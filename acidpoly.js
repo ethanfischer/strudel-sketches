@@ -69,7 +69,7 @@ const SPIDER_MED_BAND = .6    // spider medium from 60% of best
 const SPIDER_HIGH_HOLD_S = 8  // spider high after you hold your best this long; the choir comes at CHOIR_HOLD_S
 const SPIDER_STEP_DOWN_S = 4  // on the way down, the spider stays at each level this long
 const CHOIR_GRACE_S   = 1.5   // a dip below the band shorter than this pauses the hold, not resets it
-const CHOIR_FADE_IN_S = 2     // the choir gets louder over this time when it starts
+const CHOIR_FADE_IN_S = 4     // the choir gets louder over this time when it starts
 const BEST_FADE       = 1     // WPM per second that best falls while you type below it
 const LOOKAHEAD_WORDS = 50    // words to keep queued
 // Monkeytype's English quotes (GPL-3.0), pinned to one commit
@@ -254,6 +254,7 @@ function startGame() {
     spiderLevel: 0, spiderDownSince: null,   // 0 low, 1 medium, 2 high; since when the target is lower
     held: 0, outSince: null, choir: false,   // seconds held in the band; when you left it
     choirLevel: 0,                           // 0..1, fades in when the choir starts
+    choirChords: [], nextChord: null,        // the choir chords as we expect them: { at, gain, step }
     lastTick: Date.now(),
     bpm: minBpm, cpm: Math.round(minBpm) / 4,
     fireTimer: null,
@@ -405,6 +406,19 @@ function tick(g) {
   g.choir = g.held >= CHOIR_HOLD_S
   // Each new choir chord takes this level at its start
   g.choirLevel = g.choir ? Math.min(1, g.choirLevel + dt / CHOIR_FADE_IN_S) : 0
+  // The fire follows the choir chords (choirHeard). We do not know where Strudel is in its half cycle,
+  // so we expect the first chord half a step after the choir starts (up to half a step off), then one each step.
+  if (g.choir) {
+    const step = 30 / g.cpm
+    g.nextChord ??= now + step * 500
+    while (g.nextChord <= now) {
+      g.choirChords.push({ at: g.nextChord, gain: g.choirLevel, step })
+      g.nextChord += step * 1000
+    }
+  } else {
+    g.nextChord = null
+    g.choirChords = []
+  }
 
   steer('energy', g.energyWpm / fullWpm, 0, 1, .2)
   const pace = clamp(g.wpm / fullWpm, 0, 1)
@@ -575,7 +589,8 @@ function fireFrame(g) {
   const energy = window.controlState.energy
   const lit = g.startedAt != null   // the kindling catches on your first key
   const heat = g.heat
-  g.blue += ((g.choir ? 1 : 0) - g.blue) * .25   // about half a second to turn blue, and back
+  // Turns blue as loud as the choir is, and back to normal in about half a second
+  g.blue = g.choir ? choirHeard(g) : g.blue * .75
   const cooling = .44 - .32 * energy
 
   for (let x = 0; x < FIRE_W; x++) {
@@ -608,6 +623,19 @@ function fireFrame(g) {
 
   renderFire(g, energy, lit)
   tintText(g, lit ? energy : 0)
+}
+
+// How loud the choir is now, 0..1, with the same envelope as the PAD: each chord fades in over one step,
+// holds until two steps, then fades out over one step. Two chords at full gain are full.
+function choirHeard(g) {
+  const now = Date.now()
+  g.choirChords = g.choirChords.filter(c => now - c.at < 3 * c.step * 1000)
+  let sum = 0
+  for (const c of g.choirChords) {
+    const age = (now - c.at) / 1000 / c.step
+    sum += c.gain * (age < 0 ? 0 : age < 1 ? age : age < 2 ? 1 : 3 - age)
+  }
+  return Math.min(1, sum / 2)
 }
 
 // Highest row near the center with a hot cell

@@ -5,9 +5,8 @@
 // ============================================================
 const ACCENT = '#00FFD6'
 const NEG = '#FF4FD8'
-const AI_COLOR = '#FFD479'
+const GOLD = '#FFD479'
 
-setCpm(110/4)
 setGainCurve(x => Math.pow(x, 2))
 
 register('o', (orbit, pat) => pat.orbit(orbit))
@@ -39,7 +38,12 @@ const ui = controlPanel({
       spider: [.2, 0, 1],
       bass:   [.75, 0, 1],
       pad:    [.35, 0, 1],
-      chop:   [.6, 0, 1],
+    },
+    // Tune these while you play: ctrl+enter starts a new session
+    GAME: {
+      fullWpm: [100, 20, 200, 1],   // WPM for energy 1 and maxBpm
+      minBpm:  [70, 40, 160, 1],    // tempo at 0 WPM
+      maxBpm:  [110, 40, 200, 1],   // tempo at fullWpm
     },
   },
 })
@@ -47,23 +51,20 @@ const ui = controlPanel({
 const { KEY, energy } = ui
 
 // ============================================================
-//  DATA SOURCES
+//  GAME  — type the Bluesky feed; your typing drives the music
 // ============================================================
 
-const BLUESKY_ON = true   // false = no feed, key is fully manual
+const KEY_OK   = 'e:minor'    // no typo
+const KEY_TYPO = 'c:dorian'   // a typo is not fixed yet
 
-const KEY_HAPPY  = 'e:minor'
-const KEY_GLOOMY = 'c:dorian'
+const WPM_WINDOW_S    = 10    // rolling WPM window
+const CHOIR_HOLD_S    = 15    // hold your best this long to bring in the choir
+const CHOIR_BAND      = .9    // "your best" = 90% or more of the session best
+const MIN_POST_WORDS  = 5     // skip shorter posts
+const LOOKAHEAD_WORDS = 50    // words to keep queued
 
-// What counts as an AI mention: "AI", "A.I.", "#ai", "LLM(s)", "slop" (any case)
-const AI_RE = /\bA\.?I'?s?\b|#ai\b|\bLLMs?\b|\bslop\b/i
-const AI_COOLDOWN_MS = 0   // minimum gap between chops; 0 = as often as the 16th-note grid allows
-const AI_BUMP  = .1    // energy added per post that mentions AI
-const AI_DECAY = .01   // energy removed per post that doesn't
-window.chopArmed = false
-
-stopBluesky()
-if (BLUESKY_ON) startBluesky()
+stopGame()
+startGame()
 
 
 // ============================================================
@@ -137,24 +138,11 @@ $: note("<0>*12").scale(KEY).trans("<-24>/2")
   .color("magenta")._punchcard()
 
 // ============================================================
-//  SAMPLES
-// ============================================================
-
-// Veggie Chop — plays on the next 16th note after a Bluesky post mentions AI
-// (muted: change _$ back to $ to bring it back)
-_$: s("audacity4*16")
-  .n(3)
-  .speed(1.1)
-  .mask(ref(() => window.chopArmed ? 1 : 0))
-  .onTrigger(() => { window.chopArmed = false }, false)   // disarm once it's played
-  .postgain(ui.chop)
-  .color("yellow")._punchcard()
-
-// ============================================================
 //  PAD
 // ============================================================
 
 $: n("<[0,2, 4]>")   // triad on degree 1 — follows KEY
+  .mask(ref(() => window.game?.choir ? 1 : 0))   // only while you hold your best WPM
   .scale(KEY)
   .transpose(0)
   .s("gm_choir_aahs")
@@ -193,169 +181,247 @@ _$: chaos3Osc(
 
 
 // ============================================================
-//  BLUESKY — mood → key, AI mentions → energy (+ Veggie Chop when unmuted). No music below this line.
+//  GAME ENGINE — Bluesky text in; WPM, typos and choir out. No music below this line.
 //  Single quotes throughout: Strudel turns "double quotes" into patterns.
 // ============================================================
 
-function startBluesky() {
+function startGame() {
   const url = 'wss://jetstream.us-east.bsky.network/xrpc/network.bsky.jetstream.subscribeEvents'
     + '?kinds=commit&collections=app.bsky.feed.post'
+  const minBpm = window.controlState.minBpm
 
-  const b = window.bsky = {
+  // A new session on every evaluate
+  const g = window.game = {
     ws: new WebSocket(url),
-    drive: true,          // toggled by the "drive" checkbox
-    scores: [],           // sentiment of the last 200 English posts, -1..1
-    count: 0, rate: 0,    // English posts per second
-    aiCount: 0, aiRate: 0, // AI mentions per second
-    latest: null,         // most recent emotional post, for the feed
-    mood: 0,              // -1 gloomier than usual … +1 happier than usual
-    baseValence: null,
+    timer: null,
+    words: [], wi: 0, typed: '',   // the text, the active word, what you typed of it
+    nextPost: null,                // newest typeable post, waiting to join the text
+    status: '',
+    hits: [],                      // times of correct keystrokes, for rolling WPM
+    keys: 0, wrong: 0, startedAt: null,
+    wpm: 0, best: 0, bandSince: null, choir: false,
+    bpm: minBpm, cpm: Math.round(minBpm) / 4,
+    view: null,
   }
-  const analyze = sentimentAnalyzer()
-  setControl('energy', 0)   // start from silence-ish on every evaluate
+  setControl('energy', 0)
+  window.keyControl.set(KEY_OK)
+  setCpm(g.cpm)
 
-  b.ws.onmessage = e => {
+  g.ws.onmessage = e => {
     const p = JSON.parse(e.data).payload
     if (p?.operation !== 'create' || p.collection !== 'app.bsky.feed.post') return
     const text = p.record?.text
-    if (!text || !p.record?.langs?.includes('en')) return   // word lists are English-only
-
-    b.count++
-    const s = analyze(text)
-    b.scores.push(s)
-    if (b.scores.length > 200) b.scores.shift()
-
-    const ai = AI_RE.test(text)
-
-    // AI mention → energy up a lot; any other post → energy down a little
-    if (b.drive) setControl('energy', clamp(window.controlState.energy + (ai ? AI_BUMP : -AI_DECAY), 0, 1))
-
-    if (ai) {
-      b.aiCount++
-      armChop()
-      b.latest = { text, s, ai: true }
-    } else if (s !== 0) {
-      b.latest = { text, s }
-    }
+    if (!text || !p.record?.langs?.includes('en')) return
+    if (p.record.labels?.values?.length) return   // self-labelled adult content
+    const words = typeable(text)
+    if (words.length >= MIN_POST_WORDS) g.nextPost = words
   }
-  b.ws.onerror = () => console.log('bluesky: connection error')
+  g.ws.onerror = g.ws.onclose = () => { g.status = 'bluesky disconnected, re-run to reconnect' }
 
-  b.feed = feedPanel(b)
-
-  b.timer = setInterval(() => {
-    b.rate = b.count
-    b.count = 0
-    b.aiRate = b.aiCount
-    b.aiCount = 0
-
-    if (b.scores.length >= 30) {
-      // which way are the emotional posts leaning, vs. the last ~minute?
-      const emotional = b.scores.filter(s => s !== 0)
-      const valence = emotional.length ? avg(emotional) : 0
-      b.baseValence = ema(b.baseValence, valence, .02)
-      b.mood = clamp((valence - b.baseValence) * 5, -1, 1)
-
-      // Key follows mood instantly: negative → gloomy key, positive → happy key
-      if (b.drive && b.mood !== 0) window.keyControl?.set(b.mood < 0 ? KEY_GLOOMY : KEY_HAPPY)
-    }
-    b.feed.update()
-  }, 1000)
+  g.view = typingPanel(g)
+  render(g)
+  g.timer = setInterval(() => tick(g), 100)
 }
 
-function stopBluesky() {
+function stopGame() {
+  window.game?.ws.close()
+  clearInterval(window.game?.timer)
+  // An older version of this file may still run its Bluesky feed in this tab.
+  // Its mood timer changes the key, and its AI-mention code changes energy.
   window.bsky?.ws?.close()
   clearInterval(window.bsky?.timer)
   clearInterval(window.bsky?.renderTimer)
   window.bsky = null
 }
 
-// Returns text => score in -1..1. Tries the AFINN lexicon (~3,300 words),
-// falls back to a small built-in list if the import fails.
-function sentimentAnalyzer() {
-  const WORDS = {
-    love: 3, loved: 3, great: 3, amazing: 4, awesome: 4, happy: 3, beautiful: 3,
-    good: 2, nice: 2, fun: 2, excited: 3, thanks: 2, thank: 2, best: 3, cute: 2,
-    yay: 3, wonderful: 4, proud: 2, hope: 1, win: 2, lol: 1, glad: 3, joy: 3,
-    hate: -3, awful: -3, terrible: -3, sad: -2, angry: -3, worst: -3, bad: -2,
-    sucks: -3, disgusting: -3, scared: -2, afraid: -2, cry: -2, crying: -2,
-    tired: -1, sick: -2, broken: -2, lost: -2, dead: -2, horrible: -3, ugh: -2,
-  }
-
-  if (!window.sentimentLib) {
-    import('https://esm.sh/sentiment@5')
-      .then(m => { window.sentimentLib = new m.default(); console.log('sentiment: AFINN lexicon loaded') })
-      .catch(() => console.log('sentiment: import failed, using built-in word list'))
-  }
-
-  return text => {
-    const raw = window.sentimentLib
-      ? window.sentimentLib.analyze(text).score
-      : (text.toLowerCase().match(/[a-z']+/g) ?? []).reduce((sum, w) => sum + (WORDS[w] ?? 0), 0)
-    return clamp(raw / 5, -1, 1)
-  }
+// Post text → words you can type: lowercase a-z and apostrophes, no links or @handles
+function typeable(text) {
+  return text.toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')   // café → cafe
+    .replace(/[’‘ʼ]/g, '\'')
+    .split(/\s+/)
+    .filter(t => !/[\/@]|www\.|[a-z]\.[a-z]/.test(t))
+    .join(' ')
+    .replace(/[-–—]/g, ' ')
+    .replace(/[^a-z' ]/g, '')
+    .split(' ')
+    .map(w => w.replace(/^'+|'+$/g, ''))
+    .filter(w => w && w.length <= 20)   // a longer word does not fit on one line
 }
 
-function feedPanel(b) {
-  const stats = el('span', { style: { opacity: .6 } })
-  const drive = el('input', {
-    type: 'checkbox', checked: b.drive,
-    onchange: e => { b.drive = e.target.checked },
-    style: { accentColor: ACCENT },
-  })
-  const mood = meter('mood')
-  const energyMeter = meter('energy')
-  const lines = el('div', {
-    style: { display: 'flex', flexDirection: 'column', gap: '2px', height: '140px', overflow: 'hidden', marginTop: '8px' },
-  })
+function onKey(g, e) {
+  if (e.key === 'Escape') { e.currentTarget.blur(); return }
+  const clearWord = e.key === 'Backspace' && (e.ctrlKey || e.altKey)
+  if (!clearWord && (e.ctrlKey || e.metaKey || e.altKey)) return   // leave Strudel shortcuts alone
+  if (e.key !== 'Backspace' && e.key.length !== 1) return          // Tab, arrows, Shift…
+  e.preventDefault()
+  e.stopPropagation()
 
-  dock().prepend(el('div', { id: 'bsky-feed', style: panelStyle() }, [
-    el('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '8px' } }, [
-      el('span', { textContent: 'BLUESKY', style: { color: ACCENT, fontWeight: 'bold' } }),
+  const word = g.words[g.wi]
+  if (word == null) return   // no text yet
+  const target = word + ' '   // the space that ends a word is part of it
+
+  if (clearWord) {
+    let ok = 0
+    while (ok < g.typed.length && g.typed[ok] === target[ok]) ok++
+    g.hits.length = Math.max(0, g.hits.length - ok)
+    g.typed = ''
+  } else if (e.key === 'Backspace') {
+    if (g.typed && target.startsWith(g.typed)) g.hits.pop()   // the removed letter was correct
+    g.typed = g.typed.slice(0, -1)
+  } else if (g.typed.length < target.length + 10) {
+    g.startedAt ??= Date.now()
+    g.typed += e.key
+    g.keys++
+    if (target.startsWith(g.typed)) g.hits.push(Date.now())
+    else g.wrong++
+    if (g.typed === target) {
+      g.wi++
+      g.typed = ''
+      refill(g)
+    }
+  }
+
+  const next = g.words[g.wi]
+  window.keyControl.set(next == null || (next + ' ').startsWith(g.typed) ? KEY_OK : KEY_TYPO)
+  render(g)
+}
+
+function tick(g) {
+  const now = Date.now()
+  const { fullWpm, minBpm, maxBpm } = window.controlState
+
+  // Rolling WPM: correct characters / 5 over the whole window, so it ramps up from 0
+  while (g.hits.length && now - g.hits[0] > WPM_WINDOW_S * 1000) g.hits.shift()
+  g.wpm = g.hits.length / 5 / (WPM_WINDOW_S / 60)
+
+  // Choir: hold your session best for CHOIR_HOLD_S. Wait one full window first,
+  // so idling (0 >= .9 × 0) and the ramp-up do not count.
+  const warm = g.startedAt != null && now - g.startedAt >= WPM_WINDOW_S * 1000
+  if (warm) g.best = Math.max(g.best, g.wpm)
+  const inBand = warm && g.wpm > 0 && g.wpm >= g.best * CHOIR_BAND
+  g.bandSince = inBand ? g.bandSince ?? now : null
+  g.choir = inBand && now - g.bandSince >= CHOIR_HOLD_S * 1000
+
+  const pace = clamp(g.wpm / fullWpm, 0, 1)
+  steer('energy', pace, 0, 1, .2)
+
+  // Tempo glides toward the target; setCpm only when the rounded BPM changes
+  g.bpm += (minBpm + (maxBpm - minBpm) * pace - g.bpm) * .1
+  const cpm = Math.round(g.bpm) / 4
+  if (cpm !== g.cpm) {
+    g.cpm = cpm
+    setCpm(cpm)
+  }
+
+  if (refill(g)) render(g)
+
+  const v = g.view
+  const acc = g.keys ? Math.round(100 * (g.keys - g.wrong) / g.keys) : 100
+  v.stats.textContent = Math.round(g.wpm) + ' wpm · best ' + Math.round(g.best) + ' · ' + acc + '% acc · '
+    + Math.round(g.bpm) + ' bpm · ' + window.keyControl.get().replace(':', ' ')
+  v.status.textContent = g.status
+  const energy = window.controlState.energy
+  v.energy.set(energy, energy.toFixed(2), GOLD)
+  const held = g.bandSince == null ? 0 : Math.min((now - g.bandSince) / 1000, CHOIR_HOLD_S)
+  v.choir.set(held / CHOIR_HOLD_S, g.choir ? 'ON' : Math.floor(held) + '/' + CHOIR_HOLD_S + 's')
+}
+
+// Append the waiting post if the text is running low. Returns true if it did.
+function refill(g) {
+  if (!g.nextPost || g.words.length - g.wi >= LOOKAHEAD_WORDS) return false
+  g.words.push(...g.nextPost)
+  g.nextPost = null
+  return true
+}
+
+function typingPanel(g) {
+  const stats = el('span', { style: { opacity: .85 } })
+  const status = el('span', { style: { color: NEG } })
+  const energyMeter = meter('energy')
+  const choirMeter = meter('choir')
+  const text = el('div', {
+    style: { position: 'relative', display: 'flex', flexWrap: 'wrap', alignContent: 'flex-start', opacity: .3 },
+  })
+  const hint = el('div', {
+    textContent: 'click to type',
+    style: {
+      position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
+      color: ACCENT, font: '16px monospace',
+    },
+  })
+  const box = el('div', {
+    tabIndex: 0,
+    onkeydown: e => onKey(g, e),
+    onfocus: () => { text.style.opacity = 1; hint.style.display = 'none' },
+    onblur: () => { text.style.opacity = .3; hint.style.display = 'flex' },
+    style: {
+      position: 'relative', marginTop: '10px', font: '24px monospace', lineHeight: 1.6,
+      height: '4.8em', overflow: 'hidden', outline: 'none', cursor: 'text',   // exactly 3 lines
+    },
+  }, [text, hint])
+
+  document.body.appendChild(el('div', {
+    id: 'type-panel',
+    style: panelStyle({
+      position: 'fixed', top: '10px', left: '50%', transform: 'translateX(-50%)',
+      width: 'min(820px, 92vw)', zIndex: 9999, background: '#000',   // opaque: grey text must stay readable
+    }),
+  }, [
+    el('div', { style: { display: 'flex', gap: '12px', marginBottom: '8px' } }, [
+      el('span', { textContent: 'TYPE', style: { color: ACCENT, fontWeight: 'bold' } }),
       stats,
-      el('label', { style: { cursor: 'pointer' } }, [drive, ' drive']),
+      status,
     ]),
-    mood.node,
     energyMeter.node,
-    lines,
+    choirMeter.node,
+    box,
   ]))
 
-  // Show one post every 400ms — the raw stream is far too fast to read
-  let shown = null
-  b.renderTimer = setInterval(() => {
-    const post = b.latest
-    if (!post || post === shown) return
-    shown = post
-    lines.prepend(el('div', {
-      // textContent (not innerHTML) so post text can't inject markup
-      textContent: (post.ai ? 'AI ' : '') + (post.s > 0 ? '+' : '') + post.s.toFixed(2) + '  ' + post.text.replace(/\s+/g, ' '),
-      style: {
-        whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-        color: sentColor(post.s),
-        // AI mentions: whole line highlighted in yellow
-        ...(post.ai && { background: AI_COLOR, color: '#000', borderRadius: '3px', padding: '0 4px', fontWeight: 'bold' }),
-      },
-    }))
-    while (lines.children.length > 9) lines.lastChild.remove()
-  }, 400)
+  return { text, stats, status, energy: energyMeter, choir: choirMeter }
+}
 
-  return {
-    update: () => {
-      stats.textContent = b.rate + ' posts/s · ' + b.aiRate + ' AI/s'
-      mood.set((b.mood + 1) / 2, (b.mood > 0 ? '+' : '') + b.mood.toFixed(2), sentColor(b.mood))
-      energyMeter.set(window.controlState.energy, window.controlState.energy.toFixed(2), AI_COLOR)
-    },
+// Rebuild the visible words. Finished = white, upcoming = grey, wrong = pink.
+function render(g) {
+  const v = g.view
+  if (!g.words.length) {
+    v.text.replaceChildren(el('span', { textContent: 'waiting for bluesky…', style: { color: '#666' } }))
+    return
   }
-}
+  v.text.replaceChildren(...g.words.slice(0, g.wi + 60).map((word, i) => {
+    const target = word + ' '
+    const typed = i < g.wi ? target : i === g.wi ? g.typed : ''
+    const letters = []
+    for (let j = 0; j < Math.max(target.length, typed.length); j++) {
+      const want = target[j], got = typed[j]
+      let ch = want, color = '#666'
+      if (got != null && got === want) color = '#fff'
+      else if (got != null) {
+        color = NEG
+        // a wrong letter shows what you should type; at the space or past the end, what you typed
+        if (want == null || want === ' ') ch = got === ' ' ? '_' : got
+      }
+      letters.push(el('span', { textContent: ch, style: { color } }))
+    }
+    if (i === g.wi) {
+      const at = letters[typed.length]
+      if (at) at.style.boxShadow = 'inset 2px 0 ' + ACCENT
+      else letters[letters.length - 1].style.boxShadow = 'inset -2px 0 ' + ACCENT
+    }
+    return el('span', { style: { whiteSpace: 'pre' } }, letters)
+  }))
+  if (g.wi >= g.words.length) v.text.append(el('span', { textContent: 'waiting for bluesky…', style: { color: '#666' } }))
 
-// Queue one Veggie Chop (the pattern plays it on the next 16th and disarms)
-function armChop() {
-  if (Date.now() - (window.chopLast ?? 0) < AI_COOLDOWN_MS) return
-  window.chopArmed = true
-  window.chopLast = Date.now()
-}
-
-function sentColor(s) {
-  return s > 0 ? ACCENT : s < 0 ? NEG : '#888'
+  // Scroll like monkeytype: when the active word reaches line 3, drop line 1
+  const lh = parseFloat(getComputedStyle(v.text).lineHeight)
+  const line = node => Math.round(node.offsetTop / lh)
+  const active = v.text.children[g.wi]
+  if (active && line(active) >= 2) {
+    const n = [...v.text.children].filter(c => line(c) === 0).length
+    g.words.splice(0, n)
+    g.wi -= n
+    render(g)
+  }
 }
 
 
@@ -369,7 +435,7 @@ function controlPanel({ key = {}, sliders = {} } = {}) {
   const defaults = {}
   window.controlInputs = inputs   // lets data sources move the sliders
 
-  ;['key-picker', 'key-btn', 'control-panel', 'bsky-feed', 'coinbase-feed', 'strudel-dock']
+  ;['key-picker', 'key-btn', 'control-panel', 'bsky-feed', 'coinbase-feed', 'strudel-dock', 'type-panel']
     .forEach(id => document.getElementById(id)?.remove())
 
   // --- key/mode ---
@@ -440,8 +506,9 @@ function keySection({ root = 'e', mode = 'minor' } = {}) {
   const update = () => { label.textContent = ' ' + current().replace(':', ' ') }
   update()
 
-  // Lets code change the key (radio buttons + label follow). Returns true if it changed.
+  // Lets code read or change the key (radio buttons + label follow). set returns true if it changed.
   window.keyControl = {
+    get: current,
     set: name => {
       const i = MODES.indexOf(name)
       if (i < 0 || i === window.keyState.mode) return false
@@ -481,7 +548,7 @@ function radioGroup(options, stateKey, cols, onPick) {
 }
 
 function sliderRow(name, min, max, step, inputs) {
-  const fmt = v => (+v).toFixed(2)
+  const fmt = v => (+v).toFixed(step < 1 ? 2 : 0)
   const valueLabel = el('span', {
     textContent: fmt(window.controlState[name]),
     style: { width: '36px', textAlign: 'right', color: ACCENT },
@@ -585,9 +652,7 @@ function steer(name, target, min = 0, max = 1, amount = .2) {
   setControl(name, now + (t - now) * amount)
 }
 
-function avg(xs) { return xs.reduce((a, b) => a + b, 0) / xs.length }
 function clamp(x, lo, hi) { return Math.min(hi, Math.max(lo, x)) }
-function ema(prev, x, k) { return prev == null ? x : prev + (x - prev) * k }
 
 // Tiny DOM helper: el('div', { id, style: {...}, ...props }, [children])
 function el(tag, { style = {}, ...props } = {}, children = []) {

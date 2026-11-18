@@ -44,6 +44,8 @@ const ui = controlPanel({
       fullWpm: [100, 20, 200, 1],   // WPM for energy 1 and maxBpm
       minBpm:  [70, 40, 160, 1],    // tempo at 0 WPM
       maxBpm:  [110, 40, 200, 1],   // tempo at fullWpm
+      spiderMed:  [60, 0, 200, 1],  // WPM where the spider goes from low to medium
+      spiderHigh: [100, 0, 200, 1],  // WPM where it goes from medium to high
     },
   },
 })
@@ -65,6 +67,10 @@ const CHOIR_GRACE_S   = 1.5   // a dip below the band shorter than this pauses t
 const BEST_FADE       = 1     // WPM per second that best falls while you type below it
 const MIN_POST_WORDS  = 5     // skip shorter posts
 const LOOKAHEAD_WORDS = 50    // words to keep queued
+// A post is used only if every word is in both lists: common (Google 10k, no swears, personal use only)
+// and real (275k dictionary, MIT). The 10k list alone comes from web text, so it has "je", "ca", "html".
+const COMMON_WORDS_URL = 'https://cdn.jsdelivr.net/gh/first20hours/google-10000-english@d0736d492489198e4f9d650c7ab4143bc14c1e9e/google-10000-english-no-swears.txt'
+const DICTIONARY_URL = 'https://cdn.jsdelivr.net/npm/an-array-of-english-words@2.0.0/index.json'
 
 stopGame()
 startGame()
@@ -113,8 +119,13 @@ _$: note("<5 4 0 9 7>*16")
   .postgain(ui.lead1)
   //.color("cyan")._punchcard()
 
-// Spider
-$: note("<12 9 8 7 9 11>*12")
+// Spider — the melody changes with your WPM (limits: spiderMed / spiderHigh sliders)
+var low = "<- 7 7 - 7 7>*12"
+var medium = "<9 8 7 7 8 9>*12"
+var high = "<12 9 8 7 9 11>*12"
+var melody = ref(() => window.game.spiderLevel).pick([low, medium, high])
+
+$: note(melody)
   .scale(KEY)
   .s("square")
   .fmh(ui.spiderFmh)      // harmonicity: whole numbers = in tune, between = clangy
@@ -144,14 +155,14 @@ $: note("<0>*12").scale(KEY).trans("<-24>/2")
 //  PAD
 // ============================================================
 
-$: n("<[0, 2, 4]>")   // triad on degree 1 — follows KEY
+$: n("<[0, 4, 9]>")   // triad on degree 1 — follows KEY
   .mask(ref(() => window.game?.choir ? 1 : 0))   // only while you hold your best WPM
   //.mask(1)   // for testing
   .scale(KEY)
   .s("gm_choir_aahs")
   .n(6)
   //.hpf(1000)
-  .lpf(energy.range(600, 1600))
+  .lpf(600)
   .attack(.5)
   .release(1)
   .sustain(1)
@@ -199,12 +210,15 @@ function startGame() {
   const g = window.game = {
     ws: new WebSocket(url),
     timer: null,
+    dict: null,                    // Set of English words, when the word list has loaded
     words: [], wi: 0, typed: '',   // the text, the active word, what you typed of it
+    typo: false,                   // a wrong letter is not fixed yet
     nextPost: null,                // newest typeable post, waiting to join the text
     status: '',
     hits: [],                      // times of correct keystrokes, for rolling WPM
     keys: 0, wrong: 0, startedAt: null,
     wpm: 0, energyWpm: 0, best: 0,
+    spiderLevel: 0,                          // 0 low, 1 medium, 2 high
     held: 0, outSince: null, choir: false,   // seconds held in the band; when you left it
     lastTick: Date.now(),
     bpm: minBpm, cpm: Math.round(minBpm) / 4,
@@ -220,10 +234,27 @@ function startGame() {
     const text = p.record?.text
     if (!text || !p.record?.langs?.includes('en')) return
     if (p.record.labels?.values?.length) return   // self-labelled adult content
+    if (!g.dict || /\d/.test(text)) return         // digits: "about 8 hours" would become "about hours"
+    if (hasHole(text)) return                      // "the u.s. will" would become "the will"
     const words = typeable(text)
-    if (words.length >= MIN_POST_WORDS) g.nextPost = words
+    // Skip the post if one word is not English: misspellings, names, slang, other languages
+    if (words.length >= MIN_POST_WORDS && words.every(w => isWord(g.dict, w))) g.nextPost = words
   }
   g.ws.onerror = g.ws.onclose = () => { g.status = 'bluesky disconnected, re-run to reconnect' }
+
+  // The word list loads once per page (cached by URLs). After a failure, a re-run tries again.
+  const listKey = COMMON_WORDS_URL + ' ' + DICTIONARY_URL
+  window.wordLists ??= {}
+  window.wordLists[listKey] ??= Promise.all([
+    fetchOk(COMMON_WORDS_URL).then(r => r.text()),
+    fetchOk(DICTIONARY_URL).then(r => r.json()),
+  ]).then(([common, dictionary]) => {
+    const real = new Set(dictionary)
+    return new Set(common.split(/\s+/).filter(w => real.has(w)))
+  })
+  window.wordLists[listKey].then(
+    dict => { g.dict = dict; render(g) },
+    err => { delete window.wordLists[listKey]; g.status = 'word list did not load (' + err.message + '), re-run to retry' })
 
   g.view = typingPanel(g)
   render(g)
@@ -247,13 +278,35 @@ function typeable(text) {
     .normalize('NFD').replace(/[̀-ͯ]/g, '')   // café → cafe
     .replace(/[’‘ʼ]/g, '\'')
     .split(/\s+/)
-    .filter(t => !/[\/@]|www\.|[a-z]\.[a-z]/.test(t))
+    .filter(t => !isLinkLike(t))
     .join(' ')
     .replace(/[-–—]/g, ' ')
     .replace(/[^a-z' ]/g, '')
     .split(' ')
     .map(w => w.replace(/^'+|'+$/g, ''))
     .filter(w => w && w.length <= 20)   // a longer word does not fit on one line
+}
+
+// Links, @handles and dotted tokens such as u.s. or e.g. (t is lowercase)
+function isLinkLike(t) {
+  return /[\/@]|www\.|[a-z]\.[a-z]/.test(t)
+}
+
+// True if typeable() would drop a token between two words and leave a hole in the sentence.
+// A link or @handle at the start or end is fine.
+function hasHole(text) {
+  const kinds = text.toLowerCase().split(/\s+/).map(t => isLinkLike(t) ? 'drop' : /[a-z]/.test(t) ? 'word' : 'other')
+  return kinds.slice(kinds.indexOf('word'), kinds.lastIndexOf('word') + 1).includes('drop')
+}
+
+// A contraction counts if its base word is in the list and its ending is English:
+// they've, isn't, can't. Not l'avais.
+function isWord(dict, w) {
+  return dict.has(w) || dict.has(w.replace(/n't$/, '')) || dict.has(w.replace(/'(s|re|ve|ll|d|m|t)$/, ''))
+}
+
+function fetchOk(url) {
+  return fetch(url).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + url); return r })
 }
 
 function onKey(g, e) {
@@ -290,13 +343,18 @@ function onKey(g, e) {
   }
 
   const next = g.words[g.wi]
-  window.keyControl.set(next == null || (next + ' ').startsWith(g.typed) ? KEY_OK : KEY_TYPO)
+  g.typo = next != null && !(next + ' ').startsWith(g.typed)
+  window.keyControl.set(g.typo ? KEY_TYPO : KEY_OK)
+  if (g.typo) {   // a typo stops the choir now, not at the next tick
+    g.held = 0
+    g.choir = false
+  }
   render(g)
 }
 
 function tick(g) {
   const now = Date.now()
-  const { fullWpm, minBpm, maxBpm } = window.controlState
+  const { fullWpm, minBpm, maxBpm, spiderMed, spiderHigh } = window.controlState
 
   // Rolling WPM: correct characters / 5 over the whole window, so it ramps up from 0
   const wpmOver = s => g.hits.filter(t => now - t <= s * 1000).length / 5 / (s / 60)
@@ -319,6 +377,7 @@ function tick(g) {
     g.outSince ??= now
     if (now - g.outSince > CHOIR_GRACE_S * 1000) g.held = 0
   }
+  if (g.typo) g.held = 0   // the hold starts again only after you fix the typo
   g.choir = g.held >= CHOIR_HOLD_S
 
   steer('energy', g.energyWpm / fullWpm, 0, 1, .2)
@@ -331,6 +390,9 @@ function tick(g) {
     g.cpm = cpm
     setCpm(cpm)
   }
+
+  // Spider melody follows the same WPM as the stats line, so it does not flip on every pause
+  g.spiderLevel = g.wpm >= spiderHigh ? 2 : g.wpm >= spiderMed ? 1 : 0
 
   if (refill(g)) render(g)
 
@@ -404,7 +466,10 @@ function typingPanel(g) {
 function render(g) {
   const v = g.view
   if (!g.words.length) {
-    v.text.replaceChildren(el('span', { textContent: 'waiting for bluesky…', style: { color: '#666' } }))
+    v.text.replaceChildren(el('span', {
+      textContent: g.dict ? 'waiting for bluesky…' : 'loading word list…',
+      style: { color: '#666' },
+    }))
     return
   }
   v.text.replaceChildren(...g.words.slice(0, g.wi + 60).map((word, i) => {
@@ -417,8 +482,7 @@ function render(g) {
       if (got != null && got === want) color = '#fff'
       else if (got != null) {
         color = NEG
-        // a wrong letter shows what you should type; at the space or past the end, what you typed
-        if (want == null || want === ' ') ch = got === ' ' ? '_' : got
+        ch = got === ' ' ? '_' : got   // show what you typed; a typed space shows as _
       }
       letters.push(el('span', { textContent: ch, style: { color } }))
     }

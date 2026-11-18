@@ -15,9 +15,8 @@ register('electric', (amt, pat) => pat
   .crush(perlin.slow(4).mul(amt).range(10, 4))
   .pan(sine.fast(3)))
 
-// Master energy: drag live. For the automatic 8-cycle build, swap to the line below it.
-const energy = slider(0.64, 0, 1)
-// const energy = "<.25 .5 .75 .875 1 .875 .75 .5>/8"
+const energy = slider(0.05, 0.05, 1)
+const KEY = "e:minor"
 
 // --- DRUMS --- 
 
@@ -63,7 +62,7 @@ _$: note("<5 4 0 9 7>*16")
 
 //Spider
 $: note("<12 9 8 7 9 11>*12")
-  .scale("<e:minor>")
+  .scale(KEY)
   .s("square")
   .fmh(slider(1, 1, 6, .01))      // harmonicity: whole numbers = in tune, between = clangy
   .electric(energy)
@@ -72,13 +71,13 @@ $: note("<12 9 8 7 9 11>*12")
   //.delay(.5)
   //.delayfeedback(slider(0, 0, .95))  // web density; capped below 1 to avoid runaway
   .room(.7).rsize(2)
-  .postgain(slider(0.436, 0, 1))
+  .postgain(slider(0.333492, 1))
   .o(6)
   .color("#00FFD6")._punchcard()
 
 // --- BASS --- 
 
-$: note("<0>*12").scale("e:minor").trans("<-24>/2")
+$: note("<0>*12").scale(KEY).trans("<-24>/2")
   .detune(rand)
   .s("supersaw")
   .acidenv(energy.range(.05, .2))
@@ -87,7 +86,7 @@ $: note("<0>*12").scale("e:minor").trans("<-24>/2")
   .color("magenta")._punchcard()
 
 // Veggie Chop
-$: s("<audacity4>")
+_$: s("<audacity4>")
   .n("<3>")
   .speed(slider(1.1, .8, 1.5, .01))
   .early(.82) 
@@ -97,7 +96,7 @@ $: s("<audacity4>")
 
 _$: every(4, x =>
      x.lpf(1400).room(0.9),
-   chord("<Em G>/4")
+   chord(KEY)
   .mode("above:c4")
   .s("gm_pad_halo")
   .voicing()

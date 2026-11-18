@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>type til ya die</title>
+  <meta name="description" content="A typing game where your speed drives the music.">
+  <style>
+    html, body { margin: 0; height: 100%; background: #000; color: #fff; font: 14px monospace; }
+    #intro {
+      position: fixed; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 18px; text-align: center; padding: 0 16px;
+    }
+    h1 { margin: 0; font-size: 32px; color: #00FFD6; }
+    #intro p { margin: 0; opacity: .7; }
+    #start {
+      background: transparent; color: #00FFD6; border: 1px solid #00FFD6; border-radius: 6px;
+      padding: 10px 36px; font: 20px monospace; cursor: pointer;
+    }
+    #start:disabled { opacity: .4; cursor: wait; }
+    #error { color: #FF4FD8; white-space: pre-wrap; }
+    footer { position: fixed; bottom: 10px; left: 14px; font-size: 12px; opacity: .6; }
+    footer a { color: inherit; }
+  </style>
+  <script src="https://unpkg.com/@strudel/repl@1.3.0"></script>
+</head>
+<body>
+  <!-- The component puts its editor next to itself, so the editor goes in the hidden div too -->
+  <div id="editor" hidden><strudel-editor id="repl"></strudel-editor></div>
+
+  <main id="intro">
+    <h1>type til ya die</h1>
+    <p>Type the quotes. Your speed drives the music. Hold your best speed to bring in the choir.</p>
+    <button id="start" disabled>loading…</button>
+  </main>
+  <p id="error"></p>
+
+  <footer>
+    made with <a href="https://strudel.cc">Strudel</a>
+    · quotes from <a href="https://monkeytype.com">Monkeytype</a>
+    · <a href="https://github.com/ethanfischer/type-til-ya-die">source</a> (AGPL-3.0)
+  </footer>
+
+  <script>
+    const repl = document.getElementById('repl')
+    const start = document.getElementById('start')
+    const showError = msg => { document.getElementById('error').textContent = msg }
+
+    fetch('acidpoly.js')
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status + ' acidpoly.js'); return r.text() })
+      .then(code => {
+        // The transpiler in @strudel/repl 1.3.0 needs an expression as the last statement (strudel.cc does not).
+        // Strudel ignores this value, because the code plays its patterns with $:.
+        repl.setAttribute('code', code + '\nsilence\n')
+        start.disabled = false
+        start.textContent = 'Start'
+      })
+      .catch(err => showError('The game did not load: ' + err.message))
+
+    // The REPL catches errors in the code and reports them only in its state
+    repl.addEventListener('update', e => {
+      if (e.detail.evalError) showError('The game stopped with an error: ' + e.detail.evalError.message)
+    })
+
+    start.onclick = async () => {
+      document.getElementById('intro').remove()
+      // The mousedown on Start unlocked audio and began to load the audio worklets.
+      // Wait for them, or the first notes fail. The prebake makes initAudioOnFirstClick global.
+      await repl.editor.prebaked
+      await initAudioOnFirstClick()
+      await repl.editor.evaluate()
+      document.querySelector('#type-panel [tabindex]').focus()
+    }
+  </script>
+</body>
+</html>

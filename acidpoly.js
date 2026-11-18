@@ -30,7 +30,7 @@ const ui = controlPanel({
   sliders: {
     SOUND: {
       energy:    [0, 0, 1],
-      duckDepth: [0.473, 0, 1],
+      duckDepth: [1, 0, 1],
       spiderFmh: [1, 1, 6, .01],
     },
     MIX: {
@@ -42,10 +42,10 @@ const ui = controlPanel({
     // Tune these while you play: ctrl+enter starts a new session
     GAME: {
       fullWpm: [100, 20, 200, 1],   // WPM for energy 1 and maxBpm
-      minBpm:  [70, 40, 160, 1],    // tempo at 0 WPM
+      minBpm:  [80, 40, 160, 1],    // tempo at 0 WPM
       maxBpm:  [110, 40, 200, 1],   // tempo at fullWpm
-      spiderMed:  [60, 0, 200, 1],  // WPM where the spider goes from low to medium
-      spiderHigh: [100, 0, 200, 1],  // WPM where it goes from medium to high
+      spiderMed:  [78, 0, 200, 1],  // WPM where the spider goes from low to medium
+      spiderHigh: [100, 0, 200, 1], // WPM where it goes from medium to high
     },
   },
 })
@@ -53,7 +53,7 @@ const ui = controlPanel({
 const { KEY, energy } = ui
 
 // ============================================================
-//  GAME  — type the Bluesky feed; your typing drives the music
+//  GAME  — type quotes; your typing drives the music
 // ============================================================
 
 const KEY_OK   = 'e:minor'    // no typo
@@ -65,12 +65,9 @@ const CHOIR_HOLD_S    = 15    // hold your best this long to bring in the choir
 const CHOIR_BAND      = .8    // "your best" = 80% or more of best
 const CHOIR_GRACE_S   = 1.5   // a dip below the band shorter than this pauses the hold, not resets it
 const BEST_FADE       = 1     // WPM per second that best falls while you type below it
-const MIN_POST_WORDS  = 5     // skip shorter posts
 const LOOKAHEAD_WORDS = 50    // words to keep queued
-// A post is used only if every word is in both lists: common (Google 10k, no swears, personal use only)
-// and real (275k dictionary, MIT). The 10k list alone comes from web text, so it has "je", "ca", "html".
-const COMMON_WORDS_URL = 'https://cdn.jsdelivr.net/gh/first20hours/google-10000-english@d0736d492489198e4f9d650c7ab4143bc14c1e9e/google-10000-english-no-swears.txt'
-const DICTIONARY_URL = 'https://cdn.jsdelivr.net/npm/an-array-of-english-words@2.0.0/index.json'
+// Monkeytype's English quotes (GPL-3.0), pinned to one commit
+const QUOTES_URL = 'https://cdn.jsdelivr.net/gh/monkeytypegame/monkeytype@20b9530d720f04a4710853534c6f885d3cfe0d4c/frontend/static/quotes/english.json'
 
 stopGame()
 startGame()
@@ -197,23 +194,23 @@ _$: chaos3Osc(
 
 
 // ============================================================
-//  GAME ENGINE — Bluesky text in; WPM, typos and choir out. No music below this line.
+//  GAME ENGINE — quotes in; WPM, typos and choir out. No music below this line.
 //  Single quotes throughout: Strudel turns "double quotes" into patterns.
 // ============================================================
 
 function startGame() {
-  const url = 'wss://jetstream.us-east.bsky.network/xrpc/network.bsky.jetstream.subscribeEvents'
-    + '?kinds=commit&collections=app.bsky.feed.post'
   const minBpm = window.controlState.minBpm
 
   // A new session on every evaluate
   const g = window.game = {
-    ws: new WebSocket(url),
     timer: null,
-    dict: null,                    // Set of English words, when the word list has loaded
+    quotes: null,                  // [{ words, source }], when the quotes have loaded
     words: [], wi: 0, typed: '',   // the text, the active word, what you typed of it
     typo: false,                   // a wrong letter is not fixed yet
-    nextPost: null,                // newest typeable post, waiting to join the text
+    // Word counts since the start. The scroll removes words from the start of `words`, so wi cannot be used.
+    total: 0, done: 0,             // words added to the text, words finished
+    passages: [],                  // { endAt, source } for each quote in the text that is not finished
+    lastSource: '',                // source of the last quote you finished
     status: '',
     hits: [],                      // times of correct keystrokes, for rolling WPM
     keys: 0, wrong: 0, startedAt: null,
@@ -228,33 +225,13 @@ function startGame() {
   window.keyControl.set(KEY_OK)
   setCpm(g.cpm)
 
-  g.ws.onmessage = e => {
-    const p = JSON.parse(e.data).payload
-    if (p?.operation !== 'create' || p.collection !== 'app.bsky.feed.post') return
-    const text = p.record?.text
-    if (!text || !p.record?.langs?.includes('en')) return
-    if (p.record.labels?.values?.length) return   // self-labelled adult content
-    if (!g.dict || /\d/.test(text)) return         // digits: "about 8 hours" would become "about hours"
-    if (hasHole(text)) return                      // "the u.s. will" would become "the will"
-    const words = typeable(text)
-    // Skip the post if one word is not English: misspellings, names, slang, other languages
-    if (words.length >= MIN_POST_WORDS && words.every(w => isWord(g.dict, w))) g.nextPost = words
-  }
-  g.ws.onerror = g.ws.onclose = () => { g.status = 'bluesky disconnected, re-run to reconnect' }
-
-  // The word list loads once per page (cached by URLs). After a failure, a re-run tries again.
-  const listKey = COMMON_WORDS_URL + ' ' + DICTIONARY_URL
-  window.wordLists ??= {}
-  window.wordLists[listKey] ??= Promise.all([
-    fetchOk(COMMON_WORDS_URL).then(r => r.text()),
-    fetchOk(DICTIONARY_URL).then(r => r.json()),
-  ]).then(([common, dictionary]) => {
-    const real = new Set(dictionary)
-    return new Set(common.split(/\s+/).filter(w => real.has(w)))
-  })
-  window.wordLists[listKey].then(
-    dict => { g.dict = dict; render(g) },
-    err => { delete window.wordLists[listKey]; g.status = 'word list did not load (' + err.message + '), re-run to retry' })
+  // The quotes load once per page (cached by URL). After a failure, a re-run tries again.
+  window.quoteLists ??= {}
+  window.quoteLists[QUOTES_URL] ??= fetchOk(QUOTES_URL).then(r => r.json())
+    .then(j => j.quotes.filter(usable).map(q => ({ words: typeable(q.text), source: q.source })))
+  window.quoteLists[QUOTES_URL].then(
+    list => { g.quotes = list; refill(g); render(g) },
+    err => { delete window.quoteLists[QUOTES_URL]; g.status = 'quotes did not load (' + err.message + '), re-run to retry'; render(g) })
 
   g.view = typingPanel(g)
   render(g)
@@ -262,17 +239,23 @@ function startGame() {
 }
 
 function stopGame() {
-  window.game?.ws.close()
   clearInterval(window.game?.timer)
-  // An older version of this file may still run its Bluesky feed in this tab.
-  // Its mood timer changes the key, and its AI-mention code changes energy.
+  // An older version of this file may still run in this tab: its Bluesky feed (window.game.ws),
+  // and window.bsky with a mood timer that changes the key and AI-mention code that changes energy.
+  window.game?.ws?.close()
   window.bsky?.ws?.close()
   clearInterval(window.bsky?.timer)
   clearInterval(window.bsky?.renderTimer)
   window.bsky = null
 }
 
-// Post text → words you can type: lowercase a-z and apostrophes, no links or @handles
+// Skip a quote if typeable() would leave a hole in it: digits ("about 8 hours" would become "about hours"),
+// & = +, a word too long for one line, or a dropped token such as e.g. or and/or
+function usable(q) {
+  return !/[\d&=+]|[a-z]{21,}/i.test(q.text) && !hasHole(q.text)
+}
+
+// Quote text → words you can type: lowercase a-z and apostrophes, no links or @handles
 function typeable(text) {
   return text.toLowerCase()
     .normalize('NFD').replace(/[̀-ͯ]/g, '')   // café → cafe
@@ -297,12 +280,6 @@ function isLinkLike(t) {
 function hasHole(text) {
   const kinds = text.toLowerCase().split(/\s+/).map(t => isLinkLike(t) ? 'drop' : /[a-z]/.test(t) ? 'word' : 'other')
   return kinds.slice(kinds.indexOf('word'), kinds.lastIndexOf('word') + 1).includes('drop')
-}
-
-// A contraction counts if its base word is in the list and its ending is English:
-// they've, isn't, can't. Not l'avais.
-function isWord(dict, w) {
-  return dict.has(w) || dict.has(w.replace(/n't$/, '')) || dict.has(w.replace(/'(s|re|ve|ll|d|m|t)$/, ''))
 }
 
 function fetchOk(url) {
@@ -337,7 +314,9 @@ function onKey(g, e) {
     else g.wrong++
     if (g.typed === target) {
       g.wi++
+      g.done++
       g.typed = ''
+      if (g.done === g.passages[0].endAt) g.lastSource = g.passages.shift().source
       refill(g)
     }
   }
@@ -401,6 +380,7 @@ function tick(g) {
   v.stats.textContent = Math.round(g.wpm) + ' wpm · best ' + Math.round(g.best) + ' · ' + acc + '% acc · '
     + Math.round(g.bpm) + ' bpm · ' + window.keyControl.get().replace(':', ' ')
   v.status.textContent = g.status
+  v.source.textContent = g.lastSource && '— ' + g.lastSource
   const energy = window.controlState.energy
   v.energy.set(energy, energy.toFixed(2), GOLD)
   // Pink while you are below the band and the grace time runs
@@ -408,12 +388,17 @@ function tick(g) {
     g.outSince == null ? ACCENT : NEG)
 }
 
-// Append the waiting post if the text is running low. Returns true if it did.
+// Append random quotes while the text is running low. Returns true if it did.
 function refill(g) {
-  if (!g.nextPost || g.words.length - g.wi >= LOOKAHEAD_WORDS) return false
-  g.words.push(...g.nextPost)
-  g.nextPost = null
-  return true
+  let added = false
+  while (g.quotes && g.words.length - g.wi < LOOKAHEAD_WORDS) {
+    const q = g.quotes[Math.floor(Math.random() * g.quotes.length)]
+    g.words.push(...q.words)
+    g.total += q.words.length
+    g.passages.push({ endAt: g.total, source: q.source })
+    added = true
+  }
+  return added
 }
 
 function typingPanel(g) {
@@ -441,6 +426,7 @@ function typingPanel(g) {
       height: '4.8em', overflow: 'hidden', outline: 'none', cursor: 'text',   // exactly 3 lines
     },
   }, [text, hint])
+  const source = el('div', { style: { marginTop: '6px', minHeight: '1.3em', opacity: .5 } })
 
   document.body.appendChild(el('div', {
     id: 'type-panel',
@@ -457,19 +443,17 @@ function typingPanel(g) {
     energyMeter.node,
     choirMeter.node,
     box,
+    source,
   ]))
 
-  return { text, stats, status, energy: energyMeter, choir: choirMeter }
+  return { text, stats, status, source, energy: energyMeter, choir: choirMeter }
 }
 
 // Rebuild the visible words. Finished = white, upcoming = grey, wrong = pink.
 function render(g) {
   const v = g.view
-  if (!g.words.length) {
-    v.text.replaceChildren(el('span', {
-      textContent: g.dict ? 'waiting for bluesky…' : 'loading word list…',
-      style: { color: '#666' },
-    }))
+  if (!g.words.length) {   // no text while the quotes load; nothing if they failed (the status shows why)
+    v.text.replaceChildren(el('span', { textContent: g.status ? '' : 'loading quotes…', style: { color: '#666' } }))
     return
   }
   v.text.replaceChildren(...g.words.slice(0, g.wi + 60).map((word, i) => {
@@ -493,7 +477,6 @@ function render(g) {
     }
     return el('span', { style: { whiteSpace: 'pre' } }, letters)
   }))
-  if (g.wi >= g.words.length) v.text.append(el('span', { textContent: 'waiting for bluesky…', style: { color: '#666' } }))
 
   // Scroll like monkeytype: when the active word reaches line 3, drop line 1
   const lh = parseFloat(getComputedStyle(v.text).lineHeight)

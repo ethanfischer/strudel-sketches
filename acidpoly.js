@@ -144,19 +144,21 @@ $: note("<0>*12").scale(KEY).trans("<-24>/2")
 //  PAD
 // ============================================================
 
-$: n("<[0,2, 4]>")   // triad on degree 1 — follows KEY
+$: n("<[0, 2, 4]>")   // triad on degree 1 — follows KEY
   .mask(ref(() => window.game?.choir ? 1 : 0))   // only while you hold your best WPM
+  //.mask(1)   // for testing
   .scale(KEY)
-  .transpose(0)
   .s("gm_choir_aahs")
-  .hpf(1000)
-  //.lpf(energy.range(600, 1600))
+  .n(6)
+  //.hpf(1000)
+  .lpf(energy.range(600, 1600))
   .attack(.5)
   .release(1)
   .sustain(1)
   //.room(0.7)
   //.rsize(4)
   .postgain(ui.pad)
+  //.postgain(.5) //testing
   //.color("orange")._punchcard()
 
 // ============================================================

@@ -46,6 +46,7 @@ const ui = controlPanel({
       fullWpm: [100, 20, 200, 1],   // WPM for energy 1 and maxBpm
       minBpm:  [80, 40, 160, 1],    // tempo at 0 WPM
       maxBpm:  [110, 40, 200, 1],   // tempo at fullWpm
+      // The spider uses these two in the first WPM_WINDOW_S only. Then it follows your best, like the choir.
       spiderMed:  [78, 0, 200, 1],  // WPM where the spider goes from low to medium
       spiderHigh: [100, 0, 200, 1], // WPM where it goes from medium to high
     },
@@ -65,6 +66,7 @@ const WPM_WINDOW_S    = 10    // rolling WPM window: stats, choir and tempo
 const ENERGY_WINDOW_S = 3     // shorter window for energy, so it follows your speed fast
 const CHOIR_HOLD_S    = 15    // hold your best this long to bring in the choir
 const CHOIR_BAND      = .8    // "your best" = 80% or more of best
+const SPIDER_MED_BAND = .6    // spider medium from 60% of best; high in the choir band
 const CHOIR_GRACE_S   = 1.5   // a dip below the band shorter than this pauses the hold, not resets it
 const BEST_FADE       = 1     // WPM per second that best falls while you type below it
 const LOOKAHEAD_WORDS = 50    // words to keep queued
@@ -403,8 +405,12 @@ function tick(g) {
     setCpm(cpm)
   }
 
-  // Spider melody follows the same WPM as the stats line, so it does not flip on every pause
-  g.spiderLevel = g.wpm >= spiderHigh ? 2 : g.wpm >= spiderMed ? 1 : 0
+  // Spider melody follows your best, like the choir, so the blue flame always comes with the high spider.
+  // In the first window you have no best yet, so it uses the fixed WPM values.
+  // It uses the same WPM as the stats line, so it does not flip on every pause.
+  g.spiderLevel = !warm ? (g.wpm >= spiderHigh ? 2 : g.wpm >= spiderMed ? 1 : 0)
+    : g.choir || inBand ? 2
+    : g.wpm > 0 && g.wpm >= g.best * SPIDER_MED_BAND ? 1 : 0
 
   if (refill(g)) render(g)
 

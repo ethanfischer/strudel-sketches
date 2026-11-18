@@ -79,6 +79,7 @@ const QUOTES_URL = 'https://cdn.jsdelivr.net/gh/monkeytypegame/monkeytype@20b953
 const FIRE_W = 40, FIRE_H = 18     // the flame grid, in characters
 const FIRE_C = 20, FIRE_HALF = 9   // center column (the | of the kindling), half width of the base
 const FIRE_HEAD = 4                // rows above the flame where only sparks go
+const FIRE_UNDER_TEXT = 3          // rows of flame between the kindling and the text, which lies over the fire
 const FIRE_FRAME_MS = 60
 const FIRE_RAMP = ' .:-=+*#%@'     // cool → hot
 // Sticks that lean together over two logs. The | is at column FIRE_C.
@@ -485,7 +486,11 @@ function typingPanel(g) {
   const energyMeter = meter('energy')
   const choirMeter = meter('choir')
   const text = el('div', {
-    style: { position: 'relative', display: 'flex', flexWrap: 'wrap', alignContent: 'flex-start', opacity: .3 },
+    style: {
+      position: 'relative', display: 'flex', flexWrap: 'wrap', alignContent: 'flex-start', opacity: .3,
+      justifyContent: 'center',   // each line is centered over the fire
+      textShadow: '0 0 3px #000, 0 0 6px #000, 0 0 10px #000',   // cuts the text out of the flames behind it
+    },
   })
   const hint = el('div', {
     textContent: 'click to type',
@@ -494,21 +499,33 @@ function typingPanel(g) {
       color: ACCENT, font: '16px monospace',
     },
   })
+  // 32px on the site; smaller on strudel.cc, so the panel covers less of the code. It also stops at the
+  // window: all its rows fit in the height, and its columns (0.6em each) fit in the panel width.
+  const fireRows = FIRE_HEAD + FIRE_H + KINDLING.length
+  const fireSize = 'min(' + (SITE ? 32 : 18) + 'px, calc((100vh - 80px) / ' + fireRows + '), calc(92vw / ' + FIRE_W * .6 + '))'
+  const fire = el('pre', {
+    style: {
+      margin: '0 auto', width: 'max-content', fontFamily: 'monospace', fontSize: fireSize, lineHeight: 1,
+      userSelect: 'none',
+    },
+  })
+  // The text box lies over the fire, FIRE_UNDER_TEXT rows above the kindling: a small flame shows
+  // under the text, and a big one climbs up behind it
   const box = el('div', {
     tabIndex: 0,
     onkeydown: e => onKey(g, e),
     onfocus: () => { text.style.opacity = 1; hint.style.display = 'none' },
     onblur: () => { text.style.opacity = .3; hint.style.display = 'flex' },
     style: {
-      position: 'relative', marginTop: '10px', font: '24px monospace', lineHeight: 1.6,
+      position: 'absolute', left: 0, right: 0, bottom: 'calc(' + (KINDLING.length + FIRE_UNDER_TEXT) + ' * ' + fireSize + ')',
+      font: '24px monospace', lineHeight: 1.6,
       height: '4.8em', overflow: 'hidden', outline: 'none', cursor: 'text',   // exactly 3 lines
+      // A dark band dims the fire behind the text to about 30%, with soft top and bottom edges
+      background: 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.7) 15%, rgba(0,0,0,.7) 85%, rgba(0,0,0,0))',
     },
   }, [text, hint])
+  const stage = el('div', { style: { position: 'relative' } }, [fire, box])
   const source = el('div', { style: { marginTop: '6px', minHeight: '1.3em', opacity: .5 } })
-  // Smaller on strudel.cc, so the panel covers less of the code
-  const fire = el('pre', {
-    style: { margin: '0 auto', width: 'max-content', font: (SITE ? 16 : 9) + 'px/1 monospace', userSelect: 'none' },
-  })
 
   // On the site, the panel is the game screen: centered, with no border. The nodes it leaves out are
   // still built, so tick() updates them as on strudel.cc.
@@ -530,8 +547,7 @@ function typingPanel(g) {
       status,
     ]),
     ...(SITE ? [] : [energyMeter.node, choirMeter.node]),
-    fire,
-    box,
+    stage,
     ...(SITE ? [] : [source]),
   ]))
 

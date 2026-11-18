@@ -46,9 +46,8 @@ const ui = controlPanel({
       fullWpm: [100, 20, 200, 1],   // WPM for energy 1 and maxBpm
       minBpm:  [80, 40, 160, 1],    // tempo at 0 WPM
       maxBpm:  [110, 40, 200, 1],   // tempo at fullWpm
-      // The spider uses these two in the first WPM_WINDOW_S only. Then it follows your best, like the choir.
+      // In the first WPM_WINDOW_S only. Then the spider follows your best; high comes only from the hold.
       spiderMed:  [78, 0, 200, 1],  // WPM where the spider goes from low to medium
-      spiderHigh: [100, 0, 200, 1], // WPM where it goes from medium to high
     },
   },
 })
@@ -66,8 +65,11 @@ const WPM_WINDOW_S    = 10    // rolling WPM window: stats, choir and tempo
 const ENERGY_WINDOW_S = 3     // shorter window for energy, so it follows your speed fast
 const CHOIR_HOLD_S    = 15    // hold your best this long to bring in the choir
 const CHOIR_BAND      = .8    // "your best" = 80% or more of best
-const SPIDER_MED_BAND = .6    // spider medium from 60% of best; high in the choir band
+const SPIDER_MED_BAND = .6    // spider medium from 60% of best
+const SPIDER_HIGH_HOLD_S = 8  // spider high after you hold your best this long; the choir comes at CHOIR_HOLD_S
+const SPIDER_STEP_DOWN_S = 4  // on the way down, the spider stays at each level this long
 const CHOIR_GRACE_S   = 1.5   // a dip below the band shorter than this pauses the hold, not resets it
+const CHOIR_FADE_IN_S = 2     // the choir gets louder over this time when it starts
 const BEST_FADE       = 1     // WPM per second that best falls while you type below it
 const LOOKAHEAD_WORDS = 50    // words to keep queued
 // Monkeytype's English quotes (GPL-3.0), pinned to one commit
@@ -143,7 +145,7 @@ _$: note("<5 4 0 9 7>*16")
   .postgain(ui.lead1)
   //.color("cyan")._punchcard()
 
-// Spider — the melody changes with your WPM (limits: spiderMed / spiderHigh sliders)
+// Spider — the melody climbs as you hold your best (see spiderLevel in tick())
 var low = "<- 7 7 - 7 7>*12"
 var medium = "<9 8 7 7 8 9>*12"
 var high = "<12 9 8 7 9 11>*12"
@@ -154,6 +156,7 @@ $: note(melody)
   .s("square")
   .fmh(ui.spiderFmh)      // harmonicity: whole numbers = in tune, between = clangy
   .electric(energy)
+  .lpf(2000)
   //.sometimesBy(.15, x => x.ply(2))
   //.off(1/24, x => x.transpose(12).gain(.5).pan(cosine.fast(3)))
   //.delay(.5)
@@ -179,7 +182,10 @@ $: note("<0>*12").scale(KEY).trans("<-24>/2")
 //  PAD
 // ============================================================
 
-$: n("<[0, 4, 9]>")   // triad on degree 1 — follows KEY
+// A new chord every half cycle (one step). Each chord lasts two steps, and its attack and release
+// are one step each, so one chord fades in while the one before fades out: no restart is heard.
+const choirStep = ref(() => 30 / window.game.cpm)   // seconds in half a cycle
+$: n("[0, 4, 9]*2")   // triad on degree 1 — follows KEY
   .mask(ref(() => window.game?.choir ? 1 : 0))   // only while you hold your best WPM
   //.mask(1)   // for testing
   .scale(KEY)
@@ -187,9 +193,12 @@ $: n("<[0, 4, 9]>")   // triad on degree 1 — follows KEY
   .n(6)
   //.hpf(1000)
   .lpf(600)
-  .attack(.5)
-  .release(1)
+  .clip(2)
+  .attack(choirStep)
+  .release(choirStep)
   .sustain(1)
+  // Fades in over CHOIR_FADE_IN_S. Up to 3 chords sound at once, so .6 keeps about the old level.
+  .gain(ref(() => window.game.choirLevel * .6))
   //.room(0.7)
   //.rsize(4)
   .postgain(ui.pad)
@@ -242,8 +251,9 @@ function startGame() {
     hits: [],                      // times of correct keystrokes, for rolling WPM
     keys: 0, wrong: 0, startedAt: null,
     wpm: 0, energyWpm: 0, best: 0,
-    spiderLevel: 0,                          // 0 low, 1 medium, 2 high
+    spiderLevel: 0, spiderDownSince: null,   // 0 low, 1 medium, 2 high; since when the target is lower
     held: 0, outSince: null, choir: false,   // seconds held in the band; when you left it
+    choirLevel: 0,                           // 0..1, fades in when the choir starts
     lastTick: Date.now(),
     bpm: minBpm, cpm: Math.round(minBpm) / 4,
     fireTimer: null,
@@ -368,7 +378,7 @@ function onKey(g, e) {
 
 function tick(g) {
   const now = Date.now()
-  const { fullWpm, minBpm, maxBpm, spiderMed, spiderHigh } = window.controlState
+  const { fullWpm, minBpm, maxBpm, spiderMed } = window.controlState
 
   // Rolling WPM: correct characters / 5 over the whole window, so it ramps up from 0
   const wpmOver = s => g.hits.filter(t => now - t <= s * 1000).length / 5 / (s / 60)
@@ -393,6 +403,8 @@ function tick(g) {
   }
   if (g.typo) g.held = 0   // the hold starts again only after you fix the typo
   g.choir = g.held >= CHOIR_HOLD_S
+  // Each new choir chord takes this level at its start
+  g.choirLevel = g.choir ? Math.min(1, g.choirLevel + dt / CHOIR_FADE_IN_S) : 0
 
   steer('energy', g.energyWpm / fullWpm, 0, 1, .2)
   const pace = clamp(g.wpm / fullWpm, 0, 1)
@@ -405,12 +417,25 @@ function tick(g) {
     setCpm(cpm)
   }
 
-  // Spider melody follows your best, like the choir, so the blue flame always comes with the high spider.
-  // In the first window you have no best yet, so it uses the fixed WPM values.
+  // Spider melody follows your best and the choir hold: medium near your best, high after
+  // SPIDER_HIGH_HOLD_S of hold, then the choir. The blue flame always comes with the high spider.
+  // In the first window you have no best yet, so it goes only to medium, at spiderMed.
   // It uses the same WPM as the stats line, so it does not flip on every pause.
-  g.spiderLevel = !warm ? (g.wpm >= spiderHigh ? 2 : g.wpm >= spiderMed ? 1 : 0)
-    : g.choir || inBand ? 2
+  const spiderTarget = !warm ? (g.wpm >= spiderMed ? 1 : 0)
+    : g.choir || g.held >= SPIDER_HIGH_HOLD_S ? 2
     : g.wpm > 0 && g.wpm >= g.best * SPIDER_MED_BAND ? 1 : 0
+  // It climbs at once, but cools down slowly: one level at a time, after the target has been lower
+  // for SPIDER_STEP_DOWN_S. So a typo or a stop does not drop it straight to low.
+  if (spiderTarget >= g.spiderLevel) {
+    g.spiderLevel = spiderTarget
+    g.spiderDownSince = null
+  } else {
+    g.spiderDownSince ??= now
+    if (now - g.spiderDownSince >= SPIDER_STEP_DOWN_S * 1000) {
+      g.spiderLevel--
+      g.spiderDownSince = now
+    }
+  }
 
   if (refill(g)) render(g)
 

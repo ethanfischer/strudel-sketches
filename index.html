@@ -30,7 +30,7 @@
 
   <main id="intro">
     <h1>type til ya die</h1>
-    <p>Type the quotes. Your speed drives the music. Hold your best speed to bring in the choir.</p>
+    <p>Type to feed the fire. Your speed drives the music. Hold your best speed to bring in the choir.</p>
     <button id="start" disabled>loading…</button>
   </main>
   <p id="error"></p>
@@ -45,6 +45,8 @@
     const repl = document.getElementById('repl')
     const start = document.getElementById('start')
     const showError = msg => { document.getElementById('error').textContent = msg }
+    // acidpoly.js then hides the panels that are for tuning on strudel.cc
+    window.siteMode = true
 
     fetch('acidpoly.js')
       .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status + ' acidpoly.js'); return r.text() })

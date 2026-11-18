@@ -6,6 +6,8 @@
 const ACCENT = '#00FFD6'
 const NEG = '#FF4FD8'
 const GOLD = '#FFD479'
+// index.html sets siteMode. The site hides the panels for tuning: CONTROLS, stats, meters and source.
+const SITE = window.siteMode === true
 
 setGainCurve(x => Math.pow(x, 2))
 
@@ -68,6 +70,29 @@ const BEST_FADE       = 1     // WPM per second that best falls while you type b
 const LOOKAHEAD_WORDS = 50    // words to keep queued
 // Monkeytype's English quotes (GPL-3.0), pinned to one commit
 const QUOTES_URL = 'https://cdn.jsdelivr.net/gh/monkeytypegame/monkeytype@20b9530d720f04a4710853534c6f885d3cfe0d4c/frontend/static/quotes/english.json'
+
+// Fire: energy sets the size of the flame; the choir turns it blue
+const FIRE_W = 40, FIRE_H = 18     // the flame grid, in characters
+const FIRE_C = 20, FIRE_HALF = 9   // center column (the | of the kindling), half width of the base
+const FIRE_HEAD = 4                // rows above the flame where only sparks go
+const FIRE_FRAME_MS = 60
+const FIRE_RAMP = ' .:-=+*#%@'     // cool → hot
+// Sticks that lean together over two logs. The | is at column FIRE_C.
+const KINDLING = [
+  '               \\\\  \\|/  //',
+  '              \\\\\\\\ \\|/ ////',
+  '             ((==\\\\=|=//==))',
+  '            (____)(___)(____)',
+]
+// [heat or energy, [r, g, b]]
+const FIRE_STOPS  = [[0, [60, 6, 0]], [.2, [130, 20, 0]], [.35, [200, 45, 0]], [.5, [255, 110, 10]], [.7, [255, 212, 121]], [.9, [255, 246, 220]]]
+const CHOIR_STOPS = [[0, [0, 10, 70]], [.2, [0, 35, 150]], [.35, [20, 80, 230]], [.5, [40, 145, 255]], [.7, [120, 210, 255]], [.9, [225, 245, 255]]]
+const FIRE_CORE   = [175, 225, 255]   // the core moves toward this while you hold your best
+const FIRE_EMBER  = [255, 35, 25]     // sparks and logs while the choir plays
+// The text heats up with energy (white, gold, orange) and turns blue with the choir. Upcoming text stays darker.
+const TEXT_DONE   = [[0, [255, 255, 255]], [.5, [255, 212, 121]], [1, [255, 140, 40]]]
+const TEXT_NEXT   = [[0, [102, 102, 102]], [.5, [135, 100, 70]], [1, [165, 80, 40]]]
+const TEXT_CHOIR  = { done: [130, 205, 255], next: [70, 110, 180] }
 
 stopGame()
 startGame()
@@ -219,6 +244,11 @@ function startGame() {
     held: 0, outSince: null, choir: false,   // seconds held in the band; when you left it
     lastTick: Date.now(),
     bpm: minBpm, cpm: Math.round(minBpm) / 4,
+    fireTimer: null,
+    heat: new Float32Array(FIRE_W * FIRE_H),   // 0..1 per cell, row by row from the top
+    sparks: [],                                // { x, y, life }
+    blue: 0,                                   // 0 = normal fire, 1 = choir fire; eases between them
+    colors: new Map(),                         // flame color cache
     view: null,
   }
   setControl('energy', 0)
@@ -234,12 +264,15 @@ function startGame() {
     err => { delete window.quoteLists[QUOTES_URL]; g.status = 'quotes did not load (' + err.message + '), re-run to retry'; render(g) })
 
   g.view = typingPanel(g)
+  fireFrame(g)   // sets the text colors before the first render
   render(g)
   g.timer = setInterval(() => tick(g), 100)
+  g.fireTimer = setInterval(() => fireFrame(g), FIRE_FRAME_MS)
 }
 
 function stopGame() {
   clearInterval(window.game?.timer)
+  clearInterval(window.game?.fireTimer)
   // An older version of this file may still run in this tab: its Bluesky feed (window.game.ws),
   // and window.bsky with a mood timer that changes the key and AI-mention code that changes energy.
   window.game?.ws?.close()
@@ -427,29 +460,40 @@ function typingPanel(g) {
     },
   }, [text, hint])
   const source = el('div', { style: { marginTop: '6px', minHeight: '1.3em', opacity: .5 } })
+  // Smaller on strudel.cc, so the panel covers less of the code
+  const fire = el('pre', {
+    style: { margin: '0 auto', width: 'max-content', font: (SITE ? 16 : 9) + 'px/1 monospace', userSelect: 'none' },
+  })
 
+  // On the site, the panel is the game screen: centered, with no border. The nodes it leaves out are
+  // still built, so tick() updates them as on strudel.cc.
+  const width = 'min(820px, 92vw)'
   document.body.appendChild(el('div', {
     id: 'type-panel',
-    style: panelStyle({
-      position: 'fixed', top: '10px', left: '50%', transform: 'translateX(-50%)',
-      width: 'min(820px, 92vw)', zIndex: 9999, background: '#000',   // opaque: grey text must stay readable
-    }),
+    style: SITE
+      ? { position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width, zIndex: 9999,
+          color: '#fff', font: '13px monospace' }
+      : panelStyle({
+          position: 'fixed', top: '10px', left: '50%', transform: 'translateX(-50%)',
+          width, zIndex: 9999, background: '#000',   // opaque: grey text must stay readable
+        }),
   }, [
-    el('div', { style: { display: 'flex', gap: '12px', marginBottom: '8px' } }, [
+    // The status stays on the site, so an error still shows
+    el('div', { style: { display: 'flex', gap: '12px', marginBottom: '8px' } }, SITE ? [status] : [
       el('span', { textContent: 'TYPE', style: { color: ACCENT, fontWeight: 'bold' } }),
       stats,
       status,
     ]),
-    energyMeter.node,
-    choirMeter.node,
+    ...(SITE ? [] : [energyMeter.node, choirMeter.node]),
+    fire,
     box,
-    source,
+    ...(SITE ? [] : [source]),
   ]))
 
-  return { text, stats, status, source, energy: energyMeter, choir: choirMeter }
+  return { text, fire, stats, status, source, energy: energyMeter, choir: choirMeter }
 }
 
-// Rebuild the visible words. Finished = white, upcoming = grey, wrong = pink.
+// Rebuild the visible words. Finished and upcoming colors follow the fire (tintText); wrong = pink.
 function render(g) {
   const v = g.view
   if (!g.words.length) {   // no text while the quotes load; nothing if they failed (the status shows why)
@@ -462,8 +506,8 @@ function render(g) {
     const letters = []
     for (let j = 0; j < Math.max(target.length, typed.length); j++) {
       const want = target[j], got = typed[j]
-      let ch = want, color = '#666'
-      if (got != null && got === want) color = '#fff'
+      let ch = want, color = 'var(--next)'
+      if (got != null && got === want) color = 'var(--done)'
       else if (got != null) {
         color = NEG
         ch = got === ' ' ? '_' : got   // show what you typed; a typed space shows as _
@@ -488,6 +532,126 @@ function render(g) {
     g.wi -= n
     render(g)
   }
+}
+
+
+// ============================================================
+//  FIRE — ASCII fire above the text. A heat grid: each row takes the heat of the row below it,
+//  moves ±1 column, and cools. Energy makes the base hotter and the cooling slower, so the flame grows.
+// ============================================================
+
+function fireFrame(g) {
+  const energy = window.controlState.energy
+  const lit = g.startedAt != null   // the kindling catches on your first key
+  const heat = g.heat
+  g.blue += ((g.choir ? 1 : 0) - g.blue) * .25   // about half a second to turn blue, and back
+  const cooling = .44 - .32 * energy
+
+  for (let x = 0; x < FIRE_W; x++) {
+    const d = Math.abs(x - FIRE_C) / FIRE_HALF
+    const shape = d >= 1 ? 0 : 1 - d * d   // hotter in the middle, so the flame tapers
+    heat[(FIRE_H - 1) * FIRE_W + x] = !lit || !shape ? 0
+      : energy < .03 ? (Math.random() < .3 * shape ? .22 + .1 * Math.random() : .04)   // embers
+      : shape * (Math.random() < .5 + .5 * energy ? .6 + .4 * energy : .3)
+  }
+  for (let y = 0; y < FIRE_H - 1; y++) for (let x = 0; x < FIRE_W; x++) {
+    const below = heat[(y + 1) * FIRE_W + clamp(x + Math.floor(Math.random() * 3) - 1, 0, FIRE_W - 1)]
+    heat[y * FIRE_W + x] = Math.max(0, below - cooling * Math.random())
+  }
+
+  // Sparks rise from the top of the flame while the choir plays
+  if (g.choir) {
+    const top = flameTop(heat)
+    for (let i = 0; i < 2; i++) if (Math.random() < .7) g.sparks.push({
+      x: FIRE_C + Math.round((Math.random() * 2 - 1) * FIRE_HALF * .7),
+      y: top + Math.floor(Math.random() * 3),
+      life: 6 + Math.floor(Math.random() * 7),
+    })
+  }
+  g.sparks = g.sparks.filter(p => {
+    p.y--
+    p.x += Math.floor(Math.random() * 3) - 1
+    p.life--
+    return p.life > 0 && p.y >= -FIRE_HEAD && p.x >= 0 && p.x < FIRE_W
+  })
+
+  renderFire(g, energy, lit)
+  tintText(g, lit ? energy : 0)
+}
+
+// Highest row near the center with a hot cell
+function flameTop(heat) {
+  for (let y = 0; y < FIRE_H; y++) {
+    for (let x = FIRE_C - FIRE_HALF; x <= FIRE_C + FIRE_HALF; x++) if (heat[y * FIRE_W + x] > .35) return y
+  }
+  return FIRE_H - 1
+}
+
+// The fire is rows of colored runs. Its text has only our own characters, so innerHTML is safe.
+function renderFire(g, energy, lit) {
+  const hold = g.held / CHOIR_HOLD_S
+  const rows = []
+  for (let y = -FIRE_HEAD; y < FIRE_H; y++) {
+    const row = []
+    for (let x = 0; x < FIRE_W; x++) {
+      const h = y < 0 ? 0 : g.heat[y * FIRE_W + x]
+      const i = Math.min(FIRE_RAMP.length - 1, Math.floor(h * FIRE_RAMP.length))
+      row.push(i ? [FIRE_RAMP[i], heatColor(g, h, hold)] : [' ', null])
+    }
+    rows.push(row)
+  }
+  const ember = rgb(FIRE_EMBER)
+  for (const p of g.sparks) rows[p.y + FIRE_HEAD][p.x] = [p.life > 4 ? '*' : '\'', ember]
+
+  const glow = lit ? Math.max(.15, Math.min(1, energy * 1.4)) : 0
+  KINDLING.forEach((line, k) => {
+    const color = woodColor(k, glow, g.blue)
+    rows.push([...line.padEnd(FIRE_W)].map(ch => [ch, ch === ' ' ? null : color]))
+  })
+  g.view.fire.innerHTML = rows.map(colorRuns).join('\n')
+}
+
+// One span for each run of the same color. The style has no quotes (rgb() has no spaces),
+// because Strudel turns "double quotes" into patterns.
+function colorRuns(row) {
+  let out = '', color = null, run = ''
+  const flush = () => {
+    if (run) out += color ? '<span style=color:' + color + '>' + run + '</span>' : run
+    run = ''
+  }
+  for (const [ch, c] of row) {
+    if (c !== color) { flush(); color = c }
+    run += ch
+  }
+  flush()
+  return out
+}
+
+// hold (0..1) moves the core toward white-blue; g.blue turns the whole flame blue
+function heatColor(g, h, hold) {
+  h = Math.round(h * 20) / 20
+  hold = Math.round(hold * 10) / 10
+  const blue = Math.round(g.blue * 10) / 10
+  const key = h + ':' + hold + ':' + blue
+  if (!g.colors.has(key)) {
+    let c = ramp(FIRE_STOPS, h)
+    if (h > .6) c = mix(c, FIRE_CORE, hold * Math.min(1, (h - .6) / .3))
+    g.colors.set(key, rgb(mix(c, ramp(CHOIR_STOPS, h), blue)))
+  }
+  return g.colors.get(key)
+}
+
+// The logs glow a little in embers and more as the flame grows. With the choir they glow bright red.
+function woodColor(row, glow, blue) {
+  const wood = row < 2 ? [138, 90, 50] : [110, 68, 36]
+  const k = glow * (row < 2 ? .35 : .55) * (.85 + .15 * Math.random())
+  return rgb(mix(mix(wood, [230, 90, 20], k), FIRE_EMBER, blue * (row < 2 ? .6 : .9)))
+}
+
+// render() colors the text with these variables
+function tintText(g, energy) {
+  g.view.text.style.setProperty('--done', rgb(mix(ramp(TEXT_DONE, energy), TEXT_CHOIR.done, g.blue)))
+  g.view.text.style.setProperty('--next', rgb(mix(ramp(TEXT_NEXT, energy), TEXT_CHOIR.next, g.blue)))
 }
 
 
@@ -550,7 +714,7 @@ function controlPanel({ key = {}, sliders = {} } = {}) {
     },
   })
 
-  dock().appendChild(el('div', {
+  if (!SITE) dock().appendChild(el('div', {
     id: 'control-panel',
     style: panelStyle({ maxHeight: '55vh', overflowY: 'auto' }),
   }, [header, body]))
@@ -719,6 +883,17 @@ function steer(name, target, min = 0, max = 1, amount = .2) {
 }
 
 function clamp(x, lo, hi) { return Math.min(hi, Math.max(lo, x)) }
+
+// Colors as [r, g, b]: mix two by k (0..1), pick from [[at, color]] stops, write as CSS
+function mix(a, b, k) { return a.map((v, i) => v + (b[i] - v) * k) }
+function ramp(stops, x) {
+  for (let i = 1; i < stops.length; i++) if (x <= stops[i][0]) {
+    const [x0, a] = stops[i - 1], [x1, b] = stops[i]
+    return mix(a, b, (x - x0) / (x1 - x0))
+  }
+  return stops[stops.length - 1][1]
+}
+function rgb(c) { return 'rgb(' + c.map(Math.round).join(',') + ')' }
 
 // Tiny DOM helper: el('div', { id, style: {...}, ...props }, [children])
 function el(tag, { style = {}, ...props } = {}, children = []) {

@@ -7,13 +7,14 @@ Play it at **https://ethanfischer.github.io/type-til-ya-die/**
 ## How to play
 
 1. Click **Start**. The music starts.
-2. Type the text. When you type faster, the tempo and energy go up and the lead melody changes.
-3. A typo changes the key until you fix it.
-4. Hold your best speed for 15 seconds to bring in the choir. A typo stops the choir.
-5. After each quote, the line under the text shows its source.
+2. Type the text. Your first key lights the kindling. When you type faster, the fire grows, the text gets hotter, the tempo goes up and the lead melody changes.
+3. When you stop, the fire dies down to embers. Type again and it catches again.
+4. A typo changes the key until you fix it.
+5. Hold your best speed and the core of the flame turns white-blue. After 15 seconds the choir comes in: the flame turns blue and red embers rise. A typo stops the choir.
 
 Keys: Backspace deletes a letter, Ctrl+Backspace (Option+Backspace on Mac) clears the word, Esc leaves the text box.
-The CONTROLS panel sets the mix and the game limits.
+
+On strudel.cc, the game also shows your WPM, the energy and choir meters, the source of each quote, and the CONTROLS panel, which sets the mix and the game limits.
 
 The game is for desktop browsers with a keyboard. On a phone, the text box does not open the on-screen keyboard.
 

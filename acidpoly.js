@@ -57,9 +57,12 @@ const { KEY, energy } = ui
 const KEY_OK   = 'e:minor'    // no typo
 const KEY_TYPO = 'c:dorian'   // a typo is not fixed yet
 
-const WPM_WINDOW_S    = 10    // rolling WPM window
+const WPM_WINDOW_S    = 10    // rolling WPM window: stats, choir and tempo
+const ENERGY_WINDOW_S = 3     // shorter window for energy, so it follows your speed fast
 const CHOIR_HOLD_S    = 15    // hold your best this long to bring in the choir
-const CHOIR_BAND      = .9    // "your best" = 90% or more of the session best
+const CHOIR_BAND      = .8    // "your best" = 80% or more of best
+const CHOIR_GRACE_S   = 1.5   // a dip below the band shorter than this pauses the hold, not resets it
+const BEST_FADE       = 1     // WPM per second that best falls while you type below it
 const MIN_POST_WORDS  = 5     // skip shorter posts
 const LOOKAHEAD_WORDS = 50    // words to keep queued
 
@@ -199,7 +202,9 @@ function startGame() {
     status: '',
     hits: [],                      // times of correct keystrokes, for rolling WPM
     keys: 0, wrong: 0, startedAt: null,
-    wpm: 0, best: 0, bandSince: null, choir: false,
+    wpm: 0, energyWpm: 0, best: 0,
+    held: 0, outSince: null, choir: false,   // seconds held in the band; when you left it
+    lastTick: Date.now(),
     bpm: minBpm, cpm: Math.round(minBpm) / 4,
     view: null,
   }
@@ -292,19 +297,30 @@ function tick(g) {
   const { fullWpm, minBpm, maxBpm } = window.controlState
 
   // Rolling WPM: correct characters / 5 over the whole window, so it ramps up from 0
-  while (g.hits.length && now - g.hits[0] > WPM_WINDOW_S * 1000) g.hits.shift()
-  g.wpm = g.hits.length / 5 / (WPM_WINDOW_S / 60)
+  const wpmOver = s => g.hits.filter(t => now - t <= s * 1000).length / 5 / (s / 60)
+  while (g.hits.length && now - g.hits[0] > Math.max(WPM_WINDOW_S, ENERGY_WINDOW_S) * 1000) g.hits.shift()
+  g.wpm = wpmOver(WPM_WINDOW_S)
+  g.energyWpm = wpmOver(ENERGY_WINDOW_S)
 
-  // Choir: hold your session best for CHOIR_HOLD_S. Wait one full window first,
-  // so idling (0 >= .9 × 0) and the ramp-up do not count.
+  // Choir: hold near your best for CHOIR_HOLD_S. Wait one full window first,
+  // so the ramp-up at the start does not count.
+  const dt = (now - g.lastTick) / 1000
+  g.lastTick = now
   const warm = g.startedAt != null && now - g.startedAt >= WPM_WINDOW_S * 1000
-  if (warm) g.best = Math.max(g.best, g.wpm)
+  // Best fades while you type below it, so an old burst stops blocking the choir
+  if (warm) g.best = Math.max(g.wpm, g.best - BEST_FADE * dt)
   const inBand = warm && g.wpm > 0 && g.wpm >= g.best * CHOIR_BAND
-  g.bandSince = inBand ? g.bandSince ?? now : null
-  g.choir = inBand && now - g.bandSince >= CHOIR_HOLD_S * 1000
+  if (inBand) {
+    g.held = Math.min(g.held + dt, CHOIR_HOLD_S)
+    g.outSince = null
+  } else {
+    g.outSince ??= now
+    if (now - g.outSince > CHOIR_GRACE_S * 1000) g.held = 0
+  }
+  g.choir = g.held >= CHOIR_HOLD_S
 
+  steer('energy', g.energyWpm / fullWpm, 0, 1, .2)
   const pace = clamp(g.wpm / fullWpm, 0, 1)
-  steer('energy', pace, 0, 1, .2)
 
   // Tempo glides toward the target; setCpm only when the rounded BPM changes
   g.bpm += (minBpm + (maxBpm - minBpm) * pace - g.bpm) * .1
@@ -323,8 +339,9 @@ function tick(g) {
   v.status.textContent = g.status
   const energy = window.controlState.energy
   v.energy.set(energy, energy.toFixed(2), GOLD)
-  const held = g.bandSince == null ? 0 : Math.min((now - g.bandSince) / 1000, CHOIR_HOLD_S)
-  v.choir.set(held / CHOIR_HOLD_S, g.choir ? 'ON' : Math.floor(held) + '/' + CHOIR_HOLD_S + 's')
+  // Pink while you are below the band and the grace time runs
+  v.choir.set(g.held / CHOIR_HOLD_S, g.choir ? 'ON' : Math.floor(g.held) + '/' + CHOIR_HOLD_S + 's',
+    g.outSince == null ? ACCENT : NEG)
 }
 
 // Append the waiting post if the text is running low. Returns true if it did.

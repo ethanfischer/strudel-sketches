@@ -1,0 +1,132 @@
+//"Acid Poly" @by Pink Chaos
+
+setCpm (120/4)
+
+register('o', (orbit, pat) => pat.orbit(orbit))
+
+setGainCurve(x => Math.pow(x, 2))
+
+register('acidenv', (x, pat) => pat.lpf(200).lpenv(x * 12).lps(.4).lpd(.12))
+
+// amt 0 = clean, 1 = full electric
+register('electric', (amt, pat) => pat
+  .fm(perlin.mul(amt).range(0, 6))
+  .vib(14).vibmod(.25 * amt)
+  .crush(perlin.slow(4).mul(amt).range(10, 4))
+  .pan(sine.fast(3)))
+
+// Master energy: drag live. For the automatic 8-cycle build, swap to the line below it.
+const energy = slider(0.64, 0, 1)
+// const energy = "<.25 .5 .75 .875 1 .875 .75 .5>/8"
+
+// --- DRUMS --- 
+
+$: s("bd:4!4")
+  .duck("3:4:5:6:7:8")
+  .duckdepth(slider(0.473, 0, 1))      // how hard the kick pumps everything
+  .duckattack(.12)
+  .postgain(slider(.8, 0, 1))
+  //.color("yellow")._scope()
+
+_$: s("[- hh]*4")
+  .gain(slider(.65, 0, 1))
+  .delay(.4)
+  .room(.1)
+  //.o(5)
+  //._scope()
+
+_$: s("[- cp]*2")
+  .postgain(slider(.45, 0, 1))
+  .delay(.4)
+  .room(.2).rsize(2)
+  //.electric(.5)
+  //.o(8)
+  //._scope()
+
+_$: s("[- oh]*4")
+  .gain(slider(.3, 0, 1))
+  .room(0.2)
+  .delay(0.25)
+  //._scope()
+
+// --- LEADS --- 
+
+_$: note("<5 4 0 9 7>*16")
+  .late(.01)
+  .scale("e:minor")
+  .s("sawtooth")
+  .acidenv(energy.mul(.4))
+  .room(.6).rsize(.8)
+  .o(3)
+  .postgain(slider(0, 0, 1))
+  //.color("cyan")._punchcard()
+
+//Spider
+$: note("<12 9 8 7 9 11>*12")
+  .scale("<e:minor>")
+  .s("square")
+  .fmh(slider(1, 1, 6, .01))      // harmonicity: whole numbers = in tune, between = clangy
+  .electric(energy)
+  //.sometimesBy(.15, x => x.ply(2))
+  //.off(1/24, x => x.transpose(12).gain(.5).pan(cosine.fast(3)))
+  //.delay(.5)
+  //.delayfeedback(slider(0, 0, .95))  // web density; capped below 1 to avoid runaway
+  .room(.7).rsize(2)
+  .postgain(slider(0.436, 0, 1))
+  .o(6)
+  .color("#00FFD6")._punchcard()
+
+// --- BASS --- 
+
+$: note("<0>*12").scale("e:minor").trans("<-24>/2")
+  .detune(rand)
+  .s("supersaw")
+  .acidenv(energy.range(.05, .2))
+  .o(4)
+  .postgain(slider(.75, 0, 1))
+  .color("magenta")._punchcard()
+
+// Veggie Chop
+$: s("<audacity4>")
+  .n("<3>")
+  .speed(slider(1.1, .8, 1.5, .01))
+  .early(.82) 
+  .color("yellow")._punchcard()
+
+// --- PAD --- 
+
+_$: every(4, x =>
+     x.lpf(1400).room(0.9),
+   chord("<Em G>/4")
+  .mode("above:c4")
+  .s("gm_pad_halo")
+  .voicing()
+  .hpf(500)
+  .lpf(energy.range(600, 1600))
+  .attack(0.4)
+  .release(3.0)
+  .room(0.7)
+  .rsize(4)
+  .postgain(slider(.35, 0, 1)))
+  //.color("orange")._punchcard()
+
+// --- 3 Osc synth --- 
+
+const chaos3Osc = pat =>
+  stack(
+    pat.s("sawtooth"),
+    pat.s("sawtooth").add(7),
+    pat.s("triangle").sub(12),
+    pat.s("noise").hpf(4000).lpf(9000).gain(0.08)
+  )
+    .lpf(1200)
+    .attack(0.02).decay(0.5).sustain(0.8).release(1.0)
+    .shape(0.25)
+    .room(0.5)
+    .rsize(3)
+    .postgain("<.1 .2 .25 .3 .3 .25 .2>/8")
+
+_$: chaos3Osc(
+    note("<[5 [4@3.5 0@4.5] 9 4]!3 [5 [4@3.5 0@4.5] 9@2]>/4"))
+  .scale("e:minor")
+  //.color("#978EFF")._punchcard()

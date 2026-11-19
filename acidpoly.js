@@ -101,6 +101,29 @@ const TEXT_DONE   = [[0, [255, 255, 255]], [.5, [255, 212, 121]], [1, [255, 140,
 const TEXT_NEXT   = [[0, [102, 102, 102]], [.5, [135, 100, 70]], [1, [165, 80, 40]]]
 const TEXT_CHOIR  = { done: [130, 205, 255], next: [70, 110, 180] }
 
+// The train crosses a barren land at night. The hotter the fire, the faster it goes; cold, it stands still.
+const TRAIN_ROWS  = 12     // 0-3 sky and smoke, 4-8 train, 9 track, 10-11 ground
+const TRAIN_SPEED = 45     // track columns per second at energy 1 (the speed is TRAIN_SPEED * energy^1.4)
+const TRAIN_LOCO  = [
+  ' _______     _        ',
+  '|  ___  |___| |____   ',
+  '| |###| |         |\\  ',   // ### is the firebox: it glows in the fire's color
+  '|_|___|_|_________|_\\_',
+  '  (O)(O)   (o)(o)  o  ',   // the wheels: o and O turn into spokes
+]
+const TRAIN_CAR   = [
+  '              ',
+  ' ____________ ',
+  '|  []  []  []|',
+  '|____________|',
+  '  (o)    (o)  ',
+]
+const TRAIN_MESA  = [   // far away, so it moves slowly; repeats
+  '           ___                                  ______                    ',
+  '      ____/   \\___            _______         _/      \\__                 ',
+  '_____/            \\__________/       \\_______/           \\________________',
+]
+
 stopGame()
 startGame()
 if (!SITE) hideKey()
@@ -270,6 +293,8 @@ function startGame() {
     fireTimer: null,
     heat: new Float32Array(FIRE_W * FIRE_H),   // 0..1 per cell, row by row from the top
     sparks: [],                                // { x, y, life }
+    trainX: 0,                                 // how far the train has gone, in track columns
+    puffs: [],                                 // train smoke: { x, y, age }
     blue: 0,                                   // 0 = normal fire, 1 = choir fire; eases between them
     colors: new Map(),                         // flame color cache
     view: null,
@@ -536,9 +561,21 @@ function typingPanel(g) {
   // On the site the height is the part of the page you can see (--screen-h, followViewport), which is
   // smaller while a phone keyboard is open. On a phone there, the spark rows (FIRE_HEAD) may go off the
   // top, so the fire is bigger and the text can be at the center (followViewport).
+  // The train (trainFrame). On the site it is a band at the top of the screen; on a phone the flame can climb
+  // behind it, on a desktop the fire fits under it. On strudel.cc it is in the panel, over the fire.
+  const trainFont = SITE ? (phone ? 10 : 14) : 11
+  const trainPx = SITE ? innerWidth - 16 : Math.min(820, innerWidth * .92) - 28
+  const trainCols = Math.floor(trainPx / (trainFont * .6)) - 1
+  const train = el('pre', { style: { margin: '0 auto', width: 'max-content', font: trainFont + 'px/1 monospace', userSelect: 'none' } })
+  const trainBand = SITE ? document.body.appendChild(el('div', {
+    id: 'train-band',
+    style: { position: 'fixed', left: 0, right: 0, top: '24px', zIndex: 9998, pointerEvents: 'none' },
+  }, [train])) : null
+  const bandH = SITE && !phone ? TRAIN_ROWS * trainFont + 32 : 0   // the room the fire leaves for the band
+
   const fireRows = FIRE_HEAD + FIRE_H + KINDLING.length
   const offTop = SITE && phone ? FIRE_HEAD : 0
-  const fireSize = 'min(' + (SITE ? 32 : 18) + 'px, calc((var(--screen-h, 100vh) - ' + (offTop ? 40 : 80) + 'px) / '
+  const fireSize = 'min(' + (SITE ? 32 : 18) + 'px, calc((var(--screen-h, 100vh) - ' + ((offTop ? 40 : 80) + bandH) + 'px) / '
     + (fireRows - offTop) + '), calc(92vw / ' + FIRE_W * .6 + '))'
   const fire = el('pre', {
     style: {
@@ -589,14 +626,15 @@ function typingPanel(g) {
       stats,
       status,
     ]),
-    ...(SITE ? [] : [energyMeter.node, choirMeter.node]),
+    ...(SITE ? [] : [energyMeter.node, choirMeter.node, train]),
     stage,
     ...(SITE ? [] : [source]),
   ]))
-  if (SITE) followViewport(panel, box, fire, offTop)
+  if (SITE) followViewport(panel, box, fire, offTop, trainBand, bandH)
   if (document.activeElement === input) input.onfocus()   // on the site, the tap that started the game
 
-  return { text, fire, stats, status, source, energy: energyMeter, choir: choirMeter }
+  return { text, fire, stats, status, source, energy: energyMeter, choir: choirMeter,
+    train: { node: train, cols: trainCols, cars: trainCols >= 70 ? 2 : 1 } }
 }
 
 function textInput() {
@@ -614,14 +652,17 @@ function textInput() {
 // A phone keyboard covers the bottom of the page, but 100vh stays the same. So the panel follows the
 // visual viewport, the part you can see: --screen-h gives the fire that height, and the text box goes to
 // its center. The panel must not go off the bottom; at the top, only offTop rows of the fire may go off.
-function followViewport(panel, box, fire, offTop) {
+// The train band stays at the top of what you see; on a desktop the panel stays under it (bandH).
+function followViewport(panel, box, fire, offTop, trainBand, bandH) {
   const vv = window.visualViewport
   const fit = () => {
     panel.style.setProperty('--screen-h', vv.height + 'px')
+    trainBand.style.top = vv.offsetTop + 24 + 'px'
+    const h = vv.height - bandH
     const boxMid = box.getBoundingClientRect().top - panel.getBoundingClientRect().top + box.offsetHeight / 2
     const maxOff = offTop * parseFloat(getComputedStyle(fire).fontSize)
-    const top = Math.min(vv.height - panel.offsetHeight, Math.max(-maxOff, vv.height / 2 - boxMid))
-    panel.style.top = vv.offsetTop + top + 'px'
+    const top = Math.min(h - panel.offsetHeight, Math.max(-maxOff, h / 2 - boxMid))
+    panel.style.top = vv.offsetTop + bandH + top + 'px'
   }
   vv.onresize = vv.onscroll = fit   // properties, so a new run replaces the old handlers
   fit()
@@ -712,6 +753,7 @@ function fireFrame(g) {
 
   renderFire(g, energy, lit)
   tintText(g, lit ? energy : 0)
+  trainFrame(g, lit ? energy : 0)
 }
 
 // How loud the choir is now, 0..1, with the same envelope as the PAD: each chord fades in over one step,
@@ -804,6 +846,85 @@ function tintText(g, energy) {
 
 
 // ============================================================
+//  TRAIN — ASCII train in a barren land. The land scrolls past at TRAIN_SPEED * heat^1.4,
+//  in layers: stars almost still, mesas slow, trees and rocks at half speed, poles and track at full.
+// ============================================================
+
+function trainFrame(g, heat) {
+  const dt = FIRE_FRAME_MS / 1000
+  const v = TRAIN_SPEED * Math.pow(heat, 1.4)
+  const { cols, cars } = g.view.train
+  const start = Math.round(cols * .6 - (cars * 15 + TRAIN_LOCO[0].length) / 2)
+  g.trainX += v * dt
+  // Smoke leaves the stack more often when the fire is hot, and the wind of the train blows it back
+  if (heat > .03 && Math.random() < .1 + .6 * heat) g.puffs.push({ x: start + cars * 15 + 13, y: 3, age: 0 })
+  for (const p of g.puffs) {
+    p.age += dt
+    p.y -= dt * (1 + heat)
+    p.x -= dt * (v * .7 + 1.5)
+  }
+  g.puffs = g.puffs.filter(p => p.y > -.5 && p.x > -2 && p.age < 3)
+  renderTrain(g, heat, start)
+}
+
+function renderTrain(g, heat, start) {
+  const { cols, cars, node } = g.view.train
+  const x = g.trainX
+  const rows = Array.from({ length: TRAIN_ROWS }, () => Array.from({ length: cols }, () => [' ', null]))
+  const put = (r, c, s, color) => [...s].forEach((ch, i) => {
+    if (ch !== ' ' && r >= 0 && r < TRAIN_ROWS && c + i >= 0 && c + i < cols)
+      rows[r][c + i] = [ch, typeof color === 'function' ? color(ch) : color]
+  })
+  // The same land every time, from the column in the world
+  const rnd = (a, b) => { const v = Math.sin(a * 12.9898 + b * 78.233) * 43758.5453; return v - Math.floor(v) }
+  const mod = (a, n) => ((a % n) + n) % n
+
+  for (let r = 0; r < 4; r++) for (let c = 0; c < cols; c++) {
+    const wc = c + Math.floor(x * .02)
+    if (rnd(wc, r) < .02) put(r, c, rnd(wc, r + 9) < .25 ? '*' : '.', '#4d4d5c')
+  }
+  const mo = Math.floor(x * .12)
+  TRAIN_MESA.forEach((line, r) => {
+    for (let c = 0; c < cols; c++) put(6 + r, c, line[mod(c + mo, line.length)], '#4a3a30')
+  })
+  // A sprite every `every` columns of its layer, with some left out; it stands on row 8
+  const sprites = (f, every, salt, art, color) => {
+    const o = Math.floor(x * f)
+    for (let wc = o - 8; wc < o + cols; wc++) {
+      if (mod(wc, every) || rnd(wc, salt) < .35) continue
+      art.forEach((line, i) => put(9 - art.length + i, wc - o, line, color))
+    }
+  }
+  sprites(.45, 31, 1, ['\\ | /', ' \\|/_', '  |  '], '#6b5a48')   // dead trees
+  sprites(.45, 17, 2, [' __ ', '/  \\'], '#5a4c40')                  // rocks
+  sprites(1, 22, 3, ['-+-', ' | ', ' | ', ' | ', ' | '], '#6e6052')  // telegraph poles
+
+  for (const p of g.puffs) {
+    put(Math.round(p.y), Math.round(p.x), p.age < .4 ? '@' : p.age < 1 ? 'O' : p.age < 1.8 ? 'o' : '.',
+      p.age < 1 ? '#b5b5b5' : '#6a6a6a')
+  }
+
+  // The wheels turn with the distance; the firebox glows with the fire
+  const spoke = '|/-\\'[mod(Math.floor(x / 1.2), 4)]
+  const firebox = rgb(ramp(FIRE_STOPS, heat))
+  const paint = ch => ch === '#' ? firebox : ch === '[' || ch === ']' ? '#c9a45c' : '#9aa3ad'
+  const draw = (art, c) => art.forEach((line, i) =>
+    i === 4 ? put(8, c, line.replace(/[oO]/g, spoke), '#c0c0c0') : put(4 + i, c, line, paint))
+  for (let k = 0; k < cars; k++) {
+    draw(TRAIN_CAR, start + k * 15)
+    put(7, start + k * 15 + 14, '=', '#9aa3ad')
+  }
+  draw(TRAIN_LOCO, start + cars * 15)
+
+  for (let c = 0; c < cols; c++) {
+    put(9, c, mod(c + Math.floor(x), 4) ? '=' : '+', '#7d6e5e')
+    const gc = c + Math.floor(x * 1.35)
+    for (let r = 10; r < TRAIN_ROWS; r++) if (rnd(gc, r) < .07) put(r, c, '.,`_'[Math.floor(rnd(gc, r + 5) * 4)], '#4a4038')
+  }
+  node.innerHTML = rows.map(colorRuns).join('\n')
+}
+
+// ============================================================
 //  UI — control panel + helpers.
 // ============================================================
 
@@ -813,7 +934,7 @@ function controlPanel({ key = {}, sliders = {} } = {}) {
   const defaults = {}
   window.controlInputs = inputs   // lets data sources move the sliders
 
-  ;['key-picker', 'key-btn', 'control-panel', 'bsky-feed', 'coinbase-feed', 'strudel-dock', 'type-panel']
+  ;['key-picker', 'key-btn', 'control-panel', 'bsky-feed', 'coinbase-feed', 'strudel-dock', 'type-panel', 'train-band']
     .forEach(id => document.getElementById(id)?.remove())
 
   // --- key/mode ---

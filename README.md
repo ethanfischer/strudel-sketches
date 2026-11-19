@@ -7,7 +7,7 @@ Play it at **https://ethanfischer.github.io/type-til-ya-die/**
 ## How to play
 
 1. Tap or click the page. The music starts, and on a phone the keyboard opens.
-2. Type the text. Your first key lights the kindling. When you type faster, the fire grows, the text gets hotter, the tempo goes up and the lead melody changes.
+2. Type the text. Your first key lights the kindling. When you type faster, the fire grows, the train at the top runs faster, the text gets hotter, the tempo goes up and the lead melody changes.
 3. When you stop, the fire dies down to embers. Type again and it catches again.
 4. A typo changes the key until you fix it.
 5. Hold your best speed and the core of the flame turns white-blue. After 15 seconds the choir comes in: the flame turns blue and red embers rise. A typo stops the choir.

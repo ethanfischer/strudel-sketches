@@ -733,6 +733,11 @@ function followViewport(panel, box, fire, offTop, trainBand, bandH) {
     panel.style.top = vv.offsetTop + bandH + top + 'px'
   }
   vv.onresize = vv.onscroll = fit   // properties, so a new run replaces the old handlers
+  // The panel is empty when it is built, and grows when the first fire frame fills it. Fit it again then,
+  // or it stays where the empty panel was centered, off the bottom of the screen.
+  window.panelObserver?.disconnect()
+  window.panelObserver = new ResizeObserver(fit)
+  window.panelObserver.observe(panel)
   fit()
 }
 

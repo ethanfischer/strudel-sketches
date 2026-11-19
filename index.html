@@ -15,7 +15,8 @@
     #hint { font-size: 20px; color: #00FFD6; }
     #silent { font-size: 13px; color: #8f8f8f; }
     @media (pointer: fine) { #silent { display: none; } }   /* only phones have a silent switch */
-    #intro pre { margin: 24px 0 0; width: 40ch; font: 15px/1 monospace; color: #6a4420; }
+    /* left: #intro centers its text, which moved the short lines to the right */
+    #intro pre { margin: 24px 0 0; width: 40ch; font: 15px/1 monospace; color: #6a4420; text-align: left; }
     /* Invisible, over the whole page: a phone opens its keyboard only for a text field.
        16px, because iOS zooms in on a text field with a smaller font. */
     #type-input {

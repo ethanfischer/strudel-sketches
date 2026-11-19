@@ -204,7 +204,7 @@ $: note(melody)
   .fmh(ui.spiderFmh)      // harmonicity: whole numbers = in tune, between = clangy
   .electric(energy)
   .lpf(2000)
-  .sometimesBy(.5, x => x.ply("[2 1!11]")
+  .sometimesBy(.25, x => x.ply("[2 1!11]")
     .decay(.075)
     .sustain("[0 .6!11]")
     .lpf("2500 2000!11"))

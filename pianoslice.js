@@ -2,11 +2,14 @@ samples('github:switchangel/pad')
 samples('github:ethanfischer/strudel-samples')
 setcpm(90/4)
 
-// A double pendulum: two arms of the same length and mass. secondsPerCycle sets how fast it swings.
-// pendulum is the speed of the lower arm. It is not random, but it never repeats, and a very small change to the
-// start angles gives a very different path.
+// A double pendulum moves the playhead through one part of the sample, like a hand on a record.
+// The tip of the lower arm goes left and right; that is the playhead going backwards and forwards.
+// It is not random, but it never repeats, and a very small change to the start angles gives a very different path.
 const pendulum = (() => {
-  const g = 9.8, dt = .01, secondsPerCycle = 1
+  const g = 9.8, dt = .005
+  const cycleSeconds = 60 / (90 / 4) // same as setcpm, so the pendulum swings in real seconds
+  const sampleSeconds = 7.93 // length of nicechord.wav
+  const from = 7 / 8, to = 1 // the part of the sample to scrub, the same as slice(8, "7")
   const rate = ([a1, w1, a2, w2]) => {
     const d = a1 - a2, den = 3 - Math.cos(2 * d)
     return [
@@ -17,25 +20,25 @@ const pendulum = (() => {
     ]
   }
   const add = (s, k, h) => s.map((v, i) => v + k[i] * h)
-  let s = [Math.PI * .9, 0, Math.PI * .6, 0] // start angles of the two arms (0 is straight down). Change them for a new path
-  const speeds = [s[3]]
-  return signal(t => {
-    const i = Math.floor(t * secondsPerCycle / dt)
-    while (speeds.length <= i) {
+  const states = [[Math.PI * .9, 0, Math.PI * .6, 0]] // start angles of the two arms (0 is straight down). Change them for a new path
+  const at = t => {
+    const i = Math.floor(t * cycleSeconds / dt)
+    while (states.length <= i) {
+      const s = states[states.length - 1]
       const k1 = rate(s), k2 = rate(add(s, k1, dt / 2)), k3 = rate(add(s, k2, dt / 2)), k4 = rate(add(s, k3, dt))
-      s = s.map((v, j) => v + dt / 6 * (k1[j] + 2 * k2[j] + 2 * k3[j] + k4[j]))
-      speeds.push(s[3])
+      states.push(s.map((v, j) => v + dt / 6 * (k1[j] + 2 * k2[j] + 2 * k3[j] + k4[j])))
     }
-    // Lower arm speed to playback speed: - is backwards. At least .25, or a slice near a turn is too slow to hear
-    const v = speeds[i] / 5
-    return (v < 0 ? -1 : 1) * Math.min(2, Math.max(.25, Math.abs(v)))
-  })
+    const [a1, w1, a2, w2] = states[i]
+    const place = from + (to - from) * (Math.sin(a1) + Math.sin(a2) + 2) / 4 // tip from left (from) to right (to)
+    const speed = (to - from) * (Math.cos(a1) * w1 + Math.cos(a2) * w2) / 4 * sampleSeconds // how fast the tip moves
+    // [begin, speed] for scrub. With a negative speed, Strudel reverses the sample, so begin counts from the end
+    return [speed < 0 ? 1 - place : place, speed]
+  }
+  return signal(at)
 })()
 
 $: s("nicechord")
-  .slice(8, "7") // try 12, 13, 14, 15
-  .fast(4)
-  .speed(pendulum) // after fast, or fast makes the pendulum swing 4 times as fast
+  .scrub(pendulum.segment(128)) // 128 short grains per cycle. They join into one sound
   .room(.9).size(.9)
   ._scope()
 

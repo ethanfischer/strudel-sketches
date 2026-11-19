@@ -6,7 +6,7 @@ Play it at **https://ethanfischer.github.io/type-til-ya-die/**
 
 ## How to play
 
-1. Click **Start**. The music starts.
+1. Tap or click the page. The music starts, and on a phone the keyboard opens.
 2. Type the text. Your first key lights the kindling. When you type faster, the fire grows, the text gets hotter, the tempo goes up and the lead melody changes.
 3. When you stop, the fire dies down to embers. Type again and it catches again.
 4. A typo changes the key until you fix it.
@@ -16,7 +16,7 @@ Keys: Backspace deletes a letter, Ctrl+Backspace (Option+Backspace on Mac) clear
 
 On strudel.cc, the game also shows your WPM, the energy and choir meters, the source of each quote, and the CONTROLS panel, which sets the mix and the game limits. Ctrl+Shift+H hides and shows these panels. While they are hidden, the music holds its state, also through Ctrl+Enter, so you can change the code and hear the part you are working on.
 
-The game is for desktop browsers with a keyboard. On a phone, the text box does not open the on-screen keyboard.
+You can play on a desktop or on a phone (portrait). On an iPhone, turn off silent mode, or you hear nothing.
 
 ## Run it locally
 

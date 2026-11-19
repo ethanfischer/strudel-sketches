@@ -74,6 +74,8 @@ const BEST_FADE       = 1     // WPM per second that best falls while you type b
 const LOOKAHEAD_WORDS = 50    // words to keep queued
 // Monkeytype's English quotes (GPL-3.0), pinned to one commit
 const QUOTES_URL = 'https://cdn.jsdelivr.net/gh/monkeytypegame/monkeytype@20b9530d720f04a4710853534c6f885d3cfe0d4c/frontend/static/quotes/english.json'
+// Only quotes from these sources: cyberpunk, AI games and dystopias (about 130 quotes). Matched on the source name.
+const QUOTE_SOURCES = /mr\. robot|the matrix|deus ex|blade runner|serial experiments|black mirror|westworld|terminator|ghost in the shell|^hackers$|system shock|total recall|tron:|detroit: become|portal|half-life|metal gear|ready player|evangelion|^1984|orwell|fahrenheit 451|brave new world/i
 
 // Fire: energy sets the size of the flame; the choir turns it blue
 const FIRE_W = 40, FIRE_H = 18     // the flame grid, in characters
@@ -285,7 +287,8 @@ function startGame() {
   window.quoteLists[QUOTES_URL] ??= fetchOk(QUOTES_URL).then(r => r.json())
     .then(j => j.quotes.filter(usable).map(q => ({ words: typeable(q.text), source: q.source })))
   window.quoteLists[QUOTES_URL].then(
-    list => { g.quotes = list; refill(g); render(g) },
+    // The theme filter is here, not in the cached list, so a change to QUOTE_SOURCES applies on the next run
+    list => { g.quotes = list.filter(q => QUOTE_SOURCES.test(q.source.trim())); refill(g); render(g) },
     err => { delete window.quoteLists[QUOTES_URL]; g.status = 'quotes did not load (' + err.message + '), re-run to retry'; render(g) })
 
   g.view = typingPanel(g)
@@ -348,10 +351,22 @@ function onKey(g, e) {
   if (e.key === 'Escape') { e.currentTarget.blur(); return }
   const clearWord = e.key === 'Backspace' && (e.ctrlKey || e.altKey)
   if (!clearWord && (e.ctrlKey || e.metaKey || e.altKey)) return   // leave Strudel shortcuts alone
-  if (e.key !== 'Backspace' && e.key.length !== 1) return          // Tab, arrows, Shift…
-  e.preventDefault()
+  if (e.key !== 'Backspace' && e.key.length !== 1) return          // Tab, arrows, Shift… and Android's 'Unidentified' (onInput)
+  e.preventDefault()   // also stops the key going into the textarea, so onInput does not see it
   e.stopPropagation()
+  typeKey(g, e.key, clearWord)
+}
 
+// A phone keyboard can skip keydown (Android sends 'Unidentified') or put in a whole word at once
+// (a prediction). That text comes here; we type it one letter at a time and empty the textarea.
+function onInput(g, e) {
+  const input = e.currentTarget
+  if (e.inputType === 'deleteContentBackward') typeKey(g, 'Backspace', false)
+  else for (const ch of (e.data ?? input.value).replace(/\n/g, '')) typeKey(g, ch, false)   // Enter is not a key of the game
+  input.value = ''
+}
+
+function typeKey(g, key, clearWord) {
   const word = g.words[g.wi]
   if (word == null) return   // no text yet
   const target = word + ' '   // the space that ends a word is part of it
@@ -361,12 +376,12 @@ function onKey(g, e) {
     while (ok < g.typed.length && g.typed[ok] === target[ok]) ok++
     g.hits.length = Math.max(0, g.hits.length - ok)
     g.typed = ''
-  } else if (e.key === 'Backspace') {
+  } else if (key === 'Backspace') {
     if (g.typed && target.startsWith(g.typed)) g.hits.pop()   // the removed letter was correct
     g.typed = g.typed.slice(0, -1)
   } else if (g.typed.length < target.length + 10) {
     g.startedAt ??= Date.now()
-    g.typed += e.key
+    g.typed += key
     g.keys++
     if (target.startsWith(g.typed)) g.hits.push(Date.now())
     else g.wrong++
@@ -509,7 +524,7 @@ function typingPanel(g) {
     },
   })
   const hint = el('div', {
-    textContent: 'click to type',
+    textContent: matchMedia('(pointer: coarse)').matches ? 'tap to type' : 'click to type',
     style: {
       position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
       color: ACCENT, font: '16px monospace',
@@ -517,8 +532,10 @@ function typingPanel(g) {
   })
   // 32px on the site; smaller on strudel.cc, so the panel covers less of the code. It also stops at the
   // window: all its rows fit in the height, and its columns (0.6em each) fit in the panel width.
+  // On the site the height is the part of the page you can see (--screen-h, followViewport), which is
+  // smaller while a phone keyboard is open.
   const fireRows = FIRE_HEAD + FIRE_H + KINDLING.length
-  const fireSize = 'min(' + (SITE ? 32 : 18) + 'px, calc((100vh - 80px) / ' + fireRows + '), calc(92vw / ' + FIRE_W * .6 + '))'
+  const fireSize = 'min(' + (SITE ? 32 : 18) + 'px, calc((var(--screen-h, 100vh) - 80px) / ' + fireRows + '), calc(92vw / ' + FIRE_W * .6 + '))'
   const fire = el('pre', {
     style: {
       margin: '0 auto', width: 'max-content', fontFamily: 'monospace', fontSize: fireSize, lineHeight: 1,
@@ -527,30 +544,36 @@ function typingPanel(g) {
   })
   // The text box lies over the fire, FIRE_UNDER_TEXT rows above the kindling: a small flame shows
   // under the text, and a big one climbs up behind it
-  const box = el('div', {
-    tabIndex: 0,
+  // A textarea takes the keys, because a phone opens its keyboard only for a text field. It is invisible:
+  // the text shows what you type. On the site it is #type-input in index.html, over the whole page, and the
+  // tap on it opens the keyboard and starts the game. On strudel.cc it lies over the text box.
+  const input = SITE ? document.getElementById('type-input') : textInput()
+  Object.assign(input, {   // properties, so a new run replaces the handlers of the last one
     onkeydown: e => onKey(g, e),
+    oninput: e => onInput(g, e),
     onfocus: () => { text.style.opacity = 1; hint.style.display = 'none' },
     onblur: () => { text.style.opacity = .3; hint.style.display = 'flex' },
+  })
+  const box = el('div', {
     style: {
       position: 'absolute', left: 0, right: 0, bottom: 'calc(' + (KINDLING.length + FIRE_UNDER_TEXT) + ' * ' + fireSize + ')',
-      font: '24px monospace', lineHeight: 1.6,
-      height: '4.8em', overflow: 'hidden', outline: 'none', cursor: 'text',   // exactly 3 lines
+      font: 'min(24px, 5.2vw) monospace', lineHeight: 1.6,   // 20px on a phone: about 29 letters a line
+      height: '4.8em', overflow: 'hidden', cursor: 'text',   // exactly 3 lines
       // A dark band dims the fire behind the text to about 30%, with soft top and bottom edges
       background: 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.7) 15%, rgba(0,0,0,.7) 85%, rgba(0,0,0,0))',
     },
-  }, [text, hint])
+  }, SITE ? [text, hint] : [text, hint, input])
   const stage = el('div', { style: { position: 'relative' } }, [fire, box])
   const source = el('div', { style: { marginTop: '6px', minHeight: '1.3em', opacity: .5 } })
 
   // On the site, the panel is the game screen: centered, with no border. The nodes it leaves out are
-  // still built, so tick() updates them as on strudel.cc.
+  // still built, so tick() updates them as on strudel.cc. Taps go through it to #type-input.
   const width = 'min(820px, 92vw)'
-  document.body.appendChild(el('div', {
+  const panel = document.body.appendChild(el('div', {
     id: 'type-panel',
     style: SITE
-      ? { position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width, zIndex: 9999,
-          color: '#fff', font: '13px monospace' }
+      ? { position: 'fixed', left: '50%', transform: 'translate(-50%, -50%)', width, zIndex: 9999,
+          color: '#fff', font: '13px monospace', pointerEvents: 'none' }
       : panelStyle({
           position: 'fixed', top: '10px', left: '50%', transform: 'translateX(-50%)',
           width, zIndex: 9999, background: '#000',   // opaque: grey text must stay readable
@@ -566,8 +589,34 @@ function typingPanel(g) {
     stage,
     ...(SITE ? [] : [source]),
   ]))
+  if (SITE) followViewport(panel)
+  if (document.activeElement === input) input.onfocus()   // on the site, the tap that started the game
 
   return { text, fire, stats, status, source, energy: energyMeter, choir: choirMeter }
+}
+
+function textInput() {
+  const input = el('textarea', {
+    ariaLabel: 'type here', spellcheck: false,
+    // 16px: iOS zooms in on a text field with a smaller font
+    style: { position: 'absolute', inset: 0, width: '100%', height: '100%', boxSizing: 'border-box', margin: 0,
+      padding: 0, border: 0, opacity: 0, resize: 'none', cursor: 'text', fontSize: '16px' },
+  })
+  // A phone must not change what you type
+  ;['autocomplete', 'autocorrect', 'autocapitalize'].forEach(a => input.setAttribute(a, 'off'))
+  return input
+}
+
+// A phone keyboard covers the bottom of the page, but 100vh stays the same. So the panel follows the
+// visual viewport: it is centered in the part you can see, and --screen-h gives the fire that height.
+function followViewport(panel) {
+  const vv = window.visualViewport
+  const fit = () => {
+    panel.style.top = vv.offsetTop + vv.height / 2 + 'px'
+    panel.style.setProperty('--screen-h', vv.height + 'px')
+  }
+  vv.onresize = vv.onscroll = fit   // properties, so a new run replaces the old handlers
+  fit()
 }
 
 // Rebuild the visible words. Finished and upcoming colors follow the fire (tintText); wrong = pink.

@@ -6,20 +6,24 @@
   <title>type til ya die</title>
   <meta name="description" content="A typing game where your speed drives the music.">
   <style>
-    html, body { margin: 0; height: 100%; background: #000; color: #fff; font: 14px monospace; }
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #000; color: #fff; font: 14px monospace; }
+    /* Before the game loads: the cold kindling. The game's own panel then takes its place. */
     #intro {
       position: fixed; inset: 0; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 18px; text-align: center; padding: 0 16px;
+      align-items: center; justify-content: center; gap: 10px; text-align: center; padding: 0 16px;
     }
-    h1 { margin: 0; font-size: 32px; color: #00FFD6; }
-    #intro p { margin: 0; opacity: .7; }
-    #start {
-      background: transparent; color: #00FFD6; border: 1px solid #00FFD6; border-radius: 6px;
-      padding: 10px 36px; font: 20px monospace; cursor: pointer;
+    #hint { font-size: 20px; color: #00FFD6; }
+    #silent { font-size: 13px; color: #8f8f8f; }
+    @media (pointer: fine) { #silent { display: none; } }   /* only phones have a silent switch */
+    #intro pre { margin: 24px 0 0; width: 40ch; font: 15px/1 monospace; color: #6a4420; }
+    /* Invisible, over the whole page: a phone opens its keyboard only for a text field.
+       16px, because iOS zooms in on a text field with a smaller font. */
+    #type-input {
+      position: fixed; inset: 0; z-index: 1; width: 100%; height: 100%; margin: 0; padding: 0; border: 0;
+      opacity: 0; resize: none; font-size: 16px; cursor: text;
     }
-    #start:disabled { opacity: .4; cursor: wait; }
-    #error { color: #FF4FD8; white-space: pre-wrap; }
-    footer { position: fixed; bottom: 10px; left: 14px; font-size: 12px; opacity: .6; }
+    #error { position: fixed; top: 10px; left: 14px; right: 14px; z-index: 2; margin: 0; color: #FF4FD8; white-space: pre-wrap; }
+    footer { position: fixed; bottom: 10px; left: 14px; z-index: 2; font-size: 12px; opacity: .6; }
     footer a { color: inherit; }
   </style>
   <script src="https://unpkg.com/@strudel/repl@1.3.0"></script>
@@ -29,10 +33,14 @@
   <div id="editor" hidden><strudel-editor id="repl"></strudel-editor></div>
 
   <main id="intro">
-    <h1>type til ya die</h1>
-    <p>Type to feed the fire. Your speed drives the music. Hold your best speed to bring in the choir.</p>
-    <button id="start" disabled>loading…</button>
+    <div id="hint">loading…</div>
+    <div id="silent">No sound? Turn off silent mode.</div>
+    <pre aria-hidden="true">               \\  \|/  //
+              \\\\ \|/ ////
+             ((==\\=|=//==))
+            (____)(___)(____)</pre>
   </main>
+  <textarea id="type-input" aria-label="type here" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
   <p id="error"></p>
 
   <footer>
@@ -43,35 +51,42 @@
 
   <script>
     const repl = document.getElementById('repl')
-    const start = document.getElementById('start')
+    const input = document.getElementById('type-input')
     const showError = msg => { document.getElementById('error').textContent = msg }
     // acidpoly.js then hides the panels that are for tuning on strudel.cc
     window.siteMode = true
 
-    fetch('acidpoly.js')
+    const loaded = fetch('acidpoly.js')
       .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status + ' acidpoly.js'); return r.text() })
       .then(code => {
         // The transpiler in @strudel/repl 1.3.0 needs an expression as the last statement (strudel.cc does not).
         // Strudel ignores this value, because the code plays its patterns with $:.
         repl.setAttribute('code', code + '\nsilence\n')
-        start.disabled = false
-        start.textContent = 'Start'
+        document.getElementById('hint').textContent = matchMedia('(pointer: coarse)').matches ? 'tap to type' : 'click to type'
       })
-      .catch(err => showError('The game did not load: ' + err.message))
+    loaded.catch(err => showError('The game did not load: ' + err.message))
 
     // The REPL catches errors in the code and reports them only in its state
     repl.addEventListener('update', e => {
       if (e.detail.evalError) showError('The game stopped with an error: ' + e.detail.evalError.message)
     })
 
-    start.onclick = async () => {
-      document.getElementById('intro').remove()
-      // The mousedown on Start unlocked audio and began to load the audio worklets.
+    // The first tap (or click) on the page focuses #type-input, which opens a phone keyboard, and starts the
+    // game. The focus stays on #type-input, so the keyboard stays open while the game loads.
+    let begun = null
+    input.addEventListener('focus', () => {
+      begun ??= begin().catch(err => showError('The game did not start: ' + err.message))
+    })
+    async function begin() {
+      document.getElementById('hint').textContent = 'starting…'
+      await loaded
+      // The mousedown of that tap unlocked audio and began to load the audio worklets.
       // Wait for them, or the first notes fail. The prebake makes initAudioOnFirstClick global.
       await repl.editor.prebaked
       await initAudioOnFirstClick()
+      input.value = ''   // keys from before the game was ready
       await repl.editor.evaluate()
-      document.querySelector('#type-panel [tabindex]').focus()
+      document.getElementById('intro').remove()
     }
   </script>
 </body>

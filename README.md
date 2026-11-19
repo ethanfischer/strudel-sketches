@@ -14,7 +14,7 @@ Play it at **https://ethanfischer.github.io/type-til-ya-die/**
 
 Keys: Backspace deletes a letter, Ctrl+Backspace (Option+Backspace on Mac) clears the word, Esc leaves the text box.
 
-On strudel.cc, the game also shows your WPM, the energy and choir meters, the source of each quote, and the CONTROLS panel, which sets the mix and the game limits.
+On strudel.cc, the game also shows your WPM, the energy and choir meters, the source of each quote, and the CONTROLS panel, which sets the mix and the game limits. Ctrl+Shift+H hides and shows these panels. While they are hidden, the music holds its state, also through Ctrl+Enter, so you can change the code and hear the part you are working on.
 
 The game is for desktop browsers with a keyboard. On a phone, the text box does not open the on-screen keyboard.
 

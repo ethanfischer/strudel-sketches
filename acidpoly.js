@@ -101,6 +101,7 @@ const TEXT_CHOIR  = { done: [130, 205, 255], next: [70, 110, 180] }
 
 stopGame()
 startGame()
+if (!SITE) hideKey()
 
 
 // ============================================================
@@ -158,20 +159,24 @@ $: note(melody)
   .fmh(ui.spiderFmh)      // harmonicity: whole numbers = in tune, between = clangy
   .electric(energy)
   .lpf(2000)
-  //.sometimesBy(.15, x => x.ply(2))
-  //.off(1/24, x => x.transpose(12).gain(.5).pan(cosine.fast(3)))
+  .sometimesBy(.5, x => x.ply("[2 1!11]")
+    .decay(.075)
+    .sustain("[0 .6!11]")
+    .lpf("2500 2000!11"))
+     //.off(1/24, x => x.transpose(12).gain(.5).pan(cosine.fast(3)))
   //.delay(.5)
   //.delayfeedback(slider(0, 0, .95))  // web density; capped below 1 to avoid runaway
   .room(.7).rsize(2)
   .postgain(ui.spider)
-  .o(6)
+  //.o(6)
   .color("#00FFD6")._punchcard()
 
 // ============================================================
 //  BASS
 // ============================================================
 
-$: note("<0>*12").scale(KEY).trans("<-24>/2")
+$: note("<0>*12")
+  .scale(KEY).trans("<-24>/2")
   .detune(rand)
   .s("supersaw")
   .acidenv(energy.range(.05, .2))
@@ -237,6 +242,8 @@ _$: chaos3Osc(
 
 function startGame() {
   const minBpm = window.controlState.minBpm
+  // With the panels hidden, the music keeps the state of the last session, so you hear what you are changing
+  const frozen = uiHidden() ? window.game : null
 
   // A new session on every evaluate
   const g = window.game = {
@@ -265,7 +272,11 @@ function startGame() {
     colors: new Map(),                         // flame color cache
     view: null,
   }
-  setControl('energy', 0)
+  if (frozen) {
+    for (const k of ['bpm', 'cpm', 'spiderLevel', 'held', 'choir', 'choirLevel']) g[k] = frozen[k]
+  } else {
+    setControl('energy', 0)
+  }
   window.keyControl.set(KEY_OK)
   setCpm(g.cpm)
 
@@ -380,6 +391,11 @@ function onKey(g, e) {
 
 function tick(g) {
   const now = Date.now()
+  // Panels hidden: the music holds where it is (energy, tempo, spider, choir) until you show them again
+  if (uiHidden()) {
+    g.lastTick = now
+    return
+  }
   const { fullWpm, minBpm, maxBpm, spiderMed } = window.controlState
 
   // Rolling WPM: correct characters / 5 over the whole window, so it ramps up from 0
@@ -922,6 +938,25 @@ function dock() {
       display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '95vh',
     },
   }))
+}
+
+// Ctrl+Shift+H hides and shows the panels, so you can see the code. A style tag hides them, so they stay
+// hidden when ctrl+enter builds them again. While they are hidden, the music is frozen (tick, startGame).
+function uiHidden() {
+  return document.getElementById('ui-hidden') != null
+}
+
+function hideKey() {
+  window.removeEventListener('keydown', window.hideUiKey, true)   // the listener from the last run
+  window.hideUiKey = e => {
+    if (!(e.ctrlKey && e.shiftKey && e.code === 'KeyH')) return
+    e.preventDefault()
+    e.stopPropagation()   // the editor must not see it
+    const hidden = document.getElementById('ui-hidden')
+    if (hidden) hidden.remove()
+    else document.head.appendChild(el('style', { id: 'ui-hidden', textContent: '#strudel-dock, #type-panel { display: none !important }' }))
+  }
+  window.addEventListener('keydown', window.hideUiKey, true)   // capture: before the editor
 }
 
 function panelStyle(extra = {}) {

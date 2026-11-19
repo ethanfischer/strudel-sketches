@@ -653,7 +653,8 @@ function typingPanel(g) {
   if (document.activeElement === input) input.onfocus()   // on the site, the tap that started the game
 
   return { text, fire, stats, status, source, energy: energyMeter, choir: choirMeter,
-    train: { node: train, cols: trainCols, cars: trainCols >= 70 ? 2 : 1 } }
+    // The locomotive stands at 62% of the width; enough cars follow it to go off the left edge
+    train: { node: train, cols: trainCols, locoAt: Math.round(trainCols * .62), cars: Math.ceil(trainCols * .62 / 15) + 1 } }
 }
 
 function textInput() {
@@ -875,8 +876,8 @@ function trainFrame(g) {
   const target = TRAIN_SPEED * Math.pow(heat, 1.4)
   g.trainV = target > g.trainV ? Math.min(target, g.trainV + TRAIN_ACCEL * dt) : Math.max(target, g.trainV - TRAIN_BRAKE * dt)
   const v = g.trainV
-  const { cols, cars } = g.view.train
-  const start = Math.round(cols * .6 - (cars * 15 + TRAIN_LOCO[0].length) / 2)
+  const { cars, locoAt } = g.view.train
+  const start = locoAt - cars * 15   // the first car is off the left edge
   g.trainX += v * dt
   g.trainT += dt
   // Smoke leaves the stack more often when the fire is hot, and the wind of the train blows it back

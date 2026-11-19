@@ -306,6 +306,7 @@ function startGame() {
     hits: [],                      // times of correct keystrokes, for rolling WPM
     keys: 0, wrong: 0, startedAt: null,
     correct: 0, activeS: 0,        // correct letters and seconds of typing (no pauses), for the average
+    wpmShown: null, blockMax: 0, blockStart: null,   // the WPM over the fire changes once per WPM_WINDOW_S
     wpm: 0, energyWpm: 0, best: 0,
     spiderLevel: 0, spiderDownSince: null,   // 0 low, 1 medium, 2 high; since when the target is lower
     held: 0, outSince: null, choir: false,   // seconds held in the band; when you left it
@@ -540,14 +541,24 @@ function tick(g) {
 
   if (refill(g)) render(g)
 
-  // Over the fire: your WPM over the last WPM_WINDOW_S, as Monkeytype counts it (correct letters and spaces / 5
-  // per minute). A short window or the highest of many windows reads too high. A click on the flame adds your
-  // average (typing time only) and your all-time best, which stays in this browser.
+  // Over the fire: every WPM_WINDOW_S, the best WPM of that time. The WPM is over WPM_WINDOW_S, as Monkeytype
+  // counts it (correct letters and spaces / 5 per minute); a shorter window reads too high. In the first
+  // block the number climbs as you go. A click on the flame adds your average (typing time only) and your
+  // all-time best, which stays in this browser.
+  if (g.startedAt != null) {
+    g.blockStart ??= g.startedAt
+    g.blockMax = Math.max(g.blockMax, g.wpm)
+    if (now - g.blockStart >= WPM_WINDOW_S * 1000) {
+      g.wpmShown = g.blockMax
+      g.blockMax = 0
+      g.blockStart = now
+    }
+  }
   if (g.hits.length && now - g.hits[g.hits.length - 1] < IDLE_S * 1000) g.activeS += dt
   const allBest = Math.max(g.wpm, +(localStorage.getItem(BEST_KEY) ?? 0))
   localStorage.setItem(BEST_KEY, String(allBest))
   const avg = g.activeS ? g.correct / 5 / (g.activeS / 60) : 0
-  g.view.wpm.peak.textContent = g.startedAt == null ? '' : Math.round(g.wpm) + ' wpm'
+  g.view.wpm.peak.textContent = g.startedAt == null ? '' : Math.round(g.wpmShown ?? g.blockMax) + ' wpm'
   g.view.wpm.more.textContent = 'avg ' + Math.round(avg) + ' · best ' + Math.round(allBest)
   g.view.wpm.more.style.display = window.showWpmMore ? 'block' : 'none'
 

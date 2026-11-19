@@ -1,7 +1,7 @@
 // Local Strudel for live coding from an editor: node dev.mjs, then open http://localhost:8001/dev.html?file=pianoslice.js
 // Each time the file changes on disk, the page plays the new code.
-// /samples/ serves the WAV files in SAMPLES_DIR (default ~/Documents/Audacity4), so the page does not need the
-// samples that you imported on strudel.cc.
+// /samples/ serves the WAV files in SAMPLES_DIR (default ~/Documents/Audacity4). Each file is a sound with the name
+// of the file, for example s("nicechord").
 import { createServer } from 'node:http'
 import { readFile, readdir } from 'node:fs/promises'
 import { join, extname, resolve, sep } from 'node:path'
@@ -23,10 +23,17 @@ createServer(async (req, res) => {
   const path = decodeURIComponent(new URL(req.url, 'http://x').pathname)
   try {
     if (path === '/samples.json') {
-      // Same order as the import on strudel.cc (by name), so n() picks the same sample
-      const wavs = (await readdir(samplesDir)).filter(f => extname(f).toLowerCase() === '.wav').sort()
+      // One sound for each file, named after the file, so a new file does not move the others.
+      // "growl-stretched.wav" becomes s("growl_stretched"), because - is a rest in mini-notation.
+      const wavs = (await readdir(samplesDir)).filter(f => extname(f).toLowerCase() === '.wav')
+      const map = {}
+      for (const f of wavs) {
+        const name = f.slice(0, -4).toLowerCase().replace(/[^a-z0-9_]/g, '_')
+        if (map[name]) throw new Error(`${map[name][0]} and ${f} both become s("${name}"). Rename one.`)
+        map[name] = [f]
+      }
       res.writeHead(200, { 'content-type': 'application/json', 'cache-control': 'no-store' })
-      return res.end(JSON.stringify({ audacity4: wavs }))
+      return res.end(JSON.stringify(map))
     }
     const file = path.startsWith('/samples/') ? inside(samplesDir, path.slice('/samples'.length)) : inside(root, path)
     const body = await readFile(file)

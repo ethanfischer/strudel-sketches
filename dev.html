@@ -55,8 +55,8 @@
       e.currentTarget.remove()
       status('starting…')
       await repl.editor.prebaked
-      const { audacity4 } = await (await fetch('samples.json')).json()
-      await samples({ audacity4 }, location.origin + '/samples/')
+      // Reload the page to get files that you add to the samples folder
+      await samples(await (await fetch('samples.json')).json(), location.origin + '/samples/')
       await initAudioOnFirstClick()
       started = true
       await play()

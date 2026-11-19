@@ -34,7 +34,7 @@ Then open http://localhost:8000.
 node dev.mjs
 ```
 
-Open http://localhost:8001/dev.html?file=pianoslice.js and click the page. Each time you save the file, the page plays the new code. `audacity4` loads the WAV files in `~/Documents/Audacity4` (set `SAMPLES_DIR` to use another folder).
+Open http://localhost:8001/dev.html?file=pianoslice.js and click the page. Each time you save the file, the page plays the new code. Each WAV file in `~/Documents/Audacity4` is a sound with the name of the file: `nicechord.wav` is `s("nicechord")`, and `-` and other characters become `_`. Set `SAMPLES_DIR` to use another folder. Reload the page after you add a file.
 
 ## Credits and licenses
 

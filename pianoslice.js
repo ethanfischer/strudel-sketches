@@ -9,30 +9,22 @@ _$: s("nicechord")
   .room(.9).size(.9)
   ._scope()
 
-//sine
-_$: s("nicechord")
-  .slice(8, "7") // try 12, 13, 14, 15
-  .speed("1 | -1")
-  .fast(2)
-  .room(.9).size(.9)
-  ._scope()
-
 // The playhead follows a sine: from the start of the sample to the halfway point, then back to the start
 const swing = (() => {
-  const cycles = 3 // one swing there and back. 3 cycles (8 s) is about normal speed for nicechord.wav
-  const cycleSeconds = 60 / (90 / 4) // same as setcpm
-  const sampleSeconds = 7.93 // length of nicechord.wav
+  const cycles = 3 // one swing there and back
   const w = 2 * Math.PI / cycles
   return signal(t => {
     const place = .25 * (1 - Math.cos(w * t)) // 0 at the start, .5 at the halfway point
-    const speed = .25 * w * Math.sin(w * t) / cycleSeconds * sampleSeconds // how fast the playhead moves: - is backwards
-    // [begin, speed] for scrub. With a negative speed, Strudel reverses the sample, so begin counts from the end
-    return [speed < 0 ? 1 - place : place, speed]
+    const back = Math.sin(w * t) < 0 // the playhead moves backwards in the second half of the swing
+    // [begin, speed] for scrub. The speed is always 1 or -1, so the pitch does not change.
+    // With a negative speed, Strudel reverses the sample, so begin counts from the end
+    return back ? [1 - place, -1] : [place, 1]
   })
 })()
 
 $: s("nicechord")
-  .scrub(swing.segment(128)) // 128 short grains per cycle. They join into one sound
+  .scrub(swing.segment(64)) // 64 short grains per cycle. They join into one sound
+  .clip(2).attack(.03).release(.03) // each grain is 2 steps long and fades in and out, so the grains overlap
   .room(.9).size(.9)
   ._scope()
 

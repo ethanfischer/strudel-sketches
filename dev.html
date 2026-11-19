@@ -55,8 +55,9 @@
       e.currentTarget.remove()
       status('starting…')
       await repl.editor.prebaked
-      // Reload the page to get files that you add to the samples folder
-      await samples(await (await fetch('samples.json')).json(), location.origin + '/samples/')
+      // The local copy of strudel.json, so samples that you did not push yet also play. Reload the page after you
+      // add one. The base here replaces the GitHub _base in the file.
+      await samples(await (await fetch('samples/strudel.json')).json(), location.origin + '/samples/')
       await initAudioOnFirstClick()
       started = true
       await play()

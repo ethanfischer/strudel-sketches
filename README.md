@@ -34,7 +34,7 @@ Then open http://localhost:8000.
 node dev.mjs
 ```
 
-Open http://localhost:8001/dev.html?file=pianoslice.js and click the page. Each time you save the file, the page plays the new code. Each WAV file in `~/Documents/Audacity4` is a sound with the name of the file: `nicechord.wav` is `s("nicechord")`, and `-` and other characters become `_`. Set `SAMPLES_DIR` to use another folder. Reload the page after you add a file.
+Open http://localhost:8001/dev.html?file=pianoslice.js and click the page. Each time you save the file, the page plays the new code. The samples come from [strudel-samples](https://github.com/ethanfischer/strudel-samples). Clone it next to this repo, so the page also plays samples that you did not push yet. Set `SAMPLES_DIR` to use another folder. Reload the page after you add a sample.
 
 ## Credits and licenses
 

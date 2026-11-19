@@ -1,10 +1,21 @@
+samples('github:ethanfischer/strudel-samples')
 setcpm(90/4)
-$: s("nicechord")
+_$: s("nicechord")
   .slice(8, "7") // try 12, 13, 14, 15
   .speed(-1)
   .fast(4)
   .room(.9).size(.9)
   ._scope()
+
+_$: s("nicechord")
+  .slice(8, "7") // try 12, 13, 14, 15
+  .speed(-1)
+  .fast(4)
+  .room(.9).size(.9)
+  ._scope()
+
+samples('github:switchangel/pad')
+s("swpad:0").scrub("{0.1!2 .25@3 0.7!2 <0.8:1.5>}%8")
 
 _$: s("nicechord")
   // | picks one of the four at random, for each group
@@ -29,13 +40,13 @@ _$: s("hammeredpaintcanstretched")
   ._scope()
 
 // Rain: a soft hiss, and drops at random times
-$: s("pink")
-  .attack(1).release(1).sustain(1) // long fades, so each cycle blends into the next
+_$: s("pink")
+  .attack(1).release(3).sustain(2) // long fades, so each cycle blends into the next
   .hpf(400)
-  .lpf(sine.range(1500, 4000).slow(16)) // the rain gets a bit harder, then softer
+  .lpf(sine.range(3500, 6000).slow(16)) // the rain gets a bit harder, then softer
   .gain(.25)
 
-$: s("white*32")
+_$: s("white*32")
   .degradeBy(.8) // only 1 in 5 steps gets a drop
   .nudge(rand.range(0, .04)) // so the drops are not on the grid
   .decay(rand.range(.005, .03)).sustain(0)

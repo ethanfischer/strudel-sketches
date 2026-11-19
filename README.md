@@ -28,6 +28,14 @@ Then open http://localhost:8000.
 
 `acidpoly.js` is a [Strudel](https://strudel.cc) program. You can also paste it into strudel.cc and press Ctrl+Enter.
 
+## Live coding from an editor
+
+```sh
+node dev.mjs
+```
+
+Open http://localhost:8001/dev.html?file=pianoslice.js and click the page. Each time you save the file, the page plays the new code. `audacity4` loads the WAV files in `~/Documents/Audacity4` (set `SAMPLES_DIR` to use another folder).
+
 ## Credits and licenses
 
 - **This game**: [AGPL-3.0](LICENSE).

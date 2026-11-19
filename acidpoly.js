@@ -104,6 +104,9 @@ const TEXT_CHOIR  = { done: [130, 205, 255], next: [70, 110, 180] }
 // The train crosses a barren land at night. The hotter the fire, the faster it goes; cold, it stands still.
 const TRAIN_ROWS  = 12     // 0-3 sky and smoke, 4-8 train, 9 track, 10-11 ground
 const TRAIN_SPEED = 45     // track columns per second at energy 1 (the speed is TRAIN_SPEED * energy^1.4)
+// A heavy train: the fire sets the speed it goes toward, and the speed changes only this fast
+const TRAIN_ACCEL = 2.5    // columns/s per second: 0 to full speed in about 18 s
+const TRAIN_BRAKE = 3.5    // columns/s per second: full speed to a stop in about 13 s
 const TRAIN_LOCO  = [
   ' _______     _        ',
   '|  ___  |___| |____   ',
@@ -294,13 +297,14 @@ function startGame() {
     heat: new Float32Array(FIRE_W * FIRE_H),   // 0..1 per cell, row by row from the top
     sparks: [],                                // { x, y, life }
     trainX: 0,                                 // how far the train has gone, in track columns
+    trainV: 0,                                 // its speed, in columns per second
     puffs: [],                                 // train smoke: { x, y, age }
     blue: 0,                                   // 0 = normal fire, 1 = choir fire; eases between them
     colors: new Map(),                         // flame color cache
     view: null,
   }
   if (frozen) {
-    for (const k of ['bpm', 'cpm', 'spiderLevel', 'held', 'choir', 'choirLevel']) g[k] = frozen[k]
+    for (const k of ['bpm', 'cpm', 'spiderLevel', 'held', 'choir', 'choirLevel', 'trainV']) g[k] = frozen[k]
   } else {
     setControl('energy', 0)
   }
@@ -852,7 +856,9 @@ function tintText(g, energy) {
 
 function trainFrame(g, heat) {
   const dt = FIRE_FRAME_MS / 1000
-  const v = TRAIN_SPEED * Math.pow(heat, 1.4)
+  const target = TRAIN_SPEED * Math.pow(heat, 1.4)
+  g.trainV = target > g.trainV ? Math.min(target, g.trainV + TRAIN_ACCEL * dt) : Math.max(target, g.trainV - TRAIN_BRAKE * dt)
+  const v = g.trainV
   const { cols, cars } = g.view.train
   const start = Math.round(cols * .6 - (cars * 15 + TRAIN_LOCO[0].length) / 2)
   g.trainX += v * dt

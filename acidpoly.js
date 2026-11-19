@@ -523,8 +523,9 @@ function typingPanel(g) {
       textShadow: '0 0 3px #000, 0 0 6px #000, 0 0 10px #000',   // cuts the text out of the flames behind it
     },
   })
+  const phone = matchMedia('(pointer: coarse)').matches
   const hint = el('div', {
-    textContent: matchMedia('(pointer: coarse)').matches ? 'tap to type' : 'click to type',
+    textContent: phone ? 'tap to type' : 'click to type',
     style: {
       position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
       color: ACCENT, font: '16px monospace',
@@ -533,9 +534,12 @@ function typingPanel(g) {
   // 32px on the site; smaller on strudel.cc, so the panel covers less of the code. It also stops at the
   // window: all its rows fit in the height, and its columns (0.6em each) fit in the panel width.
   // On the site the height is the part of the page you can see (--screen-h, followViewport), which is
-  // smaller while a phone keyboard is open.
+  // smaller while a phone keyboard is open. On a phone there, the spark rows (FIRE_HEAD) may go off the
+  // top, so the fire is bigger and the text can be at the center (followViewport).
   const fireRows = FIRE_HEAD + FIRE_H + KINDLING.length
-  const fireSize = 'min(' + (SITE ? 32 : 18) + 'px, calc((var(--screen-h, 100vh) - 80px) / ' + fireRows + '), calc(92vw / ' + FIRE_W * .6 + '))'
+  const offTop = SITE && phone ? FIRE_HEAD : 0
+  const fireSize = 'min(' + (SITE ? 32 : 18) + 'px, calc((var(--screen-h, 100vh) - ' + (offTop ? 40 : 80) + 'px) / '
+    + (fireRows - offTop) + '), calc(92vw / ' + FIRE_W * .6 + '))'
   const fire = el('pre', {
     style: {
       margin: '0 auto', width: 'max-content', fontFamily: 'monospace', fontSize: fireSize, lineHeight: 1,
@@ -572,7 +576,7 @@ function typingPanel(g) {
   const panel = document.body.appendChild(el('div', {
     id: 'type-panel',
     style: SITE
-      ? { position: 'fixed', left: '50%', transform: 'translate(-50%, -50%)', width, zIndex: 9999,
+      ? { position: 'fixed', left: '50%', transform: 'translateX(-50%)', width, zIndex: 9999,
           color: '#fff', font: '13px monospace', pointerEvents: 'none' }
       : panelStyle({
           position: 'fixed', top: '10px', left: '50%', transform: 'translateX(-50%)',
@@ -589,7 +593,7 @@ function typingPanel(g) {
     stage,
     ...(SITE ? [] : [source]),
   ]))
-  if (SITE) followViewport(panel)
+  if (SITE) followViewport(panel, box, fire, offTop)
   if (document.activeElement === input) input.onfocus()   // on the site, the tap that started the game
 
   return { text, fire, stats, status, source, energy: energyMeter, choir: choirMeter }
@@ -608,12 +612,16 @@ function textInput() {
 }
 
 // A phone keyboard covers the bottom of the page, but 100vh stays the same. So the panel follows the
-// visual viewport: it is centered in the part you can see, and --screen-h gives the fire that height.
-function followViewport(panel) {
+// visual viewport, the part you can see: --screen-h gives the fire that height, and the text box goes to
+// its center. The panel must not go off the bottom; at the top, only offTop rows of the fire may go off.
+function followViewport(panel, box, fire, offTop) {
   const vv = window.visualViewport
   const fit = () => {
-    panel.style.top = vv.offsetTop + vv.height / 2 + 'px'
     panel.style.setProperty('--screen-h', vv.height + 'px')
+    const boxMid = box.getBoundingClientRect().top - panel.getBoundingClientRect().top + box.offsetHeight / 2
+    const maxOff = offTop * parseFloat(getComputedStyle(fire).fontSize)
+    const top = Math.min(vv.height - panel.offsetHeight, Math.max(-maxOff, vv.height / 2 - boxMid))
+    panel.style.top = vv.offsetTop + top + 'px'
   }
   vv.onresize = vv.onscroll = fit   // properties, so a new run replaces the old handlers
   fit()

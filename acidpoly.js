@@ -101,7 +101,7 @@ const TEXT_DONE   = [[0, [255, 255, 255]], [.5, [255, 212, 121]], [1, [255, 140,
 const TEXT_NEXT   = [[0, [102, 102, 102]], [.5, [135, 100, 70]], [1, [165, 80, 40]]]
 const TEXT_CHOIR  = { done: [130, 205, 255], next: [70, 110, 180] }
 
-// The train crosses a barren land at night. The hotter the fire, the faster it goes; cold, it stands still.
+// The train crosses a city at night. The hotter the fire, the faster it goes; cold, it stands still.
 const TRAIN_ROWS  = 12     // 0-3 sky and smoke, 4-8 train, 9 track, 10-11 ground
 const TRAIN_SPEED = 90     // track columns per second at energy 1 (the speed is TRAIN_SPEED * energy^1.4)
 // A heavy train: the fire sets the speed it goes toward, and the speed changes only this fast
@@ -121,11 +121,9 @@ const TRAIN_CAR   = [
   '|____________|',
   '  (o)    (o)  ',
 ]
-const TRAIN_MESA  = [   // far away, so it moves slowly; repeats
-  '           ___                                  ______                    ',
-  '      ____/   \\___            _______         _/      \\__                 ',
-  '_____/            \\__________/       \\_______/           \\________________',
-]
+// Neon signs on the near buildings, and their colors
+const TRAIN_SIGNS = ['NOODLES', 'HOTEL', 'BAR', '24H', 'CHROME', 'SYNTH', 'DATA', 'RAMEN', 'CLINIC', 'OPEN', 'ARCADE', 'NO SIGNAL']
+const TRAIN_NEON  = ['#ff4fd8', '#00ffd6', '#b066ff', '#ff3d6e']
 
 stopGame()
 startGame()
@@ -298,6 +296,7 @@ function startGame() {
     sparks: [],                                // { x, y, life }
     trainX: 0,                                 // how far the train has gone, in track columns
     trainV: 0,                                 // its speed, in columns per second
+    trainT: 0,                                 // seconds of train frames, for the rain
     puffs: [],                                 // train smoke: { x, y, age }
     blue: 0,                                   // 0 = normal fire, 1 = choir fire; eases between them
     colors: new Map(),                         // flame color cache
@@ -850,8 +849,8 @@ function tintText(g, energy) {
 
 
 // ============================================================
-//  TRAIN — ASCII train in a barren land. The land scrolls past at TRAIN_SPEED * heat^1.4,
-//  in layers: stars almost still, mesas slow, trees and rocks at half speed, poles and track at full.
+//  TRAIN — ASCII train through a city at night, in the rain. The city scrolls past at the train's speed,
+//  in layers: far towers slow, near towers with neon signs at .4, pylons and track at full, street lights faster.
 // ============================================================
 
 function trainFrame(g, heat) {
@@ -862,6 +861,7 @@ function trainFrame(g, heat) {
   const { cols, cars } = g.view.train
   const start = Math.round(cols * .6 - (cars * 15 + TRAIN_LOCO[0].length) / 2)
   g.trainX += v * dt
+  g.trainT += dt
   // Smoke leaves the stack more often when the fire is hot, and the wind of the train blows it back
   if (heat > .03 && Math.random() < .1 + .6 * heat) g.puffs.push({ x: start + cars * 15 + 13, y: 3, age: 0 })
   for (const p of g.puffs) {
@@ -881,29 +881,59 @@ function renderTrain(g, heat, start) {
     if (ch !== ' ' && r >= 0 && r < TRAIN_ROWS && c + i >= 0 && c + i < cols)
       rows[r][c + i] = [ch, typeof color === 'function' ? color(ch) : color]
   })
-  // The same land every time, from the column in the world
+  const erase = (r, c) => { if (r >= 0 && r < TRAIN_ROWS && c >= 0 && c < cols) rows[r][c] = [' ', null] }
+  // The same city every time, from the column in the world
   const rnd = (a, b) => { const v = Math.sin(a * 12.9898 + b * 78.233) * 43758.5453; return v - Math.floor(v) }
   const mod = (a, n) => ((a % n) + n) % n
+  const blink = (i, ms) => Math.floor(Date.now() / ms + rnd(i, 99) * 10) % 2 === 0
 
-  for (let r = 0; r < 4; r++) for (let c = 0; c < cols; c++) {
-    const wc = c + Math.floor(x * .02)
-    if (rnd(wc, r) < .02) put(r, c, rnd(wc, r + 9) < .25 ? '*' : '.', '#4d4d5c')
-  }
-  const mo = Math.floor(x * .12)
-  TRAIN_MESA.forEach((line, r) => {
-    for (let c = 0; c < cols; c++) put(6 + r, c, line[mod(c + mo, line.length)], '#4a3a30')
-  })
-  // A sprite every `every` columns of its layer, with some left out; it stands on row 8
-  const sprites = (f, every, salt, art, color) => {
+  // Towers: one every `stride` columns of the layer, `wMin`..`wMax` wide, roof on row `topMin`..`topMax`,
+  // down to row 8. Lit windows on every other row and column.
+  const skyline = (f, salt, stride, wMin, wMax, topMin, topMax, wall, near) => {
     const o = Math.floor(x * f)
-    for (let wc = o - 8; wc < o + cols; wc++) {
-      if (mod(wc, every) || rnd(wc, salt) < .35) continue
-      art.forEach((line, i) => put(9 - art.length + i, wc - o, line, color))
+    for (let c = 0; c < cols; c++) {
+      const wc = c + o, i = Math.floor(wc / stride), off = wc - i * stride
+      const w = wMin + Math.floor(rnd(i, salt) * (wMax - wMin + 1))
+      if (off >= w) continue
+      const top = topMin + Math.floor(rnd(i, salt + 1) * (topMax - topMin + 1))
+      for (let r = top; r <= 8; r++) {
+        if (near) erase(r, c)   // a near tower hides the far ones behind it
+        if (r === top) put(r, c, '_', wall)
+        else if (off === 0 || off === w - 1) put(r, c, '|', wall)
+        else if (off % 2 && (r - top) % 2 === 0 && rnd(wc, r + salt) < .35)
+          put(r, c, near ? ':' : '.', TRAIN_NEON[Math.floor(rnd(wc, r + salt + 1) * 4)] + (near ? '' : '88'))
+      }
+      // An antenna with a red light on some tall towers
+      if (!near && top <= topMin + 1 && off === Math.floor(w / 2) && rnd(i, salt + 2) < .5) {
+        put(top - 1, c, '|', wall)
+        if (blink(i, 700)) put(top - 2, c, '*', '#ff3d6e')
+      }
+      // A neon sign on some near towers, on the row under the roof; some flicker
+      if (near && rnd(i, salt + 3) < .6) {
+        const word = TRAIN_SIGNS[Math.floor(rnd(i, salt + 4) * TRAIN_SIGNS.length)]
+        const at = off - Math.floor((w - word.length) / 2)
+        if (w >= word.length + 2 && at >= 0 && at < word.length && (rnd(i, salt + 5) < .8 || blink(i, 160)))
+          put(top + 1, c, word[at], TRAIN_NEON[Math.floor(rnd(i, salt + 6) * 4)])
+      }
     }
   }
-  sprites(.45, 31, 1, ['\\ | /', ' \\|/_', '  |  '], '#6b5a48')   // dead trees
-  sprites(.45, 17, 2, [' __ ', '/  \\'], '#5a4c40')                  // rocks
-  sprites(1, 22, 3, ['-+-', ' | ', ' | ', ' | ', ' | '], '#6e6052')  // telegraph poles
+  skyline(.1, 10, 11, 4, 9, 0, 5, '#3a3358', false)
+  skyline(.4, 20, 19, 9, 15, 3, 5, '#4a4470', true)
+
+  // Rain: some columns of the world have a drop that falls; it moves with the city at track speed
+  for (let c = 0; c < cols; c++) {
+    const wc = c + Math.floor(x)
+    if (rnd(wc, 7) > .1) continue
+    const r = mod(Math.floor(g.trainT * 14 + rnd(wc, 8) * 40), 30)
+    if (r < TRAIN_ROWS) put(r, c, '/', '#3d4f77')
+  }
+  // Pylons that hold the wires over the track
+  const po = Math.floor(x)
+  for (let c = 0; c < cols; c++) if (!mod(c + po, 24)) {
+    put(4, c - 1, '-+-', '#5b6b8a')
+    for (let r = 5; r <= 8; r++) put(r, c, '|', '#5b6b8a')
+    if (blink(c + po, 500)) put(4, c, '+', '#00ffd6')
+  }
 
   for (const p of g.puffs) {
     put(Math.round(p.y), Math.round(p.x), p.age < .4 ? '@' : p.age < 1 ? 'O' : p.age < 1.8 ? 'o' : '.',
@@ -913,7 +943,7 @@ function renderTrain(g, heat, start) {
   // The wheels turn with the distance; the firebox glows with the fire
   const spoke = '|/-\\'[mod(Math.floor(x / 1.2), 4)]
   const firebox = rgb(ramp(FIRE_STOPS, heat))
-  const paint = ch => ch === '#' ? firebox : ch === '[' || ch === ']' ? '#c9a45c' : '#9aa3ad'
+  const paint = ch => ch === '#' ? firebox : ch === '[' || ch === ']' ? '#7fe8ff' : '#9aa3ad'
   const draw = (art, c) => art.forEach((line, i) =>
     i === 4 ? put(8, c, line.replace(/[oO]/g, spoke), '#c0c0c0') : put(4 + i, c, line, paint))
   for (let k = 0; k < cars; k++) {
@@ -922,10 +952,12 @@ function renderTrain(g, heat, start) {
   }
   draw(TRAIN_LOCO, start + cars * 15)
 
+  // The track is up on legs over the street. In the street below, the lights of cars go past faster.
   for (let c = 0; c < cols; c++) {
-    put(9, c, mod(c + Math.floor(x), 4) ? '=' : '+', '#7d6e5e')
-    const gc = c + Math.floor(x * 1.35)
-    for (let r = 10; r < TRAIN_ROWS; r++) if (rnd(gc, r) < .07) put(r, c, '.,`_'[Math.floor(rnd(gc, r + 5) * 4)], '#4a4038')
+    put(9, c, mod(c + po, 4) ? '=' : '+', '#4f86a8')
+    if (!mod(c + po, 12)) put(10, c, '||', '#3a4660')
+    const sc = c + Math.floor(x * 1.6)
+    if (rnd(sc, 11) < .05) put(11, c, rnd(sc, 12) < .5 ? '-' : '=', rnd(sc, 13) < .5 ? '#ff3d6e' : '#ffd479')
   }
   node.innerHTML = rows.map(colorRuns).join('\n')
 }

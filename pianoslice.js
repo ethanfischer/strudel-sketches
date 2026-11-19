@@ -52,3 +52,45 @@ _$: s("audacity4").n(4)
   .ply("<1 2 1 4>")
   .jux(rev)
   ._scope()
+
+// ---- Backwards experiments. Long slices so you hear the swell. ----
+
+// B1. Whole sample in reverse: chop + rev reverses the chunk order,
+// speed(-1) reverses each chunk. Together: true reverse.
+_$: s("audacity4").n(4)
+  .loopAt(4)
+  .chop(32)
+  .rev()
+  .speed(-1)
+  .room(.4)
+  ._scope()
+
+// B2. Reverse swells: four long slices, each played backwards
+// at half speed (one octave down), with a big room
+_$: s("audacity4").n(4)
+  .slice(4, "<3 1 2 0>")
+  .speed(-.5)
+  .room(.9).size(.9)
+  ._scope()
+
+// B3. Palindrome: each slice plays backwards, then forwards
+_$: s("audacity4").n(4)
+  .slice(8, "<[3 3] [5 5] [1 1] [6 6]>*2")
+  .speed("-1 1")
+  ._scope()
+
+// B4. Backwards ratchet: reverse rolls that speed up and pitch up
+_$: s("audacity4").n(4)
+  .slice(8, "<2 5>")
+  .ply("<4 8 16 [8 32]>")
+  .speed("-1 -1.5 -2 -3")
+  .gain(saw.range(.3, 1).fast(1))
+  ._scope()
+
+// B5. Tape stop: speed falls from 1 to -1, so each slice slows,
+// stops, then plays backwards
+_$: s("audacity4").n(4)
+  .slice(4, "<0 2>")
+  .chop(64)
+  .speed(saw.range(1, -1))
+  ._scope()

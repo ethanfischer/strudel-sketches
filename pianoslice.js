@@ -14,7 +14,7 @@ const swing = (() => {
   const cycles = 3 // one swing there and back
   const w = 2 * Math.PI / cycles
   return signal(t => {
-    const place = .25 * (1 - Math.cos(w * t)) // 0 at the start, .5 at the halfway point
+    const place = .05 * (1 - Math.cos(w * t)) // 0 at the start, .5 at the halfway point
     const back = Math.sin(w * t) < 0 // the playhead moves backwards in the second half of the swing
     // [begin, speed] for scrub. The speed is always 1 or -1, so the pitch does not change.
     // With a negative speed, Strudel reverses the sample, so begin counts from the end

@@ -80,8 +80,8 @@ const WPM_FALL        = 5     // …and falls this fast, so it has momentum, as 
 const BEST_KEY        = 'type-til-ya-die:best-10s'   // all-time best WPM, in this browser (a new key: the old one held 3 s peaks)
 // Monkeytype's English quotes (GPL-3.0), pinned to one commit
 const QUOTES_URL = 'https://cdn.jsdelivr.net/gh/monkeytypegame/monkeytype@20b9530d720f04a4710853534c6f885d3cfe0d4c/frontend/static/quotes/english.json'
-// Only quotes about fire: fire, fires, fired, fireball… but not fireflies or fireworks (about 106 quotes). Matched on the text.
-const QUOTE_MATCH = /\bfire(?!fl|work)/i
+// Only quotes with the word 'fire' in them: not fires, fired or fireball (about 86 quotes). Matched on the text.
+const QUOTE_MATCH = /\bfire\b/i
 
 // Fire: energy sets the size of the flame; the choir turns it blue
 const FIRE_W = 40, FIRE_H = 18     // the flame grid, in characters

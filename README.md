@@ -36,6 +36,18 @@ node dev.mjs
 
 Open http://localhost:8001/dev.html?file=pianoslice.js and click the page. Each time you save the file, the page plays the new code. The samples come from [strudel-samples](https://github.com/ethanfischer/strudel-samples). Clone it next to this repo, so the page also plays samples that you did not push yet. Set `SAMPLES_DIR` to use another folder. Reload the page after you add a sample.
 
+## Terminal version
+
+`cli/` is the same game for the terminal, in Rust. It has the fire, the train, the WPM and the quotes. A small built-in synth plays the music: the kick, the spider, the acid bass and the choir, with the same patterns, tempo and key changes as the Strudel version. It does not sound exactly the same as the web version.
+
+```sh
+cd cli
+cargo run --release            # play
+cargo run --release -- --mute  # play with no sound
+```
+
+Keys: Tab (or a click) shows your average and all-time best, Esc quits. The terminal must be at least 44x23, and 37 rows high to show the train. Use a terminal with 24-bit color.
+
 ## Credits and licenses
 
 - **This game**: [AGPL-3.0](LICENSE).

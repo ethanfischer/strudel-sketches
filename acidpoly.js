@@ -83,6 +83,10 @@ const FIRE_C = 20, FIRE_HALF = 9   // center column (the | of the kindling), hal
 const FIRE_HEAD = 4                // rows above the flame where only sparks go
 const FIRE_UNDER_TEXT = 3          // rows of flame between the kindling and the text, which lies over the fire
 const FIRE_FRAME_MS = 60
+// The fire follows the energy, but climbs slowly: FIRE_RISE_S from cold to roaring. It dies down faster.
+// The music still follows the energy at once; the fire, the text colors and the train follow the fire.
+const FIRE_RISE_S = 20
+const FIRE_FALL_S = 4
 const FIRE_RAMP = ' .:-=+*#%@'     // cool → hot
 // Sticks that lean together over two logs. The | is at column FIRE_C.
 const KINDLING = [
@@ -306,6 +310,7 @@ function startGame() {
     bpm: minBpm, cpm: Math.round(minBpm) / 4,
     fireTimer: null,
     trainTimer: null,
+    flame: 0,                                  // 0..1, the energy the fire shows (FIRE_RISE_S)
     heat: new Float32Array(FIRE_W * FIRE_H),   // 0..1 per cell, row by row from the top
     sparks: [],                                // { x, y, life }
     trainX: 0,                                 // how far the train has gone, in track columns
@@ -317,7 +322,7 @@ function startGame() {
     view: null,
   }
   if (frozen) {
-    for (const k of ['bpm', 'cpm', 'spiderLevel', 'held', 'choir', 'choirLevel', 'trainV']) g[k] = frozen[k]
+    for (const k of ['bpm', 'cpm', 'spiderLevel', 'held', 'choir', 'choirLevel', 'trainV', 'flame']) g[k] = frozen[k]
   } else {
     setControl('energy', 0)
   }
@@ -736,7 +741,9 @@ function render(g) {
 // ============================================================
 
 function fireFrame(g) {
-  const energy = window.controlState.energy
+  const target = window.controlState.energy, dt = FIRE_FRAME_MS / 1000
+  g.flame = target > g.flame ? Math.min(target, g.flame + dt / FIRE_RISE_S) : Math.max(target, g.flame - dt / FIRE_FALL_S)
+  const energy = g.flame
   const lit = g.startedAt != null   // the kindling catches on your first key
   const heat = g.heat
   // Turns blue as loud as the choir is, and back to normal in about half a second
@@ -867,11 +874,11 @@ function tintText(g, energy) {
 // ============================================================
 //  TRAIN — ASCII train through a city at night, in the rain. The city scrolls past at the train's speed,
 //  in layers: far towers slow, near towers with neon signs at .6, pylons and track at full, street lights faster.
-//  At speed, the lights blur into streaks. Its heat is the fire's: energy, from your first key.
+//  At speed, the lights blur into streaks. Its heat is the fire's (g.flame), from your first key.
 // ============================================================
 
 function trainFrame(g) {
-  const heat = g.startedAt != null ? window.controlState.energy : 0
+  const heat = g.startedAt != null ? g.flame : 0
   const dt = TRAIN_FRAME_MS / 1000
   const target = TRAIN_SPEED * Math.pow(heat, 1.4)
   g.trainV = target > g.trainV ? Math.min(target, g.trainV + TRAIN_ACCEL * dt) : Math.max(target, g.trainV - TRAIN_BRAKE * dt)

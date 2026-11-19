@@ -80,8 +80,8 @@ const WPM_FALL        = 5     // …and falls this fast, so it has momentum, as 
 const BEST_KEY        = 'type-til-ya-die:best-10s'   // all-time best WPM, in this browser (a new key: the old one held 3 s peaks)
 // Monkeytype's English quotes (GPL-3.0), pinned to one commit
 const QUOTES_URL = 'https://cdn.jsdelivr.net/gh/monkeytypegame/monkeytype@20b9530d720f04a4710853534c6f885d3cfe0d4c/frontend/static/quotes/english.json'
-// Only quotes from these sources: cyberpunk, AI games and dystopias (about 130 quotes). Matched on the source name.
-const QUOTE_SOURCES = /mr\. robot|the matrix|deus ex|blade runner|serial experiments|black mirror|westworld|terminator|ghost in the shell|^hackers$|system shock|total recall|tron:|detroit: become|portal|half-life|metal gear|ready player|evangelion|^1984|orwell|fahrenheit 451|brave new world/i
+// Only quotes about fire: fire, fires, fireworks, fireflies… (about 110 quotes). Matched on the quote text.
+const QUOTE_MATCH = /\bfire/i
 
 // Fire: energy sets the size of the flame; the choir turns it blue
 const FIRE_W = 40, FIRE_H = 18     // the flame grid, in characters
@@ -342,8 +342,8 @@ function startGame() {
   window.quoteLists[QUOTES_URL] ??= fetchOk(QUOTES_URL).then(r => r.json())
     .then(j => j.quotes.filter(usable).map(q => ({ words: typeable(q.text), source: q.source })))
   window.quoteLists[QUOTES_URL].then(
-    // The theme filter is here, not in the cached list, so a change to QUOTE_SOURCES applies on the next run
-    list => { g.quotes = list.filter(q => QUOTE_SOURCES.test(q.source.trim())); refill(g); render(g) },
+    // The theme filter is here, not in the cached list, so a change to QUOTE_MATCH applies on the next run
+    list => { g.quotes = list.filter(q => QUOTE_MATCH.test(q.words.join(' '))); refill(g); render(g) },
     err => { delete window.quoteLists[QUOTES_URL]; g.status = 'quotes did not load (' + err.message + '), re-run to retry'; render(g) })
 
   g.view = typingPanel(g)

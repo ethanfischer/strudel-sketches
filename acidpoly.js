@@ -74,9 +74,8 @@ const CHOIR_GRACE_S   = 1.5   // a dip below the band shorter than this pauses t
 const CHOIR_FADE_IN_S = 4     // the choir gets louder over this time when it starts
 const BEST_FADE       = 1     // WPM per second that best falls while you type below it
 const LOOKAHEAD_WORDS = 50    // words to keep queued
-const PEAK_WINDOW_S   = 10    // the WPM over the fire is your highest ENERGY_WINDOW_S WPM in this time
 const IDLE_S          = 2     // a pause longer than this does not count for your average
-const BEST_KEY        = 'type-til-ya-die:best'   // all-time best WPM, in this browser
+const BEST_KEY        = 'type-til-ya-die:best-10s'   // all-time best WPM, in this browser (a new key: the old one held 3 s peaks)
 // Monkeytype's English quotes (GPL-3.0), pinned to one commit
 const QUOTES_URL = 'https://cdn.jsdelivr.net/gh/monkeytypegame/monkeytype@20b9530d720f04a4710853534c6f885d3cfe0d4c/frontend/static/quotes/english.json'
 // Only quotes from these sources: cyberpunk, AI games and dystopias (about 130 quotes). Matched on the source name.
@@ -307,7 +306,6 @@ function startGame() {
     hits: [],                      // times of correct keystrokes, for rolling WPM
     keys: 0, wrong: 0, startedAt: null,
     correct: 0, activeS: 0,        // correct letters and seconds of typing (no pauses), for the average
-    peaks: [],                     // { t, wpm }: the WPM of each tick in the last PEAK_WINDOW_S
     wpm: 0, energyWpm: 0, best: 0,
     spiderLevel: 0, spiderDownSince: null,   // 0 low, 1 medium, 2 high; since when the target is lower
     held: 0, outSince: null, choir: false,   // seconds held in the band; when you left it
@@ -542,16 +540,14 @@ function tick(g) {
 
   if (refill(g)) render(g)
 
-  // Over the fire: your highest WPM of the last PEAK_WINDOW_S. A click on the flame adds your average
-  // (typing time only) and your all-time best, which stays in this browser.
+  // Over the fire: your WPM over the last WPM_WINDOW_S, as Monkeytype counts it (correct letters and spaces / 5
+  // per minute). A short window or the highest of many windows reads too high. A click on the flame adds your
+  // average (typing time only) and your all-time best, which stays in this browser.
   if (g.hits.length && now - g.hits[g.hits.length - 1] < IDLE_S * 1000) g.activeS += dt
-  g.peaks.push({ t: now, wpm: g.energyWpm })
-  while (now - g.peaks[0].t > PEAK_WINDOW_S * 1000) g.peaks.shift()
-  const peak = Math.max(...g.peaks.map(p => p.wpm))
-  const allBest = Math.max(peak, +(localStorage.getItem(BEST_KEY) ?? 0))
+  const allBest = Math.max(g.wpm, +(localStorage.getItem(BEST_KEY) ?? 0))
   localStorage.setItem(BEST_KEY, String(allBest))
   const avg = g.activeS ? g.correct / 5 / (g.activeS / 60) : 0
-  g.view.wpm.peak.textContent = g.startedAt == null ? '' : Math.round(peak) + ' wpm'
+  g.view.wpm.peak.textContent = g.startedAt == null ? '' : Math.round(g.wpm) + ' wpm'
   g.view.wpm.more.textContent = 'avg ' + Math.round(avg) + ' · best ' + Math.round(allBest)
   g.view.wpm.more.style.display = window.showWpmMore ? 'block' : 'none'
 
@@ -614,13 +610,13 @@ function typingPanel(g) {
   const train = el('pre', { style: { margin: '0 auto', width: 'max-content', font: trainFont + 'px/1 monospace', userSelect: 'none' } })
   const peak = el('div', { style: { fontSize: 'min(18px, 4.4vw)' } })
   const more = el('div', { style: { fontSize: 'min(12px, 3.2vw)', color: '#5f5f5f', marginTop: '2px' } })
-  const wpm = el('div', { style: { margin: '6px 0 8px', textAlign: 'center', color: '#777', fontFamily: 'monospace', pointerEvents: 'none' } })
-  const trainParts = [train, wpm]
+  const wpm = el('div', { style: { textAlign: 'center', color: '#777', fontFamily: 'monospace', pointerEvents: 'none' } })
+  const trainParts = [train]
   const trainBand = SITE ? document.body.appendChild(el('div', {
     id: 'train-band',
     style: { position: 'fixed', left: 0, right: 0, top: '24px', zIndex: 9998, pointerEvents: 'none' },
   }, trainParts)) : null
-  const bandH = SITE && !phone ? TRAIN_ROWS * trainFont + 72 : 0   // the room the fire leaves for the band and the WPM
+  const bandH = SITE && !phone ? TRAIN_ROWS * trainFont + 32 : 0   // the room the fire leaves for the band
 
   const fireRows = FIRE_HEAD + FIRE_H + KINDLING.length
   const offTop = SITE && phone ? FIRE_HEAD : 0
@@ -653,9 +649,13 @@ function typingPanel(g) {
       background: 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.7) 15%, rgba(0,0,0,.7) 85%, rgba(0,0,0,0))',
     },
   }, SITE ? [text, hint] : [text, hint, input])
-  // The WPM sits right under the train (trainParts), in a dull grey. A click on the flame shows or hides the
-  // average and all-time best (onFireClick); on the site the click lands on #type-input, which covers the page.
+  // The WPM, in a dull grey, sits halfway between the top of the fire and the text. A click on the flame shows
+  // or hides the average and all-time best (onFireClick); on the site the click lands on #type-input.
   wpm.append(peak, more)
+  Object.assign(wpm.style, {
+    position: 'absolute', left: 0, right: 0, transform: 'translateY(-50%)', textShadow: '0 0 3px #000, 0 0 6px #000',
+    top: 'calc((' + (fireRows - KINDLING.length - FIRE_UNDER_TEXT) + ' * ' + fireSize + ' - 4.8 * min(24px, 5.2vw)) / 2)',
+  })
   const onFireClick = e => {
     const r = fire.getBoundingClientRect(), t = box.getBoundingClientRect()
     const inFire = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom
@@ -664,7 +664,7 @@ function typingPanel(g) {
   }
   if (SITE) input.onclick = onFireClick
   else { fire.onclick = onFireClick; fire.style.cursor = 'pointer' }
-  const stage = el('div', { style: { position: 'relative' } }, [fire, box])
+  const stage = el('div', { style: { position: 'relative' } }, [fire, box, wpm])
   const source = el('div', { style: { marginTop: '6px', minHeight: '1.3em', opacity: .5 } })
 
   // On the site, the panel is the game screen: centered, with no border. The nodes it leaves out are

@@ -353,17 +353,21 @@ impl Spider {
         if self.env.t <= 0. {
             return (0., 0.);
         }
+        // As in superdough: a sine modulator at the base frequency (fmh 1) adds fm * f to the frequency, and the
+        // vibrato (a detune of vib semitones at 14 Hz) scales the result. With a big fm the frequency goes
+        // below 0 for part of each cycle; then the oscillator runs backwards, as a Web Audio oscillator does.
         advance(&mut self.vphase, 14. / sr);
-        let f = self.freq * 2f32.powf(self.vib * (2. * PI * self.vphase).sin() / 12.);
-        // FM: a sine at the same frequency (fmh 1) moves the frequency by fm * f
-        advance(&mut self.mphase, f / sr);
-        let inst = (f + self.fm * f * (2. * PI * self.mphase).sin()).abs();
+        advance(&mut self.mphase, self.freq / sr);
+        let vib = 2f32.powf(self.vib * (2. * PI * self.vphase).sin() / 12.);
+        let inst = (self.freq + self.fm * self.freq * (2. * PI * self.mphase).sin()) * vib;
         let dt = inst / sr;
         advance(&mut self.phase, dt);
-        let x = square(self.phase, dt.min(0.5));
+        // Backwards, the square of phase p is the negative square of 1 - p going forwards
+        let x = if dt >= 0. { square(self.phase, dt.min(0.5)) } else { -square((1. - self.phase).fract(), (-dt).min(0.5)) };
+        let x = self.filter.lowpass(x, self.cutoff, 1., sr);
+        // The crush comes after the filter, as in superdough's chain
         let steps = 2f32.powf(self.bits - 1.);
-        let x = (x * steps).round() / steps;
-        let x = self.filter.lowpass(x, self.cutoff, 1., sr) * e;
+        let x = (x * steps).round() / steps * e;
         pan(x, self.pan)
     }
 }

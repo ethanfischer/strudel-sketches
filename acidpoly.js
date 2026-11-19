@@ -74,6 +74,9 @@ const CHOIR_GRACE_S   = 1.5   // a dip below the band shorter than this pauses t
 const CHOIR_FADE_IN_S = 4     // the choir gets louder over this time when it starts
 const BEST_FADE       = 1     // WPM per second that best falls while you type below it
 const LOOKAHEAD_WORDS = 50    // words to keep queued
+const PEAK_WINDOW_S   = 10    // the WPM over the fire is your highest ENERGY_WINDOW_S WPM in this time
+const IDLE_S          = 2     // a pause longer than this does not count for your average
+const BEST_KEY        = 'type-til-ya-die:best'   // all-time best WPM, in this browser
 // Monkeytype's English quotes (GPL-3.0), pinned to one commit
 const QUOTES_URL = 'https://cdn.jsdelivr.net/gh/monkeytypegame/monkeytype@20b9530d720f04a4710853534c6f885d3cfe0d4c/frontend/static/quotes/english.json'
 // Only quotes from these sources: cyberpunk, AI games and dystopias (about 130 quotes). Matched on the source name.
@@ -303,6 +306,8 @@ function startGame() {
     status: '',
     hits: [],                      // times of correct keystrokes, for rolling WPM
     keys: 0, wrong: 0, startedAt: null,
+    correct: 0, activeS: 0,        // correct letters and seconds of typing (no pauses), for the average
+    peaks: [],                     // { t, wpm }: the WPM of each tick in the last PEAK_WINDOW_S
     wpm: 0, energyWpm: 0, best: 0,
     spiderLevel: 0, spiderDownSince: null,   // 0 low, 1 medium, 2 high; since when the target is lower
     held: 0, outSince: null, choir: false,   // seconds held in the band; when you left it
@@ -426,15 +431,16 @@ function typeKey(g, key, clearWord) {
     let ok = 0
     while (ok < g.typed.length && g.typed[ok] === target[ok]) ok++
     g.hits.length = Math.max(0, g.hits.length - ok)
+    g.correct -= ok
     g.typed = ''
   } else if (key === 'Backspace') {
-    if (g.typed && target.startsWith(g.typed)) g.hits.pop()   // the removed letter was correct
+    if (g.typed && target.startsWith(g.typed)) { g.hits.pop(); g.correct-- }   // the removed letter was correct
     g.typed = g.typed.slice(0, -1)
   } else if (g.typed.length < target.length + 10) {
     g.startedAt ??= Date.now()
     g.typed += key
     g.keys++
-    if (target.startsWith(g.typed)) g.hits.push(Date.now())
+    if (target.startsWith(g.typed)) { g.hits.push(Date.now()); g.correct++ }
     else g.wrong++
     if (g.typed === target) {
       g.wi++
@@ -536,6 +542,19 @@ function tick(g) {
 
   if (refill(g)) render(g)
 
+  // Over the fire: your highest WPM of the last PEAK_WINDOW_S. A click on the flame adds your average
+  // (typing time only) and your all-time best, which stays in this browser.
+  if (g.hits.length && now - g.hits[g.hits.length - 1] < IDLE_S * 1000) g.activeS += dt
+  g.peaks.push({ t: now, wpm: g.energyWpm })
+  while (now - g.peaks[0].t > PEAK_WINDOW_S * 1000) g.peaks.shift()
+  const peak = Math.max(...g.peaks.map(p => p.wpm))
+  const allBest = Math.max(peak, +(localStorage.getItem(BEST_KEY) ?? 0))
+  localStorage.setItem(BEST_KEY, String(allBest))
+  const avg = g.activeS ? g.correct / 5 / (g.activeS / 60) : 0
+  g.view.wpm.peak.textContent = g.startedAt == null ? '' : Math.round(peak) + ' wpm'
+  g.view.wpm.more.textContent = 'avg ' + Math.round(avg) + ' · best ' + Math.round(allBest)
+  g.view.wpm.more.style.display = window.showWpmMore ? 'block' : 'none'
+
   const v = g.view
   const acc = g.keys ? Math.round(100 * (g.keys - g.wrong) / g.keys) : 100
   v.stats.textContent = Math.round(g.wpm) + ' wpm · best ' + Math.round(g.best) + ' · ' + acc + '% acc · '
@@ -630,7 +649,26 @@ function typingPanel(g) {
       background: 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.7) 15%, rgba(0,0,0,.7) 85%, rgba(0,0,0,0))',
     },
   }, SITE ? [text, hint] : [text, hint, input])
-  const stage = el('div', { style: { position: 'relative' } }, [fire, box])
+  // The WPM sits over the text box. A click on the flame shows or hides the average and all-time best
+  // (onFireClick); on the site the click lands on #type-input, which covers the page.
+  const peak = el('div', { style: { fontSize: 'min(20px, 4.6vw)' } })
+  const more = el('div', { style: { fontSize: 'min(13px, 3.4vw)', opacity: .7, marginTop: '2px' } })
+  const wpm = el('div', {
+    style: {
+      position: 'absolute', left: 0, right: 0, textAlign: 'center', pointerEvents: 'none',
+      bottom: 'calc(' + (KINDLING.length + FIRE_UNDER_TEXT) + ' * ' + fireSize + ' + 4.8 * min(24px, 5.2vw) + 6px)',
+      fontFamily: 'monospace', textShadow: '0 0 3px #000, 0 0 6px #000, 0 0 10px #000',
+    },
+  }, [peak, more])
+  const onFireClick = e => {
+    const r = fire.getBoundingClientRect(), t = box.getBoundingClientRect()
+    const inFire = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom
+    const inText = e.clientY >= t.top && e.clientY <= t.bottom
+    if (inFire && !inText) window.showWpmMore = !window.showWpmMore
+  }
+  if (SITE) input.onclick = onFireClick
+  else { fire.onclick = onFireClick; fire.style.cursor = 'pointer' }
+  const stage = el('div', { style: { position: 'relative' } }, [fire, box, wpm])
   const source = el('div', { style: { marginTop: '6px', minHeight: '1.3em', opacity: .5 } })
 
   // On the site, the panel is the game screen: centered, with no border. The nodes it leaves out are
@@ -659,7 +697,7 @@ function typingPanel(g) {
   if (SITE) followViewport(panel, box, fire, offTop, trainBand, bandH)
   if (document.activeElement === input) input.onfocus()   // on the site, the tap that started the game
 
-  return { text, fire, stats, status, source, energy: energyMeter, choir: choirMeter,
+  return { text, fire, stats, status, source, energy: energyMeter, choir: choirMeter, wpm: { node: wpm, peak, more },
     // The locomotive stands at 62% of the width; enough cars follow it to go off the left edge
     train: { node: train, cols: trainCols, locoAt: Math.round(trainCols * .62), cars: Math.ceil(trainCols * .62 / 15) + 1 } }
 }
@@ -868,7 +906,9 @@ function woodColor(row, glow, blue) {
 
 // render() colors the text with these variables
 function tintText(g, energy) {
-  g.view.text.style.setProperty('--done', rgb(mix(ramp(TEXT_DONE, energy), TEXT_CHOIR.done, g.blue)))
+  const done = rgb(mix(ramp(TEXT_DONE, energy), TEXT_CHOIR.done, g.blue))
+  g.view.text.style.setProperty('--done', done)
+  g.view.wpm.node.style.color = done   // the WPM over the text heats up with it
   g.view.text.style.setProperty('--next', rgb(mix(ramp(TEXT_NEXT, energy), TEXT_CHOIR.next, g.blue)))
 }
 

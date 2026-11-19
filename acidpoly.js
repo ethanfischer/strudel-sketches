@@ -612,11 +612,15 @@ function typingPanel(g) {
   const trainPx = SITE ? innerWidth - 16 : Math.min(820, innerWidth * .92) - 28
   const trainCols = Math.floor(trainPx / (trainFont * .6)) - 1
   const train = el('pre', { style: { margin: '0 auto', width: 'max-content', font: trainFont + 'px/1 monospace', userSelect: 'none' } })
+  const peak = el('div', { style: { fontSize: 'min(18px, 4.4vw)' } })
+  const more = el('div', { style: { fontSize: 'min(12px, 3.2vw)', color: '#5f5f5f', marginTop: '2px' } })
+  const wpm = el('div', { style: { margin: '6px 0 8px', textAlign: 'center', color: '#777', fontFamily: 'monospace', pointerEvents: 'none' } })
+  const trainParts = [train, wpm]
   const trainBand = SITE ? document.body.appendChild(el('div', {
     id: 'train-band',
     style: { position: 'fixed', left: 0, right: 0, top: '24px', zIndex: 9998, pointerEvents: 'none' },
-  }, [train])) : null
-  const bandH = SITE && !phone ? TRAIN_ROWS * trainFont + 32 : 0   // the room the fire leaves for the band
+  }, trainParts)) : null
+  const bandH = SITE && !phone ? TRAIN_ROWS * trainFont + 72 : 0   // the room the fire leaves for the band and the WPM
 
   const fireRows = FIRE_HEAD + FIRE_H + KINDLING.length
   const offTop = SITE && phone ? FIRE_HEAD : 0
@@ -649,17 +653,9 @@ function typingPanel(g) {
       background: 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.7) 15%, rgba(0,0,0,.7) 85%, rgba(0,0,0,0))',
     },
   }, SITE ? [text, hint] : [text, hint, input])
-  // The WPM sits over the text box. A click on the flame shows or hides the average and all-time best
-  // (onFireClick); on the site the click lands on #type-input, which covers the page.
-  const peak = el('div', { style: { fontSize: 'min(20px, 4.6vw)' } })
-  const more = el('div', { style: { fontSize: 'min(13px, 3.4vw)', opacity: .7, marginTop: '2px' } })
-  const wpm = el('div', {
-    style: {
-      position: 'absolute', left: 0, right: 0, textAlign: 'center', pointerEvents: 'none',
-      bottom: 'calc(' + (KINDLING.length + FIRE_UNDER_TEXT) + ' * ' + fireSize + ' + 4.8 * min(24px, 5.2vw) + 6px)',
-      fontFamily: 'monospace', textShadow: '0 0 3px #000, 0 0 6px #000, 0 0 10px #000',
-    },
-  }, [peak, more])
+  // The WPM sits right under the train (trainParts), in a dull grey. A click on the flame shows or hides the
+  // average and all-time best (onFireClick); on the site the click lands on #type-input, which covers the page.
+  wpm.append(peak, more)
   const onFireClick = e => {
     const r = fire.getBoundingClientRect(), t = box.getBoundingClientRect()
     const inFire = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom
@@ -668,7 +664,7 @@ function typingPanel(g) {
   }
   if (SITE) input.onclick = onFireClick
   else { fire.onclick = onFireClick; fire.style.cursor = 'pointer' }
-  const stage = el('div', { style: { position: 'relative' } }, [fire, box, wpm])
+  const stage = el('div', { style: { position: 'relative' } }, [fire, box])
   const source = el('div', { style: { marginTop: '6px', minHeight: '1.3em', opacity: .5 } })
 
   // On the site, the panel is the game screen: centered, with no border. The nodes it leaves out are
@@ -690,7 +686,7 @@ function typingPanel(g) {
       stats,
       status,
     ]),
-    ...(SITE ? [] : [energyMeter.node, choirMeter.node, train]),
+    ...(SITE ? [] : [energyMeter.node, choirMeter.node, ...trainParts]),
     stage,
     ...(SITE ? [] : [source]),
   ]))
@@ -906,9 +902,7 @@ function woodColor(row, glow, blue) {
 
 // render() colors the text with these variables
 function tintText(g, energy) {
-  const done = rgb(mix(ramp(TEXT_DONE, energy), TEXT_CHOIR.done, g.blue))
-  g.view.text.style.setProperty('--done', done)
-  g.view.wpm.node.style.color = done   // the WPM over the text heats up with it
+  g.view.text.style.setProperty('--done', rgb(mix(ramp(TEXT_DONE, energy), TEXT_CHOIR.done, g.blue)))
   g.view.text.style.setProperty('--next', rgb(mix(ramp(TEXT_NEXT, energy), TEXT_CHOIR.next, g.blue)))
 }
 

@@ -105,8 +105,8 @@ const TEXT_CHOIR  = { done: [130, 205, 255], next: [70, 110, 180] }
 const TRAIN_ROWS  = 12     // 0-3 sky and smoke, 4-8 train, 9 track, 10-11 ground
 const TRAIN_SPEED = 90     // track columns per second at energy 1 (the speed is TRAIN_SPEED * energy^1.4)
 // A heavy train: the fire sets the speed it goes toward, and the speed changes only this fast
-const TRAIN_ACCEL = 5      // columns/s per second: 0 to full speed in about 18 s
-const TRAIN_BRAKE = 7      // columns/s per second: full speed to a stop in about 13 s
+const TRAIN_ACCEL = 2.5    // columns/s per second: 0 to full speed in about 36 s
+const TRAIN_BRAKE = 3.5    // columns/s per second: full speed to a stop in about 26 s
 const TRAIN_LOCO  = [
   ' _______     _        ',
   '|  ___  |___| |____   ',

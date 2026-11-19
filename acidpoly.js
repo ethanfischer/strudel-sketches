@@ -82,8 +82,8 @@ const BEST_KEY        = 'type-til-ya-die:best-10s'   // all-time best WPM, in th
 const QUOTES_URL = 'https://cdn.jsdelivr.net/gh/monkeytypegame/monkeytype@20b9530d720f04a4710853534c6f885d3cfe0d4c/frontend/static/quotes/english.json'
 // Only quotes from these sources: cyberpunk, AI games and dystopias (about 130 quotes). Matched on the source name.
 const QUOTE_SOURCES = /mr\. robot|the matrix|deus ex|blade runner|serial experiments|black mirror|westworld|terminator|ghost in the shell|^hackers$|system shock|total recall|tron:|detroit: become|portal|half-life|metal gear|ready player|evangelion|^1984|orwell|fahrenheit 451|brave new world/i
-// And a few quotes about fire or flame, by Monkeytype quote id: The Lord of the Rings, The Aeneid, Twin Peaks, King's Quest I
-const QUOTE_FIRE_IDS = [3419, 4644, 4394, 4730]
+// And a few quotes about fire, by Monkeytype quote id (none for now)
+const QUOTE_FIRE_IDS = []
 
 // Fire: energy sets the size of the flame; the choir turns it blue
 const FIRE_W = 40, FIRE_H = 18     // the flame grid, in characters

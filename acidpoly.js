@@ -35,7 +35,9 @@ const ui = controlPanel({
       duckDepth: [1, 0, 1],
       spiderFmh: [1, 1, 6, .01],
     },
+    // setGainCurve squares every gain and postgain, so .7 here is about half loudness
     MIX: {
+      master: [1.4, 0, 2],          // all four parts; 1.4 is about twice as loud as 1
       kick:   [.8, 0, 1],
       spider: [.2, 0, 1],
       bass:   [.75, 0, 1],
@@ -155,7 +157,7 @@ $: s("bd:4!4")
   .duck("3:4:5:6:7:8")
   .duckdepth(ui.duckDepth)      // how hard the kick pumps everything
   .duckattack(.12)
-  .postgain(ui.kick)
+  .postgain(ui.kick.mul(ui.master))
   //.color("yellow")._scope()
 
 _$: s("[- hh]*4")
@@ -210,7 +212,7 @@ $: note(melody)
   //.delay(.5)
   //.delayfeedback(slider(0, 0, .95))  // web density; capped below 1 to avoid runaway
   .room(.7).rsize(2)
-  .postgain(ui.spider)
+  .postgain(ui.spider.mul(ui.master))
   //.o(6)
   .color("#00FFD6")._punchcard()
 
@@ -224,7 +226,7 @@ $: note("<0>*12")
   .s("supersaw")
   .acidenv(energy.range(.05, .2))
   .o(4)
-  .postgain(ui.bass)
+  .postgain(ui.bass.mul(ui.master))
   .color("magenta")._punchcard()
 
 // ============================================================
@@ -250,7 +252,7 @@ $: n("[0, 4, 9]*2")   // triad on degree 1 — follows KEY
   .gain(ref(() => window.game.choirLevel * .6))
   //.room(0.7)
   //.rsize(4)
-  .postgain(ui.pad)
+  .postgain(ui.pad.mul(ui.master))
   //.postgain(.5) //testing
   //.color("orange")._punchcard()
 

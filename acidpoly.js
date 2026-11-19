@@ -75,6 +75,8 @@ const CHOIR_FADE_IN_S = 4     // the choir gets louder over this time when it st
 const BEST_FADE       = 1     // WPM per second that best falls while you type below it
 const LOOKAHEAD_WORDS = 50    // words to keep queued
 const IDLE_S          = 2     // a pause longer than this does not count for your average
+const WPM_RISE        = 8     // the WPM over the fire moves toward your WPM this fast (WPM per second)…
+const WPM_FALL        = 5     // …and falls this fast, so it has momentum, as the train has
 const BEST_KEY        = 'type-til-ya-die:best-10s'   // all-time best WPM, in this browser (a new key: the old one held 3 s peaks)
 // Monkeytype's English quotes (GPL-3.0), pinned to one commit
 const QUOTES_URL = 'https://cdn.jsdelivr.net/gh/monkeytypegame/monkeytype@20b9530d720f04a4710853534c6f885d3cfe0d4c/frontend/static/quotes/english.json'
@@ -306,7 +308,7 @@ function startGame() {
     hits: [],                      // times of correct keystrokes, for rolling WPM
     keys: 0, wrong: 0, startedAt: null,
     correct: 0, activeS: 0,        // correct letters and seconds of typing (no pauses), for the average
-    wpmShown: null, blockMax: 0, blockStart: null,   // the WPM over the fire changes once per WPM_WINDOW_S
+    wpmShown: 0,                   // the WPM over the fire, with momentum (WPM_RISE, WPM_FALL)
     wpm: 0, energyWpm: 0, best: 0,
     spiderLevel: 0, spiderDownSince: null,   // 0 low, 1 medium, 2 high; since when the target is lower
     held: 0, outSince: null, choir: false,   // seconds held in the band; when you left it
@@ -541,24 +543,15 @@ function tick(g) {
 
   if (refill(g)) render(g)
 
-  // Over the fire: every WPM_WINDOW_S, the best WPM of that time. The WPM is over WPM_WINDOW_S, as Monkeytype
-  // counts it (correct letters and spaces / 5 per minute); a shorter window reads too high. In the first
-  // block the number climbs as you go. A click on the flame adds your average (typing time only) and your
-  // all-time best, which stays in this browser.
-  if (g.startedAt != null) {
-    g.blockStart ??= g.startedAt
-    g.blockMax = Math.max(g.blockMax, g.wpm)
-    if (now - g.blockStart >= WPM_WINDOW_S * 1000) {
-      g.wpmShown = g.blockMax
-      g.blockMax = 0
-      g.blockStart = now
-    }
-  }
+  // Over the fire: your WPM over WPM_WINDOW_S, as Monkeytype counts it (correct letters and spaces / 5 per
+  // minute), with momentum: the number moves toward it at WPM_RISE or WPM_FALL per second. A click on the
+  // flame shows or hides your average (typing time only) and your all-time best, which stays in this browser.
+  g.wpmShown = g.wpm > g.wpmShown ? Math.min(g.wpm, g.wpmShown + WPM_RISE * dt) : Math.max(g.wpm, g.wpmShown - WPM_FALL * dt)
   if (g.hits.length && now - g.hits[g.hits.length - 1] < IDLE_S * 1000) g.activeS += dt
   const allBest = Math.max(g.wpm, +(localStorage.getItem(BEST_KEY) ?? 0))
   localStorage.setItem(BEST_KEY, String(allBest))
   const avg = g.activeS ? g.correct / 5 / (g.activeS / 60) : 0
-  g.view.wpm.peak.textContent = g.startedAt == null ? '' : Math.round(g.wpmShown ?? g.blockMax) + ' wpm'
+  g.view.wpm.peak.textContent = g.startedAt == null ? '' : Math.round(g.wpmShown) + ' wpm'
   g.view.wpm.more.textContent = 'avg ' + Math.round(avg) + ' · best ' + Math.round(allBest)
   g.view.wpm.more.style.display = window.showWpmMore ? 'block' : 'none'
 
@@ -667,14 +660,17 @@ function typingPanel(g) {
     position: 'absolute', left: 0, right: 0, transform: 'translateY(-50%)', textShadow: '0 0 3px #000, 0 0 6px #000',
     top: 'calc((' + (fireRows - KINDLING.length - FIRE_UNDER_TEXT) + ' * ' + fireSize + ' - 4.8 * min(24px, 5.2vw)) / 2)',
   })
+  // One toggle per press: the first click shows them, the next one hides them
   const onFireClick = e => {
     const r = fire.getBoundingClientRect(), t = box.getBoundingClientRect()
     const inFire = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom
     const inText = e.clientY >= t.top && e.clientY <= t.bottom
-    if (inFire && !inText) window.showWpmMore = !window.showWpmMore
+    if (!inFire || inText) return
+    window.showWpmMore = !window.showWpmMore
+    more.style.display = window.showWpmMore ? 'block' : 'none'   // at once, not at the next tick
   }
-  if (SITE) input.onclick = onFireClick
-  else { fire.onclick = onFireClick; fire.style.cursor = 'pointer' }
+  if (SITE) input.onpointerdown = onFireClick
+  else { fire.onpointerdown = onFireClick; fire.style.cursor = 'pointer' }
   const stage = el('div', { style: { position: 'relative' } }, [fire, box, wpm])
   const source = el('div', { style: { marginTop: '6px', minHeight: '1.3em', opacity: .5 } })
 

@@ -34,14 +34,19 @@
     })
 
     let last = null
+    let lib = '' // lib.ts without its types; play() runs it before the sketch, so its helpers are there
     let started = false // false after a stop, so a save does not start the sound again
     let audioReady = false
+    async function fetchText(path) {
+      const r = await fetch(path, { cache: 'no-store' })
+      if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + path + ': ' + await r.text())
+      return r.text()
+    }
     async function load() {
-      const r = await fetch(file, { cache: 'no-store' })
-      if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + file + ': ' + await r.text())
-      const code = await r.text()
-      if (code === last) return
-      last = code
+      const [libCode, code] = await Promise.all([fetchText('lib.ts'), fetchText(file)])
+      if (libCode + '\0' + code === last) return
+      last = libCode + '\0' + code
+      lib = libCode
       // The transpiler in @strudel/repl 1.3.0 needs an expression as the last statement (strudel.cc does not).
       // Strudel ignores this value, because the code plays its patterns with $:.
       repl.editor.setCode(code + '\nsilence\n')
@@ -49,6 +54,11 @@
     }
     async function play() {
       showError('')
+      try {
+        (0, eval)(lib) // as a plain script, in global scope
+      } catch (err) {
+        return showError('lib.ts: ' + err.message)
+      }
       await repl.editor.evaluate()
       // An error in the code does not throw here; the update event shows it, and the scheduler does not start
       status((repl.editor.repl.scheduler.started ? 'playing ' : 'not playing ') + new Date().toLocaleTimeString())

@@ -1,6 +1,6 @@
 // Local Strudel for live coding from an editor: node dev.mjs, then open http://localhost:8001/dev.html?file=pianoslice.js
 // Each time the file changes on disk, the page plays the new code.
-// A .ts file is sent without its types, so Strudel can run it. The types become spaces, so the line and column
+// The dev page runs lib.ts before each sketch. A .ts file is sent without its types, so Strudel can run it. The types become spaces, so the line and column
 // numbers in errors stay correct.
 // POST /play?file= and POST /stop do what Ctrl+Enter and Ctrl+. do in the page (see nvim.lua).
 // /samples/ serves SAMPLES_DIR (default ../strudel-samples, a clone of github.com/ethanfischer/strudel-samples),
@@ -58,6 +58,10 @@ createServer(async (req, res) => {
     if (extname(served) === '.ts' && served.startsWith(root + sep)) {
       body = stripTypeScriptTypes(body.toString())
       type = 'text/javascript'
+    }
+    // ?bundle: lib.ts in front of the sketch, so the copy has the helpers on strudel.cc
+    if (new URL(req.url, 'http://x').searchParams.has('bundle')) {
+      body = stripTypeScriptTypes(await readFile(join(root, 'lib.ts'), 'utf8')) + '\n' + body
     }
     res.writeHead(200, { 'content-type': type, 'cache-control': 'no-store' })
     res.end(body)

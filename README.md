@@ -14,6 +14,10 @@ The samples come from [strudel-samples](https://github.com/ethanfischer/strudel-
 
 You can also paste a sketch into strudel.cc and press Ctrl+Enter.
 
+## Shared helpers
+
+`lib.ts` has helpers for all sketches, for example `eachCycle` (calls a function once per cycle, so a counter in it works) and `pat.oneOf(f, g)` (one of the changes, at random, for each cycle). The dev page runs it before each sketch, and a change to it plays the sketch again. To use a sketch on strudel.cc, copy it with `<leader>my` (or open `http://localhost:8001/<file>?bundle`): the copy has `lib.ts` in front.
+
 ## nvim
 
 `<leader>mm` saves and plays the file, like Ctrl+Enter. If no dev page is open for the file, it opens one in your browser. `<leader>mp` stops all dev pages, like Ctrl+. `<leader>my` copies the file as JavaScript, to paste into strudel.cc (`nvim.lua`). To turn this on, add this line to your vimrc:

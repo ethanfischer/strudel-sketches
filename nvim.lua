@@ -1,7 +1,7 @@
 -- Strudel key maps for the dev page (node dev.mjs). Your vimrc loads this file for the .js and .ts files in this folder.
 -- <leader>mm saves and plays, like Ctrl+Enter. If no dev page is open for the file, it opens one in your browser.
 -- <leader>mp stops all dev pages, like Ctrl+.
--- <leader>my copies the file as JavaScript (a .ts file without its types), to paste into strudel.cc.
+-- <leader>my copies the file as JavaScript (a .ts file without its types), with lib.ts in front, to paste into strudel.cc.
 local root = vim.fs.dirname(debug.getinfo(1, 'S').source:sub(2))
 local server = 'http://localhost:8001/'
 
@@ -36,8 +36,8 @@ vim.keymap.set('n', '<leader>mp', function() send('stop') end, { buffer = true, 
 vim.keymap.set('n', '<leader>my', function()
   vim.cmd.write()
   local file = current_file()
-  -- The dev server sends a .ts file without its types, the same code that the page runs
-  vim.system({ 'curl', '-sS', '-o', '-', '-w', '\n%{http_code}', server .. vim.uri_encode(file) }, { text = true }, function(r)
+  -- The dev server sends lib.ts and the file without their types, the same code that the page runs
+  vim.system({ 'curl', '-sS', '-o', '-', '-w', '\n%{http_code}', server .. vim.uri_encode(file) .. '?bundle' }, { text = true }, function(r)
     if r.code ~= 0 then return fail('the dev server does not run. Start it with node dev.mjs in ' .. root) end
     local body, status = r.stdout:match('^(.-)\n?(%d+)$')
     if status ~= '200' then return fail('copy failed: ' .. vim.trim(body)) end

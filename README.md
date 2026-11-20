@@ -20,7 +20,7 @@ You can also paste a sketch into strudel.cc and press Ctrl+Enter.
 
 ## nvim
 
-`<leader>mp` saves and plays the file, like Ctrl+Enter. If no dev page is open for the file, it opens one in your browser. `<leader>mm` stops all dev pages, like Ctrl+. `<leader>mb` lists the drum banks that have all the sounds in the `s("...")` strings of the paragraph, and puts the one you pick in `.bank("...")` (`banks.json`). `<leader>my` copies the file as JavaScript, to paste into strudel.cc. `<leader>ml` opens or closes a split with the log of the dev pages: `console.log` in the sketch, errors, and play and stop (`nvim.lua`). To turn this on, add this line to your vimrc:
+`<leader>mp` saves and plays the file, like Ctrl+Enter. If no dev page is open for the file, it opens one in your browser. `<leader>mm` stops all dev pages, like Ctrl+. `<leader>mb` lists the drum banks that have all the sounds in the `s("...")` strings of the paragraph (`banks.json`). Move in the list (`j`, `k`, `/name`), and the paragraph plays with the bank on that line. Enter keeps the bank, and Esc or `q` puts back the bank that you had. Undo (`u`) also puts it back. `<leader>my` copies the file as JavaScript, to paste into strudel.cc. `<leader>ml` opens or closes a split with the log of the dev pages: `console.log` in the sketch, errors, and play and stop (`nvim.lua`). To turn this on, add this line to your vimrc:
 
 ```vim
 autocmd BufRead,BufNewFile */Music/strudel/*.js,*/Music/strudel/*.ts luafile ~/Music/strudel/nvim.lua

@@ -3,7 +3,8 @@
 -- <leader>mm stops all dev pages, like Ctrl+.
 -- <leader>my copies the file as JavaScript (a .ts file without its types), with lib.ts in front, to paste into strudel.cc.
 -- <leader>ml opens or closes a split with the log of the dev pages: console.log in the sketch, errors, play and stop.
--- <leader>mb lists the drum banks that have all the sounds of this paragraph, and puts the one you pick in .bank("...").
+-- <leader>mb lists the drum banks that have all the sounds of this paragraph. Move in the list, and the paragraph plays
+-- with that bank. Enter keeps the bank, Esc or q puts back the bank that you had.
 local root = vim.fs.dirname(debug.getinfo(1, 'S').source:sub(2))
 local server = 'http://localhost:8001/'
 
@@ -74,7 +75,8 @@ vim.keymap.set('n', '<leader>ml', function()
 end, { buffer = true, desc = 'Strudel: open or close the log of the dev pages' })
 
 -- <leader>mb: the drum banks that have all the sounds in the s("...") and sound("...") strings of this paragraph (the
--- lines between blank lines). Pick one, and it goes in the .bank("...") of the paragraph, or after the s("...") call.
+-- lines between blank lines). The bank on the line of the cursor goes in the .bank("...") of the paragraph, or after
+-- the s("...") call, and plays.
 local banks = vim.json.decode(table.concat(vim.fn.readfile(root .. '/banks.json'), '\n'))
 
 local function paragraph()
@@ -106,6 +108,22 @@ local function sounds_in(lines)
   return list
 end
 
+-- The lines with .bank("name"): the .bank("...") changed, or a new one after the first s("...") call. nil when there is
+-- no place for it.
+local function with_bank(lines, name)
+  local bank = '.bank("' .. name .. '")'
+  local new = vim.list_extend({}, lines)
+  for i, l in ipairs(lines) do
+    local changed, n = l:gsub('%.bank%s*%(([\"`]).-%1%)', bank, 1)
+    if n == 1 then new[i] = changed; return new end
+  end
+  for i, l in ipairs(lines) do
+    local _, stop = l:find('%f[%w_]s%s*%(([\"`]).-%1%)')
+    if not stop then _, stop = l:find('%f[%w_]sound%s*%(([\"`]).-%1%)') end
+    if stop then new[i] = l:sub(1, stop) .. bank .. l:sub(stop + 1); return new end
+  end
+end
+
 vim.keymap.set('n', '<leader>mb', function()
   local first, last = paragraph()
   local lines = vim.api.nvim_buf_get_lines(0, first - 1, last, false)
@@ -135,25 +153,64 @@ vim.keymap.set('n', '<leader>mb', function()
     choices = vim.tbl_filter(function(c) return #c.missing <= 1 end, choices)
   end
 
-  vim.ui.select(choices, {
-    prompt = 'Banks for ' .. table.concat(wanted, ' ')
-      .. (#other == 0 and '' or (' (no bank has ' .. table.concat(other, ' ') .. ')')) .. ':',
-    format_item = function(c) return c.name .. (#c.missing == 0 and '' or ('  (no ' .. table.concat(c.missing, ' ') .. ')')) end,
-  }, function(choice)
-    if not choice then return end
-    local bank = '.bank("' .. choice.name .. '")'
-    -- Change the .bank("...") of the paragraph, or put one after the first s("...") call
-    for i, l in ipairs(lines) do
-      local changed, n = l:gsub('%.bank%s*%(([\"`]).-%1%)', bank, 1)
-      if n == 1 then return vim.api.nvim_buf_set_lines(0, first + i - 2, first + i - 1, false, { changed }) end
-    end
-    for i, l in ipairs(lines) do
-      local _, stop = l:find('%f[%w_]s%s*%(([\"`]).-%1%)')
-      if not stop then _, stop = l:find('%f[%w_]sound%s*%(([\"`]).-%1%)') end
-      if stop then
-        return vim.api.nvim_buf_set_lines(0, first + i - 2, first + i - 1, false, { l:sub(1, stop) .. bank .. l:sub(stop + 1) })
-      end
-    end
-    fail('no place for ' .. bank .. ' in this paragraph. Add it yourself')
-  end)
-end, { buffer = true, desc = 'Strudel: the drum banks that have the sounds of this paragraph' })
+  if not with_bank(lines, choices[1].name) then return fail('no place for .bank("...") in this paragraph. Add it yourself') end
+
+  -- Save the paragraph with these lines, and play it. All the banks that you try are one change for undo.
+  local code_buf, file = vim.api.nvim_get_current_buf(), current_file()
+  local changed, kept, told = false, false, false
+  local function show(new_lines)
+    vim.api.nvim_buf_call(code_buf, function()
+      if changed then vim.cmd.undojoin() end
+      vim.api.nvim_buf_set_lines(code_buf, first - 1, last, false, new_lines)
+      vim.cmd('silent write')
+    end)
+    changed = true
+    send('play', file, function()
+      if not told then told = true; fail('no dev page is open for ' .. file .. '. Press <leader>mp first') end
+    end)
+  end
+
+  local items, width = {}, 0
+  local title = ' Banks for ' .. table.concat(wanted, ' ')
+    .. (#other == 0 and '' or (' (no bank has ' .. table.concat(other, ' ') .. ')')) .. ' '
+  for i, c in ipairs(choices) do
+    items[i] = c.name .. (#c.missing == 0 and '' or ('  (no ' .. table.concat(c.missing, ' ') .. ')'))
+    width = math.max(width, vim.fn.strdisplaywidth(items[i]))
+  end
+  width = math.min(math.max(width, vim.fn.strdisplaywidth(title)), vim.o.columns - 4)
+  local height = math.min(#items, vim.o.lines - 6)
+  local list = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(list, 0, -1, false, items)
+  vim.bo[list].modifiable = false
+  vim.bo[list].bufhidden = 'wipe'
+  local win = vim.api.nvim_open_win(list, true, {
+    relative = 'editor', style = 'minimal', border = 'rounded', title = title, title_pos = 'center',
+    width = width, height = height, row = math.floor((vim.o.lines - height) / 2) - 1, col = math.floor((vim.o.columns - width) / 2),
+  })
+  vim.wo[win].cursorline = true
+
+  -- The list starts on the bank of the paragraph (its name or an alias), when the list has it
+  -- On that line, the paragraph stays as you wrote it (for example .bank("r8"), not .bank("RolandR8")).
+  local current = (table.concat(lines, '\n'):match('%.bank%s*%(["`](.-)["`]%)') or ''):lower()
+  local current_row
+  for i, c in ipairs(choices) do
+    local names = vim.tbl_map(string.lower, { c.name, unpack(banks[c.name].aliases) })
+    if vim.tbl_contains(names, current) then current_row = i; vim.api.nvim_win_set_cursor(win, { i, 0 }) end
+  end
+  local shown
+  local function show_cursor_line()
+    local row = vim.api.nvim_win_get_cursor(win)[1]
+    if row == shown then return end
+    shown = row
+    show(row == current_row and lines or with_bank(lines, choices[row].name))
+  end
+  show_cursor_line()
+  vim.api.nvim_create_autocmd('CursorMoved', { buffer = list, callback = show_cursor_line })
+  vim.api.nvim_create_autocmd('WinClosed', { pattern = tostring(win), once = true, callback = function()
+    if not kept then show(lines) end
+  end })
+  local function close() vim.api.nvim_win_close(win, true) end
+  vim.keymap.set('n', '<CR>', function() kept = true; close() end, { buffer = list })
+  vim.keymap.set('n', '<Esc>', close, { buffer = list })
+  vim.keymap.set('n', 'q', close, { buffer = list })
+end, { buffer = true, desc = 'Strudel: play the paragraph with each drum bank that has its sounds' })

@@ -24,7 +24,7 @@ local function current_file()
   return path:sub(#root + 2) -- the path from this folder, the same as ?file= in the page
 end
 
-vim.keymap.set('n', '<leader>mm', function()
+vim.keymap.set('n', '<leader>mp', function()
   vim.cmd.write()
   local file = current_file()
   send('play', file, function()
@@ -32,7 +32,7 @@ vim.keymap.set('n', '<leader>mm', function()
     vim.schedule(function() vim.notify('Strudel: opened the dev page for ' .. file .. '. Click it once to play.') end)
   end)
 end, { buffer = true, desc = 'Strudel: save and play' })
-vim.keymap.set('n', '<leader>mp', function() send('stop') end, { buffer = true, desc = 'Strudel: stop' })
+vim.keymap.set('n', '<leader>mm', function() send('stop') end, { buffer = true, desc = 'Strudel: stop' })
 vim.keymap.set('n', '<leader>my', function()
   vim.cmd.write()
   local file = current_file()

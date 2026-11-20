@@ -25,7 +25,29 @@
     const file = new URLSearchParams(location.search).get('file')
     const repl = document.getElementById('repl')
     const status = msg => { document.getElementById('status').textContent = msg }
-    const showError = msg => { document.getElementById('error').textContent = msg }
+
+    // The log for nvim (<leader>ml): console.log in the sketch, errors, and play and stop go to the dev server.
+    // The lines go every 200 ms, in one request, so they stay in order.
+    const logLines = []
+    const sendLog = text => logLines.push(new Date().toLocaleTimeString('en-GB') + '  ' + text)
+    setInterval(() => {
+      if (logLines.length === 0) return
+      fetch('log', { method: 'POST', body: logLines.splice(0).join('\n') + '\n' })
+        // Not with showError, which would send this error to the log again
+        .catch(err => { document.getElementById('error').textContent = 'log: ' + err.message })
+    }, 200)
+    const consoleLog = console.log
+    console.log = (...args) => {
+      consoleLog(...args)
+      // Strudel's own messages start with %c, for their colors. Only the sketch's messages go to the log.
+      if (typeof args[0] === 'string' && args[0].startsWith('%c')) return
+      sendLog(args.map(a => typeof a === 'object' && a !== null ? JSON.stringify(a) : String(a)).join(' '))
+    }
+
+    const showError = msg => {
+      document.getElementById('error').textContent = msg
+      if (msg) sendLog('error: ' + msg)
+    }
     if (!file) throw showError('Add ?file=<name>.js to the URL')
     document.getElementById('file').textContent = file
 
@@ -62,6 +84,7 @@
       await repl.editor.evaluate()
       // An error in the code does not throw here; the update event shows it, and the scheduler does not start
       status((repl.editor.repl.scheduler.started ? 'playing ' : 'not playing ') + new Date().toLocaleTimeString())
+      sendLog('-- ' + (repl.editor.repl.scheduler.started ? 'playing ' : 'not playing ') + file)
     }
 
     document.getElementById('start').addEventListener('click', async e => {
@@ -90,6 +113,7 @@
           started = false
           await repl.editor.stop()
           status('stopped ' + new Date().toLocaleTimeString())
+          sendLog('-- stopped ' + file)
         }
       } catch (err) {
         showError(err.message)

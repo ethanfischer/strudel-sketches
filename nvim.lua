@@ -2,6 +2,7 @@
 -- <leader>mm saves and plays, like Ctrl+Enter. If no dev page is open for the file, it opens one in your browser.
 -- <leader>mp stops all dev pages, like Ctrl+.
 -- <leader>my copies the file as JavaScript (a .ts file without its types), with lib.ts in front, to paste into strudel.cc.
+-- <leader>ml opens or closes a split with the log of the dev pages: console.log in the sketch, errors, play and stop.
 local root = vim.fs.dirname(debug.getinfo(1, 'S').source:sub(2))
 local server = 'http://localhost:8001/'
 
@@ -47,3 +48,26 @@ vim.keymap.set('n', '<leader>my', function()
     end)
   end)
 end, { buffer = true, desc = 'Strudel: copy as JavaScript' })
+
+-- The log split stays the same for all Strudel buffers (this file runs again for each buffer)
+_G.strudel_log = _G.strudel_log or {}
+vim.keymap.set('n', '<leader>ml', function()
+  local log = _G.strudel_log
+  if log.win and vim.api.nvim_win_is_valid(log.win) then
+    vim.api.nvim_win_close(log.win, true)
+    return
+  end
+  local code_win = vim.api.nvim_get_current_win()
+  vim.cmd('botright 10split')
+  -- A new curl when there is none, or when it stopped (for example after a restart of the dev server)
+  if log.job and vim.fn.jobwait({ log.job }, 0)[1] == -1 and vim.api.nvim_buf_is_valid(log.buf) then
+    vim.api.nvim_win_set_buf(0, log.buf)
+  else
+    log.buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_win_set_buf(0, log.buf)
+    log.job = vim.fn.jobstart({ 'curl', '-sSN', server .. 'log' }, { term = true })
+  end
+  log.win = vim.api.nvim_get_current_win()
+  vim.cmd('normal! G') -- on the last line, so the split follows the new lines
+  vim.api.nvim_set_current_win(code_win)
+end, { buffer = true, desc = 'Strudel: open or close the log of the dev pages' })

@@ -38,7 +38,7 @@
     let audioReady = false
     async function load() {
       const r = await fetch(file, { cache: 'no-store' })
-      if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + file)
+      if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + file + ': ' + await r.text())
       const code = await r.text()
       if (code === last) return
       last = code

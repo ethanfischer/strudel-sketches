@@ -16,15 +16,18 @@ You can also paste a sketch into strudel.cc and press Ctrl+Enter.
 
 ## nvim
 
-`<leader>mm` saves and plays the file, like Ctrl+Enter. If no dev page is open for the file, it opens one in your browser. `<leader>mp` stops all dev pages, like Ctrl+. (`nvim.lua`). To turn this on, add this line to your vimrc:
+`<leader>mm` saves and plays the file, like Ctrl+Enter. If no dev page is open for the file, it opens one in your browser. `<leader>mp` stops all dev pages, like Ctrl+. `<leader>my` copies the file as JavaScript, to paste into strudel.cc (`nvim.lua`). To turn this on, add this line to your vimrc:
 
 ```vim
-autocmd BufRead,BufNewFile */Music/strudel/*.js luafile ~/Music/strudel/nvim.lua
+autocmd BufRead,BufNewFile */Music/strudel/*.js,*/Music/strudel/*.ts luafile ~/Music/strudel/nvim.lua
 ```
 
-## Completion
+## Completion and types
 
-`strudel.d.ts` has the Strudel names and their docs, and `jsconfig.json` adds it to the `.js` files here. An editor with a TypeScript language server then completes `note(`, `.fast(` and the others and shows their docs. In nvim, use the language server in TypeScript 7: `npm i -g typescript`, then `tsc --lsp --stdio`.
+`strudel.d.ts` has the Strudel names and their docs, and `tsconfig.json` adds it to the files here. An editor with a TypeScript language server then completes `note(`, `.fast(` and the others and shows their docs. In nvim, use the language server in TypeScript 7: `npm i -g typescript`, then `tsc --lsp --stdio`.
+
+- `.js` sketches: completion and docs only.
+- `.ts` sketches: also strict type checking, for example `function second(p: Pattern)`. The dev server removes the types before Strudel runs the code, so the line and column numbers in errors stay correct. To use a `.ts` sketch on strudel.cc, copy it as JavaScript with `<leader>my`.
 
 ## License
 

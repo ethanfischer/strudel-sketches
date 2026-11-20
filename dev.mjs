@@ -1,5 +1,7 @@
 // Local Strudel for live coding from an editor: node dev.mjs, then open http://localhost:8001/dev.html?file=pianoslice.js
 // Each time the file changes on disk, the page plays the new code.
+// A .ts file is sent without its types, so Strudel can run it. The types become spaces, so the line and column
+// numbers in errors stay correct.
 // POST /play?file= and POST /stop do what Ctrl+Enter and Ctrl+. do in the page (see nvim.lua).
 // /samples/ serves SAMPLES_DIR (default ../strudel-samples, a clone of github.com/ethanfischer/strudel-samples),
 // so a new sample plays before you push it. /samples/strudel.json is built from the folder for each request, so a new
@@ -8,6 +10,7 @@ import { createServer } from 'node:http'
 import { readFile } from 'node:fs/promises'
 import { join, extname, resolve, sep } from 'node:path'
 import { pathToFileURL } from 'node:url'
+import { stripTypeScriptTypes } from 'node:module'
 
 const root = resolve(import.meta.dirname)
 const samplesDir = resolve(process.env.SAMPLES_DIR ?? join(root, '..', 'strudel-samples'))
@@ -50,8 +53,13 @@ createServer(async (req, res) => {
       return res.end(JSON.stringify(sampleMap(samplesDir)))
     }
     const served = path.startsWith('/samples/') ? inside(samplesDir, path.slice('/samples'.length)) : inside(root, path)
-    const body = await readFile(served)
-    res.writeHead(200, { 'content-type': types[extname(served)] ?? 'application/octet-stream', 'cache-control': 'no-store' })
+    let body = await readFile(served)
+    let type = types[extname(served)] ?? 'application/octet-stream'
+    if (extname(served) === '.ts' && served.startsWith(root + sep)) {
+      body = stripTypeScriptTypes(body.toString())
+      type = 'text/javascript'
+    }
+    res.writeHead(200, { 'content-type': type, 'cache-control': 'no-store' })
     res.end(body)
   } catch (err) {
     res.writeHead(err.code === 'ENOENT' ? 404 : 500).end(err.message)

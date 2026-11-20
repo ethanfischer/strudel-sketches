@@ -1,0 +1,16 @@
+{
+  // .ts files: strict type checking. The dev server removes the types before Strudel runs the code.
+  // .js files: completion and docs only, no type checking.
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "allowJs": true,
+    "checkJs": false,
+    "strict": true,
+    "noEmit": true,
+    "erasableSyntaxOnly": true, // only types that the dev server can remove: no enum, namespace and others
+    "moduleDetection": "force", // each file has its own scope, as when Strudel runs it
+    "allowUnusedLabels": true // the $: labels
+  },
+  "include": ["*.js", "*.ts", "strudel.d.ts"]
+}

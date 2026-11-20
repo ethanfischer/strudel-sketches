@@ -32,7 +32,7 @@ autocmd BufRead,BufNewFile */Music/strudel/*.js,*/Music/strudel/*.ts luafile ~/M
 
 `strudel.d.ts` has the Strudel names and their docs, and `tsconfig.json` adds it to the files here. An editor with a TypeScript language server then completes `note(`, `.fast(` and the others and shows their docs. In nvim, use `typescript-language-server` with TypeScript 6: `npm i -g typescript-language-server`, and set its `tsserver.path` to a TypeScript 6 install. The server in TypeScript 7 (`tsc --lsp`) also works, but it does not have all the quick fixes yet.
 
-Inside `s("...")` and `.sound("...")`, the editor also completes the sound names: the Strudel sounds, and your samples from `sounds.d.ts`, which `dev.mjs` writes when it starts and when the page loads the samples. Inside `.bank("...")`, it completes the drum machine banks.
+Inside `s("...")` and `.sound("...")`, the editor also completes the sound names: the Strudel sounds, and your samples from `sounds.d.ts`, which `dev.mjs` writes when it starts and when the page loads the samples. Inside `.bank("...")`, it completes the drum machine banks. `tools/regenerate.sh` writes `strudel.d.ts` and `banks.json` again, for example after a Strudel version change.
 
 - `.js` sketches: completion and docs only.
 - `.ts` sketches: also strict type checking, for example `function second(p: Pattern)`. The dev server removes the types before Strudel runs the code, so the line and column numbers in errors stay correct. To use a `.ts` sketch on strudel.cc, copy it as JavaScript with `<leader>my`.

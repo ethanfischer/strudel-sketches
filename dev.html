@@ -42,7 +42,8 @@
       const code = await r.text()
       if (code === last) return
       last = code
-      // The transpiler in @strudel/repl 1.3.0 needs an expression as the last statement (see index.html)
+      // The transpiler in @strudel/repl 1.3.0 needs an expression as the last statement (strudel.cc does not).
+      // Strudel ignores this value, because the code plays its patterns with $:.
       repl.editor.setCode(code + '\nsilence\n')
       if (started) await play()
     }

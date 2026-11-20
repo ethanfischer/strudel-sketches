@@ -51,9 +51,75 @@
     if (!file) throw showError('Add ?file=<name>.js to the URL')
     document.getElementById('file').textContent = file
 
+    // The highlights for nvim: after each play, the positions of the mini-notation in the code ([line, UTF-16 column]
+    // for the start and the end), and then the positions that play now, as the boxes that the browser editor draws.
+    // The messages go in order, one request at a time. A new "active" message replaces an "active" message that did
+    // not go yet.
+    const highlightQueue = []
+    let sendingHighlights = false
+    function sendHighlight(message) {
+      if ('active' in message && 'active' in (highlightQueue.at(-1) ?? {})) highlightQueue.pop()
+      highlightQueue.push({ file, ...message })
+      if (!sendingHighlights) sendHighlights()
+    }
+    async function sendHighlights() {
+      sendingHighlights = true
+      while (highlightQueue.length) {
+        const body = highlightQueue.splice(0).map(m => JSON.stringify(m)).join('\n') + '\n'
+        await fetch('highlights', { method: 'POST', body })
+          .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status) })
+          .catch(err => showError('highlights: ' + err.message))
+      }
+      sendingHighlights = false
+    }
+
+    let miniLocations = null
+    let locationIndex = new Map() // 'start:end' -> its index in the positions that nvim has
     repl.addEventListener('update', e => {
       if (e.detail.evalError) showError(e.detail.evalError.message)
+      // A new array after each play
+      if (e.detail.miniLocations === miniLocations) return
+      miniLocations = e.detail.miniLocations
+      const code = e.detail.activeCode
+      const lineStarts = [0]
+      for (let i = 0; i < code.length; i++) if (code[i] === '\n') lineStarts.push(i + 1)
+      const position = offset => {
+        let line = lineStarts.length - 1
+        while (lineStarts[line] > offset) line--
+        return [line, offset - lineStarts[line]]
+      }
+      locationIndex = new Map(miniLocations.map(([start, end], i) => [start + ':' + end, i]))
+      sendHighlight({ locations: miniLocations.map(([start, end]) => [...position(start), ...position(end)]) })
     })
+
+    // The rule of the browser editor: a hap is active from its start to the end of its duration (scheduler.now()).
+    // With timers, not requestAnimationFrame, which stops when the tab is not visible.
+    let lastActive = ''
+    let lastHighlightError = ''
+    setInterval(() => {
+      const { scheduler } = repl.editor.repl
+      const active = new Set()
+      try {
+        if (scheduler.started && scheduler.pattern) {
+          const now = scheduler.now()
+          for (const hap of scheduler.pattern.queryArc(now, now + 0.001)) {
+            if (!hap.whole || !hap.isActive(now)) continue
+            for (const { start, end } of hap.context.locations ?? []) {
+              const i = locationIndex.get(start + ':' + end)
+              if (i !== undefined) active.add(i)
+            }
+          }
+        }
+      } catch (err) {
+        if (err.message !== lastHighlightError) showError('highlights: ' + err.message)
+        lastHighlightError = err.message
+        return
+      }
+      const list = [...active].sort((a, b) => a - b)
+      if (list.join() === lastActive) return
+      lastActive = list.join()
+      sendHighlight({ active: list })
+    }, 16)
 
     let last = null
     let lib = '' // lib.ts without its types; play() runs it before the sketch, so its helpers are there

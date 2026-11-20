@@ -12,7 +12,10 @@ local function fail(message)
   vim.schedule(function() vim.notify('Strudel: ' .. message, vim.log.levels.ERROR) end)
 end
 
+local connect_highlights -- below
+
 local function send(command, file, on_404)
+  connect_highlights()
   local url = server .. command .. (file and ('?file=' .. vim.uri_encode(file)) or '')
   vim.system({ 'curl', '-sS', '-o', '-', '-w', '\n%{http_code}', '-X', 'POST', url }, { text = true }, function(r)
     if r.code ~= 0 then return fail('the dev server does not run. Start it with node dev.mjs in ' .. root) end
@@ -73,6 +76,77 @@ vim.keymap.set('n', '<leader>ml', function()
   vim.cmd('normal! G') -- on the last line, so the split follows the new lines
   vim.api.nvim_set_current_win(code_win)
 end, { buffer = true, desc = 'Strudel: open or close the log of the dev pages' })
+
+-- Highlights (StrudelActive): the mini-notation that plays now, as the boxes in the browser editor. After each play, a
+-- dev page sends the positions of the mini-notation, and then the positions that play now (GET /highlights). The
+-- positions become extmarks, so they move when you edit. They are for the saved file: when the buffer has changes
+-- that you did not save, there are no highlights until the next play.
+local function set_highlight_color() vim.api.nvim_set_hl(0, 'StrudelActive', { default = true, link = 'IncSearch' }) end
+set_highlight_color()
+vim.api.nvim_create_autocmd('ColorScheme', { group = vim.api.nvim_create_augroup('strudel_highlights', {}), callback = set_highlight_color })
+
+_G.strudel_highlights = _G.strudel_highlights or { marks = {} } -- file -> { buf, ids }
+local highlights = _G.strudel_highlights
+local ns_marks = vim.api.nvim_create_namespace('strudel_marks')
+local ns_active = vim.api.nvim_create_namespace('strudel_active')
+
+local function buffer_of(file)
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(buf) and vim.fs.normalize(vim.api.nvim_buf_get_name(buf)) == root .. '/' .. file then return buf end
+  end
+end
+
+local function on_highlights(message)
+  if message.locations then
+    local old = highlights.marks[message.file]
+    if old and vim.api.nvim_buf_is_valid(old.buf) then
+      vim.api.nvim_buf_clear_namespace(old.buf, ns_marks, 0, -1)
+      vim.api.nvim_buf_clear_namespace(old.buf, ns_active, 0, -1)
+    end
+    highlights.marks[message.file] = nil
+    local buf = buffer_of(message.file)
+    if not buf or vim.bo[buf].modified then return end
+    local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+    local function col(row, utf16) return vim.str_byteindex(lines[row + 1], 'utf-16', utf16, false) end
+    local ids = {}
+    for i, l in ipairs(message.locations) do
+      ids[i] = vim.api.nvim_buf_set_extmark(buf, ns_marks, l[1], col(l[1], l[2]), { end_row = l[3], end_col = col(l[3], l[4]) })
+    end
+    highlights.marks[message.file] = { buf = buf, ids = ids }
+    return
+  end
+  local m = highlights.marks[message.file]
+  if not m or not vim.api.nvim_buf_is_valid(m.buf) then return end
+  vim.api.nvim_buf_clear_namespace(m.buf, ns_active, 0, -1)
+  for _, i in ipairs(message.active) do
+    local row, c, details = unpack(vim.api.nvim_buf_get_extmark_by_id(m.buf, ns_marks, m.ids[i + 1], { details = true }))
+    vim.api.nvim_buf_set_extmark(m.buf, ns_active, row, c, { end_row = details.end_row, end_col = details.end_col, hl_group = 'StrudelActive' })
+  end
+end
+
+-- One stream for all Strudel buffers. A new one when there is none, for example after a restart of the dev server.
+function connect_highlights()
+  if highlights.job then return end
+  local rest = ''
+  highlights.job = vim.system({ 'curl', '-sSN', server .. 'highlights' }, {
+    stdout = function(_, data)
+      if not data then return end
+      local lines = vim.split(rest .. data, '\n')
+      rest = table.remove(lines)
+      vim.schedule(function()
+        for _, line in ipairs(lines) do on_highlights(vim.json.decode(line)) end
+      end)
+    end,
+  }, function()
+    highlights.job = nil
+    vim.schedule(function()
+      for _, m in pairs(highlights.marks) do
+        if vim.api.nvim_buf_is_valid(m.buf) then vim.api.nvim_buf_clear_namespace(m.buf, ns_active, 0, -1) end
+      end
+    end)
+  end)
+end
+connect_highlights()
 
 -- <leader>mb: the drum banks that have all the sounds in the s("...") and sound("...") strings of this paragraph (the
 -- lines between blank lines). The bank on the line of the cursor goes in the .bank("...") of the paragraph, or after

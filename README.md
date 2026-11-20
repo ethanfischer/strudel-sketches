@@ -54,6 +54,10 @@ cargo run --release -- --mute  # play with no sound
 
 Keys: Tab (or a click) shows your average and all-time best, Esc quits. The terminal must be at least 44x23, and 37 rows high to show the train. Use a terminal with 24-bit color.
 
+## Completion in an editor
+
+`strudel.d.ts` has the Strudel names and their docs, and `jsconfig.json` adds it to the `.js` files here. An editor with a TypeScript language server then completes `note(`, `.fast(` and the others and shows their docs. In nvim, use the language server in TypeScript 7: `npm i -g typescript`, then `tsc --lsp --stdio`.
+
 ## Credits and licenses
 
 - **This game**: [AGPL-3.0](LICENSE).

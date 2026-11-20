@@ -8,6 +8,7 @@
 // file plays before you commit it.
 import { createServer } from 'node:http'
 import { readFile } from 'node:fs/promises'
+import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { join, extname, resolve, sep } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { stripTypeScriptTypes } from 'node:module'
@@ -16,6 +17,16 @@ const root = resolve(import.meta.dirname)
 const samplesDir = resolve(process.env.SAMPLES_DIR ?? join(root, '..', 'strudel-samples'))
 const { sampleMap } = await import(pathToFileURL(join(samplesDir, 'build.mjs')))
 const port = Number(process.env.PORT ?? 8001)
+
+// sounds.d.ts: the names of your samples, so the editor completes them in s("...") and .sound("...")
+function writeSoundTypes(map) {
+  const names = Object.keys(map).filter(n => n !== '_base').sort()
+  const text = '// Your samples (strudel-samples), for completion in s("...") and .sound("..."). dev.mjs writes this file.\n'
+    + 'type MySound =' + (names.length ? names.map(n => `\n  | ${JSON.stringify(n)}`).join('') : ' never') + '\n'
+  const file = join(root, 'sounds.d.ts')
+  if (!existsSync(file) || readFileSync(file, 'utf8') !== text) writeFileSync(file, text)
+}
+writeSoundTypes(sampleMap(samplesDir))
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.json': 'application/json', '.wav': 'audio/wav', '.mp3': 'audio/mpeg', '.ogg': 'audio/ogg', '.flac': 'audio/flac' }
 
 // Only files inside dir, so ../ cannot read other files
@@ -49,8 +60,10 @@ createServer(async (req, res) => {
       return res.writeHead(200).end(`${command} sent to ${to.length} page(s)\n`)
     }
     if (path === '/samples/strudel.json') {
+      const map = sampleMap(samplesDir)
+      writeSoundTypes(map)
       res.writeHead(200, { 'content-type': 'application/json', 'cache-control': 'no-store' })
-      return res.end(JSON.stringify(sampleMap(samplesDir)))
+      return res.end(JSON.stringify(map))
     }
     const served = path.startsWith('/samples/') ? inside(samplesDir, path.slice('/samples'.length)) : inside(root, path)
     let body = await readFile(served)

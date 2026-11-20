@@ -1,7 +1,6 @@
 -- Strudel key maps for the dev page (node dev.mjs). Your vimrc loads this file for the .js and .ts files in this folder.
 -- <leader>mp saves and plays, like Ctrl+Enter. If no dev page is open for the file, it opens one in your browser.
 -- <leader>mm stops all dev pages, like Ctrl+.
--- <leader>p saves and plays when the dev page for the file does not play, and stops it when it plays.
 -- <leader>my copies the file as JavaScript (a .ts file without its types), with lib.ts in front, to paste into strudel.cc.
 -- <leader>ml opens or closes a split with the log of the dev pages: console.log in the sketch, errors, play and stop.
 -- <leader>mb lists the drum banks that have all the sounds of this paragraph. Move in the list, and the paragraph plays
@@ -31,17 +30,14 @@ local function current_file()
   return path:sub(#root + 2) -- the path from this folder, the same as ?file= in the page
 end
 
-local function save_and_send(command)
+vim.keymap.set('n', '<leader>mp', function()
   vim.cmd.write()
   local file = current_file()
-  send(command, file, function()
+  send('play', file, function()
     vim.system({ 'open', server .. 'dev.html?file=' .. vim.uri_encode(file) })
     vim.schedule(function() vim.notify('Strudel: opened the dev page for ' .. file .. '. Click it once to play.') end)
   end)
-end
-
-vim.keymap.set('n', '<leader>mp', function() save_and_send('play') end, { buffer = true, desc = 'Strudel: save and play' })
-vim.keymap.set('n', '<leader>p', function() save_and_send('toggle') end, { buffer = true, desc = 'Strudel: save and play, or stop' })
+end, { buffer = true, desc = 'Strudel: save and play' })
 vim.keymap.set('n', '<leader>mm', function() send('stop') end, { buffer = true, desc = 'Strudel: stop' })
 vim.keymap.set('n', '<leader>my', function()
   vim.cmd.write()

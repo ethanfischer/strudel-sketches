@@ -2,7 +2,7 @@
 // Each time the file changes on disk, the page plays the new code.
 // The dev page runs lib.ts before each sketch. A .ts file is sent without its types, so Strudel can run it. The types become spaces, so the line and column
 // numbers in errors stay correct.
-// POST /play?file=, POST /toggle?file= and POST /stop do what Ctrl+Enter and Ctrl+. do in the page (see nvim.lua). GET /log streams
+// POST /play?file= and POST /stop do what Ctrl+Enter and Ctrl+. do in the page (see nvim.lua). GET /log streams
 // the log of the pages: console.log in the sketch, errors, and play and stop. GET /highlights streams the mini-notation
 // that plays now, for the highlights in nvim.
 // /samples/ serves SAMPLES_DIR (default ../strudel-samples, a clone of github.com/ethanfischer/strudel-samples),
@@ -82,7 +82,7 @@ createServer(async (req, res) => {
       return req.on('close', () => highlights.listeners.delete(res))
     }
     // POST /play?file=x plays x in the pages open for x. 404 when there is none, so the editor can open one.
-    // POST /toggle?file=x is the same, but the pages that play x stop. POST /stop stops all pages.
+    // POST /stop stops all pages.
     if (path === '/log' && req.method === 'POST') {
       let body = ''
       for await (const chunk of req) body += chunk
@@ -100,11 +100,11 @@ createServer(async (req, res) => {
       log.listeners.add(res)
       return req.on('close', () => log.listeners.delete(res))
     }
-    if (req.method === 'POST' && (path === '/play' || path === '/toggle' || path === '/stop')) {
+    if (req.method === 'POST' && (path === '/play' || path === '/stop')) {
       const command = path.slice(1)
-      if (command !== 'stop' && !file) return res.writeHead(400).end(`${command} needs ?file=\n`)
+      if (command === 'play' && !file) return res.writeHead(400).end('play needs ?file=\n')
       const to = [...pages].filter(([, f]) => command === 'stop' || f === file).map(([page]) => page)
-      if (to.length === 0) return res.writeHead(404).end(command !== 'stop' ? `No dev page is open for ${file}\n` : 'No dev page is open\n')
+      if (to.length === 0) return res.writeHead(404).end(command === 'play' ? `No dev page is open for ${file}\n` : 'No dev page is open\n')
       for (const page of to) page.write(`data: ${command}\n\n`)
       return res.writeHead(200).end(`${command} sent to ${to.length} page(s)\n`)
     }

@@ -1,0 +1,1199 @@
+{
+ "AJKPercusyn": {
+  "sounds": [
+   "bd",
+   "cb",
+   "ht",
+   "sd"
+  ],
+  "aliases": [
+   "percysyn"
+  ]
+ },
+ "AkaiLinn": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "rd",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "linn"
+  ]
+ },
+ "AkaiMPC60": {
+  "sounds": [
+   "bd",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "misc",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd"
+  ],
+  "aliases": [
+   "mpc60"
+  ]
+ },
+ "AkaiXR10": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "misc",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "xr10"
+  ]
+ },
+ "AlesisHR16": {
+  "sounds": [
+   "bd",
+   "cp",
+   "hh",
+   "ht",
+   "lt",
+   "oh",
+   "perc",
+   "rim",
+   "sd",
+   "sh"
+  ],
+  "aliases": [
+   "hr16"
+  ]
+ },
+ "AlesisSR16": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "misc",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "sr16"
+  ]
+ },
+ "BossDR110": {
+  "sounds": [
+   "bd",
+   "cp",
+   "cr",
+   "hh",
+   "oh",
+   "rd",
+   "sd"
+  ],
+  "aliases": [
+   "dr110"
+  ]
+ },
+ "BossDR220": {
+  "sounds": [
+   "bd",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "sd"
+  ],
+  "aliases": [
+   "dr220"
+  ]
+ },
+ "BossDR55": {
+  "sounds": [
+   "bd",
+   "hh",
+   "rim",
+   "sd"
+  ],
+  "aliases": [
+   "dr55"
+  ]
+ },
+ "BossDR550": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "misc",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "dr550"
+  ]
+ },
+ "CasioRZ1": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "rd",
+   "rim",
+   "sd"
+  ],
+  "aliases": [
+   "rz1"
+  ]
+ },
+ "CasioSK1": {
+  "sounds": [
+   "bd",
+   "hh",
+   "ht",
+   "mt",
+   "oh",
+   "sd"
+  ],
+  "aliases": [
+   "sk1"
+  ]
+ },
+ "CasioVL1": {
+  "sounds": [
+   "bd",
+   "hh",
+   "sd"
+  ],
+  "aliases": [
+   "vl1"
+  ]
+ },
+ "DoepferMS404": {
+  "sounds": [
+   "bd",
+   "hh",
+   "lt",
+   "oh",
+   "sd"
+  ],
+  "aliases": [
+   "ms404"
+  ]
+ },
+ "EmuDrumulator": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "perc",
+   "rim",
+   "sd"
+  ],
+  "aliases": [
+   "drumulator"
+  ]
+ },
+ "emumodular": {
+  "sounds": [
+   "bd",
+   "misc",
+   "perc"
+  ],
+  "aliases": []
+ },
+ "EmuSP12": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "misc",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd"
+  ],
+  "aliases": [
+   "sp12"
+  ]
+ },
+ "KorgDDM110": {
+  "sounds": [
+   "bd",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "oh",
+   "rim",
+   "sd"
+  ],
+  "aliases": [
+   "ddm110"
+  ]
+ },
+ "KorgKPR77": {
+  "sounds": [
+   "bd",
+   "cp",
+   "hh",
+   "oh",
+   "sd"
+  ],
+  "aliases": [
+   "kpr77"
+  ]
+ },
+ "KorgKR55": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cr",
+   "hh",
+   "ht",
+   "oh",
+   "perc",
+   "rim",
+   "sd"
+  ],
+  "aliases": [
+   "kr55"
+  ]
+ },
+ "KorgKRZ": {
+  "sounds": [
+   "bd",
+   "cr",
+   "fx",
+   "hh",
+   "ht",
+   "lt",
+   "misc",
+   "oh",
+   "rd",
+   "sd"
+  ],
+  "aliases": [
+   "krz"
+  ]
+ },
+ "KorgM1": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "misc",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "m1"
+  ]
+ },
+ "KorgMinipops": {
+  "sounds": [
+   "bd",
+   "hh",
+   "misc",
+   "oh",
+   "sd"
+  ],
+  "aliases": [
+   "minipops"
+  ]
+ },
+ "KorgPoly800": {
+  "sounds": [
+   "bd"
+  ],
+  "aliases": [
+   "poly800"
+  ]
+ },
+ "KorgT3": {
+  "sounds": [
+   "bd",
+   "cp",
+   "hh",
+   "misc",
+   "oh",
+   "perc",
+   "rim",
+   "sd",
+   "sh"
+  ],
+  "aliases": [
+   "t3"
+  ]
+ },
+ "Linn9000": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd",
+   "tb"
+  ],
+  "aliases": [
+   "9000"
+  ]
+ },
+ "linndrum": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": []
+ },
+ "LinnLM1": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "hh",
+   "ht",
+   "lt",
+   "oh",
+   "perc",
+   "rim",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "lm1"
+  ]
+ },
+ "LinnLM2": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "rd",
+   "rim",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "lm2"
+  ]
+ },
+ "mfb512": {
+  "sounds": [
+   "bd",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "sd"
+  ],
+  "aliases": []
+ },
+ "MoogConcertMateMG1": {
+  "sounds": [
+   "bd",
+   "sd"
+  ],
+  "aliases": [
+   "concertmatemg1"
+  ]
+ },
+ "mpc1000": {
+  "sounds": [
+   "bd",
+   "cp",
+   "hh",
+   "oh",
+   "perc",
+   "sd",
+   "sh"
+  ],
+  "aliases": []
+ },
+ "OberheimDMX": {
+  "sounds": [
+   "",
+   "bd",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "rd",
+   "rim",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "dmx"
+  ]
+ },
+ "RhodesPolaris": {
+  "sounds": [
+   "bd",
+   "misc",
+   "sd"
+  ],
+  "aliases": [
+   "polaris"
+  ]
+ },
+ "RhythmAce": {
+  "sounds": [
+   "bd",
+   "hh",
+   "ht",
+   "lt",
+   "oh",
+   "perc",
+   "sd"
+  ],
+  "aliases": [
+   "ace"
+  ]
+ },
+ "RolandCompurhythm1000": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd"
+  ],
+  "aliases": [
+   "compurhythm1000"
+  ]
+ },
+ "RolandCompurhythm78": {
+  "sounds": [
+   "bd",
+   "cb",
+   "hh",
+   "misc",
+   "oh",
+   "perc",
+   "sd",
+   "tb"
+  ],
+  "aliases": [
+   "compurhythm78"
+  ]
+ },
+ "RolandCompurhythm8000": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "perc",
+   "rim",
+   "sd"
+  ],
+  "aliases": [
+   "compurhythm8000"
+  ]
+ },
+ "RolandD110": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cr",
+   "hh",
+   "lt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "d110"
+  ]
+ },
+ "RolandD70": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "lt",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd",
+   "sh"
+  ],
+  "aliases": [
+   "d70"
+  ]
+ },
+ "RolandDDR30": {
+  "sounds": [
+   "bd",
+   "ht",
+   "lt",
+   "sd"
+  ],
+  "aliases": [
+   "ddr30"
+  ]
+ },
+ "RolandJD990": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "misc",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "sd",
+   "tb"
+  ],
+  "aliases": [
+   "jd990"
+  ]
+ },
+ "RolandMC202": {
+  "sounds": [
+   "bd",
+   "ht",
+   "perc"
+  ],
+  "aliases": [
+   "mc202"
+  ]
+ },
+ "RolandMC303": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "fx",
+   "hh",
+   "ht",
+   "lt",
+   "misc",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "mc303"
+  ]
+ },
+ "RolandMT32": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "mt32"
+  ]
+ },
+ "RolandR8": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "r8"
+  ]
+ },
+ "RolandS50": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "ht",
+   "lt",
+   "misc",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "s50"
+  ]
+ },
+ "RolandSH09": {
+  "sounds": [
+   "bd"
+  ],
+  "aliases": [
+   "sh09"
+  ]
+ },
+ "RolandSystem100": {
+  "sounds": [
+   "bd",
+   "hh",
+   "misc",
+   "oh",
+   "perc",
+   "sd"
+  ],
+  "aliases": [
+   "system100"
+  ]
+ },
+ "RolandTR505": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd"
+  ],
+  "aliases": [
+   "tr505"
+  ]
+ },
+ "RolandTR606": {
+  "sounds": [
+   "bd",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "oh",
+   "sd"
+  ],
+  "aliases": [
+   "tr606"
+  ]
+ },
+ "RolandTR626": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "tr626"
+  ]
+ },
+ "RolandTR707": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "rim",
+   "sd",
+   "tb"
+  ],
+  "aliases": [
+   "tr707"
+  ]
+ },
+ "RolandTR727": {
+  "sounds": [
+   "perc",
+   "sh"
+  ],
+  "aliases": [
+   "tr727"
+  ]
+ },
+ "RolandTR808": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "perc",
+   "rim",
+   "sd",
+   "sh"
+  ],
+  "aliases": [
+   "tr808"
+  ]
+ },
+ "RolandTR909": {
+  "sounds": [
+   "bd",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "rd",
+   "rim",
+   "sd"
+  ],
+  "aliases": [
+   "tr909"
+  ]
+ },
+ "SakataDPM48": {
+  "sounds": [
+   "bd",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd",
+   "sh"
+  ],
+  "aliases": [
+   "dpm48"
+  ]
+ },
+ "SequentialCircuitsDrumtracks": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "oh",
+   "rd",
+   "rim",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "circuitsdrumtracks"
+  ]
+ },
+ "SequentialCircuitsTom": {
+  "sounds": [
+   "bd",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "oh",
+   "sd"
+  ],
+  "aliases": [
+   "circuitstom"
+  ]
+ },
+ "SergeModular": {
+  "sounds": [
+   "bd",
+   "misc",
+   "perc"
+  ],
+  "aliases": [
+   "serge"
+  ]
+ },
+ "SimmonsSDS400": {
+  "sounds": [
+   "ht",
+   "lt",
+   "mt",
+   "sd"
+  ],
+  "aliases": [
+   "sds400"
+  ]
+ },
+ "SimmonsSDS5": {
+  "sounds": [
+   "bd",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "rim",
+   "sd"
+  ],
+  "aliases": [
+   "sds5"
+  ]
+ },
+ "snare": {
+  "sounds": [
+   "hi",
+   "low",
+   "modern",
+   "rim"
+  ],
+  "aliases": []
+ },
+ "SoundmastersR88": {
+  "sounds": [
+   "bd",
+   "cr",
+   "hh",
+   "oh",
+   "sd"
+  ],
+  "aliases": [
+   "r88"
+  ]
+ },
+ "tom": {
+  "sounds": [
+   "mallet",
+   "rim",
+   "stick"
+  ],
+  "aliases": []
+ },
+ "tom2": {
+  "sounds": [
+   "mallet",
+   "rim",
+   "stick"
+  ],
+  "aliases": []
+ },
+ "UnivoxMicroRhythmer12": {
+  "sounds": [
+   "bd",
+   "hh",
+   "oh",
+   "sd"
+  ],
+  "aliases": [
+   "microrhythmer12"
+  ]
+ },
+ "ViscoSpaceDrum": {
+  "sounds": [
+   "bd",
+   "cb",
+   "hh",
+   "ht",
+   "lt",
+   "misc",
+   "mt",
+   "oh",
+   "perc",
+   "rim",
+   "sd"
+  ],
+  "aliases": [
+   "spacedrum"
+  ]
+ },
+ "XdrumLM8953": {
+  "sounds": [
+   "bd",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "rd",
+   "rim",
+   "sd",
+   "tb"
+  ],
+  "aliases": [
+   "lm8953"
+  ]
+ },
+ "YamahaRM50": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "misc",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "rm50"
+  ]
+ },
+ "YamahaRX21": {
+  "sounds": [
+   "bd",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "mt",
+   "oh",
+   "sd"
+  ],
+  "aliases": [
+   "rx21"
+  ]
+ },
+ "YamahaRX5": {
+  "sounds": [
+   "bd",
+   "cb",
+   "fx",
+   "hh",
+   "lt",
+   "oh",
+   "rim",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "rx5"
+  ]
+ },
+ "YamahaRY30": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "hh",
+   "ht",
+   "lt",
+   "misc",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "ry30"
+  ]
+ },
+ "YamahaTG33": {
+  "sounds": [
+   "bd",
+   "cb",
+   "cp",
+   "cr",
+   "fx",
+   "ht",
+   "lt",
+   "misc",
+   "mt",
+   "oh",
+   "perc",
+   "rd",
+   "rim",
+   "sd",
+   "sh",
+   "tb"
+  ],
+  "aliases": [
+   "tg33"
+  ]
+ }
+}

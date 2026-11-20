@@ -1,8 +1,9 @@
 -- Strudel key maps for the dev page (node dev.mjs). Your vimrc loads this file for the .js and .ts files in this folder.
--- <leader>mm saves and plays, like Ctrl+Enter. If no dev page is open for the file, it opens one in your browser.
--- <leader>mp stops all dev pages, like Ctrl+.
+-- <leader>mp saves and plays, like Ctrl+Enter. If no dev page is open for the file, it opens one in your browser.
+-- <leader>mm stops all dev pages, like Ctrl+.
 -- <leader>my copies the file as JavaScript (a .ts file without its types), with lib.ts in front, to paste into strudel.cc.
 -- <leader>ml opens or closes a split with the log of the dev pages: console.log in the sketch, errors, play and stop.
+-- <leader>mb lists the drum banks that have all the sounds of this paragraph, and puts the one you pick in .bank("...").
 local root = vim.fs.dirname(debug.getinfo(1, 'S').source:sub(2))
 local server = 'http://localhost:8001/'
 
@@ -71,3 +72,88 @@ vim.keymap.set('n', '<leader>ml', function()
   vim.cmd('normal! G') -- on the last line, so the split follows the new lines
   vim.api.nvim_set_current_win(code_win)
 end, { buffer = true, desc = 'Strudel: open or close the log of the dev pages' })
+
+-- <leader>mb: the drum banks that have all the sounds in the s("...") and sound("...") strings of this paragraph (the
+-- lines between blank lines). Pick one, and it goes in the .bank("...") of the paragraph, or after the s("...") call.
+local banks = vim.json.decode(table.concat(vim.fn.readfile(root .. '/banks.json'), '\n'))
+
+local function paragraph()
+  local row = vim.api.nvim_win_get_cursor(0)[1]
+  local count = vim.api.nvim_buf_line_count(0)
+  local function blank(n) return not vim.fn.getline(n):match('%S') end
+  local first, last = row, row
+  while first > 1 and not blank(first - 1) do first = first - 1 end
+  while last < count and not blank(last + 1) do last = last + 1 end
+  return first, last
+end
+
+-- The sound names in the s("...") and sound("...") strings, without rests, numbers and :n
+local function sounds_in(lines)
+  local code = {}
+  for _, l in ipairs(lines) do
+    if not l:match('^%s*//') then table.insert(code, (l:gsub('%s+//.*$', ''))) end
+  end
+  code = table.concat(code, '\n')
+  local found, list = {}, {}
+  for _, name in ipairs({ 's', 'sound' }) do
+    for _, mini in code:gmatch('%f[%w_]' .. name .. '%s*%(([\"`])(.-)%1') do
+      for word in mini:gsub(':[%w%.]+', ''):gmatch('%a[%w_]*') do
+        word = word:lower()
+        if not found[word] then found[word] = true; table.insert(list, word) end
+      end
+    end
+  end
+  return list
+end
+
+vim.keymap.set('n', '<leader>mb', function()
+  local first, last = paragraph()
+  local lines = vim.api.nvim_buf_get_lines(0, first - 1, last, false)
+  local found = sounds_in(lines)
+  if #found == 0 then return fail('no s("...") or sound("...") in this paragraph') end
+  -- Sounds that no bank has (for example sawtooth or your samples) do not help to choose a bank
+  local in_a_bank = {}
+  for _, bank in pairs(banks) do for _, s in ipairs(bank.sounds) do in_a_bank[s] = true end end
+  local wanted = vim.tbl_filter(function(s) return in_a_bank[s] end, found)
+  local other = vim.tbl_filter(function(s) return not in_a_bank[s] end, found)
+  if #wanted == 0 then return fail('no bank has any of: ' .. table.concat(found, ' ')) end
+
+  local choices = {}
+  for name, bank in pairs(banks) do
+    local has = {}
+    for _, s in ipairs(bank.sounds) do has[s] = true end
+    local missing = vim.tbl_filter(function(s) return not has[s] end, wanted)
+    if #missing < #wanted then table.insert(choices, { name = name, missing = missing }) end
+  end
+  if #choices == 0 then return fail('no bank has any of: ' .. table.concat(wanted, ' ')) end
+  table.sort(choices, function(a, b)
+    if #a.missing ~= #b.missing then return #a.missing < #b.missing end
+    return a.name:lower() < b.name:lower()
+  end)
+  -- When some banks have all the sounds, show those, and after them only the banks that miss one sound
+  if #choices[1].missing == 0 then
+    choices = vim.tbl_filter(function(c) return #c.missing <= 1 end, choices)
+  end
+
+  vim.ui.select(choices, {
+    prompt = 'Banks for ' .. table.concat(wanted, ' ')
+      .. (#other == 0 and '' or (' (no bank has ' .. table.concat(other, ' ') .. ')')) .. ':',
+    format_item = function(c) return c.name .. (#c.missing == 0 and '' or ('  (no ' .. table.concat(c.missing, ' ') .. ')')) end,
+  }, function(choice)
+    if not choice then return end
+    local bank = '.bank("' .. choice.name .. '")'
+    -- Change the .bank("...") of the paragraph, or put one after the first s("...") call
+    for i, l in ipairs(lines) do
+      local changed, n = l:gsub('%.bank%s*%(([\"`]).-%1%)', bank, 1)
+      if n == 1 then return vim.api.nvim_buf_set_lines(0, first + i - 2, first + i - 1, false, { changed }) end
+    end
+    for i, l in ipairs(lines) do
+      local _, stop = l:find('%f[%w_]s%s*%(([\"`]).-%1%)')
+      if not stop then _, stop = l:find('%f[%w_]sound%s*%(([\"`]).-%1%)') end
+      if stop then
+        return vim.api.nvim_buf_set_lines(0, first + i - 2, first + i - 1, false, { l:sub(1, stop) .. bank .. l:sub(stop + 1) })
+      end
+    end
+    fail('no place for ' .. bank .. ' in this paragraph. Add it yourself')
+  end)
+end, { buffer = true, desc = 'Strudel: the drum banks that have the sounds of this paragraph' })

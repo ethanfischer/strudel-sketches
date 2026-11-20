@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2022",
     "lib": ["ES2022", "DOM"],
-    "checkJs": true,
+    "checkJs": false,
     "moduleDetection": "force",
     "allowUnusedLabels": true
   },

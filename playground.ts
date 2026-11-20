@@ -25,14 +25,16 @@ $drums: stack(
 )
 .bank("YamahaRM50")
 
-const flMel = "2 [- 2] [3 2] 0 [- 1] [2 1]  0 -";
-const flTrn = "0 [- 0] [0 0] 0 [- 0] [0 0]  0 -";
+const flMel = "2 [- 2] [3 2] 3 [- 2] [3 2] 3 -";
+const flTrn = "0 [- 0] [0 0] -2 [- 0] [0 0] 0 -";
 $flute: n(flMel)
             .slow(2)
             .set(chords)
             //.scale("pentatonic")
             .voicing()
             .transpose(flTrn.slow(2))
-            .midi('IAC Driver Bus 1') // to GarageBand: the flute is the software instrument on the selected track
+            .attack(0)
+            .release(.25)
+            .sound("gm_flute")
 
-all(x => x.swing(4).room(1).roomsize(1))
+all(x => x.swing(4)).room(6).roomsize(17)

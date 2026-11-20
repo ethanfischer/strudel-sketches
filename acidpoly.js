@@ -1,3 +1,4 @@
+// @ts-nocheck: the game has no types yet. Remove this line to see its type errors
 //"Acid Poly" @by Pink Chaos
 
 // ============================================================

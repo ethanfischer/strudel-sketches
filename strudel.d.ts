@@ -1,6 +1,9 @@
 // Strudel names for editor completion and hover docs. Made from @strudel/repl 1.3.0: the names that it defines
 // at run time (also setcpm, hush and the others that the REPL adds when it runs code), and its docs. jsconfig.json adds this file to the .js files here. Do not edit by hand.
 
+// An argument with no docs: a pattern function, or any value
+type Arg = ((pat: Pattern, ...args: any[]) => any) | string | number | boolean | object | null | undefined
+
 interface Pattern {
   /**
    * Establishes an FX chain. Can be called by chaining .FX(fx1).FX(fx2)..
@@ -23,62 +26,62 @@ interface Pattern {
    *   .FX(lpf(500).lpe(4).lpa(1).lpd(2)) // then lpf
    *   .FX(distort(1)) // then distort
    */
-  FX(...args: any[]): Pattern
-  FXr(...args: any[]): Pattern
-  FXrel(...args: any[]): Pattern
-  FXrelease(...args: any[]): Pattern
-  _ad(...args: any[]): Pattern
-  _add(...args: any[]): Pattern
-  _adsr(...args: any[]): Pattern
-  _almostAlways(...args: any[]): Pattern
-  _almostNever(...args: any[]): Pattern
-  _always(...args: any[]): Pattern
-  _and(...args: any[]): Pattern
-  _apply(...args: any[]): Pattern
-  _applyN(...args: any[]): Pattern
-  _ar(...args: any[]): Pattern
-  _arp(...args: any[]): Pattern
-  _arpWith(...args: any[]): Pattern
-  _as(...args: any[]): Pattern
-  _band(...args: any[]): Pattern
-  _beat(...args: any[]): Pattern
-  _bite(...args: any[]): Pattern
-  _bjork(...args: any[]): Pattern
-  _blshift(...args: any[]): Pattern
-  _bor(...args: any[]): Pattern
-  _brshift(...args: any[]): Pattern
-  _bxor(...args: any[]): Pattern
-  _bypass(...args: any[]): Pattern
-  _chop(...args: any[]): Pattern
-  _chunk(...args: any[]): Pattern
-  _chunkBack(...args: any[]): Pattern
-  _chunkBackInto(...args: any[]): Pattern
-  _chunkInto(...args: any[]): Pattern
-  _chunkback(...args: any[]): Pattern
-  _chunkbackinto(...args: any[]): Pattern
-  _chunkinto(...args: any[]): Pattern
-  _compress(...args: any[]): Pattern
-  _compressSpan(...args: any[]): Pattern
-  _compressspan(...args: any[]): Pattern
-  _contract(...args: any[]): Pattern
-  _control(...args: any[]): Pattern
-  _cpm(...args: any[]): Pattern
-  _degradeBy(...args: any[]): Pattern
-  _degradeByWith(...args: any[]): Pattern
-  _density(...args: any[]): Pattern
-  _div(...args: any[]): Pattern
-  _drop(...args: any[]): Pattern
-  _ds(...args: any[]): Pattern
-  _early(...args: any[]): Pattern
-  _echo(...args: any[]): Pattern
-  _echoWith(...args: any[]): Pattern
-  _echowith(...args: any[]): Pattern
-  _eish(...args: any[]): Pattern
-  _eq(...args: any[]): Pattern
-  _eqt(...args: any[]): Pattern
-  _euclid(...args: any[]): Pattern
-  _euclidLegato(...args: any[]): Pattern
-  _euclidLegatoRot(...args: any[]): Pattern
+  FX(...more: Arg[]): Pattern
+  FXr(...more: Arg[]): Pattern
+  FXrel(...more: Arg[]): Pattern
+  FXrelease(...more: Arg[]): Pattern
+  _ad(...more: Arg[]): Pattern
+  _add(...more: Arg[]): Pattern
+  _adsr(...more: Arg[]): Pattern
+  _almostAlways(...more: Arg[]): Pattern
+  _almostNever(...more: Arg[]): Pattern
+  _always(...more: Arg[]): Pattern
+  _and(...more: Arg[]): Pattern
+  _apply(...more: Arg[]): Pattern
+  _applyN(...more: Arg[]): Pattern
+  _ar(...more: Arg[]): Pattern
+  _arp(...more: Arg[]): Pattern
+  _arpWith(...more: Arg[]): Pattern
+  _as(...more: Arg[]): Pattern
+  _band(...more: Arg[]): Pattern
+  _beat(...more: Arg[]): Pattern
+  _bite(...more: Arg[]): Pattern
+  _bjork(...more: Arg[]): Pattern
+  _blshift(...more: Arg[]): Pattern
+  _bor(...more: Arg[]): Pattern
+  _brshift(...more: Arg[]): Pattern
+  _bxor(...more: Arg[]): Pattern
+  _bypass(...more: Arg[]): Pattern
+  _chop(...more: Arg[]): Pattern
+  _chunk(...more: Arg[]): Pattern
+  _chunkBack(...more: Arg[]): Pattern
+  _chunkBackInto(...more: Arg[]): Pattern
+  _chunkInto(...more: Arg[]): Pattern
+  _chunkback(...more: Arg[]): Pattern
+  _chunkbackinto(...more: Arg[]): Pattern
+  _chunkinto(...more: Arg[]): Pattern
+  _compress(...more: Arg[]): Pattern
+  _compressSpan(...more: Arg[]): Pattern
+  _compressspan(...more: Arg[]): Pattern
+  _contract(...more: Arg[]): Pattern
+  _control(...more: Arg[]): Pattern
+  _cpm(...more: Arg[]): Pattern
+  _degradeBy(...more: Arg[]): Pattern
+  _degradeByWith(...more: Arg[]): Pattern
+  _density(...more: Arg[]): Pattern
+  _div(...more: Arg[]): Pattern
+  _drop(...more: Arg[]): Pattern
+  _ds(...more: Arg[]): Pattern
+  _early(...more: Arg[]): Pattern
+  _echo(...more: Arg[]): Pattern
+  _echoWith(...more: Arg[]): Pattern
+  _echowith(...more: Arg[]): Pattern
+  _eish(...more: Arg[]): Pattern
+  _eq(...more: Arg[]): Pattern
+  _eqt(...more: Arg[]): Pattern
+  _euclid(...more: Arg[]): Pattern
+  _euclidLegato(...more: Arg[]): Pattern
+  _euclidLegatoRot(...more: Arg[]): Pattern
   /**
    *
    * @example
@@ -145,158 +148,158 @@ interface Pattern {
    * // Another rhythm necklace of the Aka Pygmies of the upper Sangha.
    * note("c3").euclidRot(13,24,5)
    */
-  _euclidRot(...args: any[]): Pattern
-  _euclidish(...args: any[]): Pattern
-  _euclidrot(...args: any[]): Pattern
-  _every(...args: any[]): Pattern
-  _expand(...args: any[]): Pattern
-  _extend(...args: any[]): Pattern
-  _fast(...args: any[]): Pattern
-  _fastChunk(...args: any[]): Pattern
-  _fastGap(...args: any[]): Pattern
-  _fastchunk(...args: any[]): Pattern
-  _fastgap(...args: any[]): Pattern
-  _filter(...args: any[]): Pattern
-  _filterWhen(...args: any[]): Pattern
-  _firstOf(...args: any[]): Pattern
-  _focus(...args: any[]): Pattern
-  _focusSpan(...args: any[]): Pattern
-  _focusspan(...args: any[]): Pattern
-  _func(...args: any[]): Pattern
-  _grow(...args: any[]): Pattern
-  _gt(...args: any[]): Pattern
-  _gte(...args: any[]): Pattern
-  _hsl(...args: any[]): Pattern
-  _hsla(...args: any[]): Pattern
-  _hurry(...args: any[]): Pattern
-  _inhabit(...args: any[]): Pattern
-  _inhabitmod(...args: any[]): Pattern
-  _inside(...args: any[]): Pattern
-  _iter(...args: any[]): Pattern
-  _iterBack(...args: any[]): Pattern
-  _iterback(...args: any[]): Pattern
-  _jux(...args: any[]): Pattern
-  _juxBy(...args: any[]): Pattern
-  _juxby(...args: any[]): Pattern
-  _keep(...args: any[]): Pattern
-  _keepif(...args: any[]): Pattern
-  _lastOf(...args: any[]): Pattern
-  _late(...args: any[]): Pattern
-  _linger(...args: any[]): Pattern
-  _log2(...args: any[]): Pattern
-  _loopAt(...args: any[]): Pattern
-  _loopAtCps(...args: any[]): Pattern
-  _loopat(...args: any[]): Pattern
-  _loopatcps(...args: any[]): Pattern
-  _lt(...args: any[]): Pattern
-  _lte(...args: any[]): Pattern
-  _mod(...args: any[]): Pattern
-  _moveXY(...args: any[]): Pattern
-  _mul(...args: any[]): Pattern
-  _ne(...args: any[]): Pattern
-  _net(...args: any[]): Pattern
-  _never(...args: any[]): Pattern
-  _off(...args: any[]): Pattern
-  _often(...args: any[]): Pattern
-  _opIn(...args: any[]): Pattern
-  _opMix(...args: any[]): Pattern
-  _opOut(...args: any[]): Pattern
-  _opPoly(...args: any[]): Pattern
-  _opReset(...args: any[]): Pattern
-  _opRestart(...args: any[]): Pattern
-  _opSqueeze(...args: any[]): Pattern
-  _opSqueezeOut(...args: any[]): Pattern
-  _or(...args: any[]): Pattern
-  _outside(...args: any[]): Pattern
-  _pace(...args: any[]): Pattern
-  _pianoroll(...args: any[]): Pattern
-  _pick(...args: any[]): Pattern
-  _pickF(...args: any[]): Pattern
-  _pickOut(...args: any[]): Pattern
-  _pickReset(...args: any[]): Pattern
-  _pickRestart(...args: any[]): Pattern
-  _pickSqueeze(...args: any[]): Pattern
-  _pickmod(...args: any[]): Pattern
-  _pickmodF(...args: any[]): Pattern
-  _pickmodOut(...args: any[]): Pattern
-  _pickmodReset(...args: any[]): Pattern
-  _pickmodRestart(...args: any[]): Pattern
-  _pickmodSqueeze(...args: any[]): Pattern
-  _pitchwheel(...args: any[]): Pattern
-  _ply(...args: any[]): Pattern
-  _plyForEach(...args: any[]): Pattern
-  _plyWith(...args: any[]): Pattern
-  _plyforeach(...args: any[]): Pattern
-  _plywith(...args: any[]): Pattern
-  _pow(...args: any[]): Pattern
-  _pressBy(...args: any[]): Pattern
-  _punchcard(...args: any[]): Pattern
-  _range(...args: any[]): Pattern
-  _range2(...args: any[]): Pattern
-  _rangex(...args: any[]): Pattern
-  _rarely(...args: any[]): Pattern
-  _repeatCycles(...args: any[]): Pattern
-  _replicate(...args: any[]): Pattern
-  _rescale(...args: any[]): Pattern
-  _rib(...args: any[]): Pattern
-  _ribbon(...args: any[]): Pattern
-  _rootNotes(...args: any[]): Pattern
-  _scale(...args: any[]): Pattern
-  _scaleTrans(...args: any[]): Pattern
-  _scaleTranspose(...args: any[]): Pattern
-  _scope(...args: any[]): Pattern
-  _scramble(...args: any[]): Pattern
-  _scrub(...args: any[]): Pattern
-  _seed(...args: any[]): Pattern
-  _seg(...args: any[]): Pattern
-  _segment(...args: any[]): Pattern
-  _set(...args: any[]): Pattern
-  _shrink(...args: any[]): Pattern
-  _shuffle(...args: any[]): Pattern
-  _slice(...args: any[]): Pattern
-  _slow(...args: any[]): Pattern
-  _slowChunk(...args: any[]): Pattern
-  _slowchunk(...args: any[]): Pattern
-  _someCycles(...args: any[]): Pattern
-  _someCyclesBy(...args: any[]): Pattern
-  _sometimes(...args: any[]): Pattern
-  _sometimesBy(...args: any[]): Pattern
-  _sparsity(...args: any[]): Pattern
-  _speak(...args: any[]): Pattern
-  _spectrum(...args: any[]): Pattern
-  _spiral(...args: any[]): Pattern
-  _splice(...args: any[]): Pattern
-  _strans(...args: any[]): Pattern
-  _striate(...args: any[]): Pattern
-  _stut(...args: any[]): Pattern
-  _stutWith(...args: any[]): Pattern
-  _stutwith(...args: any[]): Pattern
-  _sub(...args: any[]): Pattern
-  _swing(...args: any[]): Pattern
-  _swingBy(...args: any[]): Pattern
-  _sysex(...args: any[]): Pattern
-  _take(...args: any[]): Pattern
-  _timeline(...args: any[]): Pattern
-  _trans(...args: any[]): Pattern
-  _transpose(...args: any[]): Pattern
-  _undegradeBy(...args: any[]): Pattern
-  _voicings(...args: any[]): Pattern
-  _when(...args: any[]): Pattern
-  _whenKey(...args: any[]): Pattern
-  _within(...args: any[]): Pattern
-  _zoom(...args: any[]): Pattern
-  _zoomArc(...args: any[]): Pattern
-  _zoomIn(...args: any[]): Pattern
-  _zoomarc(...args: any[]): Pattern
+  _euclidRot(...more: Arg[]): Pattern
+  _euclidish(...more: Arg[]): Pattern
+  _euclidrot(...more: Arg[]): Pattern
+  _every(...more: Arg[]): Pattern
+  _expand(...more: Arg[]): Pattern
+  _extend(...more: Arg[]): Pattern
+  _fast(...more: Arg[]): Pattern
+  _fastChunk(...more: Arg[]): Pattern
+  _fastGap(...more: Arg[]): Pattern
+  _fastchunk(...more: Arg[]): Pattern
+  _fastgap(...more: Arg[]): Pattern
+  _filter(...more: Arg[]): Pattern
+  _filterWhen(...more: Arg[]): Pattern
+  _firstOf(...more: Arg[]): Pattern
+  _focus(...more: Arg[]): Pattern
+  _focusSpan(...more: Arg[]): Pattern
+  _focusspan(...more: Arg[]): Pattern
+  _func(...more: Arg[]): Pattern
+  _grow(...more: Arg[]): Pattern
+  _gt(...more: Arg[]): Pattern
+  _gte(...more: Arg[]): Pattern
+  _hsl(...more: Arg[]): Pattern
+  _hsla(...more: Arg[]): Pattern
+  _hurry(...more: Arg[]): Pattern
+  _inhabit(...more: Arg[]): Pattern
+  _inhabitmod(...more: Arg[]): Pattern
+  _inside(...more: Arg[]): Pattern
+  _iter(...more: Arg[]): Pattern
+  _iterBack(...more: Arg[]): Pattern
+  _iterback(...more: Arg[]): Pattern
+  _jux(...more: Arg[]): Pattern
+  _juxBy(...more: Arg[]): Pattern
+  _juxby(...more: Arg[]): Pattern
+  _keep(...more: Arg[]): Pattern
+  _keepif(...more: Arg[]): Pattern
+  _lastOf(...more: Arg[]): Pattern
+  _late(...more: Arg[]): Pattern
+  _linger(...more: Arg[]): Pattern
+  _log2(...more: Arg[]): Pattern
+  _loopAt(...more: Arg[]): Pattern
+  _loopAtCps(...more: Arg[]): Pattern
+  _loopat(...more: Arg[]): Pattern
+  _loopatcps(...more: Arg[]): Pattern
+  _lt(...more: Arg[]): Pattern
+  _lte(...more: Arg[]): Pattern
+  _mod(...more: Arg[]): Pattern
+  _moveXY(...more: Arg[]): Pattern
+  _mul(...more: Arg[]): Pattern
+  _ne(...more: Arg[]): Pattern
+  _net(...more: Arg[]): Pattern
+  _never(...more: Arg[]): Pattern
+  _off(...more: Arg[]): Pattern
+  _often(...more: Arg[]): Pattern
+  _opIn(...more: Arg[]): Pattern
+  _opMix(...more: Arg[]): Pattern
+  _opOut(...more: Arg[]): Pattern
+  _opPoly(...more: Arg[]): Pattern
+  _opReset(...more: Arg[]): Pattern
+  _opRestart(...more: Arg[]): Pattern
+  _opSqueeze(...more: Arg[]): Pattern
+  _opSqueezeOut(...more: Arg[]): Pattern
+  _or(...more: Arg[]): Pattern
+  _outside(...more: Arg[]): Pattern
+  _pace(...more: Arg[]): Pattern
+  _pianoroll(...more: Arg[]): Pattern
+  _pick(...more: Arg[]): Pattern
+  _pickF(...more: Arg[]): Pattern
+  _pickOut(...more: Arg[]): Pattern
+  _pickReset(...more: Arg[]): Pattern
+  _pickRestart(...more: Arg[]): Pattern
+  _pickSqueeze(...more: Arg[]): Pattern
+  _pickmod(...more: Arg[]): Pattern
+  _pickmodF(...more: Arg[]): Pattern
+  _pickmodOut(...more: Arg[]): Pattern
+  _pickmodReset(...more: Arg[]): Pattern
+  _pickmodRestart(...more: Arg[]): Pattern
+  _pickmodSqueeze(...more: Arg[]): Pattern
+  _pitchwheel(...more: Arg[]): Pattern
+  _ply(...more: Arg[]): Pattern
+  _plyForEach(...more: Arg[]): Pattern
+  _plyWith(...more: Arg[]): Pattern
+  _plyforeach(...more: Arg[]): Pattern
+  _plywith(...more: Arg[]): Pattern
+  _pow(...more: Arg[]): Pattern
+  _pressBy(...more: Arg[]): Pattern
+  _punchcard(...more: Arg[]): Pattern
+  _range(...more: Arg[]): Pattern
+  _range2(...more: Arg[]): Pattern
+  _rangex(...more: Arg[]): Pattern
+  _rarely(...more: Arg[]): Pattern
+  _repeatCycles(...more: Arg[]): Pattern
+  _replicate(...more: Arg[]): Pattern
+  _rescale(...more: Arg[]): Pattern
+  _rib(...more: Arg[]): Pattern
+  _ribbon(...more: Arg[]): Pattern
+  _rootNotes(...more: Arg[]): Pattern
+  _scale(...more: Arg[]): Pattern
+  _scaleTrans(...more: Arg[]): Pattern
+  _scaleTranspose(...more: Arg[]): Pattern
+  _scope(...more: Arg[]): Pattern
+  _scramble(...more: Arg[]): Pattern
+  _scrub(...more: Arg[]): Pattern
+  _seed(...more: Arg[]): Pattern
+  _seg(...more: Arg[]): Pattern
+  _segment(...more: Arg[]): Pattern
+  _set(...more: Arg[]): Pattern
+  _shrink(...more: Arg[]): Pattern
+  _shuffle(...more: Arg[]): Pattern
+  _slice(...more: Arg[]): Pattern
+  _slow(...more: Arg[]): Pattern
+  _slowChunk(...more: Arg[]): Pattern
+  _slowchunk(...more: Arg[]): Pattern
+  _someCycles(...more: Arg[]): Pattern
+  _someCyclesBy(...more: Arg[]): Pattern
+  _sometimes(...more: Arg[]): Pattern
+  _sometimesBy(...more: Arg[]): Pattern
+  _sparsity(...more: Arg[]): Pattern
+  _speak(...more: Arg[]): Pattern
+  _spectrum(...more: Arg[]): Pattern
+  _spiral(...more: Arg[]): Pattern
+  _splice(...more: Arg[]): Pattern
+  _strans(...more: Arg[]): Pattern
+  _striate(...more: Arg[]): Pattern
+  _stut(...more: Arg[]): Pattern
+  _stutWith(...more: Arg[]): Pattern
+  _stutwith(...more: Arg[]): Pattern
+  _sub(...more: Arg[]): Pattern
+  _swing(...more: Arg[]): Pattern
+  _swingBy(...more: Arg[]): Pattern
+  _sysex(...more: Arg[]): Pattern
+  _take(...more: Arg[]): Pattern
+  _timeline(...more: Arg[]): Pattern
+  _trans(...more: Arg[]): Pattern
+  _transpose(...more: Arg[]): Pattern
+  _undegradeBy(...more: Arg[]): Pattern
+  _voicings(...more: Arg[]): Pattern
+  _when(...more: Arg[]): Pattern
+  _whenKey(...more: Arg[]): Pattern
+  _within(...more: Arg[]): Pattern
+  _zoom(...more: Arg[]): Pattern
+  _zoomArc(...more: Arg[]): Pattern
+  _zoomIn(...more: Arg[]): Pattern
+  _zoomarc(...more: Arg[]): Pattern
   /**
    * A pattern of numbers that speed up (or slow down) samples while they play. Currently only supported by osc / superdirt.
    * @param amount {number | Pattern} acceleration.
    * @example
    * s("sax").accelerate("<0 1 2 4 8 16>").slow(2).osc()
    */
-  accelerate(amount?: any, ...more: any[]): Pattern
-  activeLabel(...args: any[]): Pattern
-  ad(...args: any[]): Pattern
+  accelerate(amount?: any, ...more: Arg[]): Pattern
+  activeLabel(...more: Arg[]): Pattern
+  ad(...more: Arg[]): Pattern
   /**
    * Assumes a pattern of numbers. Adds the given number to each item in the pattern.
    * @example
@@ -310,7 +313,7 @@ interface Pattern {
    * // Behind the scenes, the notes are converted to midi numbers:
    * // note("48 52 55".add("<0 5 7 0>"))
    */
-  add(...args: any[]): Pattern
+  add(...more: Arg[]): Pattern
   /**
    * ADSR envelope: Combination of Attack, Decay, Sustain, and Release.
    * @param time {number | Pattern} attack time in seconds
@@ -320,43 +323,43 @@ interface Pattern {
    * @example
    * note("[c3 bb2 f3 eb3]*2").sound("sawtooth").lpf(600).adsr(".1:.1:.5:.2")
    */
-  adsr(time?: any, time?: any, gain?: any, time?: any, ...more: any[]): Pattern
+  adsr(time?: any, time_?: any, gain?: any, time__?: any, ...more: Arg[]): Pattern
   /**
    * Shorthand for .sometimesBy(0.9, fn)
    * @example
    * s("hh*8").almostAlways(x=>x.speed("0.5"))
    */
-  almostAlways(...args: any[]): Pattern
+  almostAlways(...more: Arg[]): Pattern
   /**
    * Shorthand for .sometimesBy(0.1, fn)
    * @example
    * s("hh*8").almostNever(x=>x.speed("0.5"))
    */
-  almostNever(...args: any[]): Pattern
+  almostNever(...more: Arg[]): Pattern
   /**
    * Shorthand for .sometimesBy(1, fn) (always calls fn)
    * @example
    * s("hh*8").always(x=>x.speed("0.5"))
    */
-  always(...args: any[]): Pattern
+  always(...more: Arg[]): Pattern
   /**
    * Like gain, but linear.
    * @param amount {number | Pattern} gain.
    * @example
    * s("bd*8").amp(".1*2 .5 .1*2 .5 .1 .5").osc()
    */
-  amp(amount?: any, ...more: any[]): Pattern
-  analyze(...args: any[]): Pattern
+  amp(amount?: any, ...more: Arg[]): Pattern
+  analyze(...more: Arg[]): Pattern
   /**
    * The top note to align the voicing to. Defaults to c5
    * @param anchorNote {string | Pattern} the note to align the voicings to
    * @example
    * anchor("<c4 g4 c5 g5>").chord("C").voicing()
    */
-  anchor(anchorNote?: any, ...more: any[]): Pattern
-  and(...args: any[]): Pattern
-  angle(...args: any[]): Pattern
-  animate(...args: any[]): Pattern
+  anchor(anchorNote?: any, ...more: Arg[]): Pattern
+  and(...more: Arg[]): Pattern
+  angle(...more: Arg[]): Pattern
+  animate(...more: Arg[]): Pattern
   /**
    * When this method is called on a pattern of functions, it matches its haps
    * with those in the given pattern of values.  A new pattern is returned, with
@@ -366,7 +369,7 @@ interface Pattern {
    * intersection. This applies to both the part and the whole timespan.
    * @param pat_val {Pattern}
    */
-  appBoth(pat_val?: any, ...more: any[]): Pattern
+  appBoth(pat_val?: any, ...more: Arg[]): Pattern
   /**
    * As with appBoth, but the whole timespan is not the intersection,
    * but the timespan from the function of patterns that this method is called
@@ -375,14 +378,14 @@ interface Pattern {
    * hand or inner pattern).
    * @param pat_val {Pattern}
    */
-  appLeft(pat_val?: any, ...more: any[]): Pattern
+  appLeft(pat_val?: any, ...more: Arg[]): Pattern
   /**
    * As with appLeft, but whole timespans are instead taken from the
    * pattern of values, i.e. structure is preserved from the right hand/outer
    * pattern.
    * @param pat_val {Pattern}
    */
-  appRight(pat_val?: any, ...more: any[]): Pattern
+  appRight(pat_val?: any, ...more: Arg[]): Pattern
   /**
    * Assumes 'this' is a pattern of functions, and given a function to
    * resolve wholes, applies a given pattern of values to that
@@ -390,7 +393,7 @@ interface Pattern {
    * @param whole_func {function}
    * @param func {function}
    */
-  appWhole(whole_func?: any, func?: any, ...more: any[]): Pattern
+  appWhole(whole_func?: (pat: Pattern, ...args: any[]) => any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * Layers the result of the given function(s). Like superimpose, but without the original pattern:
    * Synonyms: apply
@@ -399,23 +402,23 @@ interface Pattern {
    *   .layer(x=>x.add("0,2"))
    *   .scale('C minor').note()
    */
-  apply(...args: any[]): Pattern
-  applyN(...args: any[]): Pattern
-  ar(...args: any[]): Pattern
+  apply(...more: Arg[]): Pattern
+  applyN(...more: Arg[]): Pattern
+  ar(...more: Arg[]): Pattern
   /**
    * Selects indices in in stacked notes.
    * @example
    * note("<[c,eb,g]!2 [c,f,ab] [d,f,ab]>")
    * .arp("0 [0,2] 1 [0,2]")
    */
-  arp(...args: any[]): Pattern
+  arp(...more: Arg[]): Pattern
   /**
    * Selects indices in in stacked notes.
    * @example
    * note("<[c,eb,g]!2 [c,f,ab] [d,f,ab]>")
    * .arpWith(haps => haps[2])
    */
-  arpWith(...args: any[]): Pattern
+  arpWith(...more: Arg[]): Pattern
   /**
    * Sets properties in a batch.
    * @param mapping {String | Array} the control names that are set
@@ -424,14 +427,14 @@ interface Pattern {
    * @example
    * "{0@2 0.25 0 0.5 .3 .5}%8".as("begin").s("sax_vib").clip(1)
    */
-  as(mapping?: any, ...more: any[]): Pattern
-  asNumber(...args: any[]): Pattern
+  as(mapping?: any, ...more: Arg[]): Pattern
+  asNumber(...more: Arg[]): Pattern
   /**
    * Asymmetrical diode distortion
    * @param distortion {number | Pattern} amount of distortion to apply
    * @param volume {number | Pattern} linear postgain of the distortion
    */
-  asym(distortion?: any, volume?: any, ...more: any[]): Pattern
+  asym(distortion?: any, volume?: any, ...more: Arg[]): Pattern
   /**
    * Amplitude envelope attack time: Specifies how long it takes for the sound to reach its peak value, relative to the onset.
    * Synonyms: att
@@ -439,7 +442,7 @@ interface Pattern {
    * @example
    * note("c3 e3 f3 g3").attack("<0 .1 .5>")
    */
-  att(attack?: any, ...more: any[]): Pattern
+  att(attack?: any, ...more: Arg[]): Pattern
   /**
    * Amplitude envelope attack time: Specifies how long it takes for the sound to reach its peak value, relative to the onset.
    * Synonyms: att
@@ -447,8 +450,8 @@ interface Pattern {
    * @example
    * note("c3 e3 f3 g3").attack("<0 .1 .5>")
    */
-  attack(attack?: any, ...more: any[]): Pattern
-  band(...args: any[]): Pattern
+  attack(attack?: any, ...more: Arg[]): Pattern
+  band(...more: Arg[]): Pattern
   /**
    * Sets the center frequency of the band-pass filter. When using mininotation, you
    * can also optionally supply the 'bpq' parameter separated by ':'.
@@ -457,7 +460,7 @@ interface Pattern {
    * @example
    * s("bd sd [~ bd] sd,hh*6").bpf("<1000 2000 4000 8000>")
    */
-  bandf(frequency?: any, ...more: any[]): Pattern
+  bandf(frequency?: any, ...more: Arg[]): Pattern
   /**
    * Sets the band-pass q-factor (resonance).
    * Synonyms: bandq
@@ -465,14 +468,14 @@ interface Pattern {
    * @example
    * s("bd sd [~ bd] sd").bpf(500).bpq("<0 1 2 3>")
    */
-  bandq(q?: any, ...more: any[]): Pattern
+  bandq(q?: any, ...more: Arg[]): Pattern
   /**
    * Select the sound bank to use. To be used together with s. The bank name (+ "_") will be prepended to the value of s.
    * @param bank {string | Pattern} the name of the bank
    * @example
    * s("bd sd [~ bd] sd").bank('RolandTR909') // = s("RolandTR909_bd RolandTR909_sd")
    */
-  bank(bank?: any, ...more: any[]): Pattern
+  bank(bank?: any, ...more: Arg[]): Pattern
   /**
    * Create byte beats with custom expressions
    * Synonyms: bbexpr
@@ -480,7 +483,7 @@ interface Pattern {
    * @example
    * s("bytebeat").bbexpr('t*(t>>15^t>>66)')
    */
-  bbexpr(byteBeatExpression?: any, ...more: any[]): Pattern
+  bbexpr(byteBeatExpression?: any, ...more: Arg[]): Pattern
   /**
    * Create byte beats with custom expressions
    * Synonyms: bbst
@@ -488,7 +491,7 @@ interface Pattern {
    * @example
    * note("c3!8".add("{0 0 12 0 7 5 3}%8")).s("bytebeat:5").bbst("<3 1>".mul(10000))._scope()
    */
-  bbst(byteBeatStartTime?: any, ...more: any[]): Pattern
+  bbst(byteBeatStartTime?: any, ...more: Arg[]): Pattern
   /**
    * creates a structure pattern from divisions of a cycle
    * especially useful for creating rhythms
@@ -497,7 +500,7 @@ interface Pattern {
    * @example
    * s("sd").beat("4,12", 16)
    */
-  beat(...args: any[]): Pattern
+  beat(...more: Arg[]): Pattern
   /**
    * A pattern of numbers from 0 to 1. Skips the beginning of each sample, e.g. 0.25 to cut off the first quarter from each sample.
    * @param amount {number | Pattern} between 0 and 1, where 1 is the length of the sample
@@ -505,16 +508,16 @@ interface Pattern {
    * samples({ rave: 'rave/AREUREADY.wav' }, 'github:tidalcycles/dirt-samples')
    * s("rave").begin("<0 .25 .5 .75>").fast(2)
    */
-  begin(amount?: any, ...more: any[]): Pattern
+  begin(amount?: any, ...more: Arg[]): Pattern
   /**
    * Postgain multiplier prior to sending the signal to the audio bus.
    * Synonyms: bgain
    * @param number {number | Pattern}
    */
-  bgain(number?: any, ...more: any[]): Pattern
-  bind(...args: any[]): Pattern
-  bindWhole(...args: any[]): Pattern
-  binshift(...args: any[]): Pattern
+  bgain(number?: any, ...more: Arg[]): Pattern
+  bind(...more: Arg[]): Pattern
+  bindWhole(...more: Arg[]): Pattern
+  binshift(...more: Arg[]): Pattern
   /**
    * Splits a pattern into the given number of slices, and plays them according to a pattern of slice numbers.
    * Similar to slice, but slices up patterns rather than sound samples.
@@ -528,9 +531,9 @@ interface Pattern {
    *   .bank("RolandTR909").speed(1.2)
    *   .bite(4, "0 0 [1 2] <3 2> 0 0 [2 1] 3")
    */
-  bite(number?: any, slices?: any, ...more: any[]): Pattern
-  bjork(...args: any[]): Pattern
-  blshift(...args: any[]): Pattern
+  bite(number?: any, slices?: any, ...more: Arg[]): Pattern
+  bjork(...more: Arg[]): Pattern
+  blshift(...more: Arg[]): Pattern
   /**
    * Modulates with the output from a given bus.
    * Can be called in sequence like pat.bmod(...).bmod(...) to set up multiple modulators
@@ -556,8 +559,8 @@ interface Pattern {
    * modulator: s("one").seg(64).gain(slider(0, 0, 1)).bus(1).dry(0)
    * carrier: s("saw").bmod({ b: 1 })
    */
-  bmod(config?: any, id?: any, ...more: any[]): Pattern
-  bor(...args: any[]): Pattern
+  bmod(config?: any, id?: any, ...more: Arg[]): Pattern
+  bor(...more: Arg[]): Pattern
   /**
    * Sets the center frequency of the band-pass filter. When using mininotation, you
    * can also optionally supply the 'bpq' parameter separated by ':'.
@@ -566,7 +569,7 @@ interface Pattern {
    * @example
    * s("bd sd [~ bd] sd,hh*6").bpf("<1000 2000 4000 8000>")
    */
-  bp(frequency?: any, ...more: any[]): Pattern
+  bp(frequency?: any, ...more: Arg[]): Pattern
   /**
    * Sets the attack duration for the bandpass filter envelope.
    * Synonyms: bpa
@@ -578,7 +581,7 @@ interface Pattern {
    * .bpa("<.5 .25 .1 .01>/4")
    * .bpenv(4)
    */
-  bpa(attack?: any, ...more: any[]): Pattern
+  bpa(attack?: any, ...more: Arg[]): Pattern
   /**
    * Sets the attack duration for the bandpass filter envelope.
    * Synonyms: bpa
@@ -590,7 +593,7 @@ interface Pattern {
    * .bpa("<.5 .25 .1 .01>/4")
    * .bpenv(4)
    */
-  bpattack(attack?: any, ...more: any[]): Pattern
+  bpattack(attack?: any, ...more: Arg[]): Pattern
   /**
    * Sets the decay duration for the bandpass filter envelope.
    * Synonyms: bpd
@@ -603,12 +606,12 @@ interface Pattern {
    * .bps(0.2)
    * .bpenv(4)
    */
-  bpd(decay?: any, ...more: any[]): Pattern
+  bpd(decay?: any, ...more: Arg[]): Pattern
   /**
    * DC offset of the LFO for the bandpass filter
    * @param dcoffset {number | Pattern} dc offset. set to 0 for unipolar
    */
-  bpdc(dcoffset?: any, ...more: any[]): Pattern
+  bpdc(dcoffset?: any, ...more: Arg[]): Pattern
   /**
    * Sets the decay duration for the bandpass filter envelope.
    * Synonyms: bpd
@@ -621,12 +624,12 @@ interface Pattern {
    * .bps(0.2)
    * .bpenv(4)
    */
-  bpdecay(decay?: any, ...more: any[]): Pattern
+  bpdecay(decay?: any, ...more: Arg[]): Pattern
   /**
    * Depth of the LFO for the bandpass filter
    * @param depth {number | Pattern} depth of modulation
    */
-  bpdepth(depth?: any, ...more: any[]): Pattern
+  bpdepth(depth?: any, ...more: Arg[]): Pattern
   /**
    * Depth of the LFO for the bandpass filter, in HZ
    * Synonyms: bpdepthfreq
@@ -634,7 +637,7 @@ interface Pattern {
    * @example
    * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).bpdepthfrequency("<200 500 100 0>")
    */
-  bpdepthfreq(depth?: any, ...more: any[]): Pattern
+  bpdepthfreq(depth?: any, ...more: Arg[]): Pattern
   /**
    * Depth of the LFO for the bandpass filter, in HZ
    * Synonyms: bpdepthfreq
@@ -642,7 +645,7 @@ interface Pattern {
    * @example
    * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).bpdepthfrequency("<200 500 100 0>")
    */
-  bpdepthfrequency(depth?: any, ...more: any[]): Pattern
+  bpdepthfrequency(depth?: any, ...more: Arg[]): Pattern
   /**
    * Sets the bandpass filter envelope modulation depth.
    * Synonyms: bpe
@@ -654,7 +657,7 @@ interface Pattern {
    * .bpa(.5)
    * .bpenv("<4 2 1 0 -1 -2 -4>/4")
    */
-  bpe(modulation?: any, ...more: any[]): Pattern
+  bpe(modulation?: any, ...more: Arg[]): Pattern
   /**
    * Sets the bandpass filter envelope modulation depth.
    * Synonyms: bpe
@@ -666,7 +669,7 @@ interface Pattern {
    * .bpa(.5)
    * .bpenv("<4 2 1 0 -1 -2 -4>/4")
    */
-  bpenv(modulation?: any, ...more: any[]): Pattern
+  bpenv(modulation?: any, ...more: Arg[]): Pattern
   /**
    * Sets the center frequency of the band-pass filter. When using mininotation, you
    * can also optionally supply the 'bpq' parameter separated by ':'.
@@ -675,7 +678,7 @@ interface Pattern {
    * @example
    * s("bd sd [~ bd] sd,hh*6").bpf("<1000 2000 4000 8000>")
    */
-  bpf(frequency?: any, ...more: any[]): Pattern
+  bpf(frequency?: any, ...more: Arg[]): Pattern
   /**
    * Sets the band-pass q-factor (resonance).
    * Synonyms: bandq
@@ -683,7 +686,7 @@ interface Pattern {
    * @example
    * s("bd sd [~ bd] sd").bpf(500).bpq("<0 1 2 3>")
    */
-  bpq(q?: any, ...more: any[]): Pattern
+  bpq(q?: any, ...more: Arg[]): Pattern
   /**
    * Sets the release time for the bandpass filter envelope.
    * Synonyms: bpr
@@ -697,12 +700,12 @@ interface Pattern {
    * .bpr("<.5 .25 .1 0>/4")
    * .release(.5)
    */
-  bpr(release?: any, ...more: any[]): Pattern
+  bpr(release?: any, ...more: Arg[]): Pattern
   /**
    * Rate of the LFO for the bandpass filter
    * @param rate {number | Pattern} rate in hertz
    */
-  bprate(rate?: any, ...more: any[]): Pattern
+  bprate(rate?: any, ...more: Arg[]): Pattern
   /**
    * Sets the release time for the bandpass filter envelope.
    * Synonyms: bpr
@@ -716,7 +719,7 @@ interface Pattern {
    * .bpr("<.5 .25 .1 0>/4")
    * .release(.5)
    */
-  bprelease(release?: any, ...more: any[]): Pattern
+  bprelease(release?: any, ...more: Arg[]): Pattern
   /**
    * Sets the sustain amplitude for the bandpass filter envelope.
    * Synonyms: bps
@@ -729,17 +732,17 @@ interface Pattern {
    * .bps("<0 .25 .5 1>/4")
    * .bpenv(4)
    */
-  bps(sustain?: any, ...more: any[]): Pattern
+  bps(sustain?: any, ...more: Arg[]): Pattern
   /**
    * Shape of the LFO for the bandpass filter
    * @param shape {number | Pattern} Shape of the lfo (0, 1, 2, ..)
    */
-  bpshape(shape?: any, ...more: any[]): Pattern
+  bpshape(shape?: any, ...more: Arg[]): Pattern
   /**
    * Skew of the LFO for the bandpass filter
    * @param skew {number | Pattern} How much to bend the LFO shape
    */
-  bpskew(skew?: any, ...more: any[]): Pattern
+  bpskew(skew?: any, ...more: Arg[]): Pattern
   /**
    * Sets the sustain amplitude for the bandpass filter envelope.
    * Synonyms: bps
@@ -752,19 +755,19 @@ interface Pattern {
    * .bps("<0 .25 .5 1>/4")
    * .bpenv(4)
    */
-  bpsustain(sustain?: any, ...more: any[]): Pattern
+  bpsustain(sustain?: any, ...more: Arg[]): Pattern
   /**
    * Cycle-synced rate of the LFO for the bandpass filter
    * @param rate {number | Pattern} rate in cycles
    */
-  bpsync(rate?: any, ...more: any[]): Pattern
+  bpsync(rate?: any, ...more: Arg[]): Pattern
   /**
    * Returns a new pattern where every other cycle is played once, twice as
    * fast, and offset in time by one quarter of a cycle. Creates a kind of
    * breakbeat feel.
    */
-  brak(...args: any[]): Pattern
-  brshift(...args: any[]): Pattern
+  brak(...more: Arg[]): Pattern
+  brshift(...more: Arg[]): Pattern
   /**
    * A bus is a send which can be used for mixing patterns. It combines with..
    * s("bus") to play that bus through another pattern (for, say, applying non-linear
@@ -772,15 +775,15 @@ interface Pattern {
    * otherPat.bmod(..) (to modulate another pattern with the bus)
    * @param number {number | Pattern}
    */
-  bus(number?: any, ...more: any[]): Pattern
+  bus(number?: any, ...more: Arg[]): Pattern
   /**
    * Postgain multiplier prior to sending the signal to the audio bus.
    * Synonyms: bgain
    * @param number {number | Pattern}
    */
-  busgain(number?: any, ...more: any[]): Pattern
-  bxor(...args: any[]): Pattern
-  bypass(...args: any[]): Pattern
+  busgain(number?: any, ...more: Arg[]): Pattern
+  bxor(...more: Arg[]): Pattern
+  bypass(...more: Arg[]): Pattern
   /**
    * Create byte beats with custom expressions
    * Synonyms: bbexpr
@@ -788,7 +791,7 @@ interface Pattern {
    * @example
    * s("bytebeat").bbexpr('t*(t>>15^t>>66)')
    */
-  byteBeatExpression(byteBeatExpression?: any, ...more: any[]): Pattern
+  byteBeatExpression(byteBeatExpression?: any, ...more: Arg[]): Pattern
   /**
    * Create byte beats with custom expressions
    * Synonyms: bbst
@@ -796,24 +799,24 @@ interface Pattern {
    * @example
    * note("c3!8".add("{0 0 12 0 7 5 3}%8")).s("bytebeat:5").bbst("<3 1>".mul(10000))._scope()
    */
-  byteBeatStartTime(byteBeatStartTime?: any, ...more: any[]): Pattern
+  byteBeatStartTime(byteBeatStartTime?: any, ...more: Arg[]): Pattern
   /**
    * Concatenation: combines a list of patterns, switching between them successively, one per cycle.
    * Synonyms: cat
    * @example
    * slowcat("e5", "b4", ["d5", "c5"])
    */
-  cat(...args: any[]): Pattern
+  cat(...more: Arg[]): Pattern
   /**
    * MIDI control number: Sends a MIDI control change message.
    * @param MIDI {number | Pattern} control number (0-127)
    */
-  ccn(MIDI?: any, ...more: any[]): Pattern
+  ccn(MIDI?: any, ...more: Arg[]): Pattern
   /**
    * MIDI control value: Sends a MIDI control change message.
    * @param MIDI {number | Pattern} control value (0-127)
    */
-  ccv(MIDI?: any, ...more: any[]): Pattern
+  ccv(MIDI?: any, ...more: Arg[]): Pattern
   /**
    * Assumes a numerical pattern. Returns a new pattern with all values set to
    * their mathematical ceiling. E.g. 3.2 replaced with 4, and -4.2
@@ -821,7 +824,7 @@ interface Pattern {
    * @example
    * note("42 42.1 42.5 43".ceil())
    */
-  ceil(...args: any[]): Pattern
+  ceil(...more: Arg[]): Pattern
   /**
    * Allows you to set the output channels on the interface
    * Synonyms: ch
@@ -829,12 +832,12 @@ interface Pattern {
    * @example
    * note("e a d b g").channels("3:4")
    */
-  ch(channels?: any, ...more: any[]): Pattern
+  ch(channels?: any, ...more: Arg[]): Pattern
   /**
    * Choose the channel the pattern is sent to in superdirt
    * @param channel {number | Pattern} channel number
    */
-  channel(channel?: any, ...more: any[]): Pattern
+  channel(channel?: any, ...more: Arg[]): Pattern
   /**
    * Allows you to set the output channels on the interface
    * Synonyms: ch
@@ -842,26 +845,26 @@ interface Pattern {
    * @example
    * note("e a d b g").channels("3:4")
    */
-  channels(channels?: any, ...more: any[]): Pattern
+  channels(channels?: any, ...more: Arg[]): Pattern
   /**
    * Distortion via Chebyshev polynomials
    * @param distortion {number | Pattern} amount of distortion to apply
    * @param volume {number | Pattern} linear postgain of the distortion
    */
-  chebyshev(distortion?: any, volume?: any, ...more: any[]): Pattern
+  chebyshev(distortion?: any, volume?: any, ...more: Arg[]): Pattern
   /**
    * Chooses randomly from the given list of elements.
    * @param xs {any} values / patterns to choose from.
    * @example
    * note("c2 g2!2 d2 f1").s(choose("sine", "triangle", "bd:6"))
    */
-  choose(xs?: any, ...more: any[]): Pattern
+  choose(xs?: any, ...more: Arg[]): Pattern
   /**
    * As with choose, but the pattern that this method is called on should be
    * in the range -1 .. 1
    * @param xs {any}
    */
-  choose2(xs?: any, ...more: any[]): Pattern
+  choose2(xs?: any, ...more: Arg[]): Pattern
   /**
    * Cuts each sample into the given number of parts, allowing you to explore a technique known as 'granular synthesis'.
    * It turns a pattern of samples into a pattern of parts of samples.
@@ -872,21 +875,21 @@ interface Pattern {
    *  .rev() // reverse order of chops
    *  .loopAt(2) // fit sample into 2 cycles
    */
-  chop(...args: any[]): Pattern
+  chop(...more: Arg[]): Pattern
   /**
    * The chord to voice
    * @param symbols {string | Pattern} chord symbols to voice e.g., C, Eb, Fm7, G7. The symbols can be defined via addVoicings
    * @example
    * chord("<Am C D F Am E Am E>").voicing()
    */
-  chord(symbols?: any, ...more: any[]): Pattern
+  chord(symbols?: any, ...more: Arg[]): Pattern
   /**
    * mix control for the chorus effect
    * @param chorus {string | Pattern} mix amount between 0 and 1
    * @example
    * note("d d a# a").s("sawtooth").chorus(.5)
    */
-  chorus(chorus?: any, ...more: any[]): Pattern
+  chorus(chorus?: any, ...more: Arg[]): Pattern
   /**
    * Divides a pattern into a given number of parts, then cycles through those parts in turn, applying the given function to each part in turn (one part per cycle).
    * Synonyms: slowChunk, slowchunk
@@ -894,7 +897,7 @@ interface Pattern {
    * "0 1 2 3".chunk(4, x=>x.add(7))
    * .scale("A:minor").note()
    */
-  chunk(...args: any[]): Pattern
+  chunk(...more: Arg[]): Pattern
   /**
    * Like chunk, but cycles through the parts in reverse order. Known as chunk' in tidalcycles
    * Synonyms: chunkback
@@ -902,7 +905,7 @@ interface Pattern {
    * "0 1 2 3".chunkBack(4, x=>x.add(7))
    * .scale("A:minor").note()
    */
-  chunkBack(...args: any[]): Pattern
+  chunkBack(...more: Arg[]): Pattern
   /**
    * Like chunkInto, but moves backwards through the chunks.
    * Synonyms: chunkbackinto
@@ -910,7 +913,7 @@ interface Pattern {
    * sound("bd sd ht lt bd - cp lt").chunkInto(4, hurry(2))
    *   .bank("tr909")
    */
-  chunkBackInto(...args: any[]): Pattern
+  chunkBackInto(...more: Arg[]): Pattern
   /**
    * Like chunk, but the function is applied to a looped subcycle of the source pattern.
    * Synonyms: chunkinto
@@ -918,7 +921,7 @@ interface Pattern {
    * sound("bd sd ht lt bd - cp lt").chunkInto(4, hurry(2))
    *   .bank("tr909")
    */
-  chunkInto(...args: any[]): Pattern
+  chunkInto(...more: Arg[]): Pattern
   /**
    * Like chunk, but cycles through the parts in reverse order. Known as chunk' in tidalcycles
    * Synonyms: chunkback
@@ -926,7 +929,7 @@ interface Pattern {
    * "0 1 2 3".chunkBack(4, x=>x.add(7))
    * .scale("A:minor").note()
    */
-  chunkback(...args: any[]): Pattern
+  chunkback(...more: Arg[]): Pattern
   /**
    * Like chunkInto, but moves backwards through the chunks.
    * Synonyms: chunkbackinto
@@ -934,7 +937,7 @@ interface Pattern {
    * sound("bd sd ht lt bd - cp lt").chunkInto(4, hurry(2))
    *   .bank("tr909")
    */
-  chunkbackinto(...args: any[]): Pattern
+  chunkbackinto(...more: Arg[]): Pattern
   /**
    * Like chunk, but the function is applied to a looped subcycle of the source pattern.
    * Synonyms: chunkinto
@@ -942,7 +945,7 @@ interface Pattern {
    * sound("bd sd ht lt bd - cp lt").chunkInto(4, hurry(2))
    *   .bank("tr909")
    */
-  chunkinto(...args: any[]): Pattern
+  chunkinto(...more: Arg[]): Pattern
   /**
    * Multiplies the duration with the given number. Also cuts samples off at the end if they exceed the duration.
    * Synonyms: legato
@@ -950,22 +953,22 @@ interface Pattern {
    * @example
    * note("c a f e").s("piano").clip("<.5 1 2>")
    */
-  clip(factor?: any, ...more: any[]): Pattern
+  clip(factor?: any, ...more: Arg[]): Pattern
   /**
    * Fake-resampling for lowering the sample rate. Caution: This effect seems to only work in chromium based browsers
    * @param factor {number | Pattern} 1 for original 2 for half, 3 for a third and so on.
    * @example
    * s("bd sd [~ bd] sd,hh*8").coarse("<1 4 8 16 32>")
    */
-  coarse(factor?: any, ...more: any[]): Pattern
-  collect(...args: any[]): Pattern
+  coarse(factor?: any, ...more: Arg[]): Pattern
+  collect(...more: Arg[]): Pattern
   /**
    * Sets the color of the hap in visualizations like pianoroll or highlighting.
    * Synonyms: colour
    * @param color {string} Hexadecimal or CSS color name
    */
-  color(color?: any, ...more: any[]): Pattern
-  comb(...args: any[]): Pattern
+  color(color?: any, ...more: Arg[]): Pattern
+  comb(...more: Arg[]): Pattern
   /**
    * Compress each cycle into the given timespan, leaving a gap
    * @example
@@ -974,8 +977,8 @@ interface Pattern {
    *   s("~ bd sd ~")
    * )
    */
-  compress(...args: any[]): Pattern
-  compressSpan(...args: any[]): Pattern
+  compress(...more: Arg[]): Pattern
+  compressSpan(...more: Arg[]): Pattern
   /**
    * Dynamics Compressor. The params are compressor("threshold:ratio:knee:attack:release")
    * More info here
@@ -983,39 +986,39 @@ interface Pattern {
    * s("bd sd [~ bd] sd,hh*8")
    * .compressor("-20:20:10:.002:.02")
    */
-  compressor(...args: any[]): Pattern
-  compressorAttack(...args: any[]): Pattern
-  compressorKnee(...args: any[]): Pattern
-  compressorRatio(...args: any[]): Pattern
-  compressorRelease(...args: any[]): Pattern
-  compressspan(...args: any[]): Pattern
+  compressor(...more: Arg[]): Pattern
+  compressorAttack(...more: Arg[]): Pattern
+  compressorKnee(...more: Arg[]): Pattern
+  compressorRatio(...more: Arg[]): Pattern
+  compressorRelease(...more: Arg[]): Pattern
+  compressspan(...more: Arg[]): Pattern
   /**
    * Experimental
    * Contracts the step size of the pattern by the given factor. See also expand.
    * @example
    * sound("tha dhi thom nam").bank("mridangam").contract("3 2 1 1 2 3").pace(8)
    */
-  contract(...args: any[]): Pattern
+  contract(...more: Arg[]): Pattern
   /**
    * MIDI control: Sends a MIDI control change message.
    * @param MIDI {number | Pattern} control number (0-127)
    * @param MIDI {number | Pattern} controller value (0-127)
    */
-  control(MIDI?: any, MIDI?: any, ...more: any[]): Pattern
+  control(MIDI?: any, MIDI_?: any, ...more: Arg[]): Pattern
   /**
    * Plays the pattern at the given cycles per minute.
    * @example
    * s("<bd sd>,hh*2").cpm(90) // = 90 bpm
    */
-  cpm(...args: any[]): Pattern
-  cps(...args: any[]): Pattern
+  cpm(...more: Arg[]): Pattern
+  cps(...more: Arg[]): Pattern
   /**
    * Bit crusher effect.
    * @param depth {number | Pattern} between 1 (for drastic reduction in bit-depth) to 16 (for barely no reduction).
    * @example
    * s("<bd sd>,hh*3").fast(2).crush("<16 8 7 6 5 4 3 2>")
    */
-  crush(depth?: any, ...more: any[]): Pattern
+  crush(depth?: any, ...more: Arg[]): Pattern
   /**
    * Applies the cutoff frequency of the low-pass filter.
    * When using mininotation, you can also optionally add the 'lpq' parameter, separated by ':'.
@@ -1026,23 +1029,23 @@ interface Pattern {
    * @example
    * s("bd*16").lpf("1000:0 1000:10 1000:20 1000:30")
    */
-  ctf(frequency?: any, ...more: any[]): Pattern
-  ctlNum(...args: any[]): Pattern
-  ctranspose(...args: any[]): Pattern
+  ctf(frequency?: any, ...more: Arg[]): Pattern
+  ctlNum(...more: Arg[]): Pattern
+  ctranspose(...more: Arg[]): Pattern
   /**
    * Cubic polynomial distortion
    * @param distortion {number | Pattern} amount of distortion to apply
    * @param volume {number | Pattern} linear postgain of the distortion
    */
-  cubic(distortion?: any, volume?: any, ...more: any[]): Pattern
-  curve(...args: any[]): Pattern
+  cubic(distortion?: any, volume?: any, ...more: Arg[]): Pattern
+  curve(...more: Arg[]): Pattern
   /**
    * In the style of classic drum-machines, cut will stop a playing sample as soon as another samples with in same cutgroup is to be played. An example would be an open hi-hat followed by a closed one, essentially muting the open.
    * @param group {number | Pattern} cut group number
    * @example
    * s("[oh hh]*4").cut(1)
    */
-  cut(group?: any, ...more: any[]): Pattern
+  cut(group?: any, ...more: Arg[]): Pattern
   /**
    * Applies the cutoff frequency of the low-pass filter.
    * When using mininotation, you can also optionally add the 'lpq' parameter, separated by ':'.
@@ -1053,7 +1056,7 @@ interface Pattern {
    * @example
    * s("bd*16").lpf("1000:0 1000:10 1000:20 1000:30")
    */
-  cutoff(frequency?: any, ...more: any[]): Pattern
+  cutoff(frequency?: any, ...more: Arg[]): Pattern
   /**
    * Amplitude envelope decay time: the time it takes after the attack time to reach the sustain level.
    * Note that the decay is only audible if the sustain value is lower than 1.
@@ -1062,7 +1065,7 @@ interface Pattern {
    * @example
    * note("c3 e3 f3 g3").decay("<.1 .2 .3 .4>").sustain(0)
    */
-  dec(time?: any, ...more: any[]): Pattern
+  dec(time?: any, ...more: Arg[]): Pattern
   /**
    * Amplitude envelope decay time: the time it takes after the attack time to reach the sustain level.
    * Note that the decay is only audible if the sustain value is lower than 1.
@@ -1071,12 +1074,12 @@ interface Pattern {
    * @example
    * note("c3 e3 f3 g3").decay("<.1 .2 .3 .4>").sustain(0)
    */
-  decay(time?: any, ...more: any[]): Pattern
+  decay(time?: any, ...more: Arg[]): Pattern
   /**
    * Combines adjacent haps with the same value and whole.  Only
    * intended for use in tests.
    */
-  defragmentHaps(...args: any[]): Pattern
+  defragmentHaps(...more: Arg[]): Pattern
   /**
    * Randomly removes 50% of events from the pattern. Shorthand for .degradeBy(0.5)
    * @example
@@ -1084,7 +1087,7 @@ interface Pattern {
    * @example
    * s("[hh?]*8")
    */
-  degrade(...args: any[]): Pattern
+  degrade(...more: Arg[]): Pattern
   /**
    * Randomly removes events from the pattern by a given amount.
    * 0 = 0% chance of removal
@@ -1098,9 +1101,9 @@ interface Pattern {
    * //beat generator
    * s("bd").segment(16).degradeBy(.5).ribbon(16,1)
    */
-  degradeBy(amount?: any, ...more: any[]): Pattern
-  degradeByWith(...args: any[]): Pattern
-  degree(...args: any[]): Pattern
+  degradeBy(amount?: any, ...more: Arg[]): Pattern
+  degradeByWith(...more: Arg[]): Pattern
+  degree(...more: Arg[]): Pattern
   /**
    * Sets the level of the delay signal.
    * When using mininotation, you can also optionally add the 'delaytime' and 'delayfeedback' parameter,
@@ -1111,7 +1114,7 @@ interface Pattern {
    * @example
    * s("bd bd").delay("0.65:0.25:0.9 0.65:0.125:0.7")
    */
-  delay(level?: any, ...more: any[]): Pattern
+  delay(level?: any, ...more: Arg[]): Pattern
   /**
    * Sets the level of the signal that is fed back into the delay.
    * Caution: Values >= 1 will result in a signal that gets louder and louder! Don't do it
@@ -1120,7 +1123,7 @@ interface Pattern {
    * @example
    * s("bd").delay(.25).delayfeedback("<.25 .5 .75 1>")
    */
-  delayfb(feedback?: any, ...more: any[]): Pattern
+  delayfb(feedback?: any, ...more: Arg[]): Pattern
   /**
    * Sets the level of the signal that is fed back into the delay.
    * Caution: Values >= 1 will result in a signal that gets louder and louder! Don't do it
@@ -1129,7 +1132,7 @@ interface Pattern {
    * @example
    * s("bd").delay(.25).delayfeedback("<.25 .5 .75 1>")
    */
-  delayfeedback(feedback?: any, ...more: any[]): Pattern
+  delayfeedback(feedback?: any, ...more: Arg[]): Pattern
   /**
    * Sets the time of the delay effect.
    * Synonyms: delayt, dt
@@ -1137,7 +1140,7 @@ interface Pattern {
    * @example
    * note("d d a# a".fast(2)).s("sawtooth").delay(.8).delaytime(1/2).delayspeed("<2 .5 -1 -2>")
    */
-  delayspeed(delayspeed?: any, ...more: any[]): Pattern
+  delayspeed(delayspeed?: any, ...more: Arg[]): Pattern
   /**
    * Sets the time of the delay effect in cycles.
    * Synonyms: delayt, dt
@@ -1145,7 +1148,7 @@ interface Pattern {
    * @example
    * s("bd bd").delay(.25).delaysync("<1 2 3 5>".div(8))
    */
-  delaysync(cycles?: any, ...more: any[]): Pattern
+  delaysync(cycles?: any, ...more: Arg[]): Pattern
   /**
    * Sets the time of the delay effect.
    * Synonyms: delayt, dt
@@ -1153,16 +1156,16 @@ interface Pattern {
    * @example
    * note("d d a# a".fast(2)).s("sawtooth").delay(.8).delaytime(1/2).delayspeed("<2 .5 -1 -2>")
    */
-  delayt(delayspeed?: any, ...more: any[]): Pattern
-  delaytime(...args: any[]): Pattern
-  deltaSlide(...args: any[]): Pattern
+  delayt(delayspeed?: any, ...more: Arg[]): Pattern
+  delaytime(...more: Arg[]): Pattern
+  deltaSlide(...more: Arg[]): Pattern
   /**
    * Noise crackle density
    * @param density {number | Pattern} between 0 and x
    * @example
    * s("crackle*4").density("<0.01 0.04 0.2 0.5>".slow(4))
    */
-  density(density?: any, ...more: any[]): Pattern
+  density(density?: any, ...more: Arg[]): Pattern
   /**
    * Set detune for stacked voices of supported oscillators
    * Synonyms: det
@@ -1170,7 +1173,7 @@ interface Pattern {
    * @example
    * note("d f a a# a d3").fast(2).s("supersaw").detune("<.1 .2 .5 24.1>")
    */
-  det(amount?: any, ...more: any[]): Pattern
+  det(amount?: any, ...more: Arg[]): Pattern
   /**
    * Set detune for stacked voices of supported oscillators
    * Synonyms: det
@@ -1178,7 +1181,7 @@ interface Pattern {
    * @example
    * note("d f a a# a d3").fast(2).s("supersaw").detune("<.1 .2 .5 24.1>")
    */
-  detune(amount?: any, ...more: any[]): Pattern
+  detune(amount?: any, ...more: Arg[]): Pattern
   /**
    * Sets the level of the signal that is fed back into the delay.
    * Caution: Values >= 1 will result in a signal that gets louder and louder! Don't do it
@@ -1187,8 +1190,8 @@ interface Pattern {
    * @example
    * s("bd").delay(.25).delayfeedback("<.25 .5 .75 1>")
    */
-  dfb(feedback?: any, ...more: any[]): Pattern
-  dict(...args: any[]): Pattern
+  dfb(feedback?: any, ...more: Arg[]): Pattern
+  dict(...more: Arg[]): Pattern
   /**
    * Which dictionary to use for the voicings. This falls back to the default dictionary if not provided
    * @param dictionaryName {string} which dictionary (having been defined with addVoicings) to use
@@ -1201,18 +1204,18 @@ interface Pattern {
    * .dict('house').anchor(66)
    * .voicing().room(.5)
    */
-  dictionary(dictionaryName?: any, ...more: any[]): Pattern
+  dictionary(dictionaryName?: any, ...more: Arg[]): Pattern
   /**
    * Diode-emulating distortion
    * @param distortion {number | Pattern} amount of distortion to apply
    * @param volume {number | Pattern} linear postgain of the distortion
    */
-  diode(distortion?: any, volume?: any, ...more: any[]): Pattern
+  diode(distortion?: any, volume?: any, ...more: Arg[]): Pattern
   /**
    * Returns a new pattern, with 'continuous' haps (those without 'whole'
    * timespans) removed from query results.
    */
-  discreteOnly(...args: any[]): Pattern
+  discreteOnly(...more: Arg[]): Pattern
   /**
    * Wave shaping distortion. CAUTION: it can get loud.
    * Second option in optional array syntax (ex: ".9:.5") applies a postgain to the output. Third option sets the waveshaping type.
@@ -1228,7 +1231,7 @@ interface Pattern {
    * @example
    * s("bd:4*4").bank("tr808").distort("3:0.5:diode")
    */
-  dist(distortion?: any, volume?: any, type?: any, ...more: any[]): Pattern
+  dist(distortion?: any, volume?: any, type?: any, ...more: Arg[]): Pattern
   /**
    * Wave shaping distortion. CAUTION: it can get loud.
    * Second option in optional array syntax (ex: ".9:.5") applies a postgain to the output. Third option sets the waveshaping type.
@@ -1244,7 +1247,7 @@ interface Pattern {
    * @example
    * s("bd:4*4").bank("tr808").distort("3:0.5:diode")
    */
-  distort(distortion?: any, volume?: any, type?: any, ...more: any[]): Pattern
+  distort(distortion?: any, volume?: any, type?: any, ...more: Arg[]): Pattern
   /**
    * Type of waveshaping distortion to apply.
    * Synonyms: disttype
@@ -1257,7 +1260,7 @@ interface Pattern {
    *   .distort(rand.range(1, 8))
    *   .distorttype("<fold chebyshev scurve diode asym sinefold>")
    */
-  distorttype(type?: any, ...more: any[]): Pattern
+  distorttype(type?: any, ...more: Arg[]): Pattern
   /**
    * Postgain for waveshaping distortion.
    * Synonyms: distvol
@@ -1265,7 +1268,7 @@ interface Pattern {
    * @example
    * s("bd*4").bank("tr909").distort(2).distortvol(0.8)
    */
-  distortvol(volume?: any, ...more: any[]): Pattern
+  distortvol(volume?: any, ...more: Arg[]): Pattern
   /**
    * Type of waveshaping distortion to apply.
    * Synonyms: disttype
@@ -1278,7 +1281,7 @@ interface Pattern {
    *   .distort(rand.range(1, 8))
    *   .distorttype("<fold chebyshev scurve diode asym sinefold>")
    */
-  disttype(type?: any, ...more: any[]): Pattern
+  disttype(type?: any, ...more: Arg[]): Pattern
   /**
    * Postgain for waveshaping distortion.
    * Synonyms: distvol
@@ -1286,20 +1289,20 @@ interface Pattern {
    * @example
    * s("bd*4").bank("tr909").distort(2).distortvol(0.8)
    */
-  distvol(volume?: any, ...more: any[]): Pattern
+  distvol(volume?: any, ...more: Arg[]): Pattern
   /**
    * Divides each number by the given factor.
    */
-  div(...args: any[]): Pattern
+  div(...more: Arg[]): Pattern
   /**
    * DJ filter, below 0.5 is low pass filter, above is high pass filter.
    * @param cutoff {number | Pattern} below 0.5 is low pass filter, above is high pass filter
    * @example
    * n(irand(16).seg(8)).scale("d:phrygian").s("supersaw").djf("<.5 .3 .2 .75>")
    */
-  djf(cutoff?: any, ...more: any[]): Pattern
-  dough(...args: any[]): Pattern
-  draw(...args: any[]): Pattern
+  djf(cutoff?: any, ...more: Arg[]): Pattern
+  dough(...more: Arg[]): Pattern
+  draw(...more: Arg[]): Pattern
   /**
    * Intended for a debugging, drawLine renders the pattern as a string, where each character represents the same time span.
    * Should only be used with single characters as values, otherwise the character slots will be messed up.
@@ -1315,14 +1318,14 @@ interface Pattern {
    * console.log(line);
    * silence;
    */
-  drawLine(pattern?: any, chars?: any, ...more: any[]): Pattern
+  drawLine(pattern?: any, chars?: any, ...more: Arg[]): Pattern
   /**
    * Filter overdrive for supported filter types
    * @param amount {number | Pattern}
    * @example
    * note("{f g g c d a a#}%16".sub(17)).s("supersaw").lpenv(8).lpf(150).lpq(.8).ftype('ladder').drive("<.5 4>")
    */
-  drive(amount?: any, ...more: any[]): Pattern
+  drive(amount?: any, ...more: Arg[]): Pattern
   /**
    * Experimental
    * Drops the given number of steps from a pattern.
@@ -1336,15 +1339,15 @@ interface Pattern {
    * @example
    * "tha dhi thom nam".drop("0 -1 -2 -3").sound().bank("mridangam")
    */
-  drop(...args: any[]): Pattern
+  drop(...more: Arg[]): Pattern
   /**
    * Set dryness of reverb. See room and size for more information about reverb.
    * @param dry {number | Pattern} 0 = wet, 1 = dry
    * @example
    * n("[0,3,7](3,8)").s("superpiano").room(.7).dry("<0 .5 .75 1>").osc()
    */
-  dry(dry?: any, ...more: any[]): Pattern
-  ds(...args: any[]): Pattern
+  dry(dry?: any, ...more: Arg[]): Pattern
+  ds(...more: Arg[]): Pattern
   /**
    * Sets the time of the delay effect.
    * Synonyms: delayt, dt
@@ -1352,7 +1355,7 @@ interface Pattern {
    * @example
    * note("d d a# a".fast(2)).s("sawtooth").delay(.8).delaytime(1/2).delayspeed("<2 .5 -1 -2>")
    */
-  dt(delayspeed?: any, ...more: any[]): Pattern
+  dt(delayspeed?: any, ...more: Arg[]): Pattern
   /**
    * Modulate the amplitude of an orbit to create a "sidechain" like effect.
    * Can be applied to multiple orbits with the ':' mininotation, e.g. duckorbit("2:3")
@@ -1366,7 +1369,7 @@ interface Pattern {
    * $: s("hh*16").orbit(3)
    * $: s("bd:4!4").beat("0,4,8,11,14",16).duckorbit("2:3").duckattack(0.2).duckdepth(1)
    */
-  duck(orbit?: any, ...more: any[]): Pattern
+  duck(orbit?: any, ...more: Arg[]): Pattern
   /**
    * The time required for the ducked signal(s) to return to their normal volume.
    * Can vary across orbits with the ':' mininotation, e.g. duckonset("0:0.003").
@@ -1381,7 +1384,7 @@ interface Pattern {
    * lessduck: s("hh*16").orbit(5)
    * ducker: s("bd:4!4").beat("0,4,8,11,14",16).duckorbit("2:5").duckattack("0.4:0.1")
    */
-  duckatt(time?: any, ...more: any[]): Pattern
+  duckatt(time?: any, ...more: Arg[]): Pattern
   /**
    * The time required for the ducked signal(s) to return to their normal volume.
    * Can vary across orbits with the ':' mininotation, e.g. duckonset("0:0.003").
@@ -1396,7 +1399,7 @@ interface Pattern {
    * lessduck: s("hh*16").orbit(5)
    * ducker: s("bd:4!4").beat("0,4,8,11,14",16).duckorbit("2:5").duckattack("0.4:0.1")
    */
-  duckattack(time?: any, ...more: any[]): Pattern
+  duckattack(time?: any, ...more: Arg[]): Pattern
   /**
    * The amount of ducking applied to target orbit
    * Can vary across orbits with the ':' mininotation, e.g. duckdepth("0.3:0.1").
@@ -1409,7 +1412,7 @@ interface Pattern {
    * $: s("hh*16").orbit(3)
    * $: s("bd:4!4").beat("0,4,8,11,14",16).duckorbit("2:3").duckattack(0.2).duckdepth("1:0.5")
    */
-  duckdepth(depth?: any, ...more: any[]): Pattern
+  duckdepth(depth?: any, ...more: Arg[]): Pattern
   /**
    * The time required for the ducked signal(s) to reach their lowest volume.
    * Can be used to prevent clicking or for creative rhythmic effects.
@@ -1431,7 +1434,7 @@ interface Pattern {
    * hhat: s("hh*16").orbit(7)
    * ducker: s("bd*4").bank("tr909").duckorbit("4:7").duckonset("0.3:0.003").duckattack(0.25)
    */
-  duckons(time?: any, ...more: any[]): Pattern
+  duckons(time?: any, ...more: Arg[]): Pattern
   /**
    * The time required for the ducked signal(s) to reach their lowest volume.
    * Can be used to prevent clicking or for creative rhythmic effects.
@@ -1453,7 +1456,7 @@ interface Pattern {
    * hhat: s("hh*16").orbit(7)
    * ducker: s("bd*4").bank("tr909").duckorbit("4:7").duckonset("0.3:0.003").duckattack(0.25)
    */
-  duckonset(time?: any, ...more: any[]): Pattern
+  duckonset(time?: any, ...more: Arg[]): Pattern
   /**
    * Modulate the amplitude of an orbit to create a "sidechain" like effect.
    * Can be applied to multiple orbits with the ':' mininotation, e.g. duckorbit("2:3")
@@ -1467,7 +1470,7 @@ interface Pattern {
    * $: s("hh*16").orbit(3)
    * $: s("bd:4!4").beat("0,4,8,11,14",16).duckorbit("2:3").duckattack(0.2).duckdepth(1)
    */
-  duckorbit(orbit?: any, ...more: any[]): Pattern
+  duckorbit(orbit?: any, ...more: Arg[]): Pattern
   /**
    * Sets the duration of the event in cycles. Similar to clip / legato, it also cuts samples off at the end if they exceed the duration.
    * Synonyms: dur
@@ -1475,7 +1478,7 @@ interface Pattern {
    * @example
    * note("c a f e").s("piano").dur("<.5 1 2>")
    */
-  dur(seconds?: any, ...more: any[]): Pattern
+  dur(seconds?: any, ...more: Arg[]): Pattern
   /**
    * Sets the duration of the event in cycles. Similar to clip / legato, it also cuts samples off at the end if they exceed the duration.
    * Synonyms: dur
@@ -1483,14 +1486,14 @@ interface Pattern {
    * @example
    * note("c a f e").s("piano").dur("<.5 1 2>")
    */
-  duration(seconds?: any, ...more: any[]): Pattern
+  duration(seconds?: any, ...more: Arg[]): Pattern
   /**
    * Nudge a pattern to start earlier in time. Equivalent of Tidal's <~ operator
    * @param cycles {number | Pattern} number of cycles to nudge left
    * @example
    * "bd ~".stack("hh ~".early(.1)).s()
    */
-  early(cycles?: any, ...more: any[]): Pattern
+  early(cycles?: any, ...more: Arg[]): Pattern
   /**
    * Superimpose and offset multiple times, gradually decreasing the velocity
    * @param times {number} how many times to repeat
@@ -1499,7 +1502,7 @@ interface Pattern {
    * @example
    * s("bd sd").echo(3, 1/6, .8)
    */
-  echo(times?: any, time?: any, feedback?: any, ...more: any[]): Pattern
+  echo(times?: any, time?: any, feedback?: any, ...more: Arg[]): Pattern
   /**
    * Superimpose and offset multiple times, applying the given function each time.
    * Synonyms: echowith, stutWith, stutwith
@@ -1511,7 +1514,7 @@ interface Pattern {
    * .echoWith(4, 1/8, (p,n) => p.add(n*2))
    * .scale("C:minor").note()
    */
-  echoWith(times?: any, time?: any, func?: any, ...more: any[]): Pattern
+  echoWith(times?: any, time?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * Superimpose and offset multiple times, applying the given function each time.
    * Synonyms: echowith, stutWith, stutwith
@@ -1523,7 +1526,7 @@ interface Pattern {
    * .echoWith(4, 1/8, (p,n) => p.add(n*2))
    * .scale("C:minor").note()
    */
-  echowith(times?: any, time?: any, func?: any, ...more: any[]): Pattern
+  echowith(times?: any, time?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * A 'euclid' variant with an additional parameter that morphs the resulting
    * rhythm from 0 (no morphing) to 1 (completely 'even'). For example
@@ -1540,15 +1543,15 @@ interface Pattern {
    * sound("hh").euclidish(7,12,sine.slow(8))
    * .pan(sine.slow(8))
    */
-  eish(pulses?: any, steps?: any, groove?: any, ...more: any[]): Pattern
+  eish(pulses?: any, steps?: any, groove?: any, ...more: Arg[]): Pattern
   /**
    * The same as .begin, but cuts off the end off each sample.
    * @param length {number | Pattern} 1 = whole sample, .5 = half sample, .25 = quarter sample etc..
    * @example
    * s("bd*2,oh*4").end("<.1 .2 .5 1>").fast(2)
    */
-  end(length?: any, ...more: any[]): Pattern
-  enhance(...args: any[]): Pattern
+  end(length?: any, ...more: Arg[]): Pattern
+  enhance(...more: Arg[]): Pattern
   /**
    * Configures an envelope. Can be called in sequence like pat.env(...).env(...) to set up multiple envelopes
    * There are two ways to declare which control will be modulated:
@@ -1593,9 +1596,9 @@ interface Pattern {
    *   .diode(0.3)
    *   .sometimes(x => x.env({ a: "0.5" }, 'lpf_mod'))
    */
-  env(config?: any, id?: any, ...more: any[]): Pattern
-  eq(...args: any[]): Pattern
-  eqt(...args: any[]): Pattern
+  env(config?: any, id?: any, ...more: Arg[]): Pattern
+  eq(...more: Arg[]): Pattern
+  eqt(...more: Arg[]): Pattern
   /**
    * Changes the structure of the pattern to form an Euclidean rhythm.
    * Euclidean rhythms are rhythms obtained using the greatest common
@@ -1609,7 +1612,7 @@ interface Pattern {
    * // The Cuban tresillo pattern.
    * note("c3").euclid(3,8)
    */
-  euclid(pulses?: any, steps?: any, ...more: any[]): Pattern
+  euclid(pulses?: any, steps?: any, ...more: Arg[]): Pattern
   /**
    * Similar to euclid, but each pulse is held until the next pulse,
    * so there will be no gaps.
@@ -1620,7 +1623,7 @@ interface Pattern {
    * @example
    * note("c3").euclidLegato(3,8)
    */
-  euclidLegato(pulses?: any, steps?: any, rotation?: any, pat?: any, ...more: any[]): Pattern
+  euclidLegato(pulses?: any, steps?: any, rotation?: any, pat?: any, ...more: Arg[]): Pattern
   /**
    * Similar to euclid, but each pulse is held until the next pulse,
    * so there will be no gaps, and has an additional parameter for 'rotating'
@@ -1631,7 +1634,7 @@ interface Pattern {
    * @example
    * note("c3").euclidLegatoRot(3,5,2)
    */
-  euclidLegatoRot(pulses?: any, steps?: any, rotation?: any, ...more: any[]): Pattern
+  euclidLegatoRot(pulses?: any, steps?: any, rotation?: any, ...more: Arg[]): Pattern
   /**
    * Like euclid, but has an additional parameter for 'rotating' the resulting sequence.
    * @param pulses {number} the number of onsets/beats
@@ -1641,7 +1644,7 @@ interface Pattern {
    * // A Samba rhythm necklace from Brazil
    * note("c3").euclidRot(3,16,14)
    */
-  euclidRot(pulses?: any, steps?: any, rotation?: any, ...more: any[]): Pattern
+  euclidRot(pulses?: any, steps?: any, rotation?: any, ...more: Arg[]): Pattern
   /**
    * A 'euclid' variant with an additional parameter that morphs the resulting
    * rhythm from 0 (no morphing) to 1 (completely 'even'). For example
@@ -1658,8 +1661,8 @@ interface Pattern {
    * sound("hh").euclidish(7,12,sine.slow(8))
    * .pan(sine.slow(8))
    */
-  euclidish(pulses?: any, steps?: any, groove?: any, ...more: any[]): Pattern
-  euclidrot(...args: any[]): Pattern
+  euclidish(pulses?: any, steps?: any, groove?: any, ...more: Arg[]): Pattern
+  euclidrot(...more: Arg[]): Pattern
   /**
    * An alias for firstOf
    * @param n {number} how many cycles
@@ -1667,15 +1670,15 @@ interface Pattern {
    * @example
    * note("c3 d3 e3 g3").every(4, x=>x.rev())
    */
-  every(n?: any, func?: any, ...more: any[]): Pattern
+  every(n?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * Experimental
    * Expands the step size of the pattern by the given factor.
    * @example
    * sound("tha dhi thom nam").bank("mridangam").expand("3 2 1 1 2 3").pace(8)
    */
-  expand(...args: any[]): Pattern
-  expression(...args: any[]): Pattern
+  expand(...more: Arg[]): Pattern
+  expression(...more: Arg[]): Pattern
   /**
    * Experimental
    * extend is similar to fast in that it increases its density, but it also increases the step count
@@ -1687,10 +1690,10 @@ interface Pattern {
    *   sound("bd - sd -")
    * ).pace(8)
    */
-  extend(...args: any[]): Pattern
-  fadeInTime(...args: any[]): Pattern
-  fadeOutTime(...args: any[]): Pattern
-  fadeTime(...args: any[]): Pattern
+  extend(...more: Arg[]): Pattern
+  fadeInTime(...more: Arg[]): Pattern
+  fadeOutTime(...more: Arg[]): Pattern
+  fadeTime(...more: Arg[]): Pattern
   /**
    * controls the center of the filter envelope. 0 is unipolar positive, .5 is bipolar, 1 is unipolar negative
    * @param center {number | Pattern} 0 to 1
@@ -1698,7 +1701,7 @@ interface Pattern {
    * note("{f g g c d a a#}%8").s("sawtooth").lpf("{1000}%2")
    * .lpenv(8).fanchor("<0 .5 1>")
    */
-  fanchor(center?: any, ...more: any[]): Pattern
+  fanchor(center?: any, ...more: Arg[]): Pattern
   /**
    * Speed up a pattern by the given factor. Used by "*" in mini notation.
    * Synonyms: density
@@ -1706,7 +1709,7 @@ interface Pattern {
    * @example
    * s("bd hh sd hh").fast(2) // s("[bd hh sd hh]*2")
    */
-  fast(factor?: any, ...more: any[]): Pattern
+  fast(factor?: any, ...more: Arg[]): Pattern
   /**
    * Like chunk, but the cycles of the source pattern aren't repeated
    * for each set of chunks.
@@ -1716,14 +1719,14 @@ interface Pattern {
    * .scale("C2:major").note()
    * .fastChunk(4, x => x.color('red')).slow(2)
    */
-  fastChunk(...args: any[]): Pattern
+  fastChunk(...more: Arg[]): Pattern
   /**
    * speeds up a pattern like fast, but rather than it playing multiple times as fast would it instead leaves a gap in the remaining space of the cycle. For example, the following will play the sound pattern "bd sn" only once but compressed into the first half of the cycle, i.e. twice as fast.
    * Synonyms: fastgap
    * @example
    * s("bd sd").fastGap(2)
    */
-  fastGap(...args: any[]): Pattern
+  fastGap(...more: Arg[]): Pattern
   /**
    * Like cat, but the items are crammed into one cycle.
    * Synonyms: sequence, fastcat
@@ -1736,7 +1739,7 @@ interface Pattern {
    *   note("c4(5,8)")
    * )
    */
-  fastcat(...args: any[]): Pattern
+  fastcat(...more: Arg[]): Pattern
   /**
    * Like chunk, but the cycles of the source pattern aren't repeated
    * for each set of chunks.
@@ -1746,30 +1749,30 @@ interface Pattern {
    * .scale("C2:major").note()
    * .fastChunk(4, x => x.color('red')).slow(2)
    */
-  fastchunk(...args: any[]): Pattern
+  fastchunk(...more: Arg[]): Pattern
   /**
    * speeds up a pattern like fast, but rather than it playing multiple times as fast would it instead leaves a gap in the remaining space of the cycle. For example, the following will play the sound pattern "bd sn" only once but compressed into the first half of the cycle, i.e. twice as fast.
    * Synonyms: fastgap
    * @example
    * s("bd sd").fastGap(2)
    */
-  fastgap(...args: any[]): Pattern
-  fft(...args: any[]): Pattern
-  fill(...args: any[]): Pattern
+  fastgap(...more: Arg[]): Pattern
+  fft(...more: Arg[]): Pattern
+  fill(...more: Arg[]): Pattern
   /**
    * Filters haps using the given function
    * @param test {function} function to test Hap
    * @example
    * s("hh!7 oh").filter(hap => hap.value.s === 'hh')
    */
-  filter(test?: any, ...more: any[]): Pattern
+  filter(test?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * Returns a new Pattern, which only returns haps that meet the given test.
    * @param hap_test {function} a function which returns false for haps to be removed from the pattern
    * @example
    * s("bd*8").velocity(rand).filterHaps((h) => (h.whole.begin % 1) < h.value.velocity)
    */
-  filterHaps(hap_test?: any, ...more: any[]): Pattern
+  filterHaps(hap_test?: (value: any, ...args: any[]) => any, ...more: any[]): Pattern
   /**
    * As with filterHaps, but the function is applied to values
    * inside haps.
@@ -1780,21 +1783,21 @@ interface Pattern {
    * snare: drums.filterValues((v) => v.s === 'sd')
    * bass: s("saw!4").note("G#1").lpf(80).lpenv(4).orbit(2)
    */
-  filterValues(value_test?: any, ...more: any[]): Pattern
+  filterValues(value_test?: (value: any, ...args: any[]) => any, ...more: any[]): Pattern
   /**
    * Filters haps by their begin time
    * @param test {function} function to test Hap.whole.begin
    * @example
    * oneCycle: s("bd*4").filterWhen((t) => t < 1)
    */
-  filterWhen(test?: any, ...more: any[]): Pattern
+  filterWhen(test?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * Queries the pattern for the first cycle, returning Haps. Mainly of use when
    * debugging a pattern.
    * @param with_context {Boolean} set to true, otherwise the context field
 will be stripped from the resulting haps.
    */
-  firstCycle(with_context?: any, ...more: any[]): Pattern
+  firstCycle(with_context?: any, ...more: Arg[]): Pattern
   /**
    * Applies the given function every n cycles, starting from the first cycle.
    * @param n {number} how many cycles
@@ -1802,7 +1805,7 @@ will be stripped from the resulting haps.
    * @example
    * note("c3 d3 e3 g3").firstOf(4, x=>x.rev())
    */
-  firstOf(n?: any, func?: any, ...more: any[]): Pattern
+  firstOf(n?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * Makes the sample fit its event duration. Good for rhythmical loops like drum breaks.
    * Similar to loopAt.
@@ -1810,7 +1813,7 @@ will be stripped from the resulting haps.
    * samples({ rhodes: 'https://cdn.freesound.org/previews/132/132051_316502-lq.mp3' })
    * s("rhodes/2").fit()
    */
-  fit(...args: any[]): Pattern
+  fit(...more: Arg[]): Pattern
   /**
    * Assumes a numerical pattern. Returns a new pattern with all values set to
    * their mathematical floor. E.g. 3.7 replaced with to 3, and -4.2
@@ -1818,7 +1821,7 @@ will be stripped from the resulting haps.
    * @example
    * note("42 42.1 42.5 43".floor())
    */
-  floor(...args: any[]): Pattern
+  floor(...more: Arg[]): Pattern
   /**
    * Sets the Frequency Modulation of the synth.
    * Controls the modulation index, which defines the brightness of the sound.
@@ -1837,96 +1840,96 @@ will be stripped from the resulting haps.
    *  .fm(4).fm2(rand.mul(4)).fm3(saw.mul(8).slow(8))
    *  .fmh(1.06).fmh2(10).fmh3(0.1)
    */
-  fm(brightness?: any, ...more: any[]): Pattern
-  fm00(...args: any[]): Pattern
-  fm01(...args: any[]): Pattern
-  fm02(...args: any[]): Pattern
-  fm03(...args: any[]): Pattern
-  fm04(...args: any[]): Pattern
-  fm05(...args: any[]): Pattern
-  fm06(...args: any[]): Pattern
-  fm07(...args: any[]): Pattern
-  fm08(...args: any[]): Pattern
-  fm1(...args: any[]): Pattern
-  fm10(...args: any[]): Pattern
-  fm11(...args: any[]): Pattern
-  fm12(...args: any[]): Pattern
-  fm13(...args: any[]): Pattern
-  fm14(...args: any[]): Pattern
-  fm15(...args: any[]): Pattern
-  fm16(...args: any[]): Pattern
-  fm17(...args: any[]): Pattern
-  fm18(...args: any[]): Pattern
-  fm2(...args: any[]): Pattern
-  fm20(...args: any[]): Pattern
-  fm21(...args: any[]): Pattern
-  fm22(...args: any[]): Pattern
-  fm23(...args: any[]): Pattern
-  fm24(...args: any[]): Pattern
-  fm25(...args: any[]): Pattern
-  fm26(...args: any[]): Pattern
-  fm27(...args: any[]): Pattern
-  fm28(...args: any[]): Pattern
-  fm3(...args: any[]): Pattern
-  fm30(...args: any[]): Pattern
-  fm31(...args: any[]): Pattern
-  fm32(...args: any[]): Pattern
-  fm33(...args: any[]): Pattern
-  fm34(...args: any[]): Pattern
-  fm35(...args: any[]): Pattern
-  fm36(...args: any[]): Pattern
-  fm37(...args: any[]): Pattern
-  fm38(...args: any[]): Pattern
-  fm4(...args: any[]): Pattern
-  fm40(...args: any[]): Pattern
-  fm41(...args: any[]): Pattern
-  fm42(...args: any[]): Pattern
-  fm43(...args: any[]): Pattern
-  fm44(...args: any[]): Pattern
-  fm45(...args: any[]): Pattern
-  fm46(...args: any[]): Pattern
-  fm47(...args: any[]): Pattern
-  fm48(...args: any[]): Pattern
-  fm5(...args: any[]): Pattern
-  fm50(...args: any[]): Pattern
-  fm51(...args: any[]): Pattern
-  fm52(...args: any[]): Pattern
-  fm53(...args: any[]): Pattern
-  fm54(...args: any[]): Pattern
-  fm55(...args: any[]): Pattern
-  fm56(...args: any[]): Pattern
-  fm57(...args: any[]): Pattern
-  fm58(...args: any[]): Pattern
-  fm6(...args: any[]): Pattern
-  fm60(...args: any[]): Pattern
-  fm61(...args: any[]): Pattern
-  fm62(...args: any[]): Pattern
-  fm63(...args: any[]): Pattern
-  fm64(...args: any[]): Pattern
-  fm65(...args: any[]): Pattern
-  fm66(...args: any[]): Pattern
-  fm67(...args: any[]): Pattern
-  fm68(...args: any[]): Pattern
-  fm7(...args: any[]): Pattern
-  fm70(...args: any[]): Pattern
-  fm71(...args: any[]): Pattern
-  fm72(...args: any[]): Pattern
-  fm73(...args: any[]): Pattern
-  fm74(...args: any[]): Pattern
-  fm75(...args: any[]): Pattern
-  fm76(...args: any[]): Pattern
-  fm77(...args: any[]): Pattern
-  fm78(...args: any[]): Pattern
-  fm8(...args: any[]): Pattern
-  fm80(...args: any[]): Pattern
-  fm81(...args: any[]): Pattern
-  fm82(...args: any[]): Pattern
-  fm83(...args: any[]): Pattern
-  fm84(...args: any[]): Pattern
-  fm85(...args: any[]): Pattern
-  fm86(...args: any[]): Pattern
-  fm87(...args: any[]): Pattern
-  fm88(...args: any[]): Pattern
+  fm(brightness?: any, ...more: Arg[]): Pattern
+  fm00(...more: Arg[]): Pattern
+  fm01(...more: Arg[]): Pattern
+  fm02(...more: Arg[]): Pattern
+  fm03(...more: Arg[]): Pattern
+  fm04(...more: Arg[]): Pattern
+  fm05(...more: Arg[]): Pattern
+  fm06(...more: Arg[]): Pattern
+  fm07(...more: Arg[]): Pattern
+  fm08(...more: Arg[]): Pattern
+  fm1(...more: Arg[]): Pattern
+  fm10(...more: Arg[]): Pattern
+  fm11(...more: Arg[]): Pattern
+  fm12(...more: Arg[]): Pattern
+  fm13(...more: Arg[]): Pattern
+  fm14(...more: Arg[]): Pattern
+  fm15(...more: Arg[]): Pattern
+  fm16(...more: Arg[]): Pattern
+  fm17(...more: Arg[]): Pattern
+  fm18(...more: Arg[]): Pattern
+  fm2(...more: Arg[]): Pattern
+  fm20(...more: Arg[]): Pattern
+  fm21(...more: Arg[]): Pattern
+  fm22(...more: Arg[]): Pattern
+  fm23(...more: Arg[]): Pattern
+  fm24(...more: Arg[]): Pattern
+  fm25(...more: Arg[]): Pattern
+  fm26(...more: Arg[]): Pattern
+  fm27(...more: Arg[]): Pattern
+  fm28(...more: Arg[]): Pattern
+  fm3(...more: Arg[]): Pattern
+  fm30(...more: Arg[]): Pattern
+  fm31(...more: Arg[]): Pattern
+  fm32(...more: Arg[]): Pattern
+  fm33(...more: Arg[]): Pattern
+  fm34(...more: Arg[]): Pattern
+  fm35(...more: Arg[]): Pattern
+  fm36(...more: Arg[]): Pattern
+  fm37(...more: Arg[]): Pattern
+  fm38(...more: Arg[]): Pattern
+  fm4(...more: Arg[]): Pattern
+  fm40(...more: Arg[]): Pattern
+  fm41(...more: Arg[]): Pattern
+  fm42(...more: Arg[]): Pattern
+  fm43(...more: Arg[]): Pattern
+  fm44(...more: Arg[]): Pattern
+  fm45(...more: Arg[]): Pattern
+  fm46(...more: Arg[]): Pattern
+  fm47(...more: Arg[]): Pattern
+  fm48(...more: Arg[]): Pattern
+  fm5(...more: Arg[]): Pattern
+  fm50(...more: Arg[]): Pattern
+  fm51(...more: Arg[]): Pattern
+  fm52(...more: Arg[]): Pattern
+  fm53(...more: Arg[]): Pattern
+  fm54(...more: Arg[]): Pattern
+  fm55(...more: Arg[]): Pattern
+  fm56(...more: Arg[]): Pattern
+  fm57(...more: Arg[]): Pattern
+  fm58(...more: Arg[]): Pattern
+  fm6(...more: Arg[]): Pattern
+  fm60(...more: Arg[]): Pattern
+  fm61(...more: Arg[]): Pattern
+  fm62(...more: Arg[]): Pattern
+  fm63(...more: Arg[]): Pattern
+  fm64(...more: Arg[]): Pattern
+  fm65(...more: Arg[]): Pattern
+  fm66(...more: Arg[]): Pattern
+  fm67(...more: Arg[]): Pattern
+  fm68(...more: Arg[]): Pattern
+  fm7(...more: Arg[]): Pattern
+  fm70(...more: Arg[]): Pattern
+  fm71(...more: Arg[]): Pattern
+  fm72(...more: Arg[]): Pattern
+  fm73(...more: Arg[]): Pattern
+  fm74(...more: Arg[]): Pattern
+  fm75(...more: Arg[]): Pattern
+  fm76(...more: Arg[]): Pattern
+  fm77(...more: Arg[]): Pattern
+  fm78(...more: Arg[]): Pattern
+  fm8(...more: Arg[]): Pattern
+  fm80(...more: Arg[]): Pattern
+  fm81(...more: Arg[]): Pattern
+  fm82(...more: Arg[]): Pattern
+  fm83(...more: Arg[]): Pattern
+  fm84(...more: Arg[]): Pattern
+  fm85(...more: Arg[]): Pattern
+  fm86(...more: Arg[]): Pattern
+  fm87(...more: Arg[]): Pattern
+  fm88(...more: Arg[]): Pattern
   /**
    * Returns a new pattern, with the function applied to the value of
    * each hap. It has the alias fmap.
@@ -1935,7 +1938,7 @@ will be stripped from the resulting haps.
    * @example
    * "0 1 2".withValue(v => v + 10).log()
    */
-  fmap(func?: any, ...more: any[]): Pattern
+  fmap(func?: (value: any, ...args: any[]) => any, ...more: any[]): Pattern
   /**
    * Attack time for the FM envelope: time it takes to reach maximum modulation
    * A number may be added afterwards to control the attack of the envelope of
@@ -1948,15 +1951,15 @@ will be stripped from the resulting haps.
    * .fmattack("<0 .05 .1 .2>")
    * ._scope()
    */
-  fmatt(time?: any, ...more: any[]): Pattern
-  fmatt1(...args: any[]): Pattern
-  fmatt2(...args: any[]): Pattern
-  fmatt3(...args: any[]): Pattern
-  fmatt4(...args: any[]): Pattern
-  fmatt5(...args: any[]): Pattern
-  fmatt6(...args: any[]): Pattern
-  fmatt7(...args: any[]): Pattern
-  fmatt8(...args: any[]): Pattern
+  fmatt(time?: any, ...more: Arg[]): Pattern
+  fmatt1(...more: Arg[]): Pattern
+  fmatt2(...more: Arg[]): Pattern
+  fmatt3(...more: Arg[]): Pattern
+  fmatt4(...more: Arg[]): Pattern
+  fmatt5(...more: Arg[]): Pattern
+  fmatt6(...more: Arg[]): Pattern
+  fmatt7(...more: Arg[]): Pattern
+  fmatt8(...more: Arg[]): Pattern
   /**
    * Attack time for the FM envelope: time it takes to reach maximum modulation
    * A number may be added afterwards to control the attack of the envelope of
@@ -1969,15 +1972,15 @@ will be stripped from the resulting haps.
    * .fmattack("<0 .05 .1 .2>")
    * ._scope()
    */
-  fmattack(time?: any, ...more: any[]): Pattern
-  fmattack1(...args: any[]): Pattern
-  fmattack2(...args: any[]): Pattern
-  fmattack3(...args: any[]): Pattern
-  fmattack4(...args: any[]): Pattern
-  fmattack5(...args: any[]): Pattern
-  fmattack6(...args: any[]): Pattern
-  fmattack7(...args: any[]): Pattern
-  fmattack8(...args: any[]): Pattern
+  fmattack(time?: any, ...more: Arg[]): Pattern
+  fmattack1(...more: Arg[]): Pattern
+  fmattack2(...more: Arg[]): Pattern
+  fmattack3(...more: Arg[]): Pattern
+  fmattack4(...more: Arg[]): Pattern
+  fmattack5(...more: Arg[]): Pattern
+  fmattack6(...more: Arg[]): Pattern
+  fmattack7(...more: Arg[]): Pattern
+  fmattack8(...more: Arg[]): Pattern
   /**
    * Decay time for the FM envelope: seconds until the sustain level is reached after the attack phase.
    * A number may be added afterwards to control the decay of the envelope of
@@ -1991,15 +1994,15 @@ will be stripped from the resulting haps.
    * .fmsustain(.4)
    * ._scope()
    */
-  fmdec(time?: any, ...more: any[]): Pattern
-  fmdec1(...args: any[]): Pattern
-  fmdec2(...args: any[]): Pattern
-  fmdec3(...args: any[]): Pattern
-  fmdec4(...args: any[]): Pattern
-  fmdec5(...args: any[]): Pattern
-  fmdec6(...args: any[]): Pattern
-  fmdec7(...args: any[]): Pattern
-  fmdec8(...args: any[]): Pattern
+  fmdec(time?: any, ...more: Arg[]): Pattern
+  fmdec1(...more: Arg[]): Pattern
+  fmdec2(...more: Arg[]): Pattern
+  fmdec3(...more: Arg[]): Pattern
+  fmdec4(...more: Arg[]): Pattern
+  fmdec5(...more: Arg[]): Pattern
+  fmdec6(...more: Arg[]): Pattern
+  fmdec7(...more: Arg[]): Pattern
+  fmdec8(...more: Arg[]): Pattern
   /**
    * Decay time for the FM envelope: seconds until the sustain level is reached after the attack phase.
    * A number may be added afterwards to control the decay of the envelope of
@@ -2013,15 +2016,15 @@ will be stripped from the resulting haps.
    * .fmsustain(.4)
    * ._scope()
    */
-  fmdecay(time?: any, ...more: any[]): Pattern
-  fmdecay1(...args: any[]): Pattern
-  fmdecay2(...args: any[]): Pattern
-  fmdecay3(...args: any[]): Pattern
-  fmdecay4(...args: any[]): Pattern
-  fmdecay5(...args: any[]): Pattern
-  fmdecay6(...args: any[]): Pattern
-  fmdecay7(...args: any[]): Pattern
-  fmdecay8(...args: any[]): Pattern
+  fmdecay(time?: any, ...more: Arg[]): Pattern
+  fmdecay1(...more: Arg[]): Pattern
+  fmdecay2(...more: Arg[]): Pattern
+  fmdecay3(...more: Arg[]): Pattern
+  fmdecay4(...more: Arg[]): Pattern
+  fmdecay5(...more: Arg[]): Pattern
+  fmdecay6(...more: Arg[]): Pattern
+  fmdecay7(...more: Arg[]): Pattern
+  fmdecay8(...more: Arg[]): Pattern
   /**
    * Ramp type of fm envelope. Exp might be a bit broken..
    * A number may be added afterwards to control the envelope of
@@ -2035,15 +2038,15 @@ will be stripped from the resulting haps.
    * .fmenv("<exp lin>")
    * ._scope()
    */
-  fmenv(type?: any, ...more: any[]): Pattern
-  fmenv1(...args: any[]): Pattern
-  fmenv2(...args: any[]): Pattern
-  fmenv3(...args: any[]): Pattern
-  fmenv4(...args: any[]): Pattern
-  fmenv5(...args: any[]): Pattern
-  fmenv6(...args: any[]): Pattern
-  fmenv7(...args: any[]): Pattern
-  fmenv8(...args: any[]): Pattern
+  fmenv(type?: any, ...more: Arg[]): Pattern
+  fmenv1(...more: Arg[]): Pattern
+  fmenv2(...more: Arg[]): Pattern
+  fmenv3(...more: Arg[]): Pattern
+  fmenv4(...more: Arg[]): Pattern
+  fmenv5(...more: Arg[]): Pattern
+  fmenv6(...more: Arg[]): Pattern
+  fmenv7(...more: Arg[]): Pattern
+  fmenv8(...more: Arg[]): Pattern
   /**
    * Sets the Frequency Modulation Harmonicity Ratio.
    * Controls the timbre of the sound.
@@ -2058,15 +2061,15 @@ will be stripped from the resulting haps.
    * .fmh("<1 2 1.5 1.61>")
    * ._scope()
    */
-  fmh(harmonicity?: any, ...more: any[]): Pattern
-  fmh1(...args: any[]): Pattern
-  fmh2(...args: any[]): Pattern
-  fmh3(...args: any[]): Pattern
-  fmh4(...args: any[]): Pattern
-  fmh5(...args: any[]): Pattern
-  fmh6(...args: any[]): Pattern
-  fmh7(...args: any[]): Pattern
-  fmh8(...args: any[]): Pattern
+  fmh(harmonicity?: any, ...more: Arg[]): Pattern
+  fmh1(...more: Arg[]): Pattern
+  fmh2(...more: Arg[]): Pattern
+  fmh3(...more: Arg[]): Pattern
+  fmh4(...more: Arg[]): Pattern
+  fmh5(...more: Arg[]): Pattern
+  fmh6(...more: Arg[]): Pattern
+  fmh7(...more: Arg[]): Pattern
+  fmh8(...more: Arg[]): Pattern
   /**
    * Sets the Frequency Modulation of the synth.
    * Controls the modulation index, which defines the brightness of the sound.
@@ -2085,96 +2088,96 @@ will be stripped from the resulting haps.
    *  .fm(4).fm2(rand.mul(4)).fm3(saw.mul(8).slow(8))
    *  .fmh(1.06).fmh2(10).fmh3(0.1)
    */
-  fmi(brightness?: any, ...more: any[]): Pattern
-  fmi00(...args: any[]): Pattern
-  fmi01(...args: any[]): Pattern
-  fmi02(...args: any[]): Pattern
-  fmi03(...args: any[]): Pattern
-  fmi04(...args: any[]): Pattern
-  fmi05(...args: any[]): Pattern
-  fmi06(...args: any[]): Pattern
-  fmi07(...args: any[]): Pattern
-  fmi08(...args: any[]): Pattern
-  fmi1(...args: any[]): Pattern
-  fmi10(...args: any[]): Pattern
-  fmi11(...args: any[]): Pattern
-  fmi12(...args: any[]): Pattern
-  fmi13(...args: any[]): Pattern
-  fmi14(...args: any[]): Pattern
-  fmi15(...args: any[]): Pattern
-  fmi16(...args: any[]): Pattern
-  fmi17(...args: any[]): Pattern
-  fmi18(...args: any[]): Pattern
-  fmi2(...args: any[]): Pattern
-  fmi20(...args: any[]): Pattern
-  fmi21(...args: any[]): Pattern
-  fmi22(...args: any[]): Pattern
-  fmi23(...args: any[]): Pattern
-  fmi24(...args: any[]): Pattern
-  fmi25(...args: any[]): Pattern
-  fmi26(...args: any[]): Pattern
-  fmi27(...args: any[]): Pattern
-  fmi28(...args: any[]): Pattern
-  fmi3(...args: any[]): Pattern
-  fmi30(...args: any[]): Pattern
-  fmi31(...args: any[]): Pattern
-  fmi32(...args: any[]): Pattern
-  fmi33(...args: any[]): Pattern
-  fmi34(...args: any[]): Pattern
-  fmi35(...args: any[]): Pattern
-  fmi36(...args: any[]): Pattern
-  fmi37(...args: any[]): Pattern
-  fmi38(...args: any[]): Pattern
-  fmi4(...args: any[]): Pattern
-  fmi40(...args: any[]): Pattern
-  fmi41(...args: any[]): Pattern
-  fmi42(...args: any[]): Pattern
-  fmi43(...args: any[]): Pattern
-  fmi44(...args: any[]): Pattern
-  fmi45(...args: any[]): Pattern
-  fmi46(...args: any[]): Pattern
-  fmi47(...args: any[]): Pattern
-  fmi48(...args: any[]): Pattern
-  fmi5(...args: any[]): Pattern
-  fmi50(...args: any[]): Pattern
-  fmi51(...args: any[]): Pattern
-  fmi52(...args: any[]): Pattern
-  fmi53(...args: any[]): Pattern
-  fmi54(...args: any[]): Pattern
-  fmi55(...args: any[]): Pattern
-  fmi56(...args: any[]): Pattern
-  fmi57(...args: any[]): Pattern
-  fmi58(...args: any[]): Pattern
-  fmi6(...args: any[]): Pattern
-  fmi60(...args: any[]): Pattern
-  fmi61(...args: any[]): Pattern
-  fmi62(...args: any[]): Pattern
-  fmi63(...args: any[]): Pattern
-  fmi64(...args: any[]): Pattern
-  fmi65(...args: any[]): Pattern
-  fmi66(...args: any[]): Pattern
-  fmi67(...args: any[]): Pattern
-  fmi68(...args: any[]): Pattern
-  fmi7(...args: any[]): Pattern
-  fmi70(...args: any[]): Pattern
-  fmi71(...args: any[]): Pattern
-  fmi72(...args: any[]): Pattern
-  fmi73(...args: any[]): Pattern
-  fmi74(...args: any[]): Pattern
-  fmi75(...args: any[]): Pattern
-  fmi76(...args: any[]): Pattern
-  fmi77(...args: any[]): Pattern
-  fmi78(...args: any[]): Pattern
-  fmi8(...args: any[]): Pattern
-  fmi80(...args: any[]): Pattern
-  fmi81(...args: any[]): Pattern
-  fmi82(...args: any[]): Pattern
-  fmi83(...args: any[]): Pattern
-  fmi84(...args: any[]): Pattern
-  fmi85(...args: any[]): Pattern
-  fmi86(...args: any[]): Pattern
-  fmi87(...args: any[]): Pattern
-  fmi88(...args: any[]): Pattern
+  fmi(brightness?: any, ...more: Arg[]): Pattern
+  fmi00(...more: Arg[]): Pattern
+  fmi01(...more: Arg[]): Pattern
+  fmi02(...more: Arg[]): Pattern
+  fmi03(...more: Arg[]): Pattern
+  fmi04(...more: Arg[]): Pattern
+  fmi05(...more: Arg[]): Pattern
+  fmi06(...more: Arg[]): Pattern
+  fmi07(...more: Arg[]): Pattern
+  fmi08(...more: Arg[]): Pattern
+  fmi1(...more: Arg[]): Pattern
+  fmi10(...more: Arg[]): Pattern
+  fmi11(...more: Arg[]): Pattern
+  fmi12(...more: Arg[]): Pattern
+  fmi13(...more: Arg[]): Pattern
+  fmi14(...more: Arg[]): Pattern
+  fmi15(...more: Arg[]): Pattern
+  fmi16(...more: Arg[]): Pattern
+  fmi17(...more: Arg[]): Pattern
+  fmi18(...more: Arg[]): Pattern
+  fmi2(...more: Arg[]): Pattern
+  fmi20(...more: Arg[]): Pattern
+  fmi21(...more: Arg[]): Pattern
+  fmi22(...more: Arg[]): Pattern
+  fmi23(...more: Arg[]): Pattern
+  fmi24(...more: Arg[]): Pattern
+  fmi25(...more: Arg[]): Pattern
+  fmi26(...more: Arg[]): Pattern
+  fmi27(...more: Arg[]): Pattern
+  fmi28(...more: Arg[]): Pattern
+  fmi3(...more: Arg[]): Pattern
+  fmi30(...more: Arg[]): Pattern
+  fmi31(...more: Arg[]): Pattern
+  fmi32(...more: Arg[]): Pattern
+  fmi33(...more: Arg[]): Pattern
+  fmi34(...more: Arg[]): Pattern
+  fmi35(...more: Arg[]): Pattern
+  fmi36(...more: Arg[]): Pattern
+  fmi37(...more: Arg[]): Pattern
+  fmi38(...more: Arg[]): Pattern
+  fmi4(...more: Arg[]): Pattern
+  fmi40(...more: Arg[]): Pattern
+  fmi41(...more: Arg[]): Pattern
+  fmi42(...more: Arg[]): Pattern
+  fmi43(...more: Arg[]): Pattern
+  fmi44(...more: Arg[]): Pattern
+  fmi45(...more: Arg[]): Pattern
+  fmi46(...more: Arg[]): Pattern
+  fmi47(...more: Arg[]): Pattern
+  fmi48(...more: Arg[]): Pattern
+  fmi5(...more: Arg[]): Pattern
+  fmi50(...more: Arg[]): Pattern
+  fmi51(...more: Arg[]): Pattern
+  fmi52(...more: Arg[]): Pattern
+  fmi53(...more: Arg[]): Pattern
+  fmi54(...more: Arg[]): Pattern
+  fmi55(...more: Arg[]): Pattern
+  fmi56(...more: Arg[]): Pattern
+  fmi57(...more: Arg[]): Pattern
+  fmi58(...more: Arg[]): Pattern
+  fmi6(...more: Arg[]): Pattern
+  fmi60(...more: Arg[]): Pattern
+  fmi61(...more: Arg[]): Pattern
+  fmi62(...more: Arg[]): Pattern
+  fmi63(...more: Arg[]): Pattern
+  fmi64(...more: Arg[]): Pattern
+  fmi65(...more: Arg[]): Pattern
+  fmi66(...more: Arg[]): Pattern
+  fmi67(...more: Arg[]): Pattern
+  fmi68(...more: Arg[]): Pattern
+  fmi7(...more: Arg[]): Pattern
+  fmi70(...more: Arg[]): Pattern
+  fmi71(...more: Arg[]): Pattern
+  fmi72(...more: Arg[]): Pattern
+  fmi73(...more: Arg[]): Pattern
+  fmi74(...more: Arg[]): Pattern
+  fmi75(...more: Arg[]): Pattern
+  fmi76(...more: Arg[]): Pattern
+  fmi77(...more: Arg[]): Pattern
+  fmi78(...more: Arg[]): Pattern
+  fmi8(...more: Arg[]): Pattern
+  fmi80(...more: Arg[]): Pattern
+  fmi81(...more: Arg[]): Pattern
+  fmi82(...more: Arg[]): Pattern
+  fmi83(...more: Arg[]): Pattern
+  fmi84(...more: Arg[]): Pattern
+  fmi85(...more: Arg[]): Pattern
+  fmi86(...more: Arg[]): Pattern
+  fmi87(...more: Arg[]): Pattern
+  fmi88(...more: Arg[]): Pattern
   /**
    * Release time for the FM envelope: how much modulation is applied after the note is released
    * A number may be added afterwards to control the release of the envelope of
@@ -2182,15 +2185,15 @@ will be stripped from the resulting haps.
    * Synonyms: fmrel
    * @param time {number | Pattern} release time
    */
-  fmrel(time?: any, ...more: any[]): Pattern
-  fmrel1(...args: any[]): Pattern
-  fmrel2(...args: any[]): Pattern
-  fmrel3(...args: any[]): Pattern
-  fmrel4(...args: any[]): Pattern
-  fmrel5(...args: any[]): Pattern
-  fmrel6(...args: any[]): Pattern
-  fmrel7(...args: any[]): Pattern
-  fmrel8(...args: any[]): Pattern
+  fmrel(time?: any, ...more: Arg[]): Pattern
+  fmrel1(...more: Arg[]): Pattern
+  fmrel2(...more: Arg[]): Pattern
+  fmrel3(...more: Arg[]): Pattern
+  fmrel4(...more: Arg[]): Pattern
+  fmrel5(...more: Arg[]): Pattern
+  fmrel6(...more: Arg[]): Pattern
+  fmrel7(...more: Arg[]): Pattern
+  fmrel8(...more: Arg[]): Pattern
   /**
    * Release time for the FM envelope: how much modulation is applied after the note is released
    * A number may be added afterwards to control the release of the envelope of
@@ -2198,15 +2201,15 @@ will be stripped from the resulting haps.
    * Synonyms: fmrel
    * @param time {number | Pattern} release time
    */
-  fmrelease(time?: any, ...more: any[]): Pattern
-  fmrelease1(...args: any[]): Pattern
-  fmrelease2(...args: any[]): Pattern
-  fmrelease3(...args: any[]): Pattern
-  fmrelease4(...args: any[]): Pattern
-  fmrelease5(...args: any[]): Pattern
-  fmrelease6(...args: any[]): Pattern
-  fmrelease7(...args: any[]): Pattern
-  fmrelease8(...args: any[]): Pattern
+  fmrelease(time?: any, ...more: Arg[]): Pattern
+  fmrelease1(...more: Arg[]): Pattern
+  fmrelease2(...more: Arg[]): Pattern
+  fmrelease3(...more: Arg[]): Pattern
+  fmrelease4(...more: Arg[]): Pattern
+  fmrelease5(...more: Arg[]): Pattern
+  fmrelease6(...more: Arg[]): Pattern
+  fmrelease7(...more: Arg[]): Pattern
+  fmrelease8(...more: Arg[]): Pattern
   /**
    * Sustain level for the FM envelope: how much modulation is applied after the decay phase
    * A number may be added afterwards to control the sustain of the envelope of
@@ -2220,15 +2223,15 @@ will be stripped from the resulting haps.
    * .fmsustain("<1 .75 .5 0>")
    * ._scope()
    */
-  fmsus(level?: any, ...more: any[]): Pattern
-  fmsus1(...args: any[]): Pattern
-  fmsus2(...args: any[]): Pattern
-  fmsus3(...args: any[]): Pattern
-  fmsus4(...args: any[]): Pattern
-  fmsus5(...args: any[]): Pattern
-  fmsus6(...args: any[]): Pattern
-  fmsus7(...args: any[]): Pattern
-  fmsus8(...args: any[]): Pattern
+  fmsus(level?: any, ...more: Arg[]): Pattern
+  fmsus1(...more: Arg[]): Pattern
+  fmsus2(...more: Arg[]): Pattern
+  fmsus3(...more: Arg[]): Pattern
+  fmsus4(...more: Arg[]): Pattern
+  fmsus5(...more: Arg[]): Pattern
+  fmsus6(...more: Arg[]): Pattern
+  fmsus7(...more: Arg[]): Pattern
+  fmsus8(...more: Arg[]): Pattern
   /**
    * Sustain level for the FM envelope: how much modulation is applied after the decay phase
    * A number may be added afterwards to control the sustain of the envelope of
@@ -2242,15 +2245,15 @@ will be stripped from the resulting haps.
    * .fmsustain("<1 .75 .5 0>")
    * ._scope()
    */
-  fmsustain(level?: any, ...more: any[]): Pattern
-  fmsustain1(...args: any[]): Pattern
-  fmsustain2(...args: any[]): Pattern
-  fmsustain3(...args: any[]): Pattern
-  fmsustain4(...args: any[]): Pattern
-  fmsustain5(...args: any[]): Pattern
-  fmsustain6(...args: any[]): Pattern
-  fmsustain7(...args: any[]): Pattern
-  fmsustain8(...args: any[]): Pattern
+  fmsustain(level?: any, ...more: Arg[]): Pattern
+  fmsustain1(...more: Arg[]): Pattern
+  fmsustain2(...more: Arg[]): Pattern
+  fmsustain3(...more: Arg[]): Pattern
+  fmsustain4(...more: Arg[]): Pattern
+  fmsustain5(...more: Arg[]): Pattern
+  fmsustain6(...more: Arg[]): Pattern
+  fmsustain7(...more: Arg[]): Pattern
+  fmsustain8(...more: Arg[]): Pattern
   /**
    * Waveform of the fm modulator
    * A number may be added afterwards to control the waveform
@@ -2261,32 +2264,32 @@ will be stripped from the resulting haps.
    * @example
    * n("0 1 2 3".fast(4)).chord("<Dm Am F G>").voicing().s("sawtooth").fmwave("brown").fm(.6)
    */
-  fmwave(wave?: any, ...more: any[]): Pattern
-  fmwave1(...args: any[]): Pattern
-  fmwave2(...args: any[]): Pattern
-  fmwave3(...args: any[]): Pattern
-  fmwave4(...args: any[]): Pattern
-  fmwave5(...args: any[]): Pattern
-  fmwave6(...args: any[]): Pattern
-  fmwave7(...args: any[]): Pattern
-  fmwave8(...args: any[]): Pattern
+  fmwave(wave?: any, ...more: Arg[]): Pattern
+  fmwave1(...more: Arg[]): Pattern
+  fmwave2(...more: Arg[]): Pattern
+  fmwave3(...more: Arg[]): Pattern
+  fmwave4(...more: Arg[]): Pattern
+  fmwave5(...more: Arg[]): Pattern
+  fmwave6(...more: Arg[]): Pattern
+  fmwave7(...more: Arg[]): Pattern
+  fmwave8(...more: Arg[]): Pattern
   /**
    * Similar to compress, but doesn't leave gaps, and the 'focus' can be bigger than a cycle
    * @example
    * s("bd hh sd hh").focus(1/4, 3/4)
    */
-  focus(...args: any[]): Pattern
-  focusSpan(...args: any[]): Pattern
-  focusspan(...args: any[]): Pattern
+  focus(...more: Arg[]): Pattern
+  focusSpan(...more: Arg[]): Pattern
+  focusspan(...more: Arg[]): Pattern
   /**
    * Wavefolding distortion
    * @param distortion {number | Pattern} amount of distortion to apply
    * @param volume {number | Pattern} linear postgain of the distortion
    */
-  fold(distortion?: any, volume?: any, ...more: any[]): Pattern
-  frameRate(...args: any[]): Pattern
-  frames(...args: any[]): Pattern
-  freeze(...args: any[]): Pattern
+  fold(distortion?: any, volume?: any, ...more: Arg[]): Pattern
+  frameRate(...more: Arg[]): Pattern
+  frames(...more: Arg[]): Pattern
+  freeze(...more: Arg[]): Pattern
   /**
    * Set frequency of sound.
    * @param frequency {number | Pattern} in Hz. the audible range is between 20 and 20000 Hz
@@ -2295,12 +2298,12 @@ will be stripped from the resulting haps.
    * @example
    * freq("110".mul.out(".5 1.5 .6 [2 3]")).s("superzow").osc()
    */
-  freq(frequency?: any, ...more: any[]): Pattern
+  freq(frequency?: any, ...more: Arg[]): Pattern
   /**
    * Assumes a numerical pattern, containing bipolar values in the range -1 .. 1
    * Returns a new pattern with values scaled to the unipolar range 0 .. 1
    */
-  fromBipolar(...args: any[]): Pattern
+  fromBipolar(...more: Arg[]): Pattern
   /**
    * Renders an oscilloscope for the frequency domain of the audio signal.
    * @param color {string} line color as hex or color name. defaults to white.
@@ -2312,10 +2315,10 @@ will be stripped from the resulting haps.
    * @example
    * s("sawtooth").fscope()
    */
-  fscope(color?: any, scale?: any, pos?: any, lean?: any, min?: any, max?: any, ...more: any[]): Pattern
-  fshift(...args: any[]): Pattern
-  fshiftnote(...args: any[]): Pattern
-  fshiftphase(...args: any[]): Pattern
+  fscope(color?: any, scale?: any, pos?: any, lean?: any, min?: any, max?: any, ...more: Arg[]): Pattern
+  fshift(...more: Arg[]): Pattern
+  fshiftnote(...more: Arg[]): Pattern
+  fshiftphase(...more: Arg[]): Pattern
   /**
    * Sets the filter type. The ladder filter is more aggressive. More types might be added in the future.
    * @param type {number | Pattern} 12db (0), ladder (1), or 24db (2)
@@ -2328,19 +2331,19 @@ will be stripped from the resulting haps.
    * .lpenv(3).lpq(1)
    * .ftype("<ladder 12db 24db>")
    */
-  ftype(type?: any, ...more: any[]): Pattern
-  func(...args: any[]): Pattern
-  fxr(...args: any[]): Pattern
+  ftype(type?: any, ...more: Arg[]): Pattern
+  func(...more: Arg[]): Pattern
+  fxr(...more: Arg[]): Pattern
   /**
    * Controls the gain by an exponential amount.
    * @param amount {number | Pattern} gain.
    * @example
    * s("hh*8").gain(".4!2 1 .4!2 1 .4 1").fast(2)
    */
-  gain(amount?: any, ...more: any[]): Pattern
-  gat(...args: any[]): Pattern
-  gate(...args: any[]): Pattern
-  getPainters(...args: any[]): Pattern
+  gain(amount?: any, ...more: Arg[]): Pattern
+  gat(...more: Arg[]): Pattern
+  gate(...more: Arg[]): Pattern
+  getPainters(...more: Arg[]): Pattern
   /**
    * Experimental
    * Progressively grows the pattern by 'n' steps until the full pattern is played, or if a second value is given (using mininotation list syntax with :),
@@ -2358,18 +2361,18 @@ will be stripped from the resulting haps.
    * note("0 1 2 3 4 5 6 7".scale("C:ritusen")).sound("folkharp")
    *    .grow("1 -1").pace(8)
    */
-  grow(...args: any[]): Pattern
-  gt(...args: any[]): Pattern
-  gte(...args: any[]): Pattern
-  h(...args: any[]): Pattern
+  grow(...more: Arg[]): Pattern
+  gt(...more: Arg[]): Pattern
+  gte(...more: Arg[]): Pattern
+  h(...more: Arg[]): Pattern
   /**
    * Hard-clipping distortion
    * @param distortion {number | Pattern} amount of distortion to apply
    * @param volume {number | Pattern} linear postgain of the distortion
    */
-  hard(distortion?: any, volume?: any, ...more: any[]): Pattern
-  harmonic(...args: any[]): Pattern
-  hbrick(...args: any[]): Pattern
+  hard(distortion?: any, volume?: any, ...more: Arg[]): Pattern
+  harmonic(...more: Arg[]): Pattern
+  hbrick(...more: Arg[]): Pattern
   /**
    * Applies the cutoff frequency of the high-pass filter.
    * When using mininotation, you can also optionally add the 'hpq' parameter, separated by ':'.
@@ -2380,9 +2383,9 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd,hh*8").hpf("<2000 2000:25>")
    */
-  hcutoff(frequency?: any, ...more: any[]): Pattern
-  hold(...args: any[]): Pattern
-  hours(...args: any[]): Pattern
+  hcutoff(frequency?: any, ...more: Arg[]): Pattern
+  hold(...more: Arg[]): Pattern
+  hours(...more: Arg[]): Pattern
   /**
    * Applies the cutoff frequency of the high-pass filter.
    * When using mininotation, you can also optionally add the 'hpq' parameter, separated by ':'.
@@ -2393,7 +2396,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd,hh*8").hpf("<2000 2000:25>")
    */
-  hp(frequency?: any, ...more: any[]): Pattern
+  hp(frequency?: any, ...more: Arg[]): Pattern
   /**
    * Sets the attack duration for the highpass filter envelope.
    * Synonyms: hpa
@@ -2405,7 +2408,7 @@ will be stripped from the resulting haps.
    * .hpa("<.5 .25 .1 .01>/4")
    * .hpenv(4)
    */
-  hpa(attack?: any, ...more: any[]): Pattern
+  hpa(attack?: any, ...more: Arg[]): Pattern
   /**
    * Sets the attack duration for the highpass filter envelope.
    * Synonyms: hpa
@@ -2417,7 +2420,7 @@ will be stripped from the resulting haps.
    * .hpa("<.5 .25 .1 .01>/4")
    * .hpenv(4)
    */
-  hpattack(attack?: any, ...more: any[]): Pattern
+  hpattack(attack?: any, ...more: Arg[]): Pattern
   /**
    * Sets the decay duration for the highpass filter envelope.
    * Synonyms: hpd
@@ -2430,12 +2433,12 @@ will be stripped from the resulting haps.
    * .hps(0.2)
    * .hpenv(4)
    */
-  hpd(decay?: any, ...more: any[]): Pattern
+  hpd(decay?: any, ...more: Arg[]): Pattern
   /**
    * DC offset of the LFO for the highpass filter
    * @param dcoffset {number | Pattern} dc offset. set to 0 for unipolar
    */
-  hpdc(dcoffset?: any, ...more: any[]): Pattern
+  hpdc(dcoffset?: any, ...more: Arg[]): Pattern
   /**
    * Sets the decay duration for the highpass filter envelope.
    * Synonyms: hpd
@@ -2448,12 +2451,12 @@ will be stripped from the resulting haps.
    * .hps(0.2)
    * .hpenv(4)
    */
-  hpdecay(decay?: any, ...more: any[]): Pattern
+  hpdecay(decay?: any, ...more: Arg[]): Pattern
   /**
    * Depth of the LFO for the highpass filter
    * @param depth {number | Pattern} depth of modulation
    */
-  hpdepth(depth?: any, ...more: any[]): Pattern
+  hpdepth(depth?: any, ...more: Arg[]): Pattern
   /**
    * Depth of the LFO for the hipass filter, in hz
    * Synonyms: hpdepthfreq
@@ -2461,7 +2464,7 @@ will be stripped from the resulting haps.
    * @example
    * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).hpdepthfrequency("<200 500 100 0>")
    */
-  hpdepthfreq(depth?: any, ...more: any[]): Pattern
+  hpdepthfreq(depth?: any, ...more: Arg[]): Pattern
   /**
    * Depth of the LFO for the hipass filter, in hz
    * Synonyms: hpdepthfreq
@@ -2469,7 +2472,7 @@ will be stripped from the resulting haps.
    * @example
    * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).hpdepthfrequency("<200 500 100 0>")
    */
-  hpdepthfrequency(depth?: any, ...more: any[]): Pattern
+  hpdepthfrequency(depth?: any, ...more: Arg[]): Pattern
   /**
    * Sets the highpass filter envelope modulation depth.
    * Synonyms: hpe
@@ -2481,7 +2484,7 @@ will be stripped from the resulting haps.
    * .hpa(.5)
    * .hpenv("<4 2 1 0 -1 -2 -4>/4")
    */
-  hpe(modulation?: any, ...more: any[]): Pattern
+  hpe(modulation?: any, ...more: Arg[]): Pattern
   /**
    * Sets the highpass filter envelope modulation depth.
    * Synonyms: hpe
@@ -2493,7 +2496,7 @@ will be stripped from the resulting haps.
    * .hpa(.5)
    * .hpenv("<4 2 1 0 -1 -2 -4>/4")
    */
-  hpenv(modulation?: any, ...more: any[]): Pattern
+  hpenv(modulation?: any, ...more: Arg[]): Pattern
   /**
    * Applies the cutoff frequency of the high-pass filter.
    * When using mininotation, you can also optionally add the 'hpq' parameter, separated by ':'.
@@ -2504,7 +2507,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd,hh*8").hpf("<2000 2000:25>")
    */
-  hpf(frequency?: any, ...more: any[]): Pattern
+  hpf(frequency?: any, ...more: Arg[]): Pattern
   /**
    * Controls the high-pass q-value.
    * Synonyms: hresonance
@@ -2512,7 +2515,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd,hh*8").hpf(2000).hpq("<0 10 20 30>")
    */
-  hpq(q?: any, ...more: any[]): Pattern
+  hpq(q?: any, ...more: Arg[]): Pattern
   /**
    * Sets the release time for the highpass filter envelope.
    * Synonyms: hpr
@@ -2526,12 +2529,12 @@ will be stripped from the resulting haps.
    * .hpr("<.5 .25 .1 0>/4")
    * .release(.5)
    */
-  hpr(release?: any, ...more: any[]): Pattern
+  hpr(release?: any, ...more: Arg[]): Pattern
   /**
    * Rate of the LFO for the highpass filter
    * @param rate {number | Pattern} rate in hertz
    */
-  hprate(rate?: any, ...more: any[]): Pattern
+  hprate(rate?: any, ...more: Arg[]): Pattern
   /**
    * Sets the release time for the highpass filter envelope.
    * Synonyms: hpr
@@ -2545,7 +2548,7 @@ will be stripped from the resulting haps.
    * .hpr("<.5 .25 .1 0>/4")
    * .release(.5)
    */
-  hprelease(release?: any, ...more: any[]): Pattern
+  hprelease(release?: any, ...more: Arg[]): Pattern
   /**
    * Sets the sustain amplitude for the highpass filter envelope.
    * Synonyms: hps
@@ -2558,17 +2561,17 @@ will be stripped from the resulting haps.
    * .hps("<0 .25 .5 1>/4")
    * .hpenv(4)
    */
-  hps(sustain?: any, ...more: any[]): Pattern
+  hps(sustain?: any, ...more: Arg[]): Pattern
   /**
    * Shape of the LFO for the highpass filter
    * @param shape {number | Pattern} Shape of the lfo (0, 1, 2, ..)
    */
-  hpshape(shape?: any, ...more: any[]): Pattern
+  hpshape(shape?: any, ...more: Arg[]): Pattern
   /**
    * Skew of the LFO for the highpass filter
    * @param skew {number | Pattern} How much to bend the LFO shape
    */
-  hpskew(skew?: any, ...more: any[]): Pattern
+  hpskew(skew?: any, ...more: Arg[]): Pattern
   /**
    * Sets the sustain amplitude for the highpass filter envelope.
    * Synonyms: hps
@@ -2581,12 +2584,12 @@ will be stripped from the resulting haps.
    * .hps("<0 .25 .5 1>/4")
    * .hpenv(4)
    */
-  hpsustain(sustain?: any, ...more: any[]): Pattern
+  hpsustain(sustain?: any, ...more: Arg[]): Pattern
   /**
    * Cycle-synced rate of the LFO for the highpass filter
    * @param rate {number | Pattern} rate in cycles
    */
-  hpsync(rate?: any, ...more: any[]): Pattern
+  hpsync(rate?: any, ...more: Arg[]): Pattern
   /**
    * Controls the high-pass q-value.
    * Synonyms: hresonance
@@ -2594,15 +2597,15 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd,hh*8").hpf(2000).hpq("<0 10 20 30>")
    */
-  hresonance(q?: any, ...more: any[]): Pattern
-  hsl(...args: any[]): Pattern
-  hsla(...args: any[]): Pattern
+  hresonance(q?: any, ...more: Arg[]): Pattern
+  hsl(...more: Arg[]): Pattern
+  hsla(...more: Arg[]): Pattern
   /**
    * Both speeds up the pattern (like 'fast') and the sample playback (like 'speed').
    * @example
    * s("bd sd:2").hurry("<1 2 4 3>").slow(1.5)
    */
-  hurry(...args: any[]): Pattern
+  hurry(...more: Arg[]): Pattern
   /**
    * Silences a pattern.
    * @example
@@ -2611,8 +2614,8 @@ will be stripped from the resulting haps.
    *   s("hh*3")
    * )
    */
-  hush(...args: any[]): Pattern
-  imag(...args: any[]): Pattern
+  hush(...more: Arg[]): Pattern
+  imag(...more: Arg[]): Pattern
   /**
    * Picks patterns (or plain values) either from a list (by index) or a lookup table (by name).
    * Similar to pick, but cycles are squeezed into the target ('inhabited') pattern.
@@ -2626,7 +2629,7 @@ will be stripped from the resulting haps.
    * @example
    * s("a@2 [a b] a".inhabit({a: "bd(3,8)", b: "sd sd"})).slow(4)
    */
-  inhabit(pat?: any, xs?: any, ...more: any[]): Pattern
+  inhabit(pat?: any, xs?: any, ...more: Arg[]): Pattern
   /**
    * The same as inhabit, but if you pick a number greater than the size of the list,
    * it wraps around, rather than sticking at the maximum value.
@@ -2636,16 +2639,16 @@ will be stripped from the resulting haps.
    * @param pat {Pattern}
    * @param xs {*}
    */
-  inhabitmod(pat?: any, xs?: any, ...more: any[]): Pattern
-  innerBind(...args: any[]): Pattern
-  innerJoin(...args: any[]): Pattern
+  inhabitmod(pat?: any, xs?: any, ...more: Arg[]): Pattern
+  innerBind(...more: Arg[]): Pattern
+  innerJoin(...more: Arg[]): Pattern
   /**
    * Carries out an operation 'inside' a cycle.
    * @example
    * "0 1 2 3 4 3 2 1".inside(4, rev).scale('C major').note()
    * // "0 1 2 3 4 3 2 1".slow(4).rev().fast(4).scale('C major').note()
    */
-  inside(...args: any[]): Pattern
+  inside(...more: Arg[]): Pattern
   /**
    * Breaks a pattern into pieces according to the structure of a given pattern.
    * True values in the given pattern cause the corresponding subcycle of the
@@ -2655,21 +2658,21 @@ will be stripped from the resulting haps.
    * @example
    * sound("bd sd ht lt").into("1 0", hurry(2))
    */
-  into(...args: any[]): Pattern
+  into(...more: Arg[]): Pattern
   /**
    * Swaps 1s and 0s in a binary pattern.
    * Synonyms: inv
    * @example
    * s("bd").struct("1 0 0 1 0 0 1 0".lastOf(4, invert))
    */
-  inv(...args: any[]): Pattern
+  inv(...more: Arg[]): Pattern
   /**
    * Swaps 1s and 0s in a binary pattern.
    * Synonyms: inv
    * @example
    * s("bd").struct("1 0 0 1 0 0 1 0".lastOf(4, invert))
    */
-  invert(...args: any[]): Pattern
+  invert(...more: Arg[]): Pattern
   /**
    * Sets the sample to use as an impulse response for the reverb.
    * Synonyms: ir
@@ -2677,7 +2680,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd").room(.8).ir("<shaker_large:0 shaker_large:2>")
    */
-  ir(sample?: any, ...more: any[]): Pattern
+  ir(sample?: any, ...more: Arg[]): Pattern
   /**
    * Sets the beginning of the IR response sample
    * Synonyms: ir
@@ -2686,7 +2689,7 @@ will be stripped from the resulting haps.
    * samples('github:switchangel/pad')
    * $: s("brk/2").fit().scrub(irand(16).div(16).seg(8)).ir("swpad:4").room(.65).irspeed("-2").irbegin("<0 .5 .75>/2").roomsize(.6)
    */
-  irbegin(begin?: any, ...more: any[]): Pattern
+  irbegin(begin?: any, ...more: Arg[]): Pattern
   /**
    * Sets the sample to use as an impulse response for the reverb.
    * Synonyms: ir
@@ -2694,7 +2697,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd").room(.8).ir("<shaker_large:0 shaker_large:2>")
    */
-  iresponse(sample?: any, ...more: any[]): Pattern
+  iresponse(sample?: any, ...more: Arg[]): Pattern
   /**
    * Sets speed of the sample for the impulse response.
    * @param speed {string | Pattern}
@@ -2702,28 +2705,28 @@ will be stripped from the resulting haps.
    * samples('github:switchangel/pad')
    * $: s("brk/2").fit().scrub(irand(16).div(16).seg(8)).ir("swpad:4").room(.2).irspeed("<2 1 .5>/2").irbegin(.5).roomsize(.5)
    */
-  irspeed(speed?: any, ...more: any[]): Pattern
+  irspeed(speed?: any, ...more: Arg[]): Pattern
   /**
    * Divides a pattern into a given number of subdivisions, plays the subdivisions in order, but increments the starting subdivision each cycle. The pattern wraps to the first subdivision after the last subdivision is played.
    * @example
    * note("0 1 2 3".scale('A minor')).iter(4)
    */
-  iter(...args: any[]): Pattern
+  iter(...more: Arg[]): Pattern
   /**
    * Like iter, but plays the subdivisions in reverse order. Known as iter' in tidalcycles
    * Synonyms: iterback
    * @example
    * note("0 1 2 3".scale('A minor')).iterBack(4)
    */
-  iterBack(...args: any[]): Pattern
+  iterBack(...more: Arg[]): Pattern
   /**
    * Like iter, but plays the subdivisions in reverse order. Known as iter' in tidalcycles
    * Synonyms: iterback
    * @example
    * note("0 1 2 3".scale('A minor')).iterBack(4)
    */
-  iterback(...args: any[]): Pattern
-  join(...args: any[]): Pattern
+  iterback(...more: Arg[]): Pattern
+  join(...more: Arg[]): Pattern
   /**
    * The jux function creates strange stereo effects, by applying a function to a pattern, but only in the right-hand channel.
    * @example
@@ -2733,37 +2736,37 @@ will be stripped from the resulting haps.
    * @example
    * s("bd lt [~ ht] mt cp ~ bd hh").jux(iter(4))
    */
-  jux(...args: any[]): Pattern
+  jux(...more: Arg[]): Pattern
   /**
    * Jux with adjustable stereo width. 0 = mono, 1 = full stereo.
    * Synonyms: juxby
    * @example
    * s("bd lt [~ ht] mt cp ~ bd hh").juxBy("<0 .5 1>/2", rev)
    */
-  juxBy(...args: any[]): Pattern
+  juxBy(...more: Arg[]): Pattern
   /**
    * Jux with adjustable stereo width. 0 = mono, 1 = full stereo.
    * Synonyms: juxby
    * @example
    * s("bd lt [~ ht] mt cp ~ bd hh").juxBy("<0 .5 1>/2", rev)
    */
-  juxby(...args: any[]): Pattern
-  kcutoff(...args: any[]): Pattern
-  keep(...args: any[]): Pattern
-  keepif(...args: any[]): Pattern
+  juxby(...more: Arg[]): Pattern
+  kcutoff(...more: Arg[]): Pattern
+  keep(...more: Arg[]): Pattern
+  keepif(...more: Arg[]): Pattern
   /**
    * returns true when a key or array of keys is held
    * Key name reference
    * @example
    * keyDown("Control:j").pick([s("bd(5,8)"), s("cp(3,8)")])
    */
-  keyDown(...args: any[]): Pattern
-  krush(...args: any[]): Pattern
+  keyDown(...more: Arg[]): Pattern
+  krush(...more: Arg[]): Pattern
   /**
    * Sets the displayed text for an event on the pianoroll
    * @param label {string} text to display
    */
-  label(label?: any, ...more: any[]): Pattern
+  label(label?: any, ...more: Arg[]): Pattern
   /**
    * Applies the given function every n cycles, starting from the last cycle.
    * @param n {number} how many cycles
@@ -2771,14 +2774,14 @@ will be stripped from the resulting haps.
    * @example
    * note("c3 d3 e3 g3").lastOf(4, x=>x.rev())
    */
-  lastOf(n?: any, func?: any, ...more: any[]): Pattern
+  lastOf(n?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * Nudge a pattern to start later in time. Equivalent of Tidal's ~> operator
    * @param cycles {number | Pattern} number of cycles to nudge right
    * @example
    * "bd ~".stack("hh ~".late(.1)).s()
    */
-  late(cycles?: any, ...more: any[]): Pattern
+  late(cycles?: any, ...more: Arg[]): Pattern
   /**
    * Layers the result of the given function(s). Like superimpose, but without the original pattern:
    * Synonyms: apply
@@ -2787,8 +2790,8 @@ will be stripped from the resulting haps.
    *   .layer(x=>x.add("0,2"))
    *   .scale('C minor').note()
    */
-  layer(...args: any[]): Pattern
-  lbrick(...args: any[]): Pattern
+  layer(...more: Arg[]): Pattern
+  lbrick(...more: Arg[]): Pattern
   /**
    * Multiplies the duration with the given number. Also cuts samples off at the end if they exceed the duration.
    * Synonyms: legato
@@ -2796,14 +2799,14 @@ will be stripped from the resulting haps.
    * @example
    * note("c a f e").s("piano").clip("<.5 1 2>")
    */
-  legato(factor?: any, ...more: any[]): Pattern
+  legato(factor?: any, ...more: Arg[]): Pattern
   /**
    * Emulation of a Leslie speaker: speakers rotating in a wooden amplified cabinet.
    * @param wet {number | Pattern} between 0 and 1
    * @example
    * n("0,4,7").s("supersquare").leslie("<0 .4 .6 1>").osc()
    */
-  leslie(wet?: any, ...more: any[]): Pattern
+  leslie(wet?: any, ...more: Arg[]): Pattern
   /**
    * Configures an LFO. Can be called in sequence like pat.lfo(...).lfo(...) to set up multiple LFOs.
    * There are two ways to declare which control will be modulated:
@@ -2845,35 +2848,35 @@ will be stripped from the resulting haps.
    *   .diode(0.3)
    *   .sometimes(x => x.lfo({ s: "8" }, 'lpf_mod'))
    */
-  lfo(config?: any, id?: any, ...more: any[]): Pattern
+  lfo(config?: any, id?: any, ...more: Arg[]): Pattern
   /**
    * Selects the given fraction of the pattern and repeats that part to fill the remainder of the cycle.
    * @param fraction {number} fraction to select
    * @example
    * s("lt ht mt cp, [hh oh]*2").linger("<1 .5 .25 .125>")
    */
-  linger(fraction?: any, ...more: any[]): Pattern
+  linger(fraction?: any, ...more: Arg[]): Pattern
   /**
    * Specifies whether delaytime is calculated relative to cps.
    * @param enable {number | Pattern} When set to 1, delaytime is a direct multiple of a cycle.
    * @example
    * s("sd").delay().lock(1).osc()
    */
-  lock(enable?: any, ...more: any[]): Pattern
+  lock(enable?: any, ...more: Arg[]): Pattern
   /**
    * Writes the content of the current event to the console (visible in the side menu).
    * @example
    * s("bd sd").log()
    */
-  log(...args: any[]): Pattern
-  log2(...args: any[]): Pattern
+  log(...more: Arg[]): Pattern
+  log2(...more: Arg[]): Pattern
   /**
    * A simplified version of log which writes all "values" (various configurable parameters)
    * within the event to the console (visible in the side menu).
    * @example
    * s("bd sd").gain("0.25 0.5 1").n("2 1 0").logValues()
    */
-  logValues(...args: any[]): Pattern
+  logValues(...more: Arg[]): Pattern
   /**
    * Loops the sample.
    * Note that the tempo of the loop is not synced with the cycle tempo.
@@ -2882,14 +2885,14 @@ will be stripped from the resulting haps.
    * @example
    * s("casio").loop(1)
    */
-  loop(on?: any, ...more: any[]): Pattern
+  loop(on?: any, ...more: Arg[]): Pattern
   /**
    * Makes the sample fit the given number of cycles by changing the speed.
    * @example
    * samples({ rhodes: 'https://cdn.freesound.org/previews/132/132051_316502-lq.mp3' })
    * s("rhodes").loopAt(2)
    */
-  loopAt(...args: any[]): Pattern
+  loopAt(...more: Arg[]): Pattern
   /**
    * Makes the sample fit the given number of cycles and cps value, by
    * changing the speed. Please note that at some point cps will be
@@ -2899,7 +2902,7 @@ will be stripped from the resulting haps.
    * samples({ rhodes: 'https://cdn.freesound.org/previews/132/132051_316502-lq.mp3' })
    * s("rhodes").loopAtCps(4,1.5).cps(1.5)
    */
-  loopAtCps(...args: any[]): Pattern
+  loopAtCps(...more: Arg[]): Pattern
   /**
    * Begin to loop at a specific point in the sample (inbetween begin and end).
    * Note that the loop point must be inbetween begin and end, and before loopEnd!
@@ -2910,7 +2913,7 @@ will be stripped from the resulting haps.
    * s("space").loop(1)
    * .loopBegin("<0 .125 .25>")._scope()
    */
-  loopBegin(time?: any, ...more: any[]): Pattern
+  loopBegin(time?: any, ...more: Arg[]): Pattern
   /**
    * End the looping section at a specific point in the sample (inbetween begin and end).
    * Note that the loop point must be inbetween begin and end, and after loopBegin!
@@ -2920,9 +2923,9 @@ will be stripped from the resulting haps.
    * s("space").loop(1)
    * .loopEnd("<1 .75 .5 .25>")._scope()
    */
-  loopEnd(time?: any, ...more: any[]): Pattern
-  loopat(...args: any[]): Pattern
-  loopatcps(...args: any[]): Pattern
+  loopEnd(time?: any, ...more: Arg[]): Pattern
+  loopat(...more: Arg[]): Pattern
+  loopatcps(...more: Arg[]): Pattern
   /**
    * Begin to loop at a specific point in the sample (inbetween begin and end).
    * Note that the loop point must be inbetween begin and end, and before loopEnd!
@@ -2933,7 +2936,7 @@ will be stripped from the resulting haps.
    * s("space").loop(1)
    * .loopBegin("<0 .125 .25>")._scope()
    */
-  loopb(time?: any, ...more: any[]): Pattern
+  loopb(time?: any, ...more: Arg[]): Pattern
   /**
    * End the looping section at a specific point in the sample (inbetween begin and end).
    * Note that the loop point must be inbetween begin and end, and after loopBegin!
@@ -2943,7 +2946,7 @@ will be stripped from the resulting haps.
    * s("space").loop(1)
    * .loopEnd("<1 .75 .5 .25>")._scope()
    */
-  loope(time?: any, ...more: any[]): Pattern
+  loope(time?: any, ...more: Arg[]): Pattern
   /**
    * Applies the cutoff frequency of the low-pass filter.
    * When using mininotation, you can also optionally add the 'lpq' parameter, separated by ':'.
@@ -2954,7 +2957,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd*16").lpf("1000:0 1000:10 1000:20 1000:30")
    */
-  lp(frequency?: any, ...more: any[]): Pattern
+  lp(frequency?: any, ...more: Arg[]): Pattern
   /**
    * Sets the attack duration for the lowpass filter envelope.
    * Synonyms: lpa
@@ -2966,7 +2969,7 @@ will be stripped from the resulting haps.
    * .lpa("<.5 .25 .1 .01>/4")
    * .lpenv(4)
    */
-  lpa(attack?: any, ...more: any[]): Pattern
+  lpa(attack?: any, ...more: Arg[]): Pattern
   /**
    * Sets the attack duration for the lowpass filter envelope.
    * Synonyms: lpa
@@ -2978,7 +2981,7 @@ will be stripped from the resulting haps.
    * .lpa("<.5 .25 .1 .01>/4")
    * .lpenv(4)
    */
-  lpattack(attack?: any, ...more: any[]): Pattern
+  lpattack(attack?: any, ...more: Arg[]): Pattern
   /**
    * Sets the decay duration for the lowpass filter envelope.
    * Synonyms: lpd
@@ -2990,12 +2993,12 @@ will be stripped from the resulting haps.
    * .lpd("<.5 .25 .1 0>/4")
    * .lpenv(4)
    */
-  lpd(decay?: any, ...more: any[]): Pattern
+  lpd(decay?: any, ...more: Arg[]): Pattern
   /**
    * DC offset of the LFO for the lowpass filter
    * @param dcoffset {number | Pattern} dc offset. set to 0 for unipolar
    */
-  lpdc(dcoffset?: any, ...more: any[]): Pattern
+  lpdc(dcoffset?: any, ...more: Arg[]): Pattern
   /**
    * Sets the decay duration for the lowpass filter envelope.
    * Synonyms: lpd
@@ -3007,14 +3010,14 @@ will be stripped from the resulting haps.
    * .lpd("<.5 .25 .1 0>/4")
    * .lpenv(4)
    */
-  lpdecay(decay?: any, ...more: any[]): Pattern
+  lpdecay(decay?: any, ...more: Arg[]): Pattern
   /**
    * Depth of the LFO for the lowpass filter
    * @param depth {number | Pattern} depth of modulation
    * @example
    * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).lpdepth("<1 .5 1.8 0>")
    */
-  lpdepth(depth?: any, ...more: any[]): Pattern
+  lpdepth(depth?: any, ...more: Arg[]): Pattern
   /**
    * Depth of the LFO for the lowpass filter, in HZ
    * Synonyms: lpdepthfreq
@@ -3022,7 +3025,7 @@ will be stripped from the resulting haps.
    * @example
    * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).lpdepthfrequency("<200 500 100 0>")
    */
-  lpdepthfreq(depth?: any, ...more: any[]): Pattern
+  lpdepthfreq(depth?: any, ...more: Arg[]): Pattern
   /**
    * Depth of the LFO for the lowpass filter, in HZ
    * Synonyms: lpdepthfreq
@@ -3030,7 +3033,7 @@ will be stripped from the resulting haps.
    * @example
    * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).lpdepthfrequency("<200 500 100 0>")
    */
-  lpdepthfrequency(depth?: any, ...more: any[]): Pattern
+  lpdepthfrequency(depth?: any, ...more: Arg[]): Pattern
   /**
    * Sets the lowpass filter envelope modulation depth.
    * Synonyms: lpe
@@ -3042,7 +3045,7 @@ will be stripped from the resulting haps.
    * .lpa(.5)
    * .lpenv("<4 2 1 0 -1 -2 -4>/4")
    */
-  lpe(modulation?: any, ...more: any[]): Pattern
+  lpe(modulation?: any, ...more: Arg[]): Pattern
   /**
    * Sets the lowpass filter envelope modulation depth.
    * Synonyms: lpe
@@ -3054,7 +3057,7 @@ will be stripped from the resulting haps.
    * .lpa(.5)
    * .lpenv("<4 2 1 0 -1 -2 -4>/4")
    */
-  lpenv(modulation?: any, ...more: any[]): Pattern
+  lpenv(modulation?: any, ...more: Arg[]): Pattern
   /**
    * Applies the cutoff frequency of the low-pass filter.
    * When using mininotation, you can also optionally add the 'lpq' parameter, separated by ':'.
@@ -3065,7 +3068,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd*16").lpf("1000:0 1000:10 1000:20 1000:30")
    */
-  lpf(frequency?: any, ...more: any[]): Pattern
+  lpf(frequency?: any, ...more: Arg[]): Pattern
   /**
    * Controls the low-pass q-value.
    * Synonyms: resonance
@@ -3073,7 +3076,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd,hh*8").lpf(2000).lpq("<0 10 20 30>")
    */
-  lpq(q?: any, ...more: any[]): Pattern
+  lpq(q?: any, ...more: Arg[]): Pattern
   /**
    * Sets the release time for the lowpass filter envelope.
    * Synonyms: lpr
@@ -3087,14 +3090,14 @@ will be stripped from the resulting haps.
    * .lpr("<.5 .25 .1 0>/4")
    * .release(.5)
    */
-  lpr(release?: any, ...more: any[]): Pattern
+  lpr(release?: any, ...more: Arg[]): Pattern
   /**
    * Rate of the LFO for the lowpass filter
    * @param rate {number | Pattern} rate in hertz
    * @example
    * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).lprate("<4 8 2 1>")
    */
-  lprate(rate?: any, ...more: any[]): Pattern
+  lprate(rate?: any, ...more: Arg[]): Pattern
   /**
    * Sets the release time for the lowpass filter envelope.
    * Synonyms: lpr
@@ -3108,7 +3111,7 @@ will be stripped from the resulting haps.
    * .lpr("<.5 .25 .1 0>/4")
    * .release(.5)
    */
-  lprelease(release?: any, ...more: any[]): Pattern
+  lprelease(release?: any, ...more: Arg[]): Pattern
   /**
    * Sets the sustain amplitude for the lowpass filter envelope.
    * Synonyms: lps
@@ -3121,17 +3124,17 @@ will be stripped from the resulting haps.
    * .lps("<0 .25 .5 1>/4")
    * .lpenv(4)
    */
-  lps(sustain?: any, ...more: any[]): Pattern
+  lps(sustain?: any, ...more: Arg[]): Pattern
   /**
    * Shape of the LFO for the lowpass filter
    * @param shape {number | Pattern} Shape of the lfo (0, 1, 2, ..)
    */
-  lpshape(shape?: any, ...more: any[]): Pattern
+  lpshape(shape?: any, ...more: Arg[]): Pattern
   /**
    * Skew of the LFO for the lowpass filter
    * @param skew {number | Pattern} How much to bend the LFO shape
    */
-  lpskew(skew?: any, ...more: any[]): Pattern
+  lpskew(skew?: any, ...more: Arg[]): Pattern
   /**
    * Sets the sustain amplitude for the lowpass filter envelope.
    * Synonyms: lps
@@ -3144,44 +3147,44 @@ will be stripped from the resulting haps.
    * .lps("<0 .25 .5 1>/4")
    * .lpenv(4)
    */
-  lpsustain(sustain?: any, ...more: any[]): Pattern
+  lpsustain(sustain?: any, ...more: Arg[]): Pattern
   /**
    * Cycle-synced rate of the LFO for the lowpass filter
    * @param rate {number | Pattern} rate in cycles
    * @example
    * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).lpsync("<4 8 2 1>")
    */
-  lpsync(rate?: any, ...more: any[]): Pattern
+  lpsync(rate?: any, ...more: Arg[]): Pattern
   /**
    * Rate of modulation / rotation for leslie effect
    * @param rate {number | Pattern} 6.7 for fast, 0.7 for slow
    * @example
    * n("0,4,7").s("supersquare").leslie(1).lrate("<1 2 4 8>").osc()
    */
-  lrate(rate?: any, ...more: any[]): Pattern
+  lrate(rate?: any, ...more: Arg[]): Pattern
   /**
    * Physical size of the cabinet in meters. Be careful, it might be slightly larger than your computer. Affects the Doppler amount (pitch warble)
    * @param meters {number | Pattern} somewhere between 0 and 1
    * @example
    * n("0,4,7").s("supersquare").leslie(1).lrate(2).lsize("<.1 .5 1>").osc()
    */
-  lsize(meters?: any, ...more: any[]): Pattern
-  lt(...args: any[]): Pattern
-  lte(...args: any[]): Pattern
+  lsize(meters?: any, ...more: Arg[]): Pattern
+  lt(...more: Arg[]): Pattern
+  lte(...more: Arg[]): Pattern
   /**
    * Overrides the css of highlighted events. Make sure to use single quotes!
    * @example
    * note("c a f e")
    * .markcss('text-decoration:underline')
    */
-  markcss(...args: any[]): Pattern
+  markcss(...more: Arg[]): Pattern
   /**
    * Returns silence when mask is 0 or "~"
    * @example
    * note("c [eb,g] d [eb,g]").mask("<1 [0 1]>")
    */
-  mask(...args: any[]): Pattern
-  maskAll(...args: any[]): Pattern
+  mask(...more: Arg[]): Pattern
+  maskAll(...more: Arg[]): Pattern
   /**
    * MIDI output: Opens a MIDI output port.
    * @param midiport {string | number} MIDI device name or index defaulting to 0
@@ -3191,62 +3194,62 @@ will be stripped from the resulting haps.
    * @example
    * note("c4").midichan(1).midi('IAC Driver Bus 1', { controller: true, latency: 50 })
    */
-  midi(midiport?: any, options?: any, ...more: any[]): Pattern
+  midi(midiport?: any, options?: any, ...more: Arg[]): Pattern
   /**
    * MIDI pitch bend: Sends a MIDI pitch bend message.
    * @param midibend {number | Pattern} MIDI pitch bend (-1 - 1)
    * @example
    * note("c4").midibend(sine.slow(4).range(-0.4,0.4)).midi()
    */
-  midibend(midibend?: any, ...more: any[]): Pattern
+  midibend(midibend?: any, ...more: Arg[]): Pattern
   /**
    * MIDI channel: Sets the MIDI channel for the event.
    * @param channel {number | Pattern} MIDI channel number (0-15)
    * @example
    * note("c4").midichan(1).midi()
    */
-  midichan(channel?: any, ...more: any[]): Pattern
+  midichan(channel?: any, ...more: Arg[]): Pattern
   /**
    * MIDI command: Sends a MIDI command message.
    * @param command {number | Pattern} MIDI command
    * @example
    * midicmd("clock*48,<start stop>/2").midi()
    */
-  midicmd(command?: any, ...more: any[]): Pattern
-  midimap(...args: any[]): Pattern
+  midicmd(command?: any, ...more: Arg[]): Pattern
+  midimap(...more: Arg[]): Pattern
   /**
    * MIDI port: Sets the MIDI port for the event.
    * @param port {number | Pattern} MIDI port
    * @example
    * note("c a f e").midiport("<0 1 2 3>").midi()
    */
-  midiport(port?: any, ...more: any[]): Pattern
+  midiport(port?: any, ...more: Arg[]): Pattern
   /**
    * MIDI key after touch: Sends a MIDI key after touch message.
    * @param miditouch {number | Pattern} MIDI key after touch (0-1)
    * @example
    * note("c4").miditouch(sine.slow(4).range(0,1)).midi()
    */
-  miditouch(miditouch?: any, ...more: any[]): Pattern
-  minutes(...args: any[]): Pattern
-  mix(...args: any[]): Pattern
-  mod(...args: any[]): Pattern
+  miditouch(miditouch?: any, ...more: Arg[]): Pattern
+  minutes(...more: Arg[]): Pattern
+  mix(...more: Arg[]): Pattern
+  mod(...more: Arg[]): Pattern
   /**
    * Remove anchor note from the voicing. Useful for melody harmonization
    * @param modeName {string | Pattern} one of {below | above | duck | root}
    * @example
    * mode("<below above duck root>").chord("C").voicing()
    */
-  mode(modeName?: any, ...more: any[]): Pattern
-  modulate(...args: any[]): Pattern
-  moveXY(...args: any[]): Pattern
-  mtranspose(...args: any[]): Pattern
+  mode(modeName?: any, ...more: Arg[]): Pattern
+  modulate(...more: Arg[]): Pattern
+  moveXY(...more: Arg[]): Pattern
+  mtranspose(...more: Arg[]): Pattern
   /**
    * Multiplies each number by the given factor.
    * @example
    * "<1 1.5 [1.66, <2 2.33>]>*4".mul(150).freq()
    */
-  mul(...args: any[]): Pattern
+  mul(...more: Arg[]): Pattern
   /**
    * Selects the given index from the sample map.
    * Numbers too high will wrap around.
@@ -3255,22 +3258,22 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd,hh*6").n("<0 1>")
    */
-  n(value?: any, ...more: any[]): Pattern
-  ne(...args: any[]): Pattern
-  net(...args: any[]): Pattern
+  n(value?: any, ...more: Arg[]): Pattern
+  ne(...more: Arg[]): Pattern
+  net(...more: Arg[]): Pattern
   /**
    * Shorthand for .sometimesBy(0, fn) (never calls fn)
    * @example
    * s("hh*8").never(x=>x.speed("0.5"))
    */
-  never(...args: any[]): Pattern
+  never(...more: Arg[]): Pattern
   /**
    * Adds pink noise to the mix
    * @param wet {number | Pattern} wet amount
    * @example
    * sound("<white pink brown>/2")
    */
-  noise(wet?: any, ...more: any[]): Pattern
+  noise(wet?: any, ...more: Arg[]): Pattern
   /**
    * Plays the given note name or midi number. A note name consists of
    *
@@ -3289,22 +3292,22 @@ will be stripped from the resulting haps.
    * @example
    * note("fbb1 a#0 cbbb-1 e##-2").sound("saw")
    */
-  note(...args: any[]): Pattern
+  note(...more: Arg[]): Pattern
   /**
    * MIDI NRPN non-registered parameter number: Sends a MIDI NRPN non-registered parameter number message.
    * @param nrpnn {number | Pattern} MIDI NRPN non-registered parameter number (0-127)
    * @example
    * note("c4").nrpnn("1:8").nrpv("123").midichan(1).midi()
    */
-  nrpnn(nrpnn?: any, ...more: any[]): Pattern
+  nrpnn(nrpnn?: any, ...more: Arg[]): Pattern
   /**
    * MIDI NRPN non-registered parameter value: Sends a MIDI NRPN non-registered parameter value message.
    * @param nrpv {number | Pattern} MIDI NRPN non-registered parameter value (0-127)
    * @example
    * note("c4").nrpnn("1:8").nrpv("123").midichan(1).midi()
    */
-  nrpv(nrpv?: any, ...more: any[]): Pattern
-  nudge(...args: any[]): Pattern
+  nrpv(nrpv?: any, ...more: Arg[]): Pattern
+  nudge(...more: Arg[]): Pattern
   /**
    * An orbit is a global parameter context for patterns. Patterns with the same orbit will share the same global effects.
    * Synonyms: o
@@ -3315,7 +3318,7 @@ will be stripped from the resulting haps.
    *   s("~ sd ~ sd").delay(.5).delaytime(.125).orbit(2)
    * )
    */
-  o(number?: any, ...more: any[]): Pattern
+  o(number?: any, ...more: Arg[]): Pattern
   /**
    * Sets the default octave of a synth.
    * Synonyms: oct
@@ -3323,7 +3326,7 @@ will be stripped from the resulting haps.
    * @example
    * n("0,4,7").scale("F:minor").s('supersaw').octave("<0 1 2 3>")
    */
-  oct(octave?: any, ...more: any[]): Pattern
+  oct(octave?: any, ...more: Arg[]): Pattern
   /**
    * Sets the default octave of a synth.
    * Synonyms: oct
@@ -3331,18 +3334,18 @@ will be stripped from the resulting haps.
    * @example
    * n("0,4,7").scale("F:minor").s('supersaw').octave("<0 1 2 3>")
    */
-  octave(octave?: any, ...more: any[]): Pattern
-  octaveR(...args: any[]): Pattern
+  octave(octave?: any, ...more: Arg[]): Pattern
+  octaveR(...more: Arg[]): Pattern
   /**
    * How many octaves are voicing steps spread apart, defaults to 1
    * @param count {number | Pattern} the number of octaves
    * @example
    * chord("<Am C D F Am E Am E>").octaves("<2 4>").voicing()
    */
-  octaves(count?: any, ...more: any[]): Pattern
-  octer(...args: any[]): Pattern
-  octersub(...args: any[]): Pattern
-  octersubsub(...args: any[]): Pattern
+  octaves(count?: any, ...more: Arg[]): Pattern
+  octer(...more: Arg[]): Pattern
+  octersub(...more: Arg[]): Pattern
+  octersubsub(...more: Arg[]): Pattern
   /**
    * Superimposes the function result on top of the original pattern, delayed by the given time.
    * @param time {Pattern | number} offset time
@@ -3350,36 +3353,36 @@ will be stripped from the resulting haps.
    * @example
    * "c3 eb3 g3".off(1/8, x=>x.add(7)).note()
    */
-  off(time?: any, func?: any, ...more: any[]): Pattern
+  off(time?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * Sets how the voicing is offset from the anchored position
    * @param shift {number | Pattern} the amount to shift the voicing up or down
    * @example
    * chord("<Am C D F Am E Am E>").offset("<0 1 2 3 4 5>") // alter the voicing each time
    */
-  offset(shift?: any, ...more: any[]): Pattern
+  offset(shift?: any, ...more: Arg[]): Pattern
   /**
    * Shorthand for .sometimesBy(0.75, fn)
    * @example
    * s("hh*8").often(x=>x.speed("0.5"))
    */
-  often(...args: any[]): Pattern
-  onPaint(...args: any[]): Pattern
-  onTrigger(...args: any[]): Pattern
+  often(...more: Arg[]): Pattern
+  onPaint(...more: Arg[]): Pattern
+  onTrigger(...more: Arg[]): Pattern
   /**
    * make something happen on event time
    * uses browser timeout which is innacurate for audio tasks
    * @example
    * s("bd!8").onTriggerTime((hap) => {console.log(hap)})
    */
-  onTriggerTime(...args: any[]): Pattern
+  onTriggerTime(...more: Arg[]): Pattern
   /**
    * Returns a new pattern, with all haps without onsets filtered out. A hap
    * with an onset is one with a whole timespan that begins at the same time
    * as its part timespan.
    */
-  onsetsOnly(...args: any[]): Pattern
-  or(...args: any[]): Pattern
+  onsetsOnly(...more: Arg[]): Pattern
+  or(...more: Arg[]): Pattern
   /**
    * An orbit is a global parameter context for patterns. Patterns with the same orbit will share the same global effects.
    * Synonyms: o
@@ -3390,36 +3393,36 @@ will be stripped from the resulting haps.
    *   s("~ sd ~ sd").delay(.5).delaytime(.125).orbit(2)
    * )
    */
-  orbit(number?: any, ...more: any[]): Pattern
+  orbit(number?: any, ...more: Arg[]): Pattern
   /**
    * The host to send open sound control messages to. Requires running the OSC bridge.
    * @param oschost {string | Pattern} e.g. 'localhost'
    * @example
    * note("c4").oschost('127.0.0.1').oscport(57120).osc();
    */
-  oschost(oschost?: any, ...more: any[]): Pattern
+  oschost(oschost?: any, ...more: Arg[]): Pattern
   /**
    * The port to send open sound control messages to. Requires running the OSC bridge.
    * @param oscport {number | Pattern} e.g. 57120
    * @example
    * note("c4").oschost('127.0.0.1').oscport(57120).osc();
    */
-  oscport(oscport?: any, ...more: any[]): Pattern
+  oscport(oscport?: any, ...more: Arg[]): Pattern
   /**
    *
    */
-  out(...args: any[]): Pattern
-  outerBind(...args: any[]): Pattern
-  outerJoin(...args: any[]): Pattern
+  out(...more: Arg[]): Pattern
+  outerBind(...more: Arg[]): Pattern
+  outerJoin(...more: Arg[]): Pattern
   /**
    * Carries out an operation 'outside' a cycle.
    * @example
    * "<[0 1] 2 [3 4] 5>".outside(4, rev).scale('C major').note()
    * // "<[0 1] 2 [3 4] 5>".fast(4).rev().slow(4).scale('C major').note()
    */
-  outside(...args: any[]): Pattern
-  overgain(...args: any[]): Pattern
-  overshape(...args: any[]): Pattern
+  outside(...more: Arg[]): Pattern
+  overgain(...more: Arg[]): Pattern
+  overshape(...more: Arg[]): Pattern
   /**
    * Experimental
    * Speeds a pattern up or down, to fit to the given number of steps per cycle.
@@ -3427,13 +3430,13 @@ will be stripped from the resulting haps.
    * sound("bd sd cp").pace(4)
    * // The same as sound("{bd sd cp}%4") or sound("<bd sd cp>*4")
    */
-  pace(...args: any[]): Pattern
+  pace(...more: Arg[]): Pattern
   /**
    * Applies rev to a pattern every other cycle, so that the pattern alternates between forwards and backwards.
    * @example
    * note("c d e g").palindrome()
    */
-  palindrome(...args: any[]): Pattern
+  palindrome(...more: Arg[]): Pattern
   /**
    * Sets position in stereo.
    * @param pan {number | Pattern} between 0 and 1, from left to right (assuming stereo), once round a circle (assuming multichannel)
@@ -3442,7 +3445,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd rim sd rim bd ~ cp rim").pan(sine.slow(2))
    */
-  pan(pan?: any, ...more: any[]): Pattern
+  pan(pan?: any, ...more: Arg[]): Pattern
   /**
    * Sets the range anchor of the envelope:
    *
@@ -3453,11 +3456,11 @@ will be stripped from the resulting haps.
    * @example
    * note("c c4").penv(12).panchor("<0 .5 1 .5>")
    */
-  panchor(anchor?: any, ...more: any[]): Pattern
-  panorient(...args: any[]): Pattern
-  panspan(...args: any[]): Pattern
-  pansplay(...args: any[]): Pattern
-  panwidth(...args: any[]): Pattern
+  panchor(anchor?: any, ...more: Arg[]): Pattern
+  panorient(...more: Arg[]): Pattern
+  panspan(...more: Arg[]): Pattern
+  pansplay(...more: Arg[]): Pattern
+  panwidth(...more: Arg[]): Pattern
   /**
    * Scale the magnitude of the harmonics of one of the core synths ('sine', 'tri', 'saw', ..)
    * Can also be used to create a new synth via s('user').partials(...)
@@ -3469,7 +3472,7 @@ will be stripped from the resulting haps.
    * s("saw").seg(8).n(irand(12)).scale("G#:minor")
    *   .partials(binaryL(irand(256).add("1")))
    */
-  partials(magnitudes?: any, ...more: any[]): Pattern
+  partials(magnitudes?: any, ...more: Arg[]): Pattern
   /**
    * Attack time of pitch envelope.
    * Synonyms: patt
@@ -3477,7 +3480,7 @@ will be stripped from the resulting haps.
    * @example
    * note("c eb g bb").pattack("0 .1 .25 .5").slow(2)
    */
-  patt(time?: any, ...more: any[]): Pattern
+  patt(time?: any, ...more: Arg[]): Pattern
   /**
    * Attack time of pitch envelope.
    * Synonyms: patt
@@ -3485,7 +3488,7 @@ will be stripped from the resulting haps.
    * @example
    * note("c eb g bb").pattack("0 .1 .25 .5").slow(2)
    */
-  pattack(time?: any, ...more: any[]): Pattern
+  pattack(time?: any, ...more: Arg[]): Pattern
   /**
    * Curve of envelope. Defaults to linear. exponential is good for kicks
    * @param type {number | Pattern} 0 = linear, 1 = exponential
@@ -3495,7 +3498,7 @@ will be stripped from the resulting haps.
    * .penv(32)
    * .pcurve("<0 1>")
    */
-  pcurve(type?: any, ...more: any[]): Pattern
+  pcurve(type?: any, ...more: Arg[]): Pattern
   /**
    * Decay time of pitch envelope.
    * Synonyms: pdec
@@ -3503,7 +3506,7 @@ will be stripped from the resulting haps.
    * @example
    * note("<c eb g bb>").pdecay("<0 .1 .25 .5>")
    */
-  pdec(time?: any, ...more: any[]): Pattern
+  pdec(time?: any, ...more: Arg[]): Pattern
   /**
    * Decay time of pitch envelope.
    * Synonyms: pdec
@@ -3511,7 +3514,7 @@ will be stripped from the resulting haps.
    * @example
    * note("<c eb g bb>").pdecay("<0 .1 .25 .5>")
    */
-  pdecay(time?: any, ...more: any[]): Pattern
+  pdecay(time?: any, ...more: Arg[]): Pattern
   /**
    * Amount of pitch envelope. Negative values will flip the envelope.
    * If you don't set other pitch envelope controls, pattack:.2 will be the default.
@@ -3520,7 +3523,7 @@ will be stripped from the resulting haps.
    * note("c")
    * .penv("<12 7 1 .5 0 -1 -7 -12>")
    */
-  penv(semitones?: any, ...more: any[]): Pattern
+  penv(semitones?: any, ...more: Arg[]): Pattern
   /**
    * Phaser audio effect that approximates popular guitar pedals.
    * Synonyms: ph
@@ -3529,7 +3532,7 @@ will be stripped from the resulting haps.
    * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
    * .phaser("<1 2 4 8>")
    */
-  ph(speed?: any, ...more: any[]): Pattern
+  ph(speed?: any, ...more: Arg[]): Pattern
   /**
    * The amount the signal is affected by the phaser effect. Defaults to 0.75
    * Synonyms: phd, phasdp
@@ -3538,7 +3541,7 @@ will be stripped from the resulting haps.
    * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
    * .phaser(2).phaserdepth("<0 .5 .75 1>")
    */
-  phasdp(depth?: any, ...more: any[]): Pattern
+  phasdp(depth?: any, ...more: Arg[]): Pattern
   /**
    * Phaser audio effect that approximates popular guitar pedals.
    * Synonyms: ph
@@ -3547,7 +3550,7 @@ will be stripped from the resulting haps.
    * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
    * .phaser("<1 2 4 8>")
    */
-  phaser(speed?: any, ...more: any[]): Pattern
+  phaser(speed?: any, ...more: Arg[]): Pattern
   /**
    * The center frequency of the phaser in HZ. Defaults to 1000
    * Synonyms: phc
@@ -3556,7 +3559,7 @@ will be stripped from the resulting haps.
    * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
    * .phaser(2).phasercenter("<800 2000 4000>")
    */
-  phasercenter(centerfrequency?: any, ...more: any[]): Pattern
+  phasercenter(centerfrequency?: any, ...more: Arg[]): Pattern
   /**
    * The amount the signal is affected by the phaser effect. Defaults to 0.75
    * Synonyms: phd, phasdp
@@ -3565,8 +3568,8 @@ will be stripped from the resulting haps.
    * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
    * .phaser(2).phaserdepth("<0 .5 .75 1>")
    */
-  phaserdepth(depth?: any, ...more: any[]): Pattern
-  phaserrate(...args: any[]): Pattern
+  phaserdepth(depth?: any, ...more: Arg[]): Pattern
+  phaserrate(...more: Arg[]): Pattern
   /**
    * The frequency sweep range of the lfo for the phaser effect. Defaults to 2000
    * Synonyms: phs
@@ -3575,7 +3578,7 @@ will be stripped from the resulting haps.
    * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
    * .phaser(2).phasersweep("<800 2000 4000>")
    */
-  phasersweep(phasersweep?: any, ...more: any[]): Pattern
+  phasersweep(phasersweep?: any, ...more: Arg[]): Pattern
   /**
    * Rotates the harmonics of one of the core synths ('sine', 'tri', 'saw', 'user', ..) by a list of phases
    * @param phases {Array.<number> | Pattern} List of [0, 1) phases for partials. 0th entry is the fundamental phase (i.e. DC offset is skipped)
@@ -3585,7 +3588,7 @@ will be stripped from the resulting haps.
    *   .partials(partials([1, 1, 1]))
    *   .superimpose(x => x.phases([0.5, 0.5, 0.5]))
    */
-  phases(phases?: any, ...more: any[]): Pattern
+  phases(phases?: any, ...more: Arg[]): Pattern
   /**
    * The center frequency of the phaser in HZ. Defaults to 1000
    * Synonyms: phc
@@ -3594,7 +3597,7 @@ will be stripped from the resulting haps.
    * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
    * .phaser(2).phasercenter("<800 2000 4000>")
    */
-  phc(centerfrequency?: any, ...more: any[]): Pattern
+  phc(centerfrequency?: any, ...more: Arg[]): Pattern
   /**
    * The amount the signal is affected by the phaser effect. Defaults to 0.75
    * Synonyms: phd, phasdp
@@ -3603,7 +3606,7 @@ will be stripped from the resulting haps.
    * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
    * .phaser(2).phaserdepth("<0 .5 .75 1>")
    */
-  phd(depth?: any, ...more: any[]): Pattern
+  phd(depth?: any, ...more: Arg[]): Pattern
   /**
    * The frequency sweep range of the lfo for the phaser effect. Defaults to 2000
    * Synonyms: phs
@@ -3612,8 +3615,8 @@ will be stripped from the resulting haps.
    * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
    * .phaser(2).phasersweep("<800 2000 4000>")
    */
-  phs(phasersweep?: any, ...more: any[]): Pattern
-  piano(...args: any[]): Pattern
+  phs(phasersweep?: any, ...more: Arg[]): Pattern
+  piano(...more: Arg[]): Pattern
   /**
    * Visualises a pattern as a scrolling 'pianoroll', displayed in the background of the editor. To show a pianoroll for all running patterns, use all(pianoroll). To have a pianoroll appear below
    * a pattern instead, prefix with _, e.g.: sound("bd sd")._pianoroll().
@@ -3650,7 +3653,7 @@ will be stripped from the resulting haps.
    * .lpenv(4).lpf(300)
    * .pianoroll({ labels: 1 })
    */
-  pianoroll(options?: any, cycles?: any, playhead?: any, vertical?: any, labels?: any, flipTime?: any, flipValues?: any, overscan?: any, hideNegative?: any, smear?: any, fold?: any, active?: any, inactive?: any, background?: any, playheadColor?: any, fill?: any, fillActive?: any, stroke?: any, strokeActive?: any, hideInactive?: any, colorizeInactive?: any, fontFamily?: any, minMidi?: any, maxMidi?: any, autorange?: any, ...more: any[]): Pattern
+  pianoroll(options?: any, cycles?: any, playhead?: any, vertical?: any, labels?: any, flipTime?: any, flipValues?: any, overscan?: any, hideNegative?: any, smear?: any, fold?: any, active?: any, inactive?: any, background?: any, playheadColor?: any, fill?: any, fillActive?: any, stroke?: any, strokeActive?: any, hideInactive?: any, colorizeInactive?: any, fontFamily?: any, minMidi?: any, maxMidi?: any, autorange?: any, ...more: Arg[]): Pattern
   /**
    * Picks patterns (or plain values) either from a list (by index) or a lookup table (by name).
    * Similar to inhabit, but maintains the structure of the original patterns.
@@ -3665,7 +3668,7 @@ will be stripped from the resulting haps.
    * @example
    * s("<a!2 [a,b] b>".pick({a: "bd(3,8)", b: "sd sd"}))
    */
-  pick(pat?: any, xs?: any, ...more: any[]): Pattern
+  pick(pat?: any, xs?: any, ...more: Arg[]): Pattern
   /**
    * pickF lets you use a pattern of numbers to pick which function to apply to another pattern.
    * @param pat {Pattern}
@@ -3677,25 +3680,25 @@ will be stripped from the resulting haps.
    * note("<c2 d2>(3,8)").s("square")
    *     .pickF("<0 2> 1", [jux(rev),fast(2),x=>x.lpf(800)])
    */
-  pickF(pat?: any, lookup?: any, funcs?: any, ...more: any[]): Pattern
+  pickF(pat?: any, lookup?: any, funcs?: any, ...more: Arg[]): Pattern
   /**
    * Similar to pick, but it applies an outerJoin instead of an innerJoin.
    * @param pat {Pattern}
    * @param xs {*}
    */
-  pickOut(pat?: any, xs?: any, ...more: any[]): Pattern
+  pickOut(pat?: any, xs?: any, ...more: Arg[]): Pattern
   /**
    * Similar to pick, but the choosen pattern is reset when its index is triggered.
    * @param pat {Pattern}
    * @param xs {*}
    */
-  pickReset(pat?: any, xs?: any, ...more: any[]): Pattern
+  pickReset(pat?: any, xs?: any, ...more: Arg[]): Pattern
   /**
    * Similar to pick, but the choosen pattern is restarted when its index is triggered.
    * @param pat {Pattern}
    * @param xs {*}
    */
-  pickRestart(pat?: any, xs?: any, ...more: any[]): Pattern
+  pickRestart(pat?: any, xs?: any, ...more: Arg[]): Pattern
   /**
    * Picks patterns (or plain values) either from a list (by index) or a lookup table (by name).
    * Similar to pick, but cycles are squeezed into the target ('inhabited') pattern.
@@ -3709,7 +3712,7 @@ will be stripped from the resulting haps.
    * @example
    * s("a@2 [a b] a".inhabit({a: "bd(3,8)", b: "sd sd"})).slow(4)
    */
-  pickSqueeze(pat?: any, xs?: any, ...more: any[]): Pattern
+  pickSqueeze(pat?: any, xs?: any, ...more: Arg[]): Pattern
   /**
    * The same as pick, but if you pick a number greater than the size of the list,
    * it wraps around, rather than sticking at the maximum value.
@@ -3718,7 +3721,7 @@ will be stripped from the resulting haps.
    * @param pat {Pattern}
    * @param xs {*}
    */
-  pickmod(pat?: any, xs?: any, ...more: any[]): Pattern
+  pickmod(pat?: any, xs?: any, ...more: Arg[]): Pattern
   /**
    * The same as pickF, but if you pick a number greater than the size of the functions list,
    * it wraps around, rather than sticking at the maximum value.
@@ -3726,21 +3729,21 @@ will be stripped from the resulting haps.
    * @param lookup {Pattern} a pattern of indices
    * @param funcs {Array.<function()>} the array of functions from which to pull
    */
-  pickmodF(pat?: any, lookup?: any, funcs?: any, ...more: any[]): Pattern
+  pickmodF(pat?: any, lookup?: any, funcs?: any, ...more: Arg[]): Pattern
   /**
    * The same as pickOut, but if you pick a number greater than the size of the list,
    * it wraps around, rather than sticking at the maximum value.
    * @param pat {Pattern}
    * @param xs {*}
    */
-  pickmodOut(pat?: any, xs?: any, ...more: any[]): Pattern
+  pickmodOut(pat?: any, xs?: any, ...more: Arg[]): Pattern
   /**
    * The same as pickReset, but if you pick a number greater than the size of the list,
    * it wraps around, rather than sticking at the maximum value.
    * @param pat {Pattern}
    * @param xs {*}
    */
-  pickmodReset(pat?: any, xs?: any, ...more: any[]): Pattern
+  pickmodReset(pat?: any, xs?: any, ...more: Arg[]): Pattern
   /**
    * The same as pickRestart, but if you pick a number greater than the size of the list,
    * it wraps around, rather than sticking at the maximum value.
@@ -3754,7 +3757,7 @@ will be stripped from the resulting haps.
    *         d: n("0 -3 0 ~")
    *       }).scale("C:major").s("piano")
    */
-  pickmodRestart(pat?: any, xs?: any, ...more: any[]): Pattern
+  pickmodRestart(pat?: any, xs?: any, ...more: Arg[]): Pattern
   /**
    * The same as inhabit, but if you pick a number greater than the size of the list,
    * it wraps around, rather than sticking at the maximum value.
@@ -3764,9 +3767,9 @@ will be stripped from the resulting haps.
    * @param pat {Pattern}
    * @param xs {*}
    */
-  pickmodSqueeze(pat?: any, xs?: any, ...more: any[]): Pattern
-  pitchJump(...args: any[]): Pattern
-  pitchJumpTime(...args: any[]): Pattern
+  pickmodSqueeze(pat?: any, xs?: any, ...more: Arg[]): Pattern
+  pitchJump(...more: Arg[]): Pattern
+  pitchJumpTime(...more: Arg[]): Pattern
   /**
    * Renders a pitch circle to visualize frequencies within one octave
    * @param hapcircles {number}
@@ -3783,13 +3786,13 @@ will be stripped from the resulting haps.
    * .lpf(500)
    * ._pitchwheel()
    */
-  pitchwheel(hapcircles?: any, circle?: any, edo?: any, root?: any, thickness?: any, hapRadius?: any, mode?: any, margin?: any, ...more: any[]): Pattern
+  pitchwheel(hapcircles?: any, circle?: any, edo?: any, root?: any, thickness?: any, hapRadius?: any, mode?: any, margin?: any, ...more: Arg[]): Pattern
   /**
    * The ply function repeats each event the given number of times.
    * @example
    * s("bd ~ sd cp").ply("<1 2 3>")
    */
-  ply(...args: any[]): Pattern
+  ply(...more: Arg[]): Pattern
   /**
    * The plyForEach function repeats each event the given number of times, applying the given function to each event.
    * This version of ply uses the iteration index as an argument to the function, similar to echoWith.
@@ -3801,7 +3804,7 @@ will be stripped from the resulting haps.
    * .plyForEach(4, (p,n) => p.add(n*2))
    * .scale("C:minor").note()
    */
-  plyForEach(factor?: any, func?: any, ...more: any[]): Pattern
+  plyForEach(factor?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * The plyWith function repeats each event the given number of times, applying the given function to each event.\n
    * Synonyms: plywith
@@ -3812,7 +3815,7 @@ will be stripped from the resulting haps.
    * .plyWith(4, (p) => p.add(2))
    * .scale("C:minor").note()
    */
-  plyWith(factor?: any, func?: any, ...more: any[]): Pattern
+  plyWith(factor?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * The plyForEach function repeats each event the given number of times, applying the given function to each event.
    * This version of ply uses the iteration index as an argument to the function, similar to echoWith.
@@ -3824,7 +3827,7 @@ will be stripped from the resulting haps.
    * .plyForEach(4, (p,n) => p.add(n*2))
    * .scale("C:minor").note()
    */
-  plyforeach(factor?: any, func?: any, ...more: any[]): Pattern
+  plyforeach(factor?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * The plyWith function repeats each event the given number of times, applying the given function to each event.\n
    * Synonyms: plywith
@@ -3835,18 +3838,18 @@ will be stripped from the resulting haps.
    * .plyWith(4, (p) => p.add(2))
    * .scale("C:minor").note()
    */
-  plywith(factor?: any, func?: any, ...more: any[]): Pattern
-  poly(...args: any[]): Pattern
-  polyBind(...args: any[]): Pattern
-  polyTouch(...args: any[]): Pattern
+  plywith(factor?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  poly(...more: Arg[]): Pattern
+  polyBind(...more: Arg[]): Pattern
+  polyTouch(...more: Arg[]): Pattern
   /**
    * Gain applied after all effects have been processed.
    * @example
    * s("bd sd [~ bd] sd,hh*8")
    * .compressor("-20:20:10:.002:.02").postgain(1.5)
    */
-  postgain(...args: any[]): Pattern
-  pow(...args: any[]): Pattern
+  postgain(...more: Arg[]): Pattern
+  pow(...more: Arg[]): Pattern
   /**
    * Release time of pitch envelope
    * Synonyms: prel
@@ -3856,7 +3859,7 @@ will be stripped from the resulting haps.
    * .release(.5) // to hear the pitch release
    * .prelease("<0 .1 .25 .5>")
    */
-  prel(time?: any, ...more: any[]): Pattern
+  prel(time?: any, ...more: Arg[]): Pattern
   /**
    * Release time of pitch envelope
    * Synonyms: prel
@@ -3866,7 +3869,7 @@ will be stripped from the resulting haps.
    * .release(.5) // to hear the pitch release
    * .prelease("<0 .1 .25 .5>")
    */
-  prelease(time?: any, ...more: any[]): Pattern
+  prelease(time?: any, ...more: Arg[]): Pattern
   /**
    * Syncopates a rhythm, by shifting each event halfway into its timespan.
    * @example
@@ -3874,7 +3877,7 @@ will be stripped from the resulting haps.
    *       s("bd mt sd ht").every(4, press)
    *      ).slow(2)
    */
-  press(...args: any[]): Pattern
+  press(...more: Arg[]): Pattern
   /**
    * Like press, but allows you to specify the amount by which each
    * event is shifted. pressBy(0.5) is the same as press, while
@@ -3884,19 +3887,19 @@ will be stripped from the resulting haps.
    *       s("bd mt sd ht").pressBy("<0 0.5 0.25>")
    *      ).slow(2)
    */
-  pressBy(...args: any[]): Pattern
+  pressBy(...more: Arg[]): Pattern
   /**
    * MIDI program number: Sends a MIDI program change message.
    * @param program {number | Pattern} MIDI program number (0-127)
    * @example
    * note("c4").progNum(10).midichan(1).midi()
    */
-  progNum(program?: any, ...more: any[]): Pattern
-  psus(...args: any[]): Pattern
+  progNum(program?: any, ...more: Arg[]): Pattern
+  psus(...more: Arg[]): Pattern
   /**
    *
    */
-  psustain(...args: any[]): Pattern
+  psustain(...more: Arg[]): Pattern
   /**
    * Visualises a pattern as a scrolling 'pianoroll', displayed in the background of the editor. To show a pianoroll for all running patterns, use all(pianoroll). To have a pianoroll appear below
    * a pattern instead, prefix with _, e.g.: sound("bd sd")._pianoroll().
@@ -3933,7 +3936,7 @@ will be stripped from the resulting haps.
    * .lpenv(4).lpf(300)
    * .pianoroll({ labels: 1 })
    */
-  punchcard(options?: any, cycles?: any, playhead?: any, vertical?: any, labels?: any, flipTime?: any, flipValues?: any, overscan?: any, hideNegative?: any, smear?: any, fold?: any, active?: any, inactive?: any, background?: any, playheadColor?: any, fill?: any, fillActive?: any, stroke?: any, strokeActive?: any, hideInactive?: any, colorizeInactive?: any, fontFamily?: any, minMidi?: any, maxMidi?: any, autorange?: any, ...more: any[]): Pattern
+  punchcard(options?: any, cycles?: any, playhead?: any, vertical?: any, labels?: any, flipTime?: any, flipValues?: any, overscan?: any, hideNegative?: any, smear?: any, fold?: any, active?: any, inactive?: any, background?: any, playheadColor?: any, fill?: any, fillActive?: any, stroke?: any, strokeActive?: any, hideInactive?: any, colorizeInactive?: any, fontFamily?: any, minMidi?: any, maxMidi?: any, autorange?: any, ...more: Arg[]): Pattern
   /**
    * Controls the pulsewidth of the pulse oscillator
    * @param pulsewidth {number | Pattern}
@@ -3942,21 +3945,21 @@ will be stripped from the resulting haps.
    * @example
    * n(run(8)).scale("D:pentatonic").s("pulse").pw("0 .75 .5 1")
    */
-  pw(pulsewidth?: any, ...more: any[]): Pattern
+  pw(pulsewidth?: any, ...more: Arg[]): Pattern
   /**
    * Controls the lfo rate for the pulsewidth of the pulse oscillator
    * @param rate {number | Pattern}
    * @example
    * n(run(8)).scale("D:pentatonic").s("pulse").pw("0.5").pwrate("<5 .1 25>").pwsweep("<0.3 .8>")
    */
-  pwrate(rate?: any, ...more: any[]): Pattern
+  pwrate(rate?: any, ...more: Arg[]): Pattern
   /**
    * Controls the lfo sweep for the pulsewidth of the pulse oscillator
    * @param sweep {number | Pattern}
    * @example
    * n(run(8)).scale("D:pentatonic").s("pulse").pw("0.5").pwrate("<5 .1 25>").pwsweep("<0.3 .8>")
    */
-  pwsweep(sweep?: any, ...more: any[]): Pattern
+  pwsweep(sweep?: any, ...more: Arg[]): Pattern
   /**
    * Query haps inside the given time span.
    * @param begin {Fraction | number} from time
@@ -3967,8 +3970,8 @@ will be stripped from the resulting haps.
    * console.log(haps)
    * silence
    */
-  queryArc(begin?: any, end?: any, ...more: any[]): Pattern
-  r(...args: any[]): Pattern
+  queryArc(begin?: any, end?: any, ...more: Arg[]): Pattern
+  r(...more: Arg[]): Pattern
   /**
    * Assumes a numerical pattern, containing unipolar values in the range 0 .. 1.
    * Returns a new pattern with values scaled to the given min/max range.
@@ -3977,7 +3980,7 @@ will be stripped from the resulting haps.
    * s("[bd sd]*2,hh*8")
    * .cutoff(sine.range(500,4000))
    */
-  range(...args: any[]): Pattern
+  range(...more: Arg[]): Pattern
   /**
    * Assumes a numerical pattern, containing bipolar values in the range -1 .. 1
    * Returns a new pattern with values scaled to the given min/max range.
@@ -3985,7 +3988,7 @@ will be stripped from the resulting haps.
    * s("[bd sd]*2,hh*8")
    * .cutoff(sine2.range2(500,4000))
    */
-  range2(...args: any[]): Pattern
+  range2(...more: Arg[]): Pattern
   /**
    * Assumes a numerical pattern, containing unipolar values in the range 0 .. 1
    * Returns a new pattern with values scaled to the given min/max range,
@@ -3994,13 +3997,13 @@ will be stripped from the resulting haps.
    * s("[bd sd]*2,hh*8")
    * .cutoff(sine.rangex(500,4000))
    */
-  rangex(...args: any[]): Pattern
+  rangex(...more: Arg[]): Pattern
   /**
    * Shorthand for .sometimesBy(0.25, fn)
    * @example
    * s("hh*8").rarely(x=>x.speed("0.5"))
    */
-  rarely(...args: any[]): Pattern
+  rarely(...more: Arg[]): Pattern
   /**
    * Allows dividing numbers via list notation using ":".
    * Returns a new pattern with just numbers.
@@ -4008,7 +4011,7 @@ will be stripped from the resulting haps.
    * ratio("1, 5:4, 3:2").mul(110)
    * .freq().s("piano")
    */
-  ratio(...args: any[]): Pattern
+  ratio(...more: Arg[]): Pattern
   /**
    * Reverb lowpass frequency at -60dB (in hertz).
    * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -4019,8 +4022,8 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd").room(0.5).rlp(5000).rdim(400)
    */
-  rdim(frequency?: any, ...more: any[]): Pattern
-  real(...args: any[]): Pattern
+  rdim(frequency?: any, ...more: Arg[]): Pattern
+  real(...more: Arg[]): Pattern
   /**
    * Amplitude envelope release time: The time it takes after the offset to go from sustain level to zero.
    * Synonyms: rel
@@ -4028,7 +4031,7 @@ will be stripped from the resulting haps.
    * @example
    * note("c3 e3 g3 c4").release("<0 .1 .4 .6 1>/2")
    */
-  rel(time?: any, ...more: any[]): Pattern
+  rel(time?: any, ...more: Arg[]): Pattern
   /**
    * Amplitude envelope release time: The time it takes after the offset to go from sustain level to zero.
    * Synonyms: rel
@@ -4036,18 +4039,18 @@ will be stripped from the resulting haps.
    * @example
    * note("c3 e3 g3 c4").release("<0 .1 .4 .6 1>/2")
    */
-  release(time?: any, ...more: any[]): Pattern
+  release(time?: any, ...more: Arg[]): Pattern
   /**
    * Returns a new pattern, with haps containing undefined values removed from
    * query results.
    */
-  removeUndefineds(...args: any[]): Pattern
+  removeUndefineds(...more: Arg[]): Pattern
   /**
    * Repeats each cycle the given number of times.
    * @example
    * note(irand(12).add(34)).segment(4).repeatCycles(2).s("gm_acoustic_guitar_nylon")
    */
-  repeatCycles(...args: any[]): Pattern
+  repeatCycles(...more: Arg[]): Pattern
   /**
    * Experimental
    * replicate is similar to fast in that it increases its density, but it also increases the step count
@@ -4060,16 +4063,16 @@ will be stripped from the resulting haps.
    *   sound("bd - sd -")
    * ).pace(8)
    */
-  replicate(...args: any[]): Pattern
-  rescale(...args: any[]): Pattern
+  replicate(...more: Arg[]): Pattern
+  rescale(...more: Arg[]): Pattern
   /**
    * Resets the pattern to the start of the cycle for each onset of the reset pattern.
    * @example
    * s("[<bd lt> sd]*2, hh*8").reset("<x@3 x(5,8)>")
    */
-  reset(...args: any[]): Pattern
-  resetAll(...args: any[]): Pattern
-  resetJoin(...args: any[]): Pattern
+  reset(...more: Arg[]): Pattern
+  resetAll(...more: Arg[]): Pattern
+  resetJoin(...more: Arg[]): Pattern
   /**
    * Controls the low-pass q-value.
    * Synonyms: resonance
@@ -4077,22 +4080,22 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd,hh*8").lpf(2000).lpq("<0 10 20 30>")
    */
-  resonance(q?: any, ...more: any[]): Pattern
+  resonance(q?: any, ...more: Arg[]): Pattern
   /**
    * Restarts the pattern for each onset of the restart pattern.
    * While reset will only reset the current cycle, restart will start from cycle 0.
    * @example
    * s("[<bd lt> sd]*2, hh*8").restart("<x@3 x(5,8)>")
    */
-  restart(...args: any[]): Pattern
-  restartAll(...args: any[]): Pattern
-  restartJoin(...args: any[]): Pattern
+  restart(...more: Arg[]): Pattern
+  restartAll(...more: Arg[]): Pattern
+  restartJoin(...more: Arg[]): Pattern
   /**
    * Reverse all cycles in a pattern. See also revv for reversing a whole pattern.
    * @example
    * note("c d e g").rev()
    */
-  rev(...args: any[]): Pattern
+  rev(...more: Arg[]): Pattern
   /**
    * Reverse a whole pattern. See also rev for reversing each cycle.
    * @example
@@ -4101,7 +4104,7 @@ will be stripped from the resulting haps.
    * // cycles stays the same.
    * note("<[c d] [e g]>").revv()
    */
-  revv(...args: any[]): Pattern
+  revv(...more: Arg[]): Pattern
   /**
    * Reverb fade time (in seconds).
    * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -4112,7 +4115,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd").room(0.5).rlp(5000).rfade(4)
    */
-  rfade(seconds?: any, ...more: any[]): Pattern
+  rfade(seconds?: any, ...more: Arg[]): Pattern
   /**
    * Loops the pattern inside an offset for cycles.
    * If you think of the entire span of time in cycles as a ribbon, you can cut a single piece and loop it.
@@ -4128,7 +4131,7 @@ will be stripped from the resulting haps.
    * // rhythm generator
    * s("bd!16?").ribbon(29,.5)
    */
-  rib(offset?: any, cycles?: any, ...more: any[]): Pattern
+  rib(offset?: any, cycles?: any, ...more: Arg[]): Pattern
   /**
    * Loops the pattern inside an offset for cycles.
    * If you think of the entire span of time in cycles as a ribbon, you can cut a single piece and loop it.
@@ -4144,10 +4147,10 @@ will be stripped from the resulting haps.
    * // rhythm generator
    * s("bd!16?").ribbon(29,.5)
    */
-  ribbon(offset?: any, cycles?: any, ...more: any[]): Pattern
-  ring(...args: any[]): Pattern
-  ringdf(...args: any[]): Pattern
-  ringf(...args: any[]): Pattern
+  ribbon(offset?: any, cycles?: any, ...more: Arg[]): Pattern
+  ring(...more: Arg[]): Pattern
+  ringdf(...more: Arg[]): Pattern
+  ringf(...more: Arg[]): Pattern
   /**
    * Reverb lowpass starting frequency (in hertz).
    * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -4158,7 +4161,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd").room(0.5).rlp(5000)
    */
-  rlp(frequency?: any, ...more: any[]): Pattern
+  rlp(frequency?: any, ...more: Arg[]): Pattern
   /**
    * Sets the level of reverb.
    * When using mininotation, you can also optionally add the 'size' parameter, separated by ':'.
@@ -4168,7 +4171,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd").room("<0.9:1 0.9:4>")
    */
-  room(level?: any, ...more: any[]): Pattern
+  room(level?: any, ...more: Arg[]): Pattern
   /**
    * Reverb lowpass frequency at -60dB (in hertz).
    * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -4179,7 +4182,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd").room(0.5).rlp(5000).rdim(400)
    */
-  roomdim(frequency?: any, ...more: any[]): Pattern
+  roomdim(frequency?: any, ...more: Arg[]): Pattern
   /**
    * Reverb fade time (in seconds).
    * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -4190,7 +4193,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd").room(0.5).rlp(5000).rfade(4)
    */
-  roomfade(seconds?: any, ...more: any[]): Pattern
+  roomfade(seconds?: any, ...more: Arg[]): Pattern
   /**
    * Reverb lowpass starting frequency (in hertz).
    * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -4201,7 +4204,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd").room(0.5).rlp(5000)
    */
-  roomlp(frequency?: any, ...more: any[]): Pattern
+  roomlp(frequency?: any, ...more: Arg[]): Pattern
   /**
    * Sets the room size of the reverb, see room.
    * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -4212,21 +4215,21 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd").room(.8).rsize(4)
    */
-  roomsize(size?: any, ...more: any[]): Pattern
+  roomsize(size?: any, ...more: Arg[]): Pattern
   /**
    * Maps the chords of the incoming pattern to root notes in the given octave.
    * @param octave {octave} octave to use
    * @example
    * "<C^7 A7 Dm7 G7>".rootNotes(2).note()
    */
-  rootNotes(octave?: any, ...more: any[]): Pattern
+  rootNotes(octave?: any, ...more: Arg[]): Pattern
   /**
    * Assumes a numerical pattern. Returns a new pattern with all values rounded
    * to the nearest integer.
    * @example
    * n("0.5 1.5 2.5".round()).scale("C:major")
    */
-  round(...args: any[]): Pattern
+  round(...more: Arg[]): Pattern
   /**
    * Sets the room size of the reverb, see room.
    * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -4237,7 +4240,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd").room(.8).rsize(4)
    */
-  rsize(size?: any, ...more: any[]): Pattern
+  rsize(size?: any, ...more: Arg[]): Pattern
   /**
    * Select a sound / sample by name. When using mininotation, you can also optionally supply 'n' and 'gain' parameters
    * separated by ':'.
@@ -4248,15 +4251,15 @@ will be stripped from the resulting haps.
    * @example
    * s("bd:0 bd:1 bd:0:0.3 bd:1:1.4")
    */
-  s(sound?: any, ...more: any[]): Pattern
-  s_add(...args: any[]): Pattern
-  s_contract(...args: any[]): Pattern
-  s_expand(...args: any[]): Pattern
-  s_extend(...args: any[]): Pattern
-  s_sub(...args: any[]): Pattern
-  s_taper(...args: any[]): Pattern
-  s_taperlist(...args: any[]): Pattern
-  s_tour(...args: any[]): Pattern
+  s(sound?: any, ...more: Arg[]): Pattern
+  s_add(...more: Arg[]): Pattern
+  s_contract(...more: Arg[]): Pattern
+  s_expand(...more: Arg[]): Pattern
+  s_extend(...more: Arg[]): Pattern
+  s_sub(...more: Arg[]): Pattern
+  s_taper(...more: Arg[]): Pattern
+  s_taperlist(...more: Arg[]): Pattern
+  s_tour(...more: Arg[]): Pattern
   /**
    * Turns numbers into notes in the scale (zero indexed) or quantizes notes to a scale.
    * When describing notes via numbers, note that negative numbers can be used to wrap backwards
@@ -4286,7 +4289,7 @@ will be stripped from the resulting haps.
    * @example
    * n("[0 0] [1 2] [3 4] [5 6]").scale("C:major:blues")
    */
-  scale(scale?: any, ...more: any[]): Pattern
+  scale(scale?: any, ...more: Arg[]): Pattern
   /**
    * Transposes notes inside the scale by the number of steps.
    * Expected to be called on a Pattern which already has a {@link Pattern#scale}
@@ -4298,7 +4301,7 @@ will be stripped from the resulting haps.
    * .scaleTranspose("<0 -1 -2 -3 -4 -5 -6 -4>")
    * .note()
    */
-  scaleTrans(offset?: any, ...more: any[]): Pattern
+  scaleTrans(offset?: any, ...more: Arg[]): Pattern
   /**
    * Transposes notes inside the scale by the number of steps.
    * Expected to be called on a Pattern which already has a {@link Pattern#scale}
@@ -4310,7 +4313,7 @@ will be stripped from the resulting haps.
    * .scaleTranspose("<0 -1 -2 -3 -4 -5 -6 -4>")
    * .note()
    */
-  scaleTranspose(offset?: any, ...more: any[]): Pattern
+  scaleTranspose(offset?: any, ...more: Arg[]): Pattern
   /**
    * Renders an oscilloscope for the time domain of the audio signal.
    * Synonyms: tscope
@@ -4324,8 +4327,8 @@ will be stripped from the resulting haps.
    * @example
    * s("sawtooth")._scope()
    */
-  scope(config?: any, align?: any, color?: any, thickness?: any, scale?: any, pos?: any, trigger?: any, ...more: any[]): Pattern
-  scram(...args: any[]): Pattern
+  scope(config?: any, align?: any, color?: any, thickness?: any, scale?: any, pos?: any, trigger?: any, ...more: Arg[]): Pattern
+  scram(...more: Arg[]): Pattern
   /**
    * Slices a pattern into the given number of parts, then plays those parts at random. Similar to shuffle,
    * but parts might be played more than once, or not at all, per cycle.
@@ -4334,7 +4337,7 @@ will be stripped from the resulting haps.
    * @example
    * seq("c d e f".scramble(4), "g").note().sound("piano")
    */
-  scramble(...args: any[]): Pattern
+  scramble(...more: Arg[]): Pattern
   /**
    * Allows you to scrub an audio file like a tape loop by passing values that represents the position in the audio file
    * in the optional array syntax ex: "0.5:2", the second value controls the speed of playback
@@ -4345,8 +4348,8 @@ will be stripped from the resulting haps.
    * samples('github:yaxu/clean-breaks/main');
    * s("amen/4").fit().scrub("{0@3 0@2 4@3}%8".div(16))
    */
-  scrub(...args: any[]): Pattern
-  seconds(...args: any[]): Pattern
+  scrub(...more: Arg[]): Pattern
+  seconds(...more: Arg[]): Pattern
   /**
    * Change the seed for random signals. Normally, random signals depend on time,
    * so two patterns at the same time will have the same random values. Specifying
@@ -4357,7 +4360,7 @@ will be stripped from the resulting haps.
    * $: s("hh*4").degrade();
    * $: s("bd*4").degrade().seed(1); // Will degrade different events from the hi-hat
    */
-  seed(n?: any, ...more: any[]): Pattern
+  seed(n?: any, ...more: Arg[]): Pattern
   /**
    * Samples the pattern at a rate of n events per cycle. Useful for turning a continuous pattern into a discrete one.
    * Synonyms: seg
@@ -4365,7 +4368,7 @@ will be stripped from the resulting haps.
    * @example
    * note(saw.range(40,52).segment(24))
    */
-  seg(segments?: any, ...more: any[]): Pattern
+  seg(segments?: any, ...more: Arg[]): Pattern
   /**
    * Samples the pattern at a rate of n events per cycle. Useful for turning a continuous pattern into a discrete one.
    * Synonyms: seg
@@ -4373,8 +4376,8 @@ will be stripped from the resulting haps.
    * @example
    * note(saw.range(40,52).segment(24))
    */
-  segment(segments?: any, ...more: any[]): Pattern
-  semitone(...args: any[]): Pattern
+  segment(segments?: any, ...more: Arg[]): Pattern
+  semitone(...more: Arg[]): Pattern
   /**
    * Like cat, but the items are crammed into one cycle.
    * Synonyms: sequence, fastcat
@@ -4387,18 +4390,18 @@ will be stripped from the resulting haps.
    *   note("c4(5,8)")
    * )
    */
-  seq(...args: any[]): Pattern
+  seq(...more: Arg[]): Pattern
   /**
    * See fastcat
    */
-  sequence(...args: any[]): Pattern
-  set(...args: any[]): Pattern
+  sequence(...more: Arg[]): Pattern
+  set(...more: Arg[]): Pattern
   /**
    * Returns a new pattern with the context field set to every hap set to the given value.
    * @param context {*}
    */
-  setContext(context?: any, ...more: any[]): Pattern
-  setSteps(...args: any[]): Pattern
+  setContext(context?: any, ...more: Arg[]): Pattern
+  setSteps(...more: Arg[]): Pattern
   /**
    * (Deprecated) Wave shaping distortion. WARNING: can suddenly get unpredictably loud.
    * Please use distort instead, which has a more predictable response curve
@@ -4407,7 +4410,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd,hh*8").shape("<0 .2 .4 .6 .8>")
    */
-  shape(distortion?: any, ...more: any[]): Pattern
+  shape(distortion?: any, ...more: Arg[]): Pattern
   /**
    * Experimental
    * Progressively shrinks the pattern by 'n' steps until there's nothing left, or if a second value is given (using mininotation list syntax with :),
@@ -4425,8 +4428,8 @@ will be stripped from the resulting haps.
    * note("0 1 2 3 4 5 6 7".scale("C:ritusen")).sound("folkharp")
    *    .shrink("1 -1").pace(8)
    */
-  shrink(...args: any[]): Pattern
-  shrinklist(...args: any[]): Pattern
+  shrink(...more: Arg[]): Pattern
+  shrinklist(...more: Arg[]): Pattern
   /**
    * Slices a pattern into the given number of parts, then plays those parts in random order.
    * Each part will be played exactly once per cycle.
@@ -4435,13 +4438,13 @@ will be stripped from the resulting haps.
    * @example
    * seq("c d e f".shuffle(4), "g").note().sound("piano")
    */
-  shuffle(...args: any[]): Pattern
+  shuffle(...more: Arg[]): Pattern
   /**
    * Wavefolding distortion composed with sinusoid
    * @param distortion {number | Pattern} amount of distortion to apply
    * @param volume {number | Pattern} linear postgain of the distortion
    */
-  sinefold(distortion?: any, volume?: any, ...more: any[]): Pattern
+  sinefold(distortion?: any, volume?: any, ...more: Arg[]): Pattern
   /**
    * Sets the room size of the reverb, see room.
    * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -4452,7 +4455,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd").room(.8).rsize(4)
    */
-  size(size?: any, ...more: any[]): Pattern
+  size(size?: any, ...more: Arg[]): Pattern
   /**
    * Chops samples into the given number of slices, triggering those slices with a given pattern of slice numbers.
    * Instead of a number, it also accepts a list of numbers from 0 to 1 to slice at specific points.
@@ -4463,8 +4466,8 @@ will be stripped from the resulting haps.
    * samples('github:tidalcycles/dirt-samples')
    * s("breaks125").fit().slice([0,.25,.5,.75], "0 1 1 <2 3>")
    */
-  slice(...args: any[]): Pattern
-  slide(...args: any[]): Pattern
+  slice(...more: Arg[]): Pattern
+  slide(...more: Arg[]): Pattern
   /**
    * Slow down a pattern over the given number of cycles. Like the "/" operator in mini notation.
    * Synonyms: sparsity
@@ -4472,7 +4475,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd hh sd hh").slow(2) // s("[bd hh sd hh]/2")
    */
-  slow(factor?: any, ...more: any[]): Pattern
+  slow(factor?: any, ...more: Arg[]): Pattern
   /**
    * Divides a pattern into a given number of parts, then cycles through those parts in turn, applying the given function to each part in turn (one part per cycle).
    * Synonyms: slowChunk, slowchunk
@@ -4480,14 +4483,14 @@ will be stripped from the resulting haps.
    * "0 1 2 3".chunk(4, x=>x.add(7))
    * .scale("A:minor").note()
    */
-  slowChunk(...args: any[]): Pattern
+  slowChunk(...more: Arg[]): Pattern
   /**
    * Concatenation: combines a list of patterns, switching between them successively, one per cycle.
    * Synonyms: cat
    * @example
    * slowcat("e5", "b4", ["d5", "c5"])
    */
-  slowcat(...args: any[]): Pattern
+  slowcat(...more: Arg[]): Pattern
   /**
    * Divides a pattern into a given number of parts, then cycles through those parts in turn, applying the given function to each part in turn (one part per cycle).
    * Synonyms: slowChunk, slowchunk
@@ -4495,20 +4498,20 @@ will be stripped from the resulting haps.
    * "0 1 2 3".chunk(4, x=>x.add(7))
    * .scale("A:minor").note()
    */
-  slowchunk(...args: any[]): Pattern
-  smear(...args: any[]): Pattern
+  slowchunk(...more: Arg[]): Pattern
+  smear(...more: Arg[]): Pattern
   /**
    * Soft-clipping distortion
    * @param distortion {number | Pattern} amount of distortion to apply
    * @param volume {number | Pattern} linear postgain of the distortion
    */
-  soft(distortion?: any, volume?: any, ...more: any[]): Pattern
+  soft(distortion?: any, volume?: any, ...more: Arg[]): Pattern
   /**
    * Shorthand for .someCyclesBy(0.5, fn)
    * @example
    * s("bd,hh*8").someCycles(x=>x.speed("0.5"))
    */
-  someCycles(...args: any[]): Pattern
+  someCycles(...more: Arg[]): Pattern
   /**
    * Randomly applies the given function by the given probability on a cycle by cycle basis.
    * Similar to sometimesBy
@@ -4517,14 +4520,14 @@ will be stripped from the resulting haps.
    * @example
    * s("bd,hh*8").someCyclesBy(.3, x=>x.speed("0.5"))
    */
-  someCyclesBy(probability?: any, ...more: any[]): Pattern
+  someCyclesBy(probability?: any, function_?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * Applies the given function with a 50% chance
    * @param function {function} the transformation to apply
    * @example
    * s("hh*8").sometimes(x=>x.speed("0.5"))
    */
-  sometimes(...args: any[]): Pattern
+  sometimes(function_?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * Randomly applies the given function by the given probability.
    * Similar to someCyclesBy
@@ -4533,13 +4536,13 @@ will be stripped from the resulting haps.
    * @example
    * s("hh*8").sometimesBy(.4, x=>x.speed("0.5"))
    */
-  sometimesBy(probability?: any, ...more: any[]): Pattern
-  songPtr(...args: any[]): Pattern
+  sometimesBy(probability?: any, function_?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  songPtr(...more: Arg[]): Pattern
   /**
    * Returns a new pattern, which returns haps sorted in temporal order. Mainly
    * of use when comparing two patterns for equality, in tests.
    */
-  sortHapsByPart(...args: any[]): Pattern
+  sortHapsByPart(...more: Arg[]): Pattern
   /**
    * Select a sound / sample by name. When using mininotation, you can also optionally supply 'n' and 'gain' parameters
    * separated by ':'.
@@ -4550,14 +4553,14 @@ will be stripped from the resulting haps.
    * @example
    * s("bd:0 bd:1 bd:0:0.3 bd:1:1.4")
    */
-  sound(sound?: any, ...more: any[]): Pattern
-  soundfont(...args: any[]): Pattern
+  sound(sound?: any, ...more: Arg[]): Pattern
+  soundfont(...more: Arg[]): Pattern
   /**
    * Define a custom webaudio node to use as a sound source.
    * Synonyms: src
    * @param getSource {function}
    */
-  source(getSource?: any, ...more: any[]): Pattern
+  source(getSource?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * Slow down a pattern over the given number of cycles. Like the "/" operator in mini notation.
    * Synonyms: sparsity
@@ -4565,8 +4568,8 @@ will be stripped from the resulting haps.
    * @example
    * s("bd hh sd hh").slow(2) // s("[bd hh sd hh]/2")
    */
-  sparsity(factor?: any, ...more: any[]): Pattern
-  speak(...args: any[]): Pattern
+  sparsity(factor?: any, ...more: Arg[]): Pattern
+  speak(...more: Arg[]): Pattern
   /**
    * Renders a spectrum analyzer for the incoming audio signal.
    * @param config {object} optional config with options:
@@ -4583,7 +4586,7 @@ will be stripped from the resulting haps.
    * .dec(.3).room(.5)
    * ._spectrum()
    */
-  spectrum(config?: any, thickness?: any, speed?: any, min?: any, max?: any, ...more: any[]): Pattern
+  spectrum(config?: any, thickness?: any, speed?: any, min?: any, max?: any, ...more: Arg[]): Pattern
   /**
    * Changes the speed of sample playback, i.e. a cheap way of changing pitch.
    * @param speed {number | Pattern} inf to inf, negative numbers play the sample backwards.
@@ -4592,7 +4595,7 @@ will be stripped from the resulting haps.
    * @example
    * speed("1 1.5*2 [2 1.1]").s("piano").clip(1)
    */
-  speed(speed?: any, ...more: any[]): Pattern
+  speed(speed?: any, ...more: Arg[]): Pattern
   /**
    * Displays a spiral visual.
    * @param options {Object} Object containing all the optional following parameters as key value pairs:
@@ -4618,7 +4621,7 @@ will be stripped from the resulting haps.
    * .lpenv(4).lpf(300)
    * ._spiral({ steady: .96 })
    */
-  spiral(options?: any, stretch?: any, size?: any, thickness?: any, cap?: any, inset?: any, playheadColor?: any, playheadLength?: any, playheadThickness?: any, padding?: any, steady?: any, activeColor?: any, inactiveColor?: any, colorizeInactive?: any, fade?: any, logSpiral?: any, ...more: any[]): Pattern
+  spiral(options?: any, stretch?: any, size?: any, thickness?: any, cap?: any, inset?: any, playheadColor?: any, playheadLength?: any, playheadThickness?: any, padding?: any, steady?: any, activeColor?: any, inactiveColor?: any, colorizeInactive?: any, fade?: any, logSpiral?: any, ...more: Arg[]): Pattern
   /**
    * Works the same as slice, but changes the playback speed of each slice to match the duration of its step.
    * @example
@@ -4626,20 +4629,20 @@ will be stripped from the resulting haps.
    * s("breaks165")
    * .splice(8,  "0 1 [2 3 0]@2 3 0@2 7")
    */
-  splice(...args: any[]): Pattern
+  splice(...more: Arg[]): Pattern
   /**
    * Returns a new pattern, with queries split at cycle boundaries. This makes
    * some calculations easier to express, as all haps are then constrained to
    * happen within a cycle.
    */
-  splitQueries(...args: any[]): Pattern
+  splitQueries(...more: Arg[]): Pattern
   /**
    * Set the stereo pan spread for supported oscillators
    * @param spread {number | Pattern} between 0 and 1
    * @example
    * note("d f a a# a d3").fast(2).s("supersaw").spread("<0 .3 1>")
    */
-  spread(spread?: any, ...more: any[]): Pattern
+  spread(spread?: any, ...more: Arg[]): Pattern
   /**
    * Pick from the list of values (or patterns of values) via the index using the given
    * pattern of integers. The selected pattern will be compressed to fit the duration of the selecting event
@@ -4648,10 +4651,10 @@ will be stripped from the resulting haps.
    * @example
    * note(squeeze("<0@2 [1!2] 2>", ["g a", "f g f g" , "g a c d"]))
    */
-  squeeze(pat?: any, xs?: any, ...more: any[]): Pattern
-  squeezeBind(...args: any[]): Pattern
-  squeezeJoin(...args: any[]): Pattern
-  squeezeout(...args: any[]): Pattern
+  squeeze(pat?: any, xs?: any, ...more: Arg[]): Pattern
+  squeezeBind(...more: Arg[]): Pattern
+  squeezeJoin(...more: Arg[]): Pattern
+  squeezeout(...more: Arg[]): Pattern
   /**
    * Made by Calum Gunn. Reminiscent of some weird mixture of filter, ring-modulator and pitch-shifter. The SuperCollider manual defines Squiz as:
    * "A simplistic pitch-raising algorithm. It's not meant to sound natural; its sound is reminiscent of some weird mixture of filter, ring-modulator and pitch-shifter, depending on the input. The algorithm works by cutting the signal into fragments (delimited by upwards-going zero-crossings) and squeezing those fragments in the time domain (i.e. simply playing them back faster than they came in), leaving silences inbetween. All the parameters apart from memlen can be modulated."
@@ -4659,13 +4662,13 @@ will be stripped from the resulting haps.
    * @example
    * squiz("2 4/2 6 [8 16]").s("bd").osc()
    */
-  squiz(squiz?: any, ...more: any[]): Pattern
+  squiz(squiz?: any, ...more: Arg[]): Pattern
   /**
    * Define a custom webaudio node to use as a sound source.
    * Synonyms: src
    * @param getSource {function}
    */
-  src(getSource?: any, ...more: any[]): Pattern
+  src(getSource?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * The given items are played at the same time at the same length.
    * Synonyms: polyrhythm, pr
@@ -4678,11 +4681,11 @@ will be stripped from the resulting haps.
    *   note("c4(5,8)")
    * )
    */
-  stack(...args: any[]): Pattern
-  stepBind(...args: any[]): Pattern
-  stepJoin(...args: any[]): Pattern
-  steps(...args: any[]): Pattern
-  stepsPerOctave(...args: any[]): Pattern
+  stack(...more: Arg[]): Pattern
+  stepBind(...more: Arg[]): Pattern
+  stepJoin(...more: Arg[]): Pattern
+  steps(...more: Arg[]): Pattern
+  stepsPerOctave(...more: Arg[]): Pattern
   /**
    * Transposes notes inside the scale by the number of steps.
    * Expected to be called on a Pattern which already has a {@link Pattern#scale}
@@ -4694,24 +4697,24 @@ will be stripped from the resulting haps.
    * .scaleTranspose("<0 -1 -2 -3 -4 -5 -6 -4>")
    * .note()
    */
-  strans(offset?: any, ...more: any[]): Pattern
+  strans(offset?: any, ...more: Arg[]): Pattern
   /**
    * Changes the speed of sample playback, i.e. a cheap way of changing pitch.
    * @param factor {number | Pattern} inf to inf, negative numbers play the sample backwards.
    * @example
    * s("gm_flute").stretch("1 2 .5")
    */
-  stretch(factor?: any, ...more: any[]): Pattern
+  stretch(factor?: any, ...more: Arg[]): Pattern
   /**
    * Cuts each sample into the given number of parts, triggering progressive portions of each sample at each loop.
    * @example
    * s("numbers:0 numbers:1 numbers:2").striate(6).slow(3)
    */
-  striate(...args: any[]): Pattern
+  striate(...more: Arg[]): Pattern
   /**
    * Returns a new pattern with the context field of every hap set to an empty object.
    */
-  stripContext(...args: any[]): Pattern
+  stripContext(...more: Arg[]): Pattern
   /**
    * Applies the given structure to the pattern:
    * @example
@@ -4719,8 +4722,8 @@ will be stripped from the resulting haps.
    *   .struct("x ~ x ~ ~ x ~ x ~ ~ ~ x ~ x ~ ~")
    *   .slow(2)
    */
-  struct(...args: any[]): Pattern
-  structAll(...args: any[]): Pattern
+  struct(...more: Arg[]): Pattern
+  structAll(...more: Arg[]): Pattern
   /**
    * Deprecated. Like echo, but the last 2 parameters are flipped.
    * @param times {number} how many times to repeat
@@ -4729,7 +4732,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd").stut(3, .8, 1/6)
    */
-  stut(times?: any, feedback?: any, time?: any, ...more: any[]): Pattern
+  stut(times?: any, feedback?: any, time?: any, ...more: Arg[]): Pattern
   /**
    * Superimpose and offset multiple times, applying the given function each time.
    * Synonyms: echowith, stutWith, stutwith
@@ -4741,7 +4744,7 @@ will be stripped from the resulting haps.
    * .echoWith(4, 1/8, (p,n) => p.add(n*2))
    * .scale("C:minor").note()
    */
-  stutWith(times?: any, time?: any, func?: any, ...more: any[]): Pattern
+  stutWith(times?: any, time?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * Superimpose and offset multiple times, applying the given function each time.
    * Synonyms: echowith, stutWith, stutwith
@@ -4753,14 +4756,14 @@ will be stripped from the resulting haps.
    * .echoWith(4, 1/8, (p,n) => p.add(n*2))
    * .scale("C:minor").note()
    */
-  stutwith(times?: any, time?: any, func?: any, ...more: any[]): Pattern
+  stutwith(times?: any, time?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * Like add, but the given numbers are subtracted.
    * @example
    * n("0 2 4".sub("<0 1 2 3>")).scale("C4:minor")
    * // See add for more information.
    */
-  sub(...args: any[]): Pattern
+  sub(...more: Arg[]): Pattern
   /**
    * Superimposes the result of the given function(s) on top of the original pattern:
    * @example
@@ -4768,8 +4771,8 @@ will be stripped from the resulting haps.
    *   .superimpose(x=>x.add(2))
    *   .scale('C minor').note()
    */
-  superimpose(...args: any[]): Pattern
-  supradough(...args: any[]): Pattern
+  superimpose(...more: Arg[]): Pattern
+  supradough(...more: Arg[]): Pattern
   /**
    * Amplitude envelope sustain level: The level which is reached after attack / decay, being sustained until the offset.
    * Synonyms: sus
@@ -4777,7 +4780,7 @@ will be stripped from the resulting haps.
    * @example
    * note("c3 e3 f3 g3").decay(.2).sustain("<0 .1 .4 .6 1>")
    */
-  sus(gain?: any, ...more: any[]): Pattern
+  sus(gain?: any, ...more: Arg[]): Pattern
   /**
    * Amplitude envelope sustain level: The level which is reached after attack / decay, being sustained until the offset.
    * Synonyms: sus
@@ -4785,8 +4788,8 @@ will be stripped from the resulting haps.
    * @example
    * note("c3 e3 f3 g3").decay(.2).sustain("<0 .1 .4 .6 1>")
    */
-  sustain(gain?: any, ...more: any[]): Pattern
-  sustainpedal(...args: any[]): Pattern
+  sustain(gain?: any, ...more: Arg[]): Pattern
+  sustainpedal(...more: Arg[]): Pattern
   /**
    * Shorthand for swingBy with 1/3:
    * @param subdivision {number}
@@ -4794,7 +4797,7 @@ will be stripped from the resulting haps.
    * s("hh*8").swing(4)
    * // s("hh*8").swingBy(1/3, 4)
    */
-  swing(subdivision?: any, ...more: any[]): Pattern
+  swing(subdivision?: any, ...more: Arg[]): Pattern
   /**
    * The function swingBy x n breaks each cycle into n slices, and then delays events in the second half of each slice by the amount x, which is relative to the size of the (half) slice. So if x is 0 it does nothing, 0.5 delays for half the note duration, and 1 will wrap around to doing nothing again. The end result is a shuffle or swing-like rhythm
    * @param subdivision {number}
@@ -4802,7 +4805,7 @@ will be stripped from the resulting haps.
    * @example
    * s("hh*8").swingBy(1/3, 4)
    */
-  swingBy(subdivision?: any, offset?: any, ...more: any[]): Pattern
+  swingBy(subdivision?: any, offset?: any, ...more: Arg[]): Pattern
   /**
    * MIDI sysex: Sends a MIDI sysex message.
    * @param id {number | Pattern} Sysex ID
@@ -4810,21 +4813,21 @@ will be stripped from the resulting haps.
    * @example
    * note("c4").sysex(["0x77", "0x01:0x02:0x03:0x04"]).midichan(1).midi()
    */
-  sysex(id?: any, data?: any, ...more: any[]): Pattern
+  sysex(id?: any, data?: any, ...more: Arg[]): Pattern
   /**
    * MIDI sysex data: Sends a MIDI sysex message.
    * @param data {number | Pattern} Sysex data
    * @example
    * note("c4").sysexid("0x77").sysexdata("0x01:0x02:0x03:0x04").midichan(1).midi()
    */
-  sysexdata(data?: any, ...more: any[]): Pattern
+  sysexdata(data?: any, ...more: Arg[]): Pattern
   /**
    * MIDI sysex ID: Sends a MIDI sysex identifier message.
    * @param id {number | Pattern} Sysex ID
    * @example
    * note("c4").sysexid("0x77").sysexdata("0x01:0x02:0x03:0x04").midichan(1).midi()
    */
-  sysexid(id?: any, ...more: any[]): Pattern
+  sysexid(id?: any, ...more: Arg[]): Pattern
   /**
    * Sets the room size of the reverb, see room.
    * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -4835,7 +4838,7 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd [~ bd] sd").room(.8).rsize(4)
    */
-  sz(size?: any, ...more: any[]): Pattern
+  sz(size?: any, ...more: Arg[]): Pattern
   /**
    * Tags each Hap with an identifier. Good for filtering. The function populates Hap.context.tags (Array).
    * @param tag {string} anything unique
@@ -4846,7 +4849,7 @@ will be stripped from the resulting haps.
    *   .when(rand.late(0.2).gte(0.5), x => x.s("square").tag('altered'))
    *   .when("<0 1>", x => x.filter((hap) => hap.hasTag('altered')))
    */
-  tag(tag?: any, ...more: any[]): Pattern
+  tag(tag?: any, ...more: Arg[]): Pattern
   /**
    * Experimental
    * Takes the given number of steps from a pattern (dropping the rest).
@@ -4861,14 +4864,14 @@ will be stripped from the resulting haps.
    * "bd cp ht mt".take("-1 -2 -3").sound()
    * // The same as "mt ht mt cp ht mt".sound()
    */
-  take(...args: any[]): Pattern
-  timeline(...args: any[]): Pattern
+  take(...more: Arg[]): Pattern
+  timeline(...more: Arg[]): Pattern
   /**
    * Assumes a numerical pattern, containing unipolar values in the range 0 ..
    *
    * Returns a new pattern with values scaled to the bipolar range -1 .. 1
    */
-  toBipolar(...args: any[]): Pattern
+  toBipolar(...more: Arg[]): Pattern
   /**
    * Experimental
    * Inserts a pattern into a list of patterns. On the first repetition it will be inserted at the end of the list, then moved backwards through the list
@@ -4879,7 +4882,7 @@ will be stripped from the resulting haps.
    *    .sound("folkharp")
    *    .pace(8)
    */
-  tour(...args: any[]): Pattern
+  tour(...more: Arg[]): Pattern
   /**
    * Change the pitch of each value by the given amount. Expects numbers or note strings as values.
    * The amount can be given as a number of semitones or as a string in interval short notation.
@@ -4908,7 +4911,7 @@ will be stripped from the resulting haps.
    * @example
    * "c2 c3".fast(2).transpose("<1P -2M 4P 3m>".slow(2)).note()
    */
-  trans(amount?: any, ...more: any[]): Pattern
+  trans(amount?: any, ...more: Arg[]): Pattern
   /**
    * Transient shaper. Gives independent control over the emphasis on transients
    * and sustains
@@ -4919,7 +4922,7 @@ will be stripped from the resulting haps.
    * @example
    * s("hh*16").bank("tr909").transient("<-1:1 1:-1>")
    */
-  transient(attack?: any, sustain?: any, ...more: any[]): Pattern
+  transient(attack?: any, sustain?: any, ...more: Arg[]): Pattern
   /**
    * Change the pitch of each value by the given amount. Expects numbers or note strings as values.
    * The amount can be given as a number of semitones or as a string in interval short notation.
@@ -4948,7 +4951,7 @@ will be stripped from the resulting haps.
    * @example
    * "c2 c3".fast(2).transpose("<1P -2M 4P 3m>".slow(2)).note()
    */
-  transpose(amount?: any, ...more: any[]): Pattern
+  transpose(amount?: any, ...more: Arg[]): Pattern
   /**
    * Modulate the amplitude of a sound with a continuous waveform
    * Synonyms: trem
@@ -4956,7 +4959,7 @@ will be stripped from the resulting haps.
    * @example
    * note("d d d# d".fast(4)).s("supersaw").tremolo("<3 2 100> ").tremoloskew("<.5>")
    */
-  trem(speed?: any, ...more: any[]): Pattern
+  trem(speed?: any, ...more: Arg[]): Pattern
   /**
    * Depth of amplitude modulation
    * Synonyms: tremdepth
@@ -4964,7 +4967,7 @@ will be stripped from the resulting haps.
    * @example
    * note("a1 a1 a#1 a1".fast(4)).s("pulse").tremsync(4).tremolodepth("<1 2 .7>")
    */
-  tremdepth(depth?: any, ...more: any[]): Pattern
+  tremdepth(depth?: any, ...more: Arg[]): Pattern
   /**
    * Modulate the amplitude of a sound with a continuous waveform
    * Synonyms: trem
@@ -4972,7 +4975,7 @@ will be stripped from the resulting haps.
    * @example
    * note("d d d# d".fast(4)).s("supersaw").tremolo("<3 2 100> ").tremoloskew("<.5>")
    */
-  tremolo(speed?: any, ...more: any[]): Pattern
+  tremolo(speed?: any, ...more: Arg[]): Pattern
   /**
    * Depth of amplitude modulation
    * Synonyms: tremdepth
@@ -4980,7 +4983,7 @@ will be stripped from the resulting haps.
    * @example
    * note("a1 a1 a#1 a1".fast(4)).s("pulse").tremsync(4).tremolodepth("<1 2 .7>")
    */
-  tremolodepth(depth?: any, ...more: any[]): Pattern
+  tremolodepth(depth?: any, ...more: Arg[]): Pattern
   /**
    * Alter the phase of the modulation waveform
    * Synonyms: tremphase
@@ -4988,7 +4991,7 @@ will be stripped from the resulting haps.
    * @example
    * note("{f a c e}%16").s("sawtooth").tremsync(4).tremolophase("<0 .25 .66>")
    */
-  tremolophase(offset?: any, ...more: any[]): Pattern
+  tremolophase(offset?: any, ...more: Arg[]): Pattern
   /**
    * Shape of amplitude modulation
    * Synonyms: tremshape
@@ -4996,7 +4999,7 @@ will be stripped from the resulting haps.
    * @example
    * note("{f g c d}%16").tremsync(4).tremoloshape("<sine tri square>").s("sawtooth")
    */
-  tremoloshape(shape?: any, ...more: any[]): Pattern
+  tremoloshape(shape?: any, ...more: Arg[]): Pattern
   /**
    * Alter the shape of the modulation waveform
    * Synonyms: tremskew
@@ -5004,7 +5007,7 @@ will be stripped from the resulting haps.
    * @example
    * note("{f a c e}%16").s("sawtooth").tremsync(4).tremoloskew("<.5 0 1>")
    */
-  tremoloskew(amount?: any, ...more: any[]): Pattern
+  tremoloskew(amount?: any, ...more: Arg[]): Pattern
   /**
    * Modulate the amplitude of a sound with a continuous waveform
    * Synonyms: tremsync
@@ -5012,7 +5015,7 @@ will be stripped from the resulting haps.
    * @example
    * note("d d d# d".fast(4)).s("supersaw").tremolosync("4").tremoloskew("<1 .5 0>")
    */
-  tremolosync(cycles?: any, ...more: any[]): Pattern
+  tremolosync(cycles?: any, ...more: Arg[]): Pattern
   /**
    * Alter the phase of the modulation waveform
    * Synonyms: tremphase
@@ -5020,7 +5023,7 @@ will be stripped from the resulting haps.
    * @example
    * note("{f a c e}%16").s("sawtooth").tremsync(4).tremolophase("<0 .25 .66>")
    */
-  tremphase(offset?: any, ...more: any[]): Pattern
+  tremphase(offset?: any, ...more: Arg[]): Pattern
   /**
    * Shape of amplitude modulation
    * Synonyms: tremshape
@@ -5028,7 +5031,7 @@ will be stripped from the resulting haps.
    * @example
    * note("{f g c d}%16").tremsync(4).tremoloshape("<sine tri square>").s("sawtooth")
    */
-  tremshape(shape?: any, ...more: any[]): Pattern
+  tremshape(shape?: any, ...more: Arg[]): Pattern
   /**
    * Alter the shape of the modulation waveform
    * Synonyms: tremskew
@@ -5036,7 +5039,7 @@ will be stripped from the resulting haps.
    * @example
    * note("{f a c e}%16").s("sawtooth").tremsync(4).tremoloskew("<.5 0 1>")
    */
-  tremskew(amount?: any, ...more: any[]): Pattern
+  tremskew(amount?: any, ...more: Arg[]): Pattern
   /**
    * Modulate the amplitude of a sound with a continuous waveform
    * Synonyms: tremsync
@@ -5044,8 +5047,8 @@ will be stripped from the resulting haps.
    * @example
    * note("d d d# d".fast(4)).s("supersaw").tremolosync("4").tremoloskew("<1 .5 0>")
    */
-  tremsync(cycles?: any, ...more: any[]): Pattern
-  triode(...args: any[]): Pattern
+  tremsync(cycles?: any, ...more: Arg[]): Pattern
+  triode(...more: Arg[]): Pattern
   /**
    * Renders an oscilloscope for the time domain of the audio signal.
    * Synonyms: tscope
@@ -5059,9 +5062,9 @@ will be stripped from the resulting haps.
    * @example
    * s("sawtooth")._scope()
    */
-  tscope(config?: any, align?: any, color?: any, thickness?: any, scale?: any, pos?: any, trigger?: any, ...more: any[]): Pattern
-  tsdelay(...args: any[]): Pattern
-  uid(...args: any[]): Pattern
+  tscope(config?: any, align?: any, color?: any, thickness?: any, scale?: any, pos?: any, trigger?: any, ...more: Arg[]): Pattern
+  tsdelay(...more: Arg[]): Pattern
+  uid(...more: Arg[]): Pattern
   /**
    * Inverse of degrade: Randomly removes 50% of events from the pattern. Shorthand for .undegradeBy(0.5)
    * Events that would be removed by degrade are let through by undegrade and vice versa (see second example).
@@ -5073,7 +5076,7 @@ will be stripped from the resulting haps.
    *   x => x.undegrade().pan(1)
    * )
    */
-  undegrade(...args: any[]): Pattern
+  undegrade(...more: Arg[]): Pattern
   /**
    * Inverse of degradeBy: Randomly removes events from the pattern by a given amount.
    * 0 = 100% chance of removal
@@ -5088,22 +5091,22 @@ will be stripped from the resulting haps.
    *   x => x.undegradeBy(0.8).pan(1)
    * )
    */
-  undegradeBy(amount?: any, ...more: any[]): Pattern
+  undegradeBy(amount?: any, ...more: Arg[]): Pattern
   /**
    * Set number of stacked voices for supported oscillators
    * @param numvoices {number | Pattern}
    * @example
    * note("d f a a# a d3").fast(2).s("supersaw").unison("<1 2 7>")
    */
-  unison(numvoices?: any, ...more: any[]): Pattern
+  unison(numvoices?: any, ...more: Arg[]): Pattern
   /**
    * Used in conjunction with speed, accepts values of "r" (rate, default behavior), "c" (cycles), or "s" (seconds). Using unit "c" means speed will be interpreted in units of cycles, e.g. speed "1" means samples will be stretched to fill a cycle. Using unit "s" means the playback speed will be adjusted so that the duration is the number of seconds specified by speed.
    * @param unit {number | string | Pattern} see description above
    * @example
    * speed("1 2 .5 3").s("bd").unit("c").osc()
    */
-  unit(unit?: any, ...more: any[]): Pattern
-  unjoin(...args: any[]): Pattern
+  unit(unit?: any, ...more: Arg[]): Pattern
+  unjoin(...more: Arg[]): Pattern
   /**
    * Applies a vibrato to the frequency of the oscillator.
    * Synonyms: vibrato, v
@@ -5118,8 +5121,8 @@ will be stripped from the resulting haps.
    * .vib("<.5 1 2 4 8 16>:12")
    * ._scope()
    */
-  v(frequency?: any, ...more: any[]): Pattern
-  val(...args: any[]): Pattern
+  v(frequency?: any, ...more: Arg[]): Pattern
+  val(...more: Arg[]): Pattern
   /**
    * Sets the velocity from 0 to 1. Is multiplied together with gain.
    * Synonyms: vel
@@ -5128,7 +5131,7 @@ will be stripped from the resulting haps.
    * .gain(".4!2 1 .4!2 1 .4 1")
    * .velocity(".4 1")
    */
-  vel(...args: any[]): Pattern
+  vel(...more: Arg[]): Pattern
   /**
    * Sets the velocity from 0 to 1. Is multiplied together with gain.
    * Synonyms: vel
@@ -5137,7 +5140,7 @@ will be stripped from the resulting haps.
    * .gain(".4!2 1 .4!2 1 .4 1")
    * .velocity(".4 1")
    */
-  velocity(...args: any[]): Pattern
+  velocity(...more: Arg[]): Pattern
   /**
    * Applies a vibrato to the frequency of the oscillator.
    * Synonyms: vibrato, v
@@ -5152,7 +5155,7 @@ will be stripped from the resulting haps.
    * .vib("<.5 1 2 4 8 16>:12")
    * ._scope()
    */
-  vib(frequency?: any, ...more: any[]): Pattern
+  vib(frequency?: any, ...more: Arg[]): Pattern
   /**
    * Sets the vibrato depth in semitones. Only has an effect if vibrato | vib | v is is also set
    * Synonyms: vmod
@@ -5167,7 +5170,7 @@ will be stripped from the resulting haps.
    * .vibmod("<.25 .5 1 2 12>:8")
    * ._scope()
    */
-  vibmod(depth?: any, ...more: any[]): Pattern
+  vibmod(depth?: any, ...more: Arg[]): Pattern
   /**
    * Applies a vibrato to the frequency of the oscillator.
    * Synonyms: vibrato, v
@@ -5182,7 +5185,7 @@ will be stripped from the resulting haps.
    * .vib("<.5 1 2 4 8 16>:12")
    * ._scope()
    */
-  vibrato(frequency?: any, ...more: any[]): Pattern
+  vibrato(frequency?: any, ...more: Arg[]): Pattern
   /**
    * Sets the vibrato depth in semitones. Only has an effect if vibrato | vib | v is is also set
    * Synonyms: vmod
@@ -5197,8 +5200,8 @@ will be stripped from the resulting haps.
    * .vibmod("<.25 .5 1 2 12>:8")
    * ._scope()
    */
-  vmod(depth?: any, ...more: any[]): Pattern
-  voice(...args: any[]): Pattern
+  vmod(depth?: any, ...more: Arg[]): Pattern
+  voice(...more: Arg[]): Pattern
   /**
    * Turns chord symbols into voicings. You can use the following control params:
    *
@@ -5220,7 +5223,7 @@ will be stripped from the resulting haps.
    * @example
    * n("0 1 2 3").chord("<C Am F G>").voicing()
    */
-  voicing(...args: any[]): Pattern
+  voicing(...more: Arg[]): Pattern
   /**
    * DEPRECATED: still works, but it is recommended you use .voicing instead (without s).
    * Turns chord symbols into voicings, using the smoothest voice leading possible.
@@ -5229,7 +5232,7 @@ will be stripped from the resulting haps.
    * @example
    * stack("<C^7 A7 Dm7 G7>".voicings('lefthand'), "<C3 A2 D3 G2>").note()
    */
-  voicings(dictionary?: any, ...more: any[]): Pattern
+  voicings(dictionary?: any, ...more: Arg[]): Pattern
   /**
    * Formant filter to make things sound like vowels.
    * @param vowel {string | Pattern} You can use a e i o u ae aa oe ue y uh un en an on, corresponding to [a] [e] [i] [o] [u] [æ] [ɑ] [ø] [y] [ɯ] [ʌ] [œ̃] [ɛ̃] [ɑ̃] [ɔ̃]. Aliases: aa = å = ɑ, oe = ø = ö, y = ı, ae = æ.
@@ -5239,8 +5242,8 @@ will be stripped from the resulting haps.
    * @example
    * s("bd sd mt ht bd [~ cp] ht lt").vowel("[a|e|i|o|u]")
    */
-  vowel(vowel?: any, ...more: any[]): Pattern
-  w(...args: any[]): Pattern
+  vowel(vowel?: any, ...more: Arg[]): Pattern
+  w(...more: Arg[]): Pattern
   /**
    * Amount of warp (alteration of the waveform) to apply to the wavetable oscillator
    * Synonyms: wavetableWarp
@@ -5249,46 +5252,46 @@ will be stripped from the resulting haps.
    * s("basique").bank("wt_digital").seg(8).note("F1").warp("0 0.25 0.5 0.75 1")
    *   .warpmode("spin")
    */
-  warp(amount?: any, ...more: any[]): Pattern
+  warp(amount?: any, ...more: Arg[]): Pattern
   /**
    * Attack time of the wavetable oscillator's warp envelope
    * Synonyms: warpatt
    * @param time {number | Pattern} attack time in seconds
    */
-  warpatt(time?: any, ...more: any[]): Pattern
+  warpatt(time?: any, ...more: Arg[]): Pattern
   /**
    * Attack time of the wavetable oscillator's warp envelope
    * Synonyms: warpatt
    * @param time {number | Pattern} attack time in seconds
    */
-  warpattack(time?: any, ...more: any[]): Pattern
+  warpattack(time?: any, ...more: Arg[]): Pattern
   /**
    * DC offset of the LFO for the wavetable oscillator's warp
    * @param dcoffset {number | Pattern} dc offset. set to 0 for unipolar
    */
-  warpdc(dcoffset?: any, ...more: any[]): Pattern
+  warpdc(dcoffset?: any, ...more: Arg[]): Pattern
   /**
    * Decay time of the wavetable oscillator's warp envelope
    * Synonyms: warpdec
    * @param time {number | Pattern} decay time in seconds
    */
-  warpdec(time?: any, ...more: any[]): Pattern
+  warpdec(time?: any, ...more: Arg[]): Pattern
   /**
    * Decay time of the wavetable oscillator's warp envelope
    * Synonyms: warpdec
    * @param time {number | Pattern} decay time in seconds
    */
-  warpdecay(time?: any, ...more: any[]): Pattern
+  warpdecay(time?: any, ...more: Arg[]): Pattern
   /**
    * Depth of the LFO for the wavetable oscillator's warp
    * @param depth {number | Pattern} depth of modulation
    */
-  warpdepth(depth?: any, ...more: any[]): Pattern
+  warpdepth(depth?: any, ...more: Arg[]): Pattern
   /**
    * Amount of envelope applied wavetable oscillator's position envelope
    * @param amount {number | Pattern} between 0 and 1
    */
-  warpenv(amount?: any, ...more: any[]): Pattern
+  warpenv(amount?: any, ...more: Arg[]): Pattern
   /**
    * Type of warp (alteration of the waveform) to apply to the wavetable oscillator.
    * The current options are: none, asym, bendp, bendm, bendmp, sync, quant, fold, pwm, orbit,
@@ -5299,52 +5302,52 @@ will be stripped from the resulting haps.
    * s("morgana").bank("wt_digital").seg(8).note("F1").warp("0 0.25 0.5 0.75 1")
    *   .warpmode("<asym bendp spin logistic sync wormhole brownian>*2")
    */
-  warpmode(mode?: any, ...more: any[]): Pattern
+  warpmode(mode?: any, ...more: Arg[]): Pattern
   /**
    * Rate of the LFO for the wavetable oscillator's warp
    * @param rate {number | Pattern} rate in hertz
    */
-  warprate(rate?: any, ...more: any[]): Pattern
+  warprate(rate?: any, ...more: Arg[]): Pattern
   /**
    * Release time of the wavetable oscillator's warp envelope
    * Synonyms: warprel
    * @param time {number | Pattern} release time in seconds
    */
-  warprel(time?: any, ...more: any[]): Pattern
+  warprel(time?: any, ...more: Arg[]): Pattern
   /**
    * Release time of the wavetable oscillator's warp envelope
    * Synonyms: warprel
    * @param time {number | Pattern} release time in seconds
    */
-  warprelease(time?: any, ...more: any[]): Pattern
+  warprelease(time?: any, ...more: Arg[]): Pattern
   /**
    * Shape of the LFO for the wavetable oscillator's warp
    * @param shape {number | Pattern} Shape of the lfo (0, 1, 2, ..)
    */
-  warpshape(shape?: any, ...more: any[]): Pattern
+  warpshape(shape?: any, ...more: Arg[]): Pattern
   /**
    * Skew of the LFO for the wavetable oscillator's warp
    * @param skew {number | Pattern} How much to bend the LFO shape
    */
-  warpskew(skew?: any, ...more: any[]): Pattern
+  warpskew(skew?: any, ...more: Arg[]): Pattern
   /**
    * Sustain time of the wavetable oscillator's warp envelope
    * Synonyms: warpsus
    * @param gain {number | Pattern} sustain level (0 to 1)
    */
-  warpsus(gain?: any, ...more: any[]): Pattern
+  warpsus(gain?: any, ...more: Arg[]): Pattern
   /**
    * Sustain time of the wavetable oscillator's warp envelope
    * Synonyms: warpsus
    * @param gain {number | Pattern} sustain level (0 to 1)
    */
-  warpsustain(gain?: any, ...more: any[]): Pattern
+  warpsustain(gain?: any, ...more: Arg[]): Pattern
   /**
    * cycle synced rate of the LFO for the wavetable warp position
    * @param rate {number | Pattern} rate in cycles
    */
-  warpsync(rate?: any, ...more: any[]): Pattern
-  waveloss(...args: any[]): Pattern
+  warpsync(rate?: any, ...more: Arg[]): Pattern
+  waveloss(...more: Arg[]): Pattern
   /**
    * Amount of randomness of the initial phase of the wavetable oscillator.
    * Synonyms: wavetablePhaseRand
@@ -5352,7 +5355,7 @@ will be stripped from the resulting haps.
    * @example
    * s("basique").bank("wt_digital").seg(16).wtphaserand("<0 1>")
    */
-  wavetablePhaseRand(amount?: any, ...more: any[]): Pattern
+  wavetablePhaseRand(amount?: any, ...more: Arg[]): Pattern
   /**
    * Position in the wavetable of the wavetable oscillator
    * Synonyms: wavetablePosition
@@ -5360,7 +5363,7 @@ will be stripped from the resulting haps.
    * @example
    * s("squelch").bank("wt_digital").seg(8).note("F1").wt("0 0.25 0.5 0.75 1")
    */
-  wavetablePosition(position?: any, ...more: any[]): Pattern
+  wavetablePosition(position?: any, ...more: Arg[]): Pattern
   /**
    * Amount of warp (alteration of the waveform) to apply to the wavetable oscillator
    * Synonyms: wavetableWarp
@@ -5369,7 +5372,7 @@ will be stripped from the resulting haps.
    * s("basique").bank("wt_digital").seg(8).note("F1").warp("0 0.25 0.5 0.75 1")
    *   .warpmode("spin")
    */
-  wavetableWarp(amount?: any, ...more: any[]): Pattern
+  wavetableWarp(amount?: any, ...more: Arg[]): Pattern
   /**
    * Type of warp (alteration of the waveform) to apply to the wavetable oscillator.
    * The current options are: none, asym, bendp, bendm, bendmp, sync, quant, fold, pwm, orbit,
@@ -5380,7 +5383,7 @@ will be stripped from the resulting haps.
    * s("morgana").bank("wt_digital").seg(8).note("F1").warp("0 0.25 0.5 0.75 1")
    *   .warpmode("<asym bendp spin logistic sync wormhole brownian>*2")
    */
-  wavetableWarpMode(mode?: any, ...more: any[]): Pattern
+  wavetableWarpMode(mode?: any, ...more: Arg[]): Pattern
   /**
    * Applies the given function whenever the given pattern is in a true state.
    * @param binary_pat {Pattern}
@@ -5388,64 +5391,64 @@ will be stripped from the resulting haps.
    * @example
    * "c3 eb3 g3".when("<0 1>/2", x=>x.sub("5")).note()
    */
-  when(binary_pat?: any, func?: any, ...more: any[]): Pattern
+  when(binary_pat?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * Do something on a keypress, or array of keypresses
    * Key name reference
    * @example
    * s("bd(5,8)").whenKey("Control:j", x => x.segment(16).color("red")).whenKey("Control:i", x => x.fast(2).color("blue"))
    */
-  whenKey(...args: any[]): Pattern
+  whenKey(...more: Arg[]): Pattern
   /**
    * Returns a new pattern with the given function applied to the context field of every hap.
    * @param func {function}
    */
-  withContext(func?: any, ...more: any[]): Pattern
+  withContext(func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * As with withHaps, but applies the function to every hap, rather than every list of haps.
    * @param func {function}
    */
-  withHap(func?: any, ...more: any[]): Pattern
+  withHap(func?: (value: any, ...args: any[]) => any, ...more: any[]): Pattern
   /**
    * Similar to withQuerySpan, but the function is applied to the timespans
    * of all haps returned by pattern queries (both part timespans, and where
    * present, whole timespans).
    * @param func {function}
    */
-  withHapSpan(func?: any, ...more: any[]): Pattern
+  withHapSpan(func?: (value: any, ...args: any[]) => any, ...more: any[]): Pattern
   /**
    * As with withHapSpan, but the function is applied to both the
    * begin and end time of the hap timespans.
    * @param func {function} the function to apply
    */
-  withHapTime(func?: any, ...more: any[]): Pattern
+  withHapTime(func?: (value: any, ...args: any[]) => any, ...more: any[]): Pattern
   /**
    * Returns a new pattern with the given function applied to the list of haps returned by every query.
    * @param func {function}
    */
-  withHaps(func?: any, ...more: any[]): Pattern
+  withHaps(func?: (value: any, ...args: any[]) => any, ...more: any[]): Pattern
   /**
    * Returns a new pattern with the given location information added to the
    * context of every hap.
    * @param start {Number} start offset
    * @param end {Number} end offset
    */
-  withLoc(start?: any, end?: any, ...more: any[]): Pattern
+  withLoc(start?: any, end?: any, ...more: Arg[]): Pattern
   /**
    * Returns a new pattern, where the given function is applied to the query
    * timespan before passing it to the original pattern.
    * @param func {function} the function to apply
    */
-  withQuerySpan(func?: any, ...more: any[]): Pattern
-  withQuerySpanMaybe(...args: any[]): Pattern
+  withQuerySpan(func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  withQuerySpanMaybe(...more: Arg[]): Pattern
   /**
    * As with withQuerySpan, but the function is applied to both the
    * begin and end time of the query timespan.
    * @param func {function} the function to apply
    */
-  withQueryTime(func?: any, ...more: any[]): Pattern
-  withState(...args: any[]): Pattern
-  withSteps(...args: any[]): Pattern
+  withQueryTime(func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  withState(...more: Arg[]): Pattern
+  withSteps(...more: Arg[]): Pattern
   /**
    * Returns a new pattern, with the function applied to the value of
    * each hap. It has the alias fmap.
@@ -5454,26 +5457,26 @@ will be stripped from the resulting haps.
    * @example
    * "0 1 2".withValue(v => v + 10).log()
    */
-  withValue(func?: any, ...more: any[]): Pattern
+  withValue(func?: (value: any, ...args: any[]) => any, ...more: any[]): Pattern
   /**
    * Use within to apply a function to only a part of a pattern.
    * @param start {number} start within cycle (0 - 1)
    * @param end {number} end within cycle (0 - 1). Must be > start
    * @param func {function} function to be applied to the sub-pattern
    */
-  within(start?: any, end?: any, func?: any, ...more: any[]): Pattern
+  within(start?: any, end?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
   /**
    * Displays a vertical pianoroll with event labels.
    * Supports all the same options as pianoroll.
    */
-  wordfall(...args: any[]): Pattern
+  wordfall(...more: Arg[]): Pattern
   /**
    * Creates a worklet effect. Typically derived by writing K(...) in the REPL which will parse
    * Kabelsalat code.
    * @param src {string} Source code of the worklet update function
    * @param inputs {number | Pattern} Worklet inputs
    */
-  worklet(src?: any, inputs?: any, ...more: any[]): Pattern
+  worklet(src?: any, inputs?: any, ...more: Arg[]): Pattern
   /**
    * Position in the wavetable of the wavetable oscillator
    * Synonyms: wavetablePosition
@@ -5481,46 +5484,46 @@ will be stripped from the resulting haps.
    * @example
    * s("squelch").bank("wt_digital").seg(8).note("F1").wt("0 0.25 0.5 0.75 1")
    */
-  wt(position?: any, ...more: any[]): Pattern
+  wt(position?: any, ...more: Arg[]): Pattern
   /**
    * Attack time of the wavetable oscillator's position envelope
    * Synonyms: wtatt
    * @param time {number | Pattern} attack time in seconds
    */
-  wtatt(time?: any, ...more: any[]): Pattern
+  wtatt(time?: any, ...more: Arg[]): Pattern
   /**
    * Attack time of the wavetable oscillator's position envelope
    * Synonyms: wtatt
    * @param time {number | Pattern} attack time in seconds
    */
-  wtattack(time?: any, ...more: any[]): Pattern
+  wtattack(time?: any, ...more: Arg[]): Pattern
   /**
    * DC offset of the LFO for the wavetable oscillator's position
    * @param dcoffset {number | Pattern} dc offset. set to 0 for unipolar
    */
-  wtdc(dcoffset?: any, ...more: any[]): Pattern
+  wtdc(dcoffset?: any, ...more: Arg[]): Pattern
   /**
    * Decay time of the wavetable oscillator's position envelope
    * Synonyms: wtdec
    * @param time {number | Pattern} decay time in seconds
    */
-  wtdec(time?: any, ...more: any[]): Pattern
+  wtdec(time?: any, ...more: Arg[]): Pattern
   /**
    * Decay time of the wavetable oscillator's position envelope
    * Synonyms: wtdec
    * @param time {number | Pattern} decay time in seconds
    */
-  wtdecay(time?: any, ...more: any[]): Pattern
+  wtdecay(time?: any, ...more: Arg[]): Pattern
   /**
    * Depth of the LFO for the wavetable oscillator's position
    * @param depth {number | Pattern} depth of modulation
    */
-  wtdepth(depth?: any, ...more: any[]): Pattern
+  wtdepth(depth?: any, ...more: Arg[]): Pattern
   /**
    * Amount of envelope applied wavetable oscillator's position envelope
    * @param amount {number | Pattern} between 0 and 1
    */
-  wtenv(amount?: any, ...more: any[]): Pattern
+  wtenv(amount?: any, ...more: Arg[]): Pattern
   /**
    * Amount of randomness of the initial phase of the wavetable oscillator.
    * Synonyms: wavetablePhaseRand
@@ -5528,52 +5531,52 @@ will be stripped from the resulting haps.
    * @example
    * s("basique").bank("wt_digital").seg(16).wtphaserand("<0 1>")
    */
-  wtphaserand(amount?: any, ...more: any[]): Pattern
+  wtphaserand(amount?: any, ...more: Arg[]): Pattern
   /**
    * Rate of the LFO for the wavetable oscillator's position
    * @param rate {number | Pattern} rate in hertz
    */
-  wtrate(rate?: any, ...more: any[]): Pattern
+  wtrate(rate?: any, ...more: Arg[]): Pattern
   /**
    * Release time of the wavetable oscillator's position envelope
    * Synonyms: wtrel
    * @param time {number | Pattern} release time in seconds
    */
-  wtrel(time?: any, ...more: any[]): Pattern
+  wtrel(time?: any, ...more: Arg[]): Pattern
   /**
    * Release time of the wavetable oscillator's position envelope
    * Synonyms: wtrel
    * @param time {number | Pattern} release time in seconds
    */
-  wtrelease(time?: any, ...more: any[]): Pattern
+  wtrelease(time?: any, ...more: Arg[]): Pattern
   /**
    * Shape of the LFO for the wavetable oscillator's position
    * @param shape {number | Pattern} Shape of the lfo (0, 1, 2, ..)
    */
-  wtshape(shape?: any, ...more: any[]): Pattern
+  wtshape(shape?: any, ...more: Arg[]): Pattern
   /**
    * Skew of the LFO for the wavetable oscillator's position
    * @param skew {number | Pattern} How much to bend the LFO shape
    */
-  wtskew(skew?: any, ...more: any[]): Pattern
+  wtskew(skew?: any, ...more: Arg[]): Pattern
   /**
    * Sustain time of the wavetable oscillator's position envelope
    * Synonyms: wtsus
    * @param gain {number | Pattern} sustain level (0 to 1)
    */
-  wtsus(gain?: any, ...more: any[]): Pattern
+  wtsus(gain?: any, ...more: Arg[]): Pattern
   /**
    * Sustain time of the wavetable oscillator's position envelope
    * Synonyms: wtsus
    * @param gain {number | Pattern} sustain level (0 to 1)
    */
-  wtsustain(gain?: any, ...more: any[]): Pattern
+  wtsustain(gain?: any, ...more: Arg[]): Pattern
   /**
    * cycle synced rate of the LFO for the wavetable oscillator's position
    * @param rate {number | Pattern} rate in cycles
    */
-  wtsync(rate?: any, ...more: any[]): Pattern
-  x(...args: any[]): Pattern
+  wtsync(rate?: any, ...more: Arg[]): Pattern
+  x(...more: Arg[]): Pattern
   /**
    * Cross-fades between left and right from 0 to 1:
    *
@@ -5583,1476 +5586,1238 @@ will be stripped from the resulting haps.
    * @example
    * xfade(s("bd*2"), "<0 .25 .5 .75 1>", s("hh*8"))
    */
-  xfade(...args: any[]): Pattern
-  xsdelay(...args: any[]): Pattern
-  y(...args: any[]): Pattern
-  zcrush(...args: any[]): Pattern
-  zdelay(...args: any[]): Pattern
-  zmod(...args: any[]): Pattern
-  znoise(...args: any[]): Pattern
+  xfade(...more: Arg[]): Pattern
+  xsdelay(...more: Arg[]): Pattern
+  y(...more: Arg[]): Pattern
+  zcrush(...more: Arg[]): Pattern
+  zdelay(...more: Arg[]): Pattern
+  zmod(...more: Arg[]): Pattern
+  znoise(...more: Arg[]): Pattern
   /**
    * Plays a portion of a pattern, specified by the beginning and end of a time span. The new resulting pattern is played over the time period of the original pattern:
    * @example
    * s("bd*2 hh*3 [sd bd]*2 perc").zoom(0.25, 0.75)
    * // s("hh*3 [sd bd]*2") // equivalent
    */
-  zoom(...args: any[]): Pattern
-  zoomArc(...args: any[]): Pattern
-  zoomIn(...args: any[]): Pattern
-  zoomarc(...args: any[]): Pattern
-  zrand(...args: any[]): Pattern
-  zzfx(...args: any[]): Pattern
+  zoom(...more: Arg[]): Pattern
+  zoomArc(...more: Arg[]): Pattern
+  zoomIn(...more: Arg[]): Pattern
+  zoomarc(...more: Arg[]): Pattern
+  zrand(...more: Arg[]): Pattern
+  zzfx(...more: Arg[]): Pattern
 }
 
 // In Strudel, "..." is a pattern in mini-notation, so a string has the pattern methods too
 interface String {
-  FX(...args: any[]): Pattern
-  FXr(...args: any[]): Pattern
-  FXrel(...args: any[]): Pattern
-  FXrelease(...args: any[]): Pattern
-  _ad(...args: any[]): Pattern
-  _add(...args: any[]): Pattern
-  _adsr(...args: any[]): Pattern
-  _almostAlways(...args: any[]): Pattern
-  _almostNever(...args: any[]): Pattern
-  _always(...args: any[]): Pattern
-  _and(...args: any[]): Pattern
-  _apply(...args: any[]): Pattern
-  _applyN(...args: any[]): Pattern
-  _ar(...args: any[]): Pattern
-  _arp(...args: any[]): Pattern
-  _arpWith(...args: any[]): Pattern
-  _as(...args: any[]): Pattern
-  _band(...args: any[]): Pattern
-  _beat(...args: any[]): Pattern
-  _bite(...args: any[]): Pattern
-  _bjork(...args: any[]): Pattern
-  _blshift(...args: any[]): Pattern
-  _bor(...args: any[]): Pattern
-  _brshift(...args: any[]): Pattern
-  _bxor(...args: any[]): Pattern
-  _bypass(...args: any[]): Pattern
-  _chop(...args: any[]): Pattern
-  _chunk(...args: any[]): Pattern
-  _chunkBack(...args: any[]): Pattern
-  _chunkBackInto(...args: any[]): Pattern
-  _chunkInto(...args: any[]): Pattern
-  _chunkback(...args: any[]): Pattern
-  _chunkbackinto(...args: any[]): Pattern
-  _chunkinto(...args: any[]): Pattern
-  _compress(...args: any[]): Pattern
-  _compressSpan(...args: any[]): Pattern
-  _compressspan(...args: any[]): Pattern
-  _contract(...args: any[]): Pattern
-  _control(...args: any[]): Pattern
-  _cpm(...args: any[]): Pattern
-  _degradeBy(...args: any[]): Pattern
-  _degradeByWith(...args: any[]): Pattern
-  _density(...args: any[]): Pattern
-  _div(...args: any[]): Pattern
-  _drop(...args: any[]): Pattern
-  _ds(...args: any[]): Pattern
-  _early(...args: any[]): Pattern
-  _echo(...args: any[]): Pattern
-  _echoWith(...args: any[]): Pattern
-  _echowith(...args: any[]): Pattern
-  _eish(...args: any[]): Pattern
-  _eq(...args: any[]): Pattern
-  _eqt(...args: any[]): Pattern
-  _euclid(...args: any[]): Pattern
-  _euclidLegato(...args: any[]): Pattern
-  _euclidLegatoRot(...args: any[]): Pattern
-  _euclidRot(...args: any[]): Pattern
-  _euclidish(...args: any[]): Pattern
-  _euclidrot(...args: any[]): Pattern
-  _every(...args: any[]): Pattern
-  _expand(...args: any[]): Pattern
-  _extend(...args: any[]): Pattern
-  _fast(...args: any[]): Pattern
-  _fastChunk(...args: any[]): Pattern
-  _fastGap(...args: any[]): Pattern
-  _fastchunk(...args: any[]): Pattern
-  _fastgap(...args: any[]): Pattern
-  _filter(...args: any[]): Pattern
-  _filterWhen(...args: any[]): Pattern
-  _firstOf(...args: any[]): Pattern
-  _focus(...args: any[]): Pattern
-  _focusSpan(...args: any[]): Pattern
-  _focusspan(...args: any[]): Pattern
-  _func(...args: any[]): Pattern
-  _grow(...args: any[]): Pattern
-  _gt(...args: any[]): Pattern
-  _gte(...args: any[]): Pattern
-  _hsl(...args: any[]): Pattern
-  _hsla(...args: any[]): Pattern
-  _hurry(...args: any[]): Pattern
-  _inhabit(...args: any[]): Pattern
-  _inhabitmod(...args: any[]): Pattern
-  _inside(...args: any[]): Pattern
-  _iter(...args: any[]): Pattern
-  _iterBack(...args: any[]): Pattern
-  _iterback(...args: any[]): Pattern
-  _jux(...args: any[]): Pattern
-  _juxBy(...args: any[]): Pattern
-  _juxby(...args: any[]): Pattern
-  _keep(...args: any[]): Pattern
-  _keepif(...args: any[]): Pattern
-  _lastOf(...args: any[]): Pattern
-  _late(...args: any[]): Pattern
-  _linger(...args: any[]): Pattern
-  _log2(...args: any[]): Pattern
-  _loopAt(...args: any[]): Pattern
-  _loopAtCps(...args: any[]): Pattern
-  _loopat(...args: any[]): Pattern
-  _loopatcps(...args: any[]): Pattern
-  _lt(...args: any[]): Pattern
-  _lte(...args: any[]): Pattern
-  _mod(...args: any[]): Pattern
-  _moveXY(...args: any[]): Pattern
-  _mul(...args: any[]): Pattern
-  _ne(...args: any[]): Pattern
-  _net(...args: any[]): Pattern
-  _never(...args: any[]): Pattern
-  _off(...args: any[]): Pattern
-  _often(...args: any[]): Pattern
-  _opIn(...args: any[]): Pattern
-  _opMix(...args: any[]): Pattern
-  _opOut(...args: any[]): Pattern
-  _opPoly(...args: any[]): Pattern
-  _opReset(...args: any[]): Pattern
-  _opRestart(...args: any[]): Pattern
-  _opSqueeze(...args: any[]): Pattern
-  _opSqueezeOut(...args: any[]): Pattern
-  _or(...args: any[]): Pattern
-  _outside(...args: any[]): Pattern
-  _pace(...args: any[]): Pattern
-  _pianoroll(...args: any[]): Pattern
-  _pick(...args: any[]): Pattern
-  _pickF(...args: any[]): Pattern
-  _pickOut(...args: any[]): Pattern
-  _pickReset(...args: any[]): Pattern
-  _pickRestart(...args: any[]): Pattern
-  _pickSqueeze(...args: any[]): Pattern
-  _pickmod(...args: any[]): Pattern
-  _pickmodF(...args: any[]): Pattern
-  _pickmodOut(...args: any[]): Pattern
-  _pickmodReset(...args: any[]): Pattern
-  _pickmodRestart(...args: any[]): Pattern
-  _pickmodSqueeze(...args: any[]): Pattern
-  _pitchwheel(...args: any[]): Pattern
-  _ply(...args: any[]): Pattern
-  _plyForEach(...args: any[]): Pattern
-  _plyWith(...args: any[]): Pattern
-  _plyforeach(...args: any[]): Pattern
-  _plywith(...args: any[]): Pattern
-  _pow(...args: any[]): Pattern
-  _pressBy(...args: any[]): Pattern
-  _punchcard(...args: any[]): Pattern
-  _range(...args: any[]): Pattern
-  _range2(...args: any[]): Pattern
-  _rangex(...args: any[]): Pattern
-  _rarely(...args: any[]): Pattern
-  _repeatCycles(...args: any[]): Pattern
-  _replicate(...args: any[]): Pattern
-  _rescale(...args: any[]): Pattern
-  _rib(...args: any[]): Pattern
-  _ribbon(...args: any[]): Pattern
-  _rootNotes(...args: any[]): Pattern
-  _scale(...args: any[]): Pattern
-  _scaleTrans(...args: any[]): Pattern
-  _scaleTranspose(...args: any[]): Pattern
-  _scope(...args: any[]): Pattern
-  _scramble(...args: any[]): Pattern
-  _scrub(...args: any[]): Pattern
-  _seed(...args: any[]): Pattern
-  _seg(...args: any[]): Pattern
-  _segment(...args: any[]): Pattern
-  _set(...args: any[]): Pattern
-  _shrink(...args: any[]): Pattern
-  _shuffle(...args: any[]): Pattern
-  _slice(...args: any[]): Pattern
-  _slow(...args: any[]): Pattern
-  _slowChunk(...args: any[]): Pattern
-  _slowchunk(...args: any[]): Pattern
-  _someCycles(...args: any[]): Pattern
-  _someCyclesBy(...args: any[]): Pattern
-  _sometimes(...args: any[]): Pattern
-  _sometimesBy(...args: any[]): Pattern
-  _sparsity(...args: any[]): Pattern
-  _speak(...args: any[]): Pattern
-  _spectrum(...args: any[]): Pattern
-  _spiral(...args: any[]): Pattern
-  _splice(...args: any[]): Pattern
-  _strans(...args: any[]): Pattern
-  _striate(...args: any[]): Pattern
-  _stut(...args: any[]): Pattern
-  _stutWith(...args: any[]): Pattern
-  _stutwith(...args: any[]): Pattern
-  _sub(...args: any[]): Pattern
-  _swing(...args: any[]): Pattern
-  _swingBy(...args: any[]): Pattern
-  _sysex(...args: any[]): Pattern
-  _take(...args: any[]): Pattern
-  _timeline(...args: any[]): Pattern
-  _trans(...args: any[]): Pattern
-  _transpose(...args: any[]): Pattern
-  _undegradeBy(...args: any[]): Pattern
-  _voicings(...args: any[]): Pattern
-  _when(...args: any[]): Pattern
-  _whenKey(...args: any[]): Pattern
-  _within(...args: any[]): Pattern
-  _zoom(...args: any[]): Pattern
-  _zoomArc(...args: any[]): Pattern
-  _zoomIn(...args: any[]): Pattern
-  _zoomarc(...args: any[]): Pattern
-  accelerate(amount?: any, ...more: any[]): Pattern
-  activeLabel(...args: any[]): Pattern
-  ad(...args: any[]): Pattern
-  add(...args: any[]): Pattern
-  adsr(time?: any, time?: any, gain?: any, time?: any, ...more: any[]): Pattern
-  almostAlways(...args: any[]): Pattern
-  almostNever(...args: any[]): Pattern
-  always(...args: any[]): Pattern
-  amp(amount?: any, ...more: any[]): Pattern
-  analyze(...args: any[]): Pattern
-  anchor(anchorNote?: any, ...more: any[]): Pattern
-  and(...args: any[]): Pattern
-  angle(...args: any[]): Pattern
-  animate(...args: any[]): Pattern
-  appBoth(pat_val?: any, ...more: any[]): Pattern
-  appLeft(pat_val?: any, ...more: any[]): Pattern
-  appRight(pat_val?: any, ...more: any[]): Pattern
-  appWhole(whole_func?: any, func?: any, ...more: any[]): Pattern
-  apply(...args: any[]): Pattern
-  applyN(...args: any[]): Pattern
-  ar(...args: any[]): Pattern
-  arp(...args: any[]): Pattern
-  arpWith(...args: any[]): Pattern
-  as(mapping?: any, ...more: any[]): Pattern
-  asNumber(...args: any[]): Pattern
-  asym(distortion?: any, volume?: any, ...more: any[]): Pattern
-  att(attack?: any, ...more: any[]): Pattern
-  attack(attack?: any, ...more: any[]): Pattern
-  band(...args: any[]): Pattern
-  bandf(frequency?: any, ...more: any[]): Pattern
-  bandq(q?: any, ...more: any[]): Pattern
-  bank(bank?: any, ...more: any[]): Pattern
-  bbexpr(byteBeatExpression?: any, ...more: any[]): Pattern
-  bbst(byteBeatStartTime?: any, ...more: any[]): Pattern
-  beat(...args: any[]): Pattern
-  begin(amount?: any, ...more: any[]): Pattern
-  bgain(number?: any, ...more: any[]): Pattern
-  bind(...args: any[]): Pattern
-  bindWhole(...args: any[]): Pattern
-  binshift(...args: any[]): Pattern
-  bite(number?: any, slices?: any, ...more: any[]): Pattern
-  bjork(...args: any[]): Pattern
-  blshift(...args: any[]): Pattern
-  bmod(config?: any, id?: any, ...more: any[]): Pattern
-  bor(...args: any[]): Pattern
-  bp(frequency?: any, ...more: any[]): Pattern
-  bpa(attack?: any, ...more: any[]): Pattern
-  bpattack(attack?: any, ...more: any[]): Pattern
-  bpd(decay?: any, ...more: any[]): Pattern
-  bpdc(dcoffset?: any, ...more: any[]): Pattern
-  bpdecay(decay?: any, ...more: any[]): Pattern
-  bpdepth(depth?: any, ...more: any[]): Pattern
-  bpdepthfreq(depth?: any, ...more: any[]): Pattern
-  bpdepthfrequency(depth?: any, ...more: any[]): Pattern
-  bpe(modulation?: any, ...more: any[]): Pattern
-  bpenv(modulation?: any, ...more: any[]): Pattern
-  bpf(frequency?: any, ...more: any[]): Pattern
-  bpq(q?: any, ...more: any[]): Pattern
-  bpr(release?: any, ...more: any[]): Pattern
-  bprate(rate?: any, ...more: any[]): Pattern
-  bprelease(release?: any, ...more: any[]): Pattern
-  bps(sustain?: any, ...more: any[]): Pattern
-  bpshape(shape?: any, ...more: any[]): Pattern
-  bpskew(skew?: any, ...more: any[]): Pattern
-  bpsustain(sustain?: any, ...more: any[]): Pattern
-  bpsync(rate?: any, ...more: any[]): Pattern
-  brak(...args: any[]): Pattern
-  brshift(...args: any[]): Pattern
-  bus(number?: any, ...more: any[]): Pattern
-  busgain(number?: any, ...more: any[]): Pattern
-  bxor(...args: any[]): Pattern
-  bypass(...args: any[]): Pattern
-  byteBeatExpression(byteBeatExpression?: any, ...more: any[]): Pattern
-  byteBeatStartTime(byteBeatStartTime?: any, ...more: any[]): Pattern
-  cat(...args: any[]): Pattern
-  ccn(MIDI?: any, ...more: any[]): Pattern
-  ccv(MIDI?: any, ...more: any[]): Pattern
-  ceil(...args: any[]): Pattern
-  ch(channels?: any, ...more: any[]): Pattern
-  channel(channel?: any, ...more: any[]): Pattern
-  channels(channels?: any, ...more: any[]): Pattern
-  chebyshev(distortion?: any, volume?: any, ...more: any[]): Pattern
-  choose(xs?: any, ...more: any[]): Pattern
-  choose2(xs?: any, ...more: any[]): Pattern
-  chop(...args: any[]): Pattern
-  chord(symbols?: any, ...more: any[]): Pattern
-  chorus(chorus?: any, ...more: any[]): Pattern
-  chunk(...args: any[]): Pattern
-  chunkBack(...args: any[]): Pattern
-  chunkBackInto(...args: any[]): Pattern
-  chunkInto(...args: any[]): Pattern
-  chunkback(...args: any[]): Pattern
-  chunkbackinto(...args: any[]): Pattern
-  chunkinto(...args: any[]): Pattern
-  clip(factor?: any, ...more: any[]): Pattern
-  coarse(factor?: any, ...more: any[]): Pattern
-  collect(...args: any[]): Pattern
-  color(color?: any, ...more: any[]): Pattern
-  comb(...args: any[]): Pattern
-  compress(...args: any[]): Pattern
-  compressSpan(...args: any[]): Pattern
-  compressor(...args: any[]): Pattern
-  compressorAttack(...args: any[]): Pattern
-  compressorKnee(...args: any[]): Pattern
-  compressorRatio(...args: any[]): Pattern
-  compressorRelease(...args: any[]): Pattern
-  compressspan(...args: any[]): Pattern
-  contract(...args: any[]): Pattern
-  control(MIDI?: any, MIDI?: any, ...more: any[]): Pattern
-  cpm(...args: any[]): Pattern
-  cps(...args: any[]): Pattern
-  crush(depth?: any, ...more: any[]): Pattern
-  ctf(frequency?: any, ...more: any[]): Pattern
-  ctlNum(...args: any[]): Pattern
-  ctranspose(...args: any[]): Pattern
-  cubic(distortion?: any, volume?: any, ...more: any[]): Pattern
-  curve(...args: any[]): Pattern
-  cut(group?: any, ...more: any[]): Pattern
-  cutoff(frequency?: any, ...more: any[]): Pattern
-  dec(time?: any, ...more: any[]): Pattern
-  decay(time?: any, ...more: any[]): Pattern
-  defragmentHaps(...args: any[]): Pattern
-  degrade(...args: any[]): Pattern
-  degradeBy(amount?: any, ...more: any[]): Pattern
-  degradeByWith(...args: any[]): Pattern
-  degree(...args: any[]): Pattern
-  delay(level?: any, ...more: any[]): Pattern
-  delayfb(feedback?: any, ...more: any[]): Pattern
-  delayfeedback(feedback?: any, ...more: any[]): Pattern
-  delayspeed(delayspeed?: any, ...more: any[]): Pattern
-  delaysync(cycles?: any, ...more: any[]): Pattern
-  delayt(delayspeed?: any, ...more: any[]): Pattern
-  delaytime(...args: any[]): Pattern
-  deltaSlide(...args: any[]): Pattern
-  density(density?: any, ...more: any[]): Pattern
-  det(amount?: any, ...more: any[]): Pattern
-  detune(amount?: any, ...more: any[]): Pattern
-  dfb(feedback?: any, ...more: any[]): Pattern
-  dict(...args: any[]): Pattern
-  dictionary(dictionaryName?: any, ...more: any[]): Pattern
-  diode(distortion?: any, volume?: any, ...more: any[]): Pattern
-  discreteOnly(...args: any[]): Pattern
-  dist(distortion?: any, volume?: any, type?: any, ...more: any[]): Pattern
-  distort(distortion?: any, volume?: any, type?: any, ...more: any[]): Pattern
-  distorttype(type?: any, ...more: any[]): Pattern
-  distortvol(volume?: any, ...more: any[]): Pattern
-  disttype(type?: any, ...more: any[]): Pattern
-  distvol(volume?: any, ...more: any[]): Pattern
-  div(...args: any[]): Pattern
-  djf(cutoff?: any, ...more: any[]): Pattern
-  dough(...args: any[]): Pattern
-  draw(...args: any[]): Pattern
-  drawLine(pattern?: any, chars?: any, ...more: any[]): Pattern
-  drive(amount?: any, ...more: any[]): Pattern
-  drop(...args: any[]): Pattern
-  dry(dry?: any, ...more: any[]): Pattern
-  ds(...args: any[]): Pattern
-  dt(delayspeed?: any, ...more: any[]): Pattern
-  duck(orbit?: any, ...more: any[]): Pattern
-  duckatt(time?: any, ...more: any[]): Pattern
-  duckattack(time?: any, ...more: any[]): Pattern
-  duckdepth(depth?: any, ...more: any[]): Pattern
-  duckons(time?: any, ...more: any[]): Pattern
-  duckonset(time?: any, ...more: any[]): Pattern
-  duckorbit(orbit?: any, ...more: any[]): Pattern
-  dur(seconds?: any, ...more: any[]): Pattern
-  duration(seconds?: any, ...more: any[]): Pattern
-  early(cycles?: any, ...more: any[]): Pattern
-  echo(times?: any, time?: any, feedback?: any, ...more: any[]): Pattern
-  echoWith(times?: any, time?: any, func?: any, ...more: any[]): Pattern
-  echowith(times?: any, time?: any, func?: any, ...more: any[]): Pattern
-  eish(pulses?: any, steps?: any, groove?: any, ...more: any[]): Pattern
-  end(length?: any, ...more: any[]): Pattern
-  enhance(...args: any[]): Pattern
-  env(config?: any, id?: any, ...more: any[]): Pattern
-  eq(...args: any[]): Pattern
-  eqt(...args: any[]): Pattern
-  euclid(pulses?: any, steps?: any, ...more: any[]): Pattern
-  euclidLegato(pulses?: any, steps?: any, rotation?: any, pat?: any, ...more: any[]): Pattern
-  euclidLegatoRot(pulses?: any, steps?: any, rotation?: any, ...more: any[]): Pattern
-  euclidRot(pulses?: any, steps?: any, rotation?: any, ...more: any[]): Pattern
-  euclidish(pulses?: any, steps?: any, groove?: any, ...more: any[]): Pattern
-  euclidrot(...args: any[]): Pattern
-  every(n?: any, func?: any, ...more: any[]): Pattern
-  expand(...args: any[]): Pattern
-  expression(...args: any[]): Pattern
-  extend(...args: any[]): Pattern
-  fadeInTime(...args: any[]): Pattern
-  fadeOutTime(...args: any[]): Pattern
-  fadeTime(...args: any[]): Pattern
-  fanchor(center?: any, ...more: any[]): Pattern
-  fast(factor?: any, ...more: any[]): Pattern
-  fastChunk(...args: any[]): Pattern
-  fastGap(...args: any[]): Pattern
-  fastcat(...args: any[]): Pattern
-  fastchunk(...args: any[]): Pattern
-  fastgap(...args: any[]): Pattern
-  fft(...args: any[]): Pattern
-  fill(...args: any[]): Pattern
-  filter(test?: any, ...more: any[]): Pattern
-  filterHaps(hap_test?: any, ...more: any[]): Pattern
-  filterValues(value_test?: any, ...more: any[]): Pattern
-  filterWhen(test?: any, ...more: any[]): Pattern
-  firstCycle(with_context?: any, ...more: any[]): Pattern
-  firstOf(n?: any, func?: any, ...more: any[]): Pattern
-  fit(...args: any[]): Pattern
-  floor(...args: any[]): Pattern
-  fm(brightness?: any, ...more: any[]): Pattern
-  fm00(...args: any[]): Pattern
-  fm01(...args: any[]): Pattern
-  fm02(...args: any[]): Pattern
-  fm03(...args: any[]): Pattern
-  fm04(...args: any[]): Pattern
-  fm05(...args: any[]): Pattern
-  fm06(...args: any[]): Pattern
-  fm07(...args: any[]): Pattern
-  fm08(...args: any[]): Pattern
-  fm1(...args: any[]): Pattern
-  fm10(...args: any[]): Pattern
-  fm11(...args: any[]): Pattern
-  fm12(...args: any[]): Pattern
-  fm13(...args: any[]): Pattern
-  fm14(...args: any[]): Pattern
-  fm15(...args: any[]): Pattern
-  fm16(...args: any[]): Pattern
-  fm17(...args: any[]): Pattern
-  fm18(...args: any[]): Pattern
-  fm2(...args: any[]): Pattern
-  fm20(...args: any[]): Pattern
-  fm21(...args: any[]): Pattern
-  fm22(...args: any[]): Pattern
-  fm23(...args: any[]): Pattern
-  fm24(...args: any[]): Pattern
-  fm25(...args: any[]): Pattern
-  fm26(...args: any[]): Pattern
-  fm27(...args: any[]): Pattern
-  fm28(...args: any[]): Pattern
-  fm3(...args: any[]): Pattern
-  fm30(...args: any[]): Pattern
-  fm31(...args: any[]): Pattern
-  fm32(...args: any[]): Pattern
-  fm33(...args: any[]): Pattern
-  fm34(...args: any[]): Pattern
-  fm35(...args: any[]): Pattern
-  fm36(...args: any[]): Pattern
-  fm37(...args: any[]): Pattern
-  fm38(...args: any[]): Pattern
-  fm4(...args: any[]): Pattern
-  fm40(...args: any[]): Pattern
-  fm41(...args: any[]): Pattern
-  fm42(...args: any[]): Pattern
-  fm43(...args: any[]): Pattern
-  fm44(...args: any[]): Pattern
-  fm45(...args: any[]): Pattern
-  fm46(...args: any[]): Pattern
-  fm47(...args: any[]): Pattern
-  fm48(...args: any[]): Pattern
-  fm5(...args: any[]): Pattern
-  fm50(...args: any[]): Pattern
-  fm51(...args: any[]): Pattern
-  fm52(...args: any[]): Pattern
-  fm53(...args: any[]): Pattern
-  fm54(...args: any[]): Pattern
-  fm55(...args: any[]): Pattern
-  fm56(...args: any[]): Pattern
-  fm57(...args: any[]): Pattern
-  fm58(...args: any[]): Pattern
-  fm6(...args: any[]): Pattern
-  fm60(...args: any[]): Pattern
-  fm61(...args: any[]): Pattern
-  fm62(...args: any[]): Pattern
-  fm63(...args: any[]): Pattern
-  fm64(...args: any[]): Pattern
-  fm65(...args: any[]): Pattern
-  fm66(...args: any[]): Pattern
-  fm67(...args: any[]): Pattern
-  fm68(...args: any[]): Pattern
-  fm7(...args: any[]): Pattern
-  fm70(...args: any[]): Pattern
-  fm71(...args: any[]): Pattern
-  fm72(...args: any[]): Pattern
-  fm73(...args: any[]): Pattern
-  fm74(...args: any[]): Pattern
-  fm75(...args: any[]): Pattern
-  fm76(...args: any[]): Pattern
-  fm77(...args: any[]): Pattern
-  fm78(...args: any[]): Pattern
-  fm8(...args: any[]): Pattern
-  fm80(...args: any[]): Pattern
-  fm81(...args: any[]): Pattern
-  fm82(...args: any[]): Pattern
-  fm83(...args: any[]): Pattern
-  fm84(...args: any[]): Pattern
-  fm85(...args: any[]): Pattern
-  fm86(...args: any[]): Pattern
-  fm87(...args: any[]): Pattern
-  fm88(...args: any[]): Pattern
-  fmap(func?: any, ...more: any[]): Pattern
-  fmatt(time?: any, ...more: any[]): Pattern
-  fmatt1(...args: any[]): Pattern
-  fmatt2(...args: any[]): Pattern
-  fmatt3(...args: any[]): Pattern
-  fmatt4(...args: any[]): Pattern
-  fmatt5(...args: any[]): Pattern
-  fmatt6(...args: any[]): Pattern
-  fmatt7(...args: any[]): Pattern
-  fmatt8(...args: any[]): Pattern
-  fmattack(time?: any, ...more: any[]): Pattern
-  fmattack1(...args: any[]): Pattern
-  fmattack2(...args: any[]): Pattern
-  fmattack3(...args: any[]): Pattern
-  fmattack4(...args: any[]): Pattern
-  fmattack5(...args: any[]): Pattern
-  fmattack6(...args: any[]): Pattern
-  fmattack7(...args: any[]): Pattern
-  fmattack8(...args: any[]): Pattern
-  fmdec(time?: any, ...more: any[]): Pattern
-  fmdec1(...args: any[]): Pattern
-  fmdec2(...args: any[]): Pattern
-  fmdec3(...args: any[]): Pattern
-  fmdec4(...args: any[]): Pattern
-  fmdec5(...args: any[]): Pattern
-  fmdec6(...args: any[]): Pattern
-  fmdec7(...args: any[]): Pattern
-  fmdec8(...args: any[]): Pattern
-  fmdecay(time?: any, ...more: any[]): Pattern
-  fmdecay1(...args: any[]): Pattern
-  fmdecay2(...args: any[]): Pattern
-  fmdecay3(...args: any[]): Pattern
-  fmdecay4(...args: any[]): Pattern
-  fmdecay5(...args: any[]): Pattern
-  fmdecay6(...args: any[]): Pattern
-  fmdecay7(...args: any[]): Pattern
-  fmdecay8(...args: any[]): Pattern
-  fmenv(type?: any, ...more: any[]): Pattern
-  fmenv1(...args: any[]): Pattern
-  fmenv2(...args: any[]): Pattern
-  fmenv3(...args: any[]): Pattern
-  fmenv4(...args: any[]): Pattern
-  fmenv5(...args: any[]): Pattern
-  fmenv6(...args: any[]): Pattern
-  fmenv7(...args: any[]): Pattern
-  fmenv8(...args: any[]): Pattern
-  fmh(harmonicity?: any, ...more: any[]): Pattern
-  fmh1(...args: any[]): Pattern
-  fmh2(...args: any[]): Pattern
-  fmh3(...args: any[]): Pattern
-  fmh4(...args: any[]): Pattern
-  fmh5(...args: any[]): Pattern
-  fmh6(...args: any[]): Pattern
-  fmh7(...args: any[]): Pattern
-  fmh8(...args: any[]): Pattern
-  fmi(brightness?: any, ...more: any[]): Pattern
-  fmi00(...args: any[]): Pattern
-  fmi01(...args: any[]): Pattern
-  fmi02(...args: any[]): Pattern
-  fmi03(...args: any[]): Pattern
-  fmi04(...args: any[]): Pattern
-  fmi05(...args: any[]): Pattern
-  fmi06(...args: any[]): Pattern
-  fmi07(...args: any[]): Pattern
-  fmi08(...args: any[]): Pattern
-  fmi1(...args: any[]): Pattern
-  fmi10(...args: any[]): Pattern
-  fmi11(...args: any[]): Pattern
-  fmi12(...args: any[]): Pattern
-  fmi13(...args: any[]): Pattern
-  fmi14(...args: any[]): Pattern
-  fmi15(...args: any[]): Pattern
-  fmi16(...args: any[]): Pattern
-  fmi17(...args: any[]): Pattern
-  fmi18(...args: any[]): Pattern
-  fmi2(...args: any[]): Pattern
-  fmi20(...args: any[]): Pattern
-  fmi21(...args: any[]): Pattern
-  fmi22(...args: any[]): Pattern
-  fmi23(...args: any[]): Pattern
-  fmi24(...args: any[]): Pattern
-  fmi25(...args: any[]): Pattern
-  fmi26(...args: any[]): Pattern
-  fmi27(...args: any[]): Pattern
-  fmi28(...args: any[]): Pattern
-  fmi3(...args: any[]): Pattern
-  fmi30(...args: any[]): Pattern
-  fmi31(...args: any[]): Pattern
-  fmi32(...args: any[]): Pattern
-  fmi33(...args: any[]): Pattern
-  fmi34(...args: any[]): Pattern
-  fmi35(...args: any[]): Pattern
-  fmi36(...args: any[]): Pattern
-  fmi37(...args: any[]): Pattern
-  fmi38(...args: any[]): Pattern
-  fmi4(...args: any[]): Pattern
-  fmi40(...args: any[]): Pattern
-  fmi41(...args: any[]): Pattern
-  fmi42(...args: any[]): Pattern
-  fmi43(...args: any[]): Pattern
-  fmi44(...args: any[]): Pattern
-  fmi45(...args: any[]): Pattern
-  fmi46(...args: any[]): Pattern
-  fmi47(...args: any[]): Pattern
-  fmi48(...args: any[]): Pattern
-  fmi5(...args: any[]): Pattern
-  fmi50(...args: any[]): Pattern
-  fmi51(...args: any[]): Pattern
-  fmi52(...args: any[]): Pattern
-  fmi53(...args: any[]): Pattern
-  fmi54(...args: any[]): Pattern
-  fmi55(...args: any[]): Pattern
-  fmi56(...args: any[]): Pattern
-  fmi57(...args: any[]): Pattern
-  fmi58(...args: any[]): Pattern
-  fmi6(...args: any[]): Pattern
-  fmi60(...args: any[]): Pattern
-  fmi61(...args: any[]): Pattern
-  fmi62(...args: any[]): Pattern
-  fmi63(...args: any[]): Pattern
-  fmi64(...args: any[]): Pattern
-  fmi65(...args: any[]): Pattern
-  fmi66(...args: any[]): Pattern
-  fmi67(...args: any[]): Pattern
-  fmi68(...args: any[]): Pattern
-  fmi7(...args: any[]): Pattern
-  fmi70(...args: any[]): Pattern
-  fmi71(...args: any[]): Pattern
-  fmi72(...args: any[]): Pattern
-  fmi73(...args: any[]): Pattern
-  fmi74(...args: any[]): Pattern
-  fmi75(...args: any[]): Pattern
-  fmi76(...args: any[]): Pattern
-  fmi77(...args: any[]): Pattern
-  fmi78(...args: any[]): Pattern
-  fmi8(...args: any[]): Pattern
-  fmi80(...args: any[]): Pattern
-  fmi81(...args: any[]): Pattern
-  fmi82(...args: any[]): Pattern
-  fmi83(...args: any[]): Pattern
-  fmi84(...args: any[]): Pattern
-  fmi85(...args: any[]): Pattern
-  fmi86(...args: any[]): Pattern
-  fmi87(...args: any[]): Pattern
-  fmi88(...args: any[]): Pattern
-  fmrel(time?: any, ...more: any[]): Pattern
-  fmrel1(...args: any[]): Pattern
-  fmrel2(...args: any[]): Pattern
-  fmrel3(...args: any[]): Pattern
-  fmrel4(...args: any[]): Pattern
-  fmrel5(...args: any[]): Pattern
-  fmrel6(...args: any[]): Pattern
-  fmrel7(...args: any[]): Pattern
-  fmrel8(...args: any[]): Pattern
-  fmrelease(time?: any, ...more: any[]): Pattern
-  fmrelease1(...args: any[]): Pattern
-  fmrelease2(...args: any[]): Pattern
-  fmrelease3(...args: any[]): Pattern
-  fmrelease4(...args: any[]): Pattern
-  fmrelease5(...args: any[]): Pattern
-  fmrelease6(...args: any[]): Pattern
-  fmrelease7(...args: any[]): Pattern
-  fmrelease8(...args: any[]): Pattern
-  fmsus(level?: any, ...more: any[]): Pattern
-  fmsus1(...args: any[]): Pattern
-  fmsus2(...args: any[]): Pattern
-  fmsus3(...args: any[]): Pattern
-  fmsus4(...args: any[]): Pattern
-  fmsus5(...args: any[]): Pattern
-  fmsus6(...args: any[]): Pattern
-  fmsus7(...args: any[]): Pattern
-  fmsus8(...args: any[]): Pattern
-  fmsustain(level?: any, ...more: any[]): Pattern
-  fmsustain1(...args: any[]): Pattern
-  fmsustain2(...args: any[]): Pattern
-  fmsustain3(...args: any[]): Pattern
-  fmsustain4(...args: any[]): Pattern
-  fmsustain5(...args: any[]): Pattern
-  fmsustain6(...args: any[]): Pattern
-  fmsustain7(...args: any[]): Pattern
-  fmsustain8(...args: any[]): Pattern
-  fmwave(wave?: any, ...more: any[]): Pattern
-  fmwave1(...args: any[]): Pattern
-  fmwave2(...args: any[]): Pattern
-  fmwave3(...args: any[]): Pattern
-  fmwave4(...args: any[]): Pattern
-  fmwave5(...args: any[]): Pattern
-  fmwave6(...args: any[]): Pattern
-  fmwave7(...args: any[]): Pattern
-  fmwave8(...args: any[]): Pattern
-  focus(...args: any[]): Pattern
-  focusSpan(...args: any[]): Pattern
-  focusspan(...args: any[]): Pattern
-  fold(distortion?: any, volume?: any, ...more: any[]): Pattern
-  frameRate(...args: any[]): Pattern
-  frames(...args: any[]): Pattern
-  freeze(...args: any[]): Pattern
-  freq(frequency?: any, ...more: any[]): Pattern
-  fromBipolar(...args: any[]): Pattern
-  fscope(color?: any, scale?: any, pos?: any, lean?: any, min?: any, max?: any, ...more: any[]): Pattern
-  fshift(...args: any[]): Pattern
-  fshiftnote(...args: any[]): Pattern
-  fshiftphase(...args: any[]): Pattern
-  ftype(type?: any, ...more: any[]): Pattern
-  func(...args: any[]): Pattern
-  fxr(...args: any[]): Pattern
-  gain(amount?: any, ...more: any[]): Pattern
-  gat(...args: any[]): Pattern
-  gate(...args: any[]): Pattern
-  getPainters(...args: any[]): Pattern
-  grow(...args: any[]): Pattern
-  gt(...args: any[]): Pattern
-  gte(...args: any[]): Pattern
-  h(...args: any[]): Pattern
-  hard(distortion?: any, volume?: any, ...more: any[]): Pattern
-  harmonic(...args: any[]): Pattern
-  hbrick(...args: any[]): Pattern
-  hcutoff(frequency?: any, ...more: any[]): Pattern
-  hold(...args: any[]): Pattern
-  hours(...args: any[]): Pattern
-  hp(frequency?: any, ...more: any[]): Pattern
-  hpa(attack?: any, ...more: any[]): Pattern
-  hpattack(attack?: any, ...more: any[]): Pattern
-  hpd(decay?: any, ...more: any[]): Pattern
-  hpdc(dcoffset?: any, ...more: any[]): Pattern
-  hpdecay(decay?: any, ...more: any[]): Pattern
-  hpdepth(depth?: any, ...more: any[]): Pattern
-  hpdepthfreq(depth?: any, ...more: any[]): Pattern
-  hpdepthfrequency(depth?: any, ...more: any[]): Pattern
-  hpe(modulation?: any, ...more: any[]): Pattern
-  hpenv(modulation?: any, ...more: any[]): Pattern
-  hpf(frequency?: any, ...more: any[]): Pattern
-  hpq(q?: any, ...more: any[]): Pattern
-  hpr(release?: any, ...more: any[]): Pattern
-  hprate(rate?: any, ...more: any[]): Pattern
-  hprelease(release?: any, ...more: any[]): Pattern
-  hps(sustain?: any, ...more: any[]): Pattern
-  hpshape(shape?: any, ...more: any[]): Pattern
-  hpskew(skew?: any, ...more: any[]): Pattern
-  hpsustain(sustain?: any, ...more: any[]): Pattern
-  hpsync(rate?: any, ...more: any[]): Pattern
-  hresonance(q?: any, ...more: any[]): Pattern
-  hsl(...args: any[]): Pattern
-  hsla(...args: any[]): Pattern
-  hurry(...args: any[]): Pattern
-  hush(...args: any[]): Pattern
-  imag(...args: any[]): Pattern
-  inhabit(pat?: any, xs?: any, ...more: any[]): Pattern
-  inhabitmod(pat?: any, xs?: any, ...more: any[]): Pattern
-  innerBind(...args: any[]): Pattern
-  innerJoin(...args: any[]): Pattern
-  inside(...args: any[]): Pattern
-  into(...args: any[]): Pattern
-  inv(...args: any[]): Pattern
-  invert(...args: any[]): Pattern
-  ir(sample?: any, ...more: any[]): Pattern
-  irbegin(begin?: any, ...more: any[]): Pattern
-  iresponse(sample?: any, ...more: any[]): Pattern
-  irspeed(speed?: any, ...more: any[]): Pattern
-  iter(...args: any[]): Pattern
-  iterBack(...args: any[]): Pattern
-  iterback(...args: any[]): Pattern
-  join(...args: any[]): Pattern
-  jux(...args: any[]): Pattern
-  juxBy(...args: any[]): Pattern
-  juxby(...args: any[]): Pattern
-  kcutoff(...args: any[]): Pattern
-  keep(...args: any[]): Pattern
-  keepif(...args: any[]): Pattern
-  keyDown(...args: any[]): Pattern
-  krush(...args: any[]): Pattern
-  label(label?: any, ...more: any[]): Pattern
-  lastOf(n?: any, func?: any, ...more: any[]): Pattern
-  late(cycles?: any, ...more: any[]): Pattern
-  layer(...args: any[]): Pattern
-  lbrick(...args: any[]): Pattern
-  legato(factor?: any, ...more: any[]): Pattern
-  leslie(wet?: any, ...more: any[]): Pattern
-  lfo(config?: any, id?: any, ...more: any[]): Pattern
-  linger(fraction?: any, ...more: any[]): Pattern
-  lock(enable?: any, ...more: any[]): Pattern
-  log(...args: any[]): Pattern
-  log2(...args: any[]): Pattern
-  logValues(...args: any[]): Pattern
-  loop(on?: any, ...more: any[]): Pattern
-  loopAt(...args: any[]): Pattern
-  loopAtCps(...args: any[]): Pattern
-  loopBegin(time?: any, ...more: any[]): Pattern
-  loopEnd(time?: any, ...more: any[]): Pattern
-  loopat(...args: any[]): Pattern
-  loopatcps(...args: any[]): Pattern
-  loopb(time?: any, ...more: any[]): Pattern
-  loope(time?: any, ...more: any[]): Pattern
-  lp(frequency?: any, ...more: any[]): Pattern
-  lpa(attack?: any, ...more: any[]): Pattern
-  lpattack(attack?: any, ...more: any[]): Pattern
-  lpd(decay?: any, ...more: any[]): Pattern
-  lpdc(dcoffset?: any, ...more: any[]): Pattern
-  lpdecay(decay?: any, ...more: any[]): Pattern
-  lpdepth(depth?: any, ...more: any[]): Pattern
-  lpdepthfreq(depth?: any, ...more: any[]): Pattern
-  lpdepthfrequency(depth?: any, ...more: any[]): Pattern
-  lpe(modulation?: any, ...more: any[]): Pattern
-  lpenv(modulation?: any, ...more: any[]): Pattern
-  lpf(frequency?: any, ...more: any[]): Pattern
-  lpq(q?: any, ...more: any[]): Pattern
-  lpr(release?: any, ...more: any[]): Pattern
-  lprate(rate?: any, ...more: any[]): Pattern
-  lprelease(release?: any, ...more: any[]): Pattern
-  lps(sustain?: any, ...more: any[]): Pattern
-  lpshape(shape?: any, ...more: any[]): Pattern
-  lpskew(skew?: any, ...more: any[]): Pattern
-  lpsustain(sustain?: any, ...more: any[]): Pattern
-  lpsync(rate?: any, ...more: any[]): Pattern
-  lrate(rate?: any, ...more: any[]): Pattern
-  lsize(meters?: any, ...more: any[]): Pattern
-  lt(...args: any[]): Pattern
-  lte(...args: any[]): Pattern
-  markcss(...args: any[]): Pattern
-  mask(...args: any[]): Pattern
-  maskAll(...args: any[]): Pattern
-  midi(midiport?: any, options?: any, ...more: any[]): Pattern
-  midibend(midibend?: any, ...more: any[]): Pattern
-  midichan(channel?: any, ...more: any[]): Pattern
-  midicmd(command?: any, ...more: any[]): Pattern
-  midimap(...args: any[]): Pattern
-  midiport(port?: any, ...more: any[]): Pattern
-  miditouch(miditouch?: any, ...more: any[]): Pattern
-  minutes(...args: any[]): Pattern
-  mix(...args: any[]): Pattern
-  mod(...args: any[]): Pattern
-  mode(modeName?: any, ...more: any[]): Pattern
-  modulate(...args: any[]): Pattern
-  moveXY(...args: any[]): Pattern
-  mtranspose(...args: any[]): Pattern
-  mul(...args: any[]): Pattern
-  n(value?: any, ...more: any[]): Pattern
-  ne(...args: any[]): Pattern
-  net(...args: any[]): Pattern
-  never(...args: any[]): Pattern
-  noise(wet?: any, ...more: any[]): Pattern
-  note(...args: any[]): Pattern
-  nrpnn(nrpnn?: any, ...more: any[]): Pattern
-  nrpv(nrpv?: any, ...more: any[]): Pattern
-  nudge(...args: any[]): Pattern
-  o(number?: any, ...more: any[]): Pattern
-  oct(octave?: any, ...more: any[]): Pattern
-  octave(octave?: any, ...more: any[]): Pattern
-  octaveR(...args: any[]): Pattern
-  octaves(count?: any, ...more: any[]): Pattern
-  octer(...args: any[]): Pattern
-  octersub(...args: any[]): Pattern
-  octersubsub(...args: any[]): Pattern
-  off(time?: any, func?: any, ...more: any[]): Pattern
-  offset(shift?: any, ...more: any[]): Pattern
-  often(...args: any[]): Pattern
-  onPaint(...args: any[]): Pattern
-  onTrigger(...args: any[]): Pattern
-  onTriggerTime(...args: any[]): Pattern
-  onsetsOnly(...args: any[]): Pattern
-  or(...args: any[]): Pattern
-  orbit(number?: any, ...more: any[]): Pattern
-  oschost(oschost?: any, ...more: any[]): Pattern
-  oscport(oscport?: any, ...more: any[]): Pattern
-  out(...args: any[]): Pattern
-  outerBind(...args: any[]): Pattern
-  outerJoin(...args: any[]): Pattern
-  outside(...args: any[]): Pattern
-  overgain(...args: any[]): Pattern
-  overshape(...args: any[]): Pattern
-  pace(...args: any[]): Pattern
-  palindrome(...args: any[]): Pattern
-  pan(pan?: any, ...more: any[]): Pattern
-  panchor(anchor?: any, ...more: any[]): Pattern
-  panorient(...args: any[]): Pattern
-  panspan(...args: any[]): Pattern
-  pansplay(...args: any[]): Pattern
-  panwidth(...args: any[]): Pattern
-  partials(magnitudes?: any, ...more: any[]): Pattern
-  patt(time?: any, ...more: any[]): Pattern
-  pattack(time?: any, ...more: any[]): Pattern
-  pcurve(type?: any, ...more: any[]): Pattern
-  pdec(time?: any, ...more: any[]): Pattern
-  pdecay(time?: any, ...more: any[]): Pattern
-  penv(semitones?: any, ...more: any[]): Pattern
-  ph(speed?: any, ...more: any[]): Pattern
-  phasdp(depth?: any, ...more: any[]): Pattern
-  phaser(speed?: any, ...more: any[]): Pattern
-  phasercenter(centerfrequency?: any, ...more: any[]): Pattern
-  phaserdepth(depth?: any, ...more: any[]): Pattern
-  phaserrate(...args: any[]): Pattern
-  phasersweep(phasersweep?: any, ...more: any[]): Pattern
-  phases(phases?: any, ...more: any[]): Pattern
-  phc(centerfrequency?: any, ...more: any[]): Pattern
-  phd(depth?: any, ...more: any[]): Pattern
-  phs(phasersweep?: any, ...more: any[]): Pattern
-  piano(...args: any[]): Pattern
-  pianoroll(options?: any, cycles?: any, playhead?: any, vertical?: any, labels?: any, flipTime?: any, flipValues?: any, overscan?: any, hideNegative?: any, smear?: any, fold?: any, active?: any, inactive?: any, background?: any, playheadColor?: any, fill?: any, fillActive?: any, stroke?: any, strokeActive?: any, hideInactive?: any, colorizeInactive?: any, fontFamily?: any, minMidi?: any, maxMidi?: any, autorange?: any, ...more: any[]): Pattern
-  pick(pat?: any, xs?: any, ...more: any[]): Pattern
-  pickF(pat?: any, lookup?: any, funcs?: any, ...more: any[]): Pattern
-  pickOut(pat?: any, xs?: any, ...more: any[]): Pattern
-  pickReset(pat?: any, xs?: any, ...more: any[]): Pattern
-  pickRestart(pat?: any, xs?: any, ...more: any[]): Pattern
-  pickSqueeze(pat?: any, xs?: any, ...more: any[]): Pattern
-  pickmod(pat?: any, xs?: any, ...more: any[]): Pattern
-  pickmodF(pat?: any, lookup?: any, funcs?: any, ...more: any[]): Pattern
-  pickmodOut(pat?: any, xs?: any, ...more: any[]): Pattern
-  pickmodReset(pat?: any, xs?: any, ...more: any[]): Pattern
-  pickmodRestart(pat?: any, xs?: any, ...more: any[]): Pattern
-  pickmodSqueeze(pat?: any, xs?: any, ...more: any[]): Pattern
-  pitchJump(...args: any[]): Pattern
-  pitchJumpTime(...args: any[]): Pattern
-  pitchwheel(hapcircles?: any, circle?: any, edo?: any, root?: any, thickness?: any, hapRadius?: any, mode?: any, margin?: any, ...more: any[]): Pattern
-  ply(...args: any[]): Pattern
-  plyForEach(factor?: any, func?: any, ...more: any[]): Pattern
-  plyWith(factor?: any, func?: any, ...more: any[]): Pattern
-  plyforeach(factor?: any, func?: any, ...more: any[]): Pattern
-  plywith(factor?: any, func?: any, ...more: any[]): Pattern
-  poly(...args: any[]): Pattern
-  polyBind(...args: any[]): Pattern
-  polyTouch(...args: any[]): Pattern
-  postgain(...args: any[]): Pattern
-  pow(...args: any[]): Pattern
-  prel(time?: any, ...more: any[]): Pattern
-  prelease(time?: any, ...more: any[]): Pattern
-  press(...args: any[]): Pattern
-  pressBy(...args: any[]): Pattern
-  progNum(program?: any, ...more: any[]): Pattern
-  psus(...args: any[]): Pattern
-  psustain(...args: any[]): Pattern
-  punchcard(options?: any, cycles?: any, playhead?: any, vertical?: any, labels?: any, flipTime?: any, flipValues?: any, overscan?: any, hideNegative?: any, smear?: any, fold?: any, active?: any, inactive?: any, background?: any, playheadColor?: any, fill?: any, fillActive?: any, stroke?: any, strokeActive?: any, hideInactive?: any, colorizeInactive?: any, fontFamily?: any, minMidi?: any, maxMidi?: any, autorange?: any, ...more: any[]): Pattern
-  pw(pulsewidth?: any, ...more: any[]): Pattern
-  pwrate(rate?: any, ...more: any[]): Pattern
-  pwsweep(sweep?: any, ...more: any[]): Pattern
-  queryArc(begin?: any, end?: any, ...more: any[]): Pattern
-  r(...args: any[]): Pattern
-  range(...args: any[]): Pattern
-  range2(...args: any[]): Pattern
-  rangex(...args: any[]): Pattern
-  rarely(...args: any[]): Pattern
-  ratio(...args: any[]): Pattern
-  rdim(frequency?: any, ...more: any[]): Pattern
-  real(...args: any[]): Pattern
-  rel(time?: any, ...more: any[]): Pattern
-  release(time?: any, ...more: any[]): Pattern
-  removeUndefineds(...args: any[]): Pattern
-  repeatCycles(...args: any[]): Pattern
-  replicate(...args: any[]): Pattern
-  rescale(...args: any[]): Pattern
-  reset(...args: any[]): Pattern
-  resetAll(...args: any[]): Pattern
-  resetJoin(...args: any[]): Pattern
-  resonance(q?: any, ...more: any[]): Pattern
-  restart(...args: any[]): Pattern
-  restartAll(...args: any[]): Pattern
-  restartJoin(...args: any[]): Pattern
-  rev(...args: any[]): Pattern
-  revv(...args: any[]): Pattern
-  rfade(seconds?: any, ...more: any[]): Pattern
-  rib(offset?: any, cycles?: any, ...more: any[]): Pattern
-  ribbon(offset?: any, cycles?: any, ...more: any[]): Pattern
-  ring(...args: any[]): Pattern
-  ringdf(...args: any[]): Pattern
-  ringf(...args: any[]): Pattern
-  rlp(frequency?: any, ...more: any[]): Pattern
-  room(level?: any, ...more: any[]): Pattern
-  roomdim(frequency?: any, ...more: any[]): Pattern
-  roomfade(seconds?: any, ...more: any[]): Pattern
-  roomlp(frequency?: any, ...more: any[]): Pattern
-  roomsize(size?: any, ...more: any[]): Pattern
-  rootNotes(octave?: any, ...more: any[]): Pattern
-  round(...args: any[]): Pattern
-  rsize(size?: any, ...more: any[]): Pattern
-  s(sound?: any, ...more: any[]): Pattern
-  s_add(...args: any[]): Pattern
-  s_contract(...args: any[]): Pattern
-  s_expand(...args: any[]): Pattern
-  s_extend(...args: any[]): Pattern
-  s_sub(...args: any[]): Pattern
-  s_taper(...args: any[]): Pattern
-  s_taperlist(...args: any[]): Pattern
-  s_tour(...args: any[]): Pattern
-  scale(scale?: any, ...more: any[]): Pattern
-  scaleTrans(offset?: any, ...more: any[]): Pattern
-  scaleTranspose(offset?: any, ...more: any[]): Pattern
-  scope(config?: any, align?: any, color?: any, thickness?: any, scale?: any, pos?: any, trigger?: any, ...more: any[]): Pattern
-  scram(...args: any[]): Pattern
-  scramble(...args: any[]): Pattern
-  scrub(...args: any[]): Pattern
-  seconds(...args: any[]): Pattern
-  seed(n?: any, ...more: any[]): Pattern
-  seg(segments?: any, ...more: any[]): Pattern
-  segment(segments?: any, ...more: any[]): Pattern
-  semitone(...args: any[]): Pattern
-  seq(...args: any[]): Pattern
-  sequence(...args: any[]): Pattern
-  set(...args: any[]): Pattern
-  setContext(context?: any, ...more: any[]): Pattern
-  setSteps(...args: any[]): Pattern
-  shape(distortion?: any, ...more: any[]): Pattern
-  shrink(...args: any[]): Pattern
-  shrinklist(...args: any[]): Pattern
-  shuffle(...args: any[]): Pattern
-  sinefold(distortion?: any, volume?: any, ...more: any[]): Pattern
-  size(size?: any, ...more: any[]): Pattern
-  slice(...args: any[]): Pattern
-  slide(...args: any[]): Pattern
-  slow(factor?: any, ...more: any[]): Pattern
-  slowChunk(...args: any[]): Pattern
-  slowcat(...args: any[]): Pattern
-  slowchunk(...args: any[]): Pattern
-  smear(...args: any[]): Pattern
-  soft(distortion?: any, volume?: any, ...more: any[]): Pattern
-  someCycles(...args: any[]): Pattern
-  someCyclesBy(probability?: any, ...more: any[]): Pattern
-  sometimes(...args: any[]): Pattern
-  sometimesBy(probability?: any, ...more: any[]): Pattern
-  songPtr(...args: any[]): Pattern
-  sortHapsByPart(...args: any[]): Pattern
-  sound(sound?: any, ...more: any[]): Pattern
-  soundfont(...args: any[]): Pattern
-  source(getSource?: any, ...more: any[]): Pattern
-  sparsity(factor?: any, ...more: any[]): Pattern
-  speak(...args: any[]): Pattern
-  spectrum(config?: any, thickness?: any, speed?: any, min?: any, max?: any, ...more: any[]): Pattern
-  speed(speed?: any, ...more: any[]): Pattern
-  spiral(options?: any, stretch?: any, size?: any, thickness?: any, cap?: any, inset?: any, playheadColor?: any, playheadLength?: any, playheadThickness?: any, padding?: any, steady?: any, activeColor?: any, inactiveColor?: any, colorizeInactive?: any, fade?: any, logSpiral?: any, ...more: any[]): Pattern
-  splice(...args: any[]): Pattern
-  splitQueries(...args: any[]): Pattern
-  spread(spread?: any, ...more: any[]): Pattern
-  squeeze(pat?: any, xs?: any, ...more: any[]): Pattern
-  squeezeBind(...args: any[]): Pattern
-  squeezeJoin(...args: any[]): Pattern
-  squeezeout(...args: any[]): Pattern
-  squiz(squiz?: any, ...more: any[]): Pattern
-  src(getSource?: any, ...more: any[]): Pattern
-  stack(...args: any[]): Pattern
-  stepBind(...args: any[]): Pattern
-  stepJoin(...args: any[]): Pattern
-  steps(...args: any[]): Pattern
-  stepsPerOctave(...args: any[]): Pattern
-  strans(offset?: any, ...more: any[]): Pattern
-  stretch(factor?: any, ...more: any[]): Pattern
-  striate(...args: any[]): Pattern
-  stripContext(...args: any[]): Pattern
-  struct(...args: any[]): Pattern
-  structAll(...args: any[]): Pattern
-  stut(times?: any, feedback?: any, time?: any, ...more: any[]): Pattern
-  stutWith(times?: any, time?: any, func?: any, ...more: any[]): Pattern
-  stutwith(times?: any, time?: any, func?: any, ...more: any[]): Pattern
-  sub(...args: any[]): Pattern
-  superimpose(...args: any[]): Pattern
-  supradough(...args: any[]): Pattern
-  sus(gain?: any, ...more: any[]): Pattern
-  sustain(gain?: any, ...more: any[]): Pattern
-  sustainpedal(...args: any[]): Pattern
-  swing(subdivision?: any, ...more: any[]): Pattern
-  swingBy(subdivision?: any, offset?: any, ...more: any[]): Pattern
-  sysex(id?: any, data?: any, ...more: any[]): Pattern
-  sysexdata(data?: any, ...more: any[]): Pattern
-  sysexid(id?: any, ...more: any[]): Pattern
-  sz(size?: any, ...more: any[]): Pattern
-  tag(tag?: any, ...more: any[]): Pattern
-  take(...args: any[]): Pattern
-  timeline(...args: any[]): Pattern
-  toBipolar(...args: any[]): Pattern
-  tour(...args: any[]): Pattern
-  trans(amount?: any, ...more: any[]): Pattern
-  transient(attack?: any, sustain?: any, ...more: any[]): Pattern
-  transpose(amount?: any, ...more: any[]): Pattern
-  trem(speed?: any, ...more: any[]): Pattern
-  tremdepth(depth?: any, ...more: any[]): Pattern
-  tremolo(speed?: any, ...more: any[]): Pattern
-  tremolodepth(depth?: any, ...more: any[]): Pattern
-  tremolophase(offset?: any, ...more: any[]): Pattern
-  tremoloshape(shape?: any, ...more: any[]): Pattern
-  tremoloskew(amount?: any, ...more: any[]): Pattern
-  tremolosync(cycles?: any, ...more: any[]): Pattern
-  tremphase(offset?: any, ...more: any[]): Pattern
-  tremshape(shape?: any, ...more: any[]): Pattern
-  tremskew(amount?: any, ...more: any[]): Pattern
-  tremsync(cycles?: any, ...more: any[]): Pattern
-  triode(...args: any[]): Pattern
-  tscope(config?: any, align?: any, color?: any, thickness?: any, scale?: any, pos?: any, trigger?: any, ...more: any[]): Pattern
-  tsdelay(...args: any[]): Pattern
-  uid(...args: any[]): Pattern
-  undegrade(...args: any[]): Pattern
-  undegradeBy(amount?: any, ...more: any[]): Pattern
-  unison(numvoices?: any, ...more: any[]): Pattern
-  unit(unit?: any, ...more: any[]): Pattern
-  unjoin(...args: any[]): Pattern
-  v(frequency?: any, ...more: any[]): Pattern
-  val(...args: any[]): Pattern
-  vel(...args: any[]): Pattern
-  velocity(...args: any[]): Pattern
-  vib(frequency?: any, ...more: any[]): Pattern
-  vibmod(depth?: any, ...more: any[]): Pattern
-  vibrato(frequency?: any, ...more: any[]): Pattern
-  vmod(depth?: any, ...more: any[]): Pattern
-  voice(...args: any[]): Pattern
-  voicing(...args: any[]): Pattern
-  voicings(dictionary?: any, ...more: any[]): Pattern
-  vowel(vowel?: any, ...more: any[]): Pattern
-  w(...args: any[]): Pattern
-  warp(amount?: any, ...more: any[]): Pattern
-  warpatt(time?: any, ...more: any[]): Pattern
-  warpattack(time?: any, ...more: any[]): Pattern
-  warpdc(dcoffset?: any, ...more: any[]): Pattern
-  warpdec(time?: any, ...more: any[]): Pattern
-  warpdecay(time?: any, ...more: any[]): Pattern
-  warpdepth(depth?: any, ...more: any[]): Pattern
-  warpenv(amount?: any, ...more: any[]): Pattern
-  warpmode(mode?: any, ...more: any[]): Pattern
-  warprate(rate?: any, ...more: any[]): Pattern
-  warprel(time?: any, ...more: any[]): Pattern
-  warprelease(time?: any, ...more: any[]): Pattern
-  warpshape(shape?: any, ...more: any[]): Pattern
-  warpskew(skew?: any, ...more: any[]): Pattern
-  warpsus(gain?: any, ...more: any[]): Pattern
-  warpsustain(gain?: any, ...more: any[]): Pattern
-  warpsync(rate?: any, ...more: any[]): Pattern
-  waveloss(...args: any[]): Pattern
-  wavetablePhaseRand(amount?: any, ...more: any[]): Pattern
-  wavetablePosition(position?: any, ...more: any[]): Pattern
-  wavetableWarp(amount?: any, ...more: any[]): Pattern
-  wavetableWarpMode(mode?: any, ...more: any[]): Pattern
-  when(binary_pat?: any, func?: any, ...more: any[]): Pattern
-  whenKey(...args: any[]): Pattern
-  withContext(func?: any, ...more: any[]): Pattern
-  withHap(func?: any, ...more: any[]): Pattern
-  withHapSpan(func?: any, ...more: any[]): Pattern
-  withHapTime(func?: any, ...more: any[]): Pattern
-  withHaps(func?: any, ...more: any[]): Pattern
-  withLoc(start?: any, end?: any, ...more: any[]): Pattern
-  withQuerySpan(func?: any, ...more: any[]): Pattern
-  withQuerySpanMaybe(...args: any[]): Pattern
-  withQueryTime(func?: any, ...more: any[]): Pattern
-  withState(...args: any[]): Pattern
-  withSteps(...args: any[]): Pattern
-  withValue(func?: any, ...more: any[]): Pattern
-  within(start?: any, end?: any, func?: any, ...more: any[]): Pattern
-  wordfall(...args: any[]): Pattern
-  worklet(src?: any, inputs?: any, ...more: any[]): Pattern
-  wt(position?: any, ...more: any[]): Pattern
-  wtatt(time?: any, ...more: any[]): Pattern
-  wtattack(time?: any, ...more: any[]): Pattern
-  wtdc(dcoffset?: any, ...more: any[]): Pattern
-  wtdec(time?: any, ...more: any[]): Pattern
-  wtdecay(time?: any, ...more: any[]): Pattern
-  wtdepth(depth?: any, ...more: any[]): Pattern
-  wtenv(amount?: any, ...more: any[]): Pattern
-  wtphaserand(amount?: any, ...more: any[]): Pattern
-  wtrate(rate?: any, ...more: any[]): Pattern
-  wtrel(time?: any, ...more: any[]): Pattern
-  wtrelease(time?: any, ...more: any[]): Pattern
-  wtshape(shape?: any, ...more: any[]): Pattern
-  wtskew(skew?: any, ...more: any[]): Pattern
-  wtsus(gain?: any, ...more: any[]): Pattern
-  wtsustain(gain?: any, ...more: any[]): Pattern
-  wtsync(rate?: any, ...more: any[]): Pattern
-  x(...args: any[]): Pattern
-  xfade(...args: any[]): Pattern
-  xsdelay(...args: any[]): Pattern
-  y(...args: any[]): Pattern
-  zcrush(...args: any[]): Pattern
-  zdelay(...args: any[]): Pattern
-  zmod(...args: any[]): Pattern
-  znoise(...args: any[]): Pattern
-  zoom(...args: any[]): Pattern
-  zoomArc(...args: any[]): Pattern
-  zoomIn(...args: any[]): Pattern
-  zoomarc(...args: any[]): Pattern
-  zrand(...args: any[]): Pattern
-  zzfx(...args: any[]): Pattern
+  FX(...more: Arg[]): Pattern
+  FXr(...more: Arg[]): Pattern
+  FXrel(...more: Arg[]): Pattern
+  FXrelease(...more: Arg[]): Pattern
+  _ad(...more: Arg[]): Pattern
+  _add(...more: Arg[]): Pattern
+  _adsr(...more: Arg[]): Pattern
+  _almostAlways(...more: Arg[]): Pattern
+  _almostNever(...more: Arg[]): Pattern
+  _always(...more: Arg[]): Pattern
+  _and(...more: Arg[]): Pattern
+  _apply(...more: Arg[]): Pattern
+  _applyN(...more: Arg[]): Pattern
+  _ar(...more: Arg[]): Pattern
+  _arp(...more: Arg[]): Pattern
+  _arpWith(...more: Arg[]): Pattern
+  _as(...more: Arg[]): Pattern
+  _band(...more: Arg[]): Pattern
+  _beat(...more: Arg[]): Pattern
+  _bite(...more: Arg[]): Pattern
+  _bjork(...more: Arg[]): Pattern
+  _blshift(...more: Arg[]): Pattern
+  _bor(...more: Arg[]): Pattern
+  _brshift(...more: Arg[]): Pattern
+  _bxor(...more: Arg[]): Pattern
+  _bypass(...more: Arg[]): Pattern
+  _chop(...more: Arg[]): Pattern
+  _chunk(...more: Arg[]): Pattern
+  _chunkBack(...more: Arg[]): Pattern
+  _chunkBackInto(...more: Arg[]): Pattern
+  _chunkInto(...more: Arg[]): Pattern
+  _chunkback(...more: Arg[]): Pattern
+  _chunkbackinto(...more: Arg[]): Pattern
+  _chunkinto(...more: Arg[]): Pattern
+  _compress(...more: Arg[]): Pattern
+  _compressSpan(...more: Arg[]): Pattern
+  _compressspan(...more: Arg[]): Pattern
+  _contract(...more: Arg[]): Pattern
+  _control(...more: Arg[]): Pattern
+  _cpm(...more: Arg[]): Pattern
+  _degradeBy(...more: Arg[]): Pattern
+  _degradeByWith(...more: Arg[]): Pattern
+  _density(...more: Arg[]): Pattern
+  _div(...more: Arg[]): Pattern
+  _drop(...more: Arg[]): Pattern
+  _ds(...more: Arg[]): Pattern
+  _early(...more: Arg[]): Pattern
+  _echo(...more: Arg[]): Pattern
+  _echoWith(...more: Arg[]): Pattern
+  _echowith(...more: Arg[]): Pattern
+  _eish(...more: Arg[]): Pattern
+  _eq(...more: Arg[]): Pattern
+  _eqt(...more: Arg[]): Pattern
+  _euclid(...more: Arg[]): Pattern
+  _euclidLegato(...more: Arg[]): Pattern
+  _euclidLegatoRot(...more: Arg[]): Pattern
+  _euclidRot(...more: Arg[]): Pattern
+  _euclidish(...more: Arg[]): Pattern
+  _euclidrot(...more: Arg[]): Pattern
+  _every(...more: Arg[]): Pattern
+  _expand(...more: Arg[]): Pattern
+  _extend(...more: Arg[]): Pattern
+  _fast(...more: Arg[]): Pattern
+  _fastChunk(...more: Arg[]): Pattern
+  _fastGap(...more: Arg[]): Pattern
+  _fastchunk(...more: Arg[]): Pattern
+  _fastgap(...more: Arg[]): Pattern
+  _filter(...more: Arg[]): Pattern
+  _filterWhen(...more: Arg[]): Pattern
+  _firstOf(...more: Arg[]): Pattern
+  _focus(...more: Arg[]): Pattern
+  _focusSpan(...more: Arg[]): Pattern
+  _focusspan(...more: Arg[]): Pattern
+  _func(...more: Arg[]): Pattern
+  _grow(...more: Arg[]): Pattern
+  _gt(...more: Arg[]): Pattern
+  _gte(...more: Arg[]): Pattern
+  _hsl(...more: Arg[]): Pattern
+  _hsla(...more: Arg[]): Pattern
+  _hurry(...more: Arg[]): Pattern
+  _inhabit(...more: Arg[]): Pattern
+  _inhabitmod(...more: Arg[]): Pattern
+  _inside(...more: Arg[]): Pattern
+  _iter(...more: Arg[]): Pattern
+  _iterBack(...more: Arg[]): Pattern
+  _iterback(...more: Arg[]): Pattern
+  _jux(...more: Arg[]): Pattern
+  _juxBy(...more: Arg[]): Pattern
+  _juxby(...more: Arg[]): Pattern
+  _keep(...more: Arg[]): Pattern
+  _keepif(...more: Arg[]): Pattern
+  _lastOf(...more: Arg[]): Pattern
+  _late(...more: Arg[]): Pattern
+  _linger(...more: Arg[]): Pattern
+  _log2(...more: Arg[]): Pattern
+  _loopAt(...more: Arg[]): Pattern
+  _loopAtCps(...more: Arg[]): Pattern
+  _loopat(...more: Arg[]): Pattern
+  _loopatcps(...more: Arg[]): Pattern
+  _lt(...more: Arg[]): Pattern
+  _lte(...more: Arg[]): Pattern
+  _mod(...more: Arg[]): Pattern
+  _moveXY(...more: Arg[]): Pattern
+  _mul(...more: Arg[]): Pattern
+  _ne(...more: Arg[]): Pattern
+  _net(...more: Arg[]): Pattern
+  _never(...more: Arg[]): Pattern
+  _off(...more: Arg[]): Pattern
+  _often(...more: Arg[]): Pattern
+  _opIn(...more: Arg[]): Pattern
+  _opMix(...more: Arg[]): Pattern
+  _opOut(...more: Arg[]): Pattern
+  _opPoly(...more: Arg[]): Pattern
+  _opReset(...more: Arg[]): Pattern
+  _opRestart(...more: Arg[]): Pattern
+  _opSqueeze(...more: Arg[]): Pattern
+  _opSqueezeOut(...more: Arg[]): Pattern
+  _or(...more: Arg[]): Pattern
+  _outside(...more: Arg[]): Pattern
+  _pace(...more: Arg[]): Pattern
+  _pianoroll(...more: Arg[]): Pattern
+  _pick(...more: Arg[]): Pattern
+  _pickF(...more: Arg[]): Pattern
+  _pickOut(...more: Arg[]): Pattern
+  _pickReset(...more: Arg[]): Pattern
+  _pickRestart(...more: Arg[]): Pattern
+  _pickSqueeze(...more: Arg[]): Pattern
+  _pickmod(...more: Arg[]): Pattern
+  _pickmodF(...more: Arg[]): Pattern
+  _pickmodOut(...more: Arg[]): Pattern
+  _pickmodReset(...more: Arg[]): Pattern
+  _pickmodRestart(...more: Arg[]): Pattern
+  _pickmodSqueeze(...more: Arg[]): Pattern
+  _pitchwheel(...more: Arg[]): Pattern
+  _ply(...more: Arg[]): Pattern
+  _plyForEach(...more: Arg[]): Pattern
+  _plyWith(...more: Arg[]): Pattern
+  _plyforeach(...more: Arg[]): Pattern
+  _plywith(...more: Arg[]): Pattern
+  _pow(...more: Arg[]): Pattern
+  _pressBy(...more: Arg[]): Pattern
+  _punchcard(...more: Arg[]): Pattern
+  _range(...more: Arg[]): Pattern
+  _range2(...more: Arg[]): Pattern
+  _rangex(...more: Arg[]): Pattern
+  _rarely(...more: Arg[]): Pattern
+  _repeatCycles(...more: Arg[]): Pattern
+  _replicate(...more: Arg[]): Pattern
+  _rescale(...more: Arg[]): Pattern
+  _rib(...more: Arg[]): Pattern
+  _ribbon(...more: Arg[]): Pattern
+  _rootNotes(...more: Arg[]): Pattern
+  _scale(...more: Arg[]): Pattern
+  _scaleTrans(...more: Arg[]): Pattern
+  _scaleTranspose(...more: Arg[]): Pattern
+  _scope(...more: Arg[]): Pattern
+  _scramble(...more: Arg[]): Pattern
+  _scrub(...more: Arg[]): Pattern
+  _seed(...more: Arg[]): Pattern
+  _seg(...more: Arg[]): Pattern
+  _segment(...more: Arg[]): Pattern
+  _set(...more: Arg[]): Pattern
+  _shrink(...more: Arg[]): Pattern
+  _shuffle(...more: Arg[]): Pattern
+  _slice(...more: Arg[]): Pattern
+  _slow(...more: Arg[]): Pattern
+  _slowChunk(...more: Arg[]): Pattern
+  _slowchunk(...more: Arg[]): Pattern
+  _someCycles(...more: Arg[]): Pattern
+  _someCyclesBy(...more: Arg[]): Pattern
+  _sometimes(...more: Arg[]): Pattern
+  _sometimesBy(...more: Arg[]): Pattern
+  _sparsity(...more: Arg[]): Pattern
+  _speak(...more: Arg[]): Pattern
+  _spectrum(...more: Arg[]): Pattern
+  _spiral(...more: Arg[]): Pattern
+  _splice(...more: Arg[]): Pattern
+  _strans(...more: Arg[]): Pattern
+  _striate(...more: Arg[]): Pattern
+  _stut(...more: Arg[]): Pattern
+  _stutWith(...more: Arg[]): Pattern
+  _stutwith(...more: Arg[]): Pattern
+  _sub(...more: Arg[]): Pattern
+  _swing(...more: Arg[]): Pattern
+  _swingBy(...more: Arg[]): Pattern
+  _sysex(...more: Arg[]): Pattern
+  _take(...more: Arg[]): Pattern
+  _timeline(...more: Arg[]): Pattern
+  _trans(...more: Arg[]): Pattern
+  _transpose(...more: Arg[]): Pattern
+  _undegradeBy(...more: Arg[]): Pattern
+  _voicings(...more: Arg[]): Pattern
+  _when(...more: Arg[]): Pattern
+  _whenKey(...more: Arg[]): Pattern
+  _within(...more: Arg[]): Pattern
+  _zoom(...more: Arg[]): Pattern
+  _zoomArc(...more: Arg[]): Pattern
+  _zoomIn(...more: Arg[]): Pattern
+  _zoomarc(...more: Arg[]): Pattern
+  accelerate(amount?: any, ...more: Arg[]): Pattern
+  activeLabel(...more: Arg[]): Pattern
+  ad(...more: Arg[]): Pattern
+  add(...more: Arg[]): Pattern
+  adsr(time?: any, time_?: any, gain?: any, time__?: any, ...more: Arg[]): Pattern
+  almostAlways(...more: Arg[]): Pattern
+  almostNever(...more: Arg[]): Pattern
+  always(...more: Arg[]): Pattern
+  amp(amount?: any, ...more: Arg[]): Pattern
+  analyze(...more: Arg[]): Pattern
+  anchor(anchorNote?: any, ...more: Arg[]): Pattern
+  and(...more: Arg[]): Pattern
+  angle(...more: Arg[]): Pattern
+  animate(...more: Arg[]): Pattern
+  appBoth(pat_val?: any, ...more: Arg[]): Pattern
+  appLeft(pat_val?: any, ...more: Arg[]): Pattern
+  appRight(pat_val?: any, ...more: Arg[]): Pattern
+  appWhole(whole_func?: (pat: Pattern, ...args: any[]) => any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  apply(...more: Arg[]): Pattern
+  applyN(...more: Arg[]): Pattern
+  ar(...more: Arg[]): Pattern
+  arp(...more: Arg[]): Pattern
+  arpWith(...more: Arg[]): Pattern
+  as(mapping?: any, ...more: Arg[]): Pattern
+  asNumber(...more: Arg[]): Pattern
+  asym(distortion?: any, volume?: any, ...more: Arg[]): Pattern
+  att(attack?: any, ...more: Arg[]): Pattern
+  attack(attack?: any, ...more: Arg[]): Pattern
+  band(...more: Arg[]): Pattern
+  bandf(frequency?: any, ...more: Arg[]): Pattern
+  bandq(q?: any, ...more: Arg[]): Pattern
+  bank(bank?: any, ...more: Arg[]): Pattern
+  bbexpr(byteBeatExpression?: any, ...more: Arg[]): Pattern
+  bbst(byteBeatStartTime?: any, ...more: Arg[]): Pattern
+  beat(...more: Arg[]): Pattern
+  begin(amount?: any, ...more: Arg[]): Pattern
+  bgain(number?: any, ...more: Arg[]): Pattern
+  bind(...more: Arg[]): Pattern
+  bindWhole(...more: Arg[]): Pattern
+  binshift(...more: Arg[]): Pattern
+  bite(number?: any, slices?: any, ...more: Arg[]): Pattern
+  bjork(...more: Arg[]): Pattern
+  blshift(...more: Arg[]): Pattern
+  bmod(config?: any, id?: any, ...more: Arg[]): Pattern
+  bor(...more: Arg[]): Pattern
+  bp(frequency?: any, ...more: Arg[]): Pattern
+  bpa(attack?: any, ...more: Arg[]): Pattern
+  bpattack(attack?: any, ...more: Arg[]): Pattern
+  bpd(decay?: any, ...more: Arg[]): Pattern
+  bpdc(dcoffset?: any, ...more: Arg[]): Pattern
+  bpdecay(decay?: any, ...more: Arg[]): Pattern
+  bpdepth(depth?: any, ...more: Arg[]): Pattern
+  bpdepthfreq(depth?: any, ...more: Arg[]): Pattern
+  bpdepthfrequency(depth?: any, ...more: Arg[]): Pattern
+  bpe(modulation?: any, ...more: Arg[]): Pattern
+  bpenv(modulation?: any, ...more: Arg[]): Pattern
+  bpf(frequency?: any, ...more: Arg[]): Pattern
+  bpq(q?: any, ...more: Arg[]): Pattern
+  bpr(release?: any, ...more: Arg[]): Pattern
+  bprate(rate?: any, ...more: Arg[]): Pattern
+  bprelease(release?: any, ...more: Arg[]): Pattern
+  bps(sustain?: any, ...more: Arg[]): Pattern
+  bpshape(shape?: any, ...more: Arg[]): Pattern
+  bpskew(skew?: any, ...more: Arg[]): Pattern
+  bpsustain(sustain?: any, ...more: Arg[]): Pattern
+  bpsync(rate?: any, ...more: Arg[]): Pattern
+  brak(...more: Arg[]): Pattern
+  brshift(...more: Arg[]): Pattern
+  bus(number?: any, ...more: Arg[]): Pattern
+  busgain(number?: any, ...more: Arg[]): Pattern
+  bxor(...more: Arg[]): Pattern
+  bypass(...more: Arg[]): Pattern
+  byteBeatExpression(byteBeatExpression?: any, ...more: Arg[]): Pattern
+  byteBeatStartTime(byteBeatStartTime?: any, ...more: Arg[]): Pattern
+  cat(...more: Arg[]): Pattern
+  ccn(MIDI?: any, ...more: Arg[]): Pattern
+  ccv(MIDI?: any, ...more: Arg[]): Pattern
+  ceil(...more: Arg[]): Pattern
+  ch(channels?: any, ...more: Arg[]): Pattern
+  channel(channel?: any, ...more: Arg[]): Pattern
+  channels(channels?: any, ...more: Arg[]): Pattern
+  chebyshev(distortion?: any, volume?: any, ...more: Arg[]): Pattern
+  choose(xs?: any, ...more: Arg[]): Pattern
+  choose2(xs?: any, ...more: Arg[]): Pattern
+  chop(...more: Arg[]): Pattern
+  chord(symbols?: any, ...more: Arg[]): Pattern
+  chorus(chorus?: any, ...more: Arg[]): Pattern
+  chunk(...more: Arg[]): Pattern
+  chunkBack(...more: Arg[]): Pattern
+  chunkBackInto(...more: Arg[]): Pattern
+  chunkInto(...more: Arg[]): Pattern
+  chunkback(...more: Arg[]): Pattern
+  chunkbackinto(...more: Arg[]): Pattern
+  chunkinto(...more: Arg[]): Pattern
+  clip(factor?: any, ...more: Arg[]): Pattern
+  coarse(factor?: any, ...more: Arg[]): Pattern
+  collect(...more: Arg[]): Pattern
+  color(color?: any, ...more: Arg[]): Pattern
+  comb(...more: Arg[]): Pattern
+  compress(...more: Arg[]): Pattern
+  compressSpan(...more: Arg[]): Pattern
+  compressor(...more: Arg[]): Pattern
+  compressorAttack(...more: Arg[]): Pattern
+  compressorKnee(...more: Arg[]): Pattern
+  compressorRatio(...more: Arg[]): Pattern
+  compressorRelease(...more: Arg[]): Pattern
+  compressspan(...more: Arg[]): Pattern
+  contract(...more: Arg[]): Pattern
+  control(MIDI?: any, MIDI_?: any, ...more: Arg[]): Pattern
+  cpm(...more: Arg[]): Pattern
+  cps(...more: Arg[]): Pattern
+  crush(depth?: any, ...more: Arg[]): Pattern
+  ctf(frequency?: any, ...more: Arg[]): Pattern
+  ctlNum(...more: Arg[]): Pattern
+  ctranspose(...more: Arg[]): Pattern
+  cubic(distortion?: any, volume?: any, ...more: Arg[]): Pattern
+  curve(...more: Arg[]): Pattern
+  cut(group?: any, ...more: Arg[]): Pattern
+  cutoff(frequency?: any, ...more: Arg[]): Pattern
+  dec(time?: any, ...more: Arg[]): Pattern
+  decay(time?: any, ...more: Arg[]): Pattern
+  defragmentHaps(...more: Arg[]): Pattern
+  degrade(...more: Arg[]): Pattern
+  degradeBy(amount?: any, ...more: Arg[]): Pattern
+  degradeByWith(...more: Arg[]): Pattern
+  degree(...more: Arg[]): Pattern
+  delay(level?: any, ...more: Arg[]): Pattern
+  delayfb(feedback?: any, ...more: Arg[]): Pattern
+  delayfeedback(feedback?: any, ...more: Arg[]): Pattern
+  delayspeed(delayspeed?: any, ...more: Arg[]): Pattern
+  delaysync(cycles?: any, ...more: Arg[]): Pattern
+  delayt(delayspeed?: any, ...more: Arg[]): Pattern
+  delaytime(...more: Arg[]): Pattern
+  deltaSlide(...more: Arg[]): Pattern
+  density(density?: any, ...more: Arg[]): Pattern
+  det(amount?: any, ...more: Arg[]): Pattern
+  detune(amount?: any, ...more: Arg[]): Pattern
+  dfb(feedback?: any, ...more: Arg[]): Pattern
+  dict(...more: Arg[]): Pattern
+  dictionary(dictionaryName?: any, ...more: Arg[]): Pattern
+  diode(distortion?: any, volume?: any, ...more: Arg[]): Pattern
+  discreteOnly(...more: Arg[]): Pattern
+  dist(distortion?: any, volume?: any, type?: any, ...more: Arg[]): Pattern
+  distort(distortion?: any, volume?: any, type?: any, ...more: Arg[]): Pattern
+  distorttype(type?: any, ...more: Arg[]): Pattern
+  distortvol(volume?: any, ...more: Arg[]): Pattern
+  disttype(type?: any, ...more: Arg[]): Pattern
+  distvol(volume?: any, ...more: Arg[]): Pattern
+  div(...more: Arg[]): Pattern
+  djf(cutoff?: any, ...more: Arg[]): Pattern
+  dough(...more: Arg[]): Pattern
+  draw(...more: Arg[]): Pattern
+  drawLine(pattern?: any, chars?: any, ...more: Arg[]): Pattern
+  drive(amount?: any, ...more: Arg[]): Pattern
+  drop(...more: Arg[]): Pattern
+  dry(dry?: any, ...more: Arg[]): Pattern
+  ds(...more: Arg[]): Pattern
+  dt(delayspeed?: any, ...more: Arg[]): Pattern
+  duck(orbit?: any, ...more: Arg[]): Pattern
+  duckatt(time?: any, ...more: Arg[]): Pattern
+  duckattack(time?: any, ...more: Arg[]): Pattern
+  duckdepth(depth?: any, ...more: Arg[]): Pattern
+  duckons(time?: any, ...more: Arg[]): Pattern
+  duckonset(time?: any, ...more: Arg[]): Pattern
+  duckorbit(orbit?: any, ...more: Arg[]): Pattern
+  dur(seconds?: any, ...more: Arg[]): Pattern
+  duration(seconds?: any, ...more: Arg[]): Pattern
+  early(cycles?: any, ...more: Arg[]): Pattern
+  echo(times?: any, time?: any, feedback?: any, ...more: Arg[]): Pattern
+  echoWith(times?: any, time?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  echowith(times?: any, time?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  eish(pulses?: any, steps?: any, groove?: any, ...more: Arg[]): Pattern
+  end(length?: any, ...more: Arg[]): Pattern
+  enhance(...more: Arg[]): Pattern
+  env(config?: any, id?: any, ...more: Arg[]): Pattern
+  eq(...more: Arg[]): Pattern
+  eqt(...more: Arg[]): Pattern
+  euclid(pulses?: any, steps?: any, ...more: Arg[]): Pattern
+  euclidLegato(pulses?: any, steps?: any, rotation?: any, pat?: any, ...more: Arg[]): Pattern
+  euclidLegatoRot(pulses?: any, steps?: any, rotation?: any, ...more: Arg[]): Pattern
+  euclidRot(pulses?: any, steps?: any, rotation?: any, ...more: Arg[]): Pattern
+  euclidish(pulses?: any, steps?: any, groove?: any, ...more: Arg[]): Pattern
+  euclidrot(...more: Arg[]): Pattern
+  every(n?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  expand(...more: Arg[]): Pattern
+  expression(...more: Arg[]): Pattern
+  extend(...more: Arg[]): Pattern
+  fadeInTime(...more: Arg[]): Pattern
+  fadeOutTime(...more: Arg[]): Pattern
+  fadeTime(...more: Arg[]): Pattern
+  fanchor(center?: any, ...more: Arg[]): Pattern
+  fast(factor?: any, ...more: Arg[]): Pattern
+  fastChunk(...more: Arg[]): Pattern
+  fastGap(...more: Arg[]): Pattern
+  fastcat(...more: Arg[]): Pattern
+  fastchunk(...more: Arg[]): Pattern
+  fastgap(...more: Arg[]): Pattern
+  fft(...more: Arg[]): Pattern
+  fill(...more: Arg[]): Pattern
+  filter(test?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  filterHaps(hap_test?: (value: any, ...args: any[]) => any, ...more: any[]): Pattern
+  filterValues(value_test?: (value: any, ...args: any[]) => any, ...more: any[]): Pattern
+  filterWhen(test?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  firstCycle(with_context?: any, ...more: Arg[]): Pattern
+  firstOf(n?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  fit(...more: Arg[]): Pattern
+  floor(...more: Arg[]): Pattern
+  fm(brightness?: any, ...more: Arg[]): Pattern
+  fm00(...more: Arg[]): Pattern
+  fm01(...more: Arg[]): Pattern
+  fm02(...more: Arg[]): Pattern
+  fm03(...more: Arg[]): Pattern
+  fm04(...more: Arg[]): Pattern
+  fm05(...more: Arg[]): Pattern
+  fm06(...more: Arg[]): Pattern
+  fm07(...more: Arg[]): Pattern
+  fm08(...more: Arg[]): Pattern
+  fm1(...more: Arg[]): Pattern
+  fm10(...more: Arg[]): Pattern
+  fm11(...more: Arg[]): Pattern
+  fm12(...more: Arg[]): Pattern
+  fm13(...more: Arg[]): Pattern
+  fm14(...more: Arg[]): Pattern
+  fm15(...more: Arg[]): Pattern
+  fm16(...more: Arg[]): Pattern
+  fm17(...more: Arg[]): Pattern
+  fm18(...more: Arg[]): Pattern
+  fm2(...more: Arg[]): Pattern
+  fm20(...more: Arg[]): Pattern
+  fm21(...more: Arg[]): Pattern
+  fm22(...more: Arg[]): Pattern
+  fm23(...more: Arg[]): Pattern
+  fm24(...more: Arg[]): Pattern
+  fm25(...more: Arg[]): Pattern
+  fm26(...more: Arg[]): Pattern
+  fm27(...more: Arg[]): Pattern
+  fm28(...more: Arg[]): Pattern
+  fm3(...more: Arg[]): Pattern
+  fm30(...more: Arg[]): Pattern
+  fm31(...more: Arg[]): Pattern
+  fm32(...more: Arg[]): Pattern
+  fm33(...more: Arg[]): Pattern
+  fm34(...more: Arg[]): Pattern
+  fm35(...more: Arg[]): Pattern
+  fm36(...more: Arg[]): Pattern
+  fm37(...more: Arg[]): Pattern
+  fm38(...more: Arg[]): Pattern
+  fm4(...more: Arg[]): Pattern
+  fm40(...more: Arg[]): Pattern
+  fm41(...more: Arg[]): Pattern
+  fm42(...more: Arg[]): Pattern
+  fm43(...more: Arg[]): Pattern
+  fm44(...more: Arg[]): Pattern
+  fm45(...more: Arg[]): Pattern
+  fm46(...more: Arg[]): Pattern
+  fm47(...more: Arg[]): Pattern
+  fm48(...more: Arg[]): Pattern
+  fm5(...more: Arg[]): Pattern
+  fm50(...more: Arg[]): Pattern
+  fm51(...more: Arg[]): Pattern
+  fm52(...more: Arg[]): Pattern
+  fm53(...more: Arg[]): Pattern
+  fm54(...more: Arg[]): Pattern
+  fm55(...more: Arg[]): Pattern
+  fm56(...more: Arg[]): Pattern
+  fm57(...more: Arg[]): Pattern
+  fm58(...more: Arg[]): Pattern
+  fm6(...more: Arg[]): Pattern
+  fm60(...more: Arg[]): Pattern
+  fm61(...more: Arg[]): Pattern
+  fm62(...more: Arg[]): Pattern
+  fm63(...more: Arg[]): Pattern
+  fm64(...more: Arg[]): Pattern
+  fm65(...more: Arg[]): Pattern
+  fm66(...more: Arg[]): Pattern
+  fm67(...more: Arg[]): Pattern
+  fm68(...more: Arg[]): Pattern
+  fm7(...more: Arg[]): Pattern
+  fm70(...more: Arg[]): Pattern
+  fm71(...more: Arg[]): Pattern
+  fm72(...more: Arg[]): Pattern
+  fm73(...more: Arg[]): Pattern
+  fm74(...more: Arg[]): Pattern
+  fm75(...more: Arg[]): Pattern
+  fm76(...more: Arg[]): Pattern
+  fm77(...more: Arg[]): Pattern
+  fm78(...more: Arg[]): Pattern
+  fm8(...more: Arg[]): Pattern
+  fm80(...more: Arg[]): Pattern
+  fm81(...more: Arg[]): Pattern
+  fm82(...more: Arg[]): Pattern
+  fm83(...more: Arg[]): Pattern
+  fm84(...more: Arg[]): Pattern
+  fm85(...more: Arg[]): Pattern
+  fm86(...more: Arg[]): Pattern
+  fm87(...more: Arg[]): Pattern
+  fm88(...more: Arg[]): Pattern
+  fmap(func?: (value: any, ...args: any[]) => any, ...more: any[]): Pattern
+  fmatt(time?: any, ...more: Arg[]): Pattern
+  fmatt1(...more: Arg[]): Pattern
+  fmatt2(...more: Arg[]): Pattern
+  fmatt3(...more: Arg[]): Pattern
+  fmatt4(...more: Arg[]): Pattern
+  fmatt5(...more: Arg[]): Pattern
+  fmatt6(...more: Arg[]): Pattern
+  fmatt7(...more: Arg[]): Pattern
+  fmatt8(...more: Arg[]): Pattern
+  fmattack(time?: any, ...more: Arg[]): Pattern
+  fmattack1(...more: Arg[]): Pattern
+  fmattack2(...more: Arg[]): Pattern
+  fmattack3(...more: Arg[]): Pattern
+  fmattack4(...more: Arg[]): Pattern
+  fmattack5(...more: Arg[]): Pattern
+  fmattack6(...more: Arg[]): Pattern
+  fmattack7(...more: Arg[]): Pattern
+  fmattack8(...more: Arg[]): Pattern
+  fmdec(time?: any, ...more: Arg[]): Pattern
+  fmdec1(...more: Arg[]): Pattern
+  fmdec2(...more: Arg[]): Pattern
+  fmdec3(...more: Arg[]): Pattern
+  fmdec4(...more: Arg[]): Pattern
+  fmdec5(...more: Arg[]): Pattern
+  fmdec6(...more: Arg[]): Pattern
+  fmdec7(...more: Arg[]): Pattern
+  fmdec8(...more: Arg[]): Pattern
+  fmdecay(time?: any, ...more: Arg[]): Pattern
+  fmdecay1(...more: Arg[]): Pattern
+  fmdecay2(...more: Arg[]): Pattern
+  fmdecay3(...more: Arg[]): Pattern
+  fmdecay4(...more: Arg[]): Pattern
+  fmdecay5(...more: Arg[]): Pattern
+  fmdecay6(...more: Arg[]): Pattern
+  fmdecay7(...more: Arg[]): Pattern
+  fmdecay8(...more: Arg[]): Pattern
+  fmenv(type?: any, ...more: Arg[]): Pattern
+  fmenv1(...more: Arg[]): Pattern
+  fmenv2(...more: Arg[]): Pattern
+  fmenv3(...more: Arg[]): Pattern
+  fmenv4(...more: Arg[]): Pattern
+  fmenv5(...more: Arg[]): Pattern
+  fmenv6(...more: Arg[]): Pattern
+  fmenv7(...more: Arg[]): Pattern
+  fmenv8(...more: Arg[]): Pattern
+  fmh(harmonicity?: any, ...more: Arg[]): Pattern
+  fmh1(...more: Arg[]): Pattern
+  fmh2(...more: Arg[]): Pattern
+  fmh3(...more: Arg[]): Pattern
+  fmh4(...more: Arg[]): Pattern
+  fmh5(...more: Arg[]): Pattern
+  fmh6(...more: Arg[]): Pattern
+  fmh7(...more: Arg[]): Pattern
+  fmh8(...more: Arg[]): Pattern
+  fmi(brightness?: any, ...more: Arg[]): Pattern
+  fmi00(...more: Arg[]): Pattern
+  fmi01(...more: Arg[]): Pattern
+  fmi02(...more: Arg[]): Pattern
+  fmi03(...more: Arg[]): Pattern
+  fmi04(...more: Arg[]): Pattern
+  fmi05(...more: Arg[]): Pattern
+  fmi06(...more: Arg[]): Pattern
+  fmi07(...more: Arg[]): Pattern
+  fmi08(...more: Arg[]): Pattern
+  fmi1(...more: Arg[]): Pattern
+  fmi10(...more: Arg[]): Pattern
+  fmi11(...more: Arg[]): Pattern
+  fmi12(...more: Arg[]): Pattern
+  fmi13(...more: Arg[]): Pattern
+  fmi14(...more: Arg[]): Pattern
+  fmi15(...more: Arg[]): Pattern
+  fmi16(...more: Arg[]): Pattern
+  fmi17(...more: Arg[]): Pattern
+  fmi18(...more: Arg[]): Pattern
+  fmi2(...more: Arg[]): Pattern
+  fmi20(...more: Arg[]): Pattern
+  fmi21(...more: Arg[]): Pattern
+  fmi22(...more: Arg[]): Pattern
+  fmi23(...more: Arg[]): Pattern
+  fmi24(...more: Arg[]): Pattern
+  fmi25(...more: Arg[]): Pattern
+  fmi26(...more: Arg[]): Pattern
+  fmi27(...more: Arg[]): Pattern
+  fmi28(...more: Arg[]): Pattern
+  fmi3(...more: Arg[]): Pattern
+  fmi30(...more: Arg[]): Pattern
+  fmi31(...more: Arg[]): Pattern
+  fmi32(...more: Arg[]): Pattern
+  fmi33(...more: Arg[]): Pattern
+  fmi34(...more: Arg[]): Pattern
+  fmi35(...more: Arg[]): Pattern
+  fmi36(...more: Arg[]): Pattern
+  fmi37(...more: Arg[]): Pattern
+  fmi38(...more: Arg[]): Pattern
+  fmi4(...more: Arg[]): Pattern
+  fmi40(...more: Arg[]): Pattern
+  fmi41(...more: Arg[]): Pattern
+  fmi42(...more: Arg[]): Pattern
+  fmi43(...more: Arg[]): Pattern
+  fmi44(...more: Arg[]): Pattern
+  fmi45(...more: Arg[]): Pattern
+  fmi46(...more: Arg[]): Pattern
+  fmi47(...more: Arg[]): Pattern
+  fmi48(...more: Arg[]): Pattern
+  fmi5(...more: Arg[]): Pattern
+  fmi50(...more: Arg[]): Pattern
+  fmi51(...more: Arg[]): Pattern
+  fmi52(...more: Arg[]): Pattern
+  fmi53(...more: Arg[]): Pattern
+  fmi54(...more: Arg[]): Pattern
+  fmi55(...more: Arg[]): Pattern
+  fmi56(...more: Arg[]): Pattern
+  fmi57(...more: Arg[]): Pattern
+  fmi58(...more: Arg[]): Pattern
+  fmi6(...more: Arg[]): Pattern
+  fmi60(...more: Arg[]): Pattern
+  fmi61(...more: Arg[]): Pattern
+  fmi62(...more: Arg[]): Pattern
+  fmi63(...more: Arg[]): Pattern
+  fmi64(...more: Arg[]): Pattern
+  fmi65(...more: Arg[]): Pattern
+  fmi66(...more: Arg[]): Pattern
+  fmi67(...more: Arg[]): Pattern
+  fmi68(...more: Arg[]): Pattern
+  fmi7(...more: Arg[]): Pattern
+  fmi70(...more: Arg[]): Pattern
+  fmi71(...more: Arg[]): Pattern
+  fmi72(...more: Arg[]): Pattern
+  fmi73(...more: Arg[]): Pattern
+  fmi74(...more: Arg[]): Pattern
+  fmi75(...more: Arg[]): Pattern
+  fmi76(...more: Arg[]): Pattern
+  fmi77(...more: Arg[]): Pattern
+  fmi78(...more: Arg[]): Pattern
+  fmi8(...more: Arg[]): Pattern
+  fmi80(...more: Arg[]): Pattern
+  fmi81(...more: Arg[]): Pattern
+  fmi82(...more: Arg[]): Pattern
+  fmi83(...more: Arg[]): Pattern
+  fmi84(...more: Arg[]): Pattern
+  fmi85(...more: Arg[]): Pattern
+  fmi86(...more: Arg[]): Pattern
+  fmi87(...more: Arg[]): Pattern
+  fmi88(...more: Arg[]): Pattern
+  fmrel(time?: any, ...more: Arg[]): Pattern
+  fmrel1(...more: Arg[]): Pattern
+  fmrel2(...more: Arg[]): Pattern
+  fmrel3(...more: Arg[]): Pattern
+  fmrel4(...more: Arg[]): Pattern
+  fmrel5(...more: Arg[]): Pattern
+  fmrel6(...more: Arg[]): Pattern
+  fmrel7(...more: Arg[]): Pattern
+  fmrel8(...more: Arg[]): Pattern
+  fmrelease(time?: any, ...more: Arg[]): Pattern
+  fmrelease1(...more: Arg[]): Pattern
+  fmrelease2(...more: Arg[]): Pattern
+  fmrelease3(...more: Arg[]): Pattern
+  fmrelease4(...more: Arg[]): Pattern
+  fmrelease5(...more: Arg[]): Pattern
+  fmrelease6(...more: Arg[]): Pattern
+  fmrelease7(...more: Arg[]): Pattern
+  fmrelease8(...more: Arg[]): Pattern
+  fmsus(level?: any, ...more: Arg[]): Pattern
+  fmsus1(...more: Arg[]): Pattern
+  fmsus2(...more: Arg[]): Pattern
+  fmsus3(...more: Arg[]): Pattern
+  fmsus4(...more: Arg[]): Pattern
+  fmsus5(...more: Arg[]): Pattern
+  fmsus6(...more: Arg[]): Pattern
+  fmsus7(...more: Arg[]): Pattern
+  fmsus8(...more: Arg[]): Pattern
+  fmsustain(level?: any, ...more: Arg[]): Pattern
+  fmsustain1(...more: Arg[]): Pattern
+  fmsustain2(...more: Arg[]): Pattern
+  fmsustain3(...more: Arg[]): Pattern
+  fmsustain4(...more: Arg[]): Pattern
+  fmsustain5(...more: Arg[]): Pattern
+  fmsustain6(...more: Arg[]): Pattern
+  fmsustain7(...more: Arg[]): Pattern
+  fmsustain8(...more: Arg[]): Pattern
+  fmwave(wave?: any, ...more: Arg[]): Pattern
+  fmwave1(...more: Arg[]): Pattern
+  fmwave2(...more: Arg[]): Pattern
+  fmwave3(...more: Arg[]): Pattern
+  fmwave4(...more: Arg[]): Pattern
+  fmwave5(...more: Arg[]): Pattern
+  fmwave6(...more: Arg[]): Pattern
+  fmwave7(...more: Arg[]): Pattern
+  fmwave8(...more: Arg[]): Pattern
+  focus(...more: Arg[]): Pattern
+  focusSpan(...more: Arg[]): Pattern
+  focusspan(...more: Arg[]): Pattern
+  fold(distortion?: any, volume?: any, ...more: Arg[]): Pattern
+  frameRate(...more: Arg[]): Pattern
+  frames(...more: Arg[]): Pattern
+  freeze(...more: Arg[]): Pattern
+  freq(frequency?: any, ...more: Arg[]): Pattern
+  fromBipolar(...more: Arg[]): Pattern
+  fscope(color?: any, scale?: any, pos?: any, lean?: any, min?: any, max?: any, ...more: Arg[]): Pattern
+  fshift(...more: Arg[]): Pattern
+  fshiftnote(...more: Arg[]): Pattern
+  fshiftphase(...more: Arg[]): Pattern
+  ftype(type?: any, ...more: Arg[]): Pattern
+  func(...more: Arg[]): Pattern
+  fxr(...more: Arg[]): Pattern
+  gain(amount?: any, ...more: Arg[]): Pattern
+  gat(...more: Arg[]): Pattern
+  gate(...more: Arg[]): Pattern
+  getPainters(...more: Arg[]): Pattern
+  grow(...more: Arg[]): Pattern
+  gt(...more: Arg[]): Pattern
+  gte(...more: Arg[]): Pattern
+  h(...more: Arg[]): Pattern
+  hard(distortion?: any, volume?: any, ...more: Arg[]): Pattern
+  harmonic(...more: Arg[]): Pattern
+  hbrick(...more: Arg[]): Pattern
+  hcutoff(frequency?: any, ...more: Arg[]): Pattern
+  hold(...more: Arg[]): Pattern
+  hours(...more: Arg[]): Pattern
+  hp(frequency?: any, ...more: Arg[]): Pattern
+  hpa(attack?: any, ...more: Arg[]): Pattern
+  hpattack(attack?: any, ...more: Arg[]): Pattern
+  hpd(decay?: any, ...more: Arg[]): Pattern
+  hpdc(dcoffset?: any, ...more: Arg[]): Pattern
+  hpdecay(decay?: any, ...more: Arg[]): Pattern
+  hpdepth(depth?: any, ...more: Arg[]): Pattern
+  hpdepthfreq(depth?: any, ...more: Arg[]): Pattern
+  hpdepthfrequency(depth?: any, ...more: Arg[]): Pattern
+  hpe(modulation?: any, ...more: Arg[]): Pattern
+  hpenv(modulation?: any, ...more: Arg[]): Pattern
+  hpf(frequency?: any, ...more: Arg[]): Pattern
+  hpq(q?: any, ...more: Arg[]): Pattern
+  hpr(release?: any, ...more: Arg[]): Pattern
+  hprate(rate?: any, ...more: Arg[]): Pattern
+  hprelease(release?: any, ...more: Arg[]): Pattern
+  hps(sustain?: any, ...more: Arg[]): Pattern
+  hpshape(shape?: any, ...more: Arg[]): Pattern
+  hpskew(skew?: any, ...more: Arg[]): Pattern
+  hpsustain(sustain?: any, ...more: Arg[]): Pattern
+  hpsync(rate?: any, ...more: Arg[]): Pattern
+  hresonance(q?: any, ...more: Arg[]): Pattern
+  hsl(...more: Arg[]): Pattern
+  hsla(...more: Arg[]): Pattern
+  hurry(...more: Arg[]): Pattern
+  hush(...more: Arg[]): Pattern
+  imag(...more: Arg[]): Pattern
+  inhabit(pat?: any, xs?: any, ...more: Arg[]): Pattern
+  inhabitmod(pat?: any, xs?: any, ...more: Arg[]): Pattern
+  innerBind(...more: Arg[]): Pattern
+  innerJoin(...more: Arg[]): Pattern
+  inside(...more: Arg[]): Pattern
+  into(...more: Arg[]): Pattern
+  inv(...more: Arg[]): Pattern
+  invert(...more: Arg[]): Pattern
+  ir(sample?: any, ...more: Arg[]): Pattern
+  irbegin(begin?: any, ...more: Arg[]): Pattern
+  iresponse(sample?: any, ...more: Arg[]): Pattern
+  irspeed(speed?: any, ...more: Arg[]): Pattern
+  iter(...more: Arg[]): Pattern
+  iterBack(...more: Arg[]): Pattern
+  iterback(...more: Arg[]): Pattern
+  join(...more: Arg[]): Pattern
+  jux(...more: Arg[]): Pattern
+  juxBy(...more: Arg[]): Pattern
+  juxby(...more: Arg[]): Pattern
+  kcutoff(...more: Arg[]): Pattern
+  keep(...more: Arg[]): Pattern
+  keepif(...more: Arg[]): Pattern
+  keyDown(...more: Arg[]): Pattern
+  krush(...more: Arg[]): Pattern
+  label(label?: any, ...more: Arg[]): Pattern
+  lastOf(n?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  late(cycles?: any, ...more: Arg[]): Pattern
+  layer(...more: Arg[]): Pattern
+  lbrick(...more: Arg[]): Pattern
+  legato(factor?: any, ...more: Arg[]): Pattern
+  leslie(wet?: any, ...more: Arg[]): Pattern
+  lfo(config?: any, id?: any, ...more: Arg[]): Pattern
+  linger(fraction?: any, ...more: Arg[]): Pattern
+  lock(enable?: any, ...more: Arg[]): Pattern
+  log(...more: Arg[]): Pattern
+  log2(...more: Arg[]): Pattern
+  logValues(...more: Arg[]): Pattern
+  loop(on?: any, ...more: Arg[]): Pattern
+  loopAt(...more: Arg[]): Pattern
+  loopAtCps(...more: Arg[]): Pattern
+  loopBegin(time?: any, ...more: Arg[]): Pattern
+  loopEnd(time?: any, ...more: Arg[]): Pattern
+  loopat(...more: Arg[]): Pattern
+  loopatcps(...more: Arg[]): Pattern
+  loopb(time?: any, ...more: Arg[]): Pattern
+  loope(time?: any, ...more: Arg[]): Pattern
+  lp(frequency?: any, ...more: Arg[]): Pattern
+  lpa(attack?: any, ...more: Arg[]): Pattern
+  lpattack(attack?: any, ...more: Arg[]): Pattern
+  lpd(decay?: any, ...more: Arg[]): Pattern
+  lpdc(dcoffset?: any, ...more: Arg[]): Pattern
+  lpdecay(decay?: any, ...more: Arg[]): Pattern
+  lpdepth(depth?: any, ...more: Arg[]): Pattern
+  lpdepthfreq(depth?: any, ...more: Arg[]): Pattern
+  lpdepthfrequency(depth?: any, ...more: Arg[]): Pattern
+  lpe(modulation?: any, ...more: Arg[]): Pattern
+  lpenv(modulation?: any, ...more: Arg[]): Pattern
+  lpf(frequency?: any, ...more: Arg[]): Pattern
+  lpq(q?: any, ...more: Arg[]): Pattern
+  lpr(release?: any, ...more: Arg[]): Pattern
+  lprate(rate?: any, ...more: Arg[]): Pattern
+  lprelease(release?: any, ...more: Arg[]): Pattern
+  lps(sustain?: any, ...more: Arg[]): Pattern
+  lpshape(shape?: any, ...more: Arg[]): Pattern
+  lpskew(skew?: any, ...more: Arg[]): Pattern
+  lpsustain(sustain?: any, ...more: Arg[]): Pattern
+  lpsync(rate?: any, ...more: Arg[]): Pattern
+  lrate(rate?: any, ...more: Arg[]): Pattern
+  lsize(meters?: any, ...more: Arg[]): Pattern
+  lt(...more: Arg[]): Pattern
+  lte(...more: Arg[]): Pattern
+  markcss(...more: Arg[]): Pattern
+  mask(...more: Arg[]): Pattern
+  maskAll(...more: Arg[]): Pattern
+  midi(midiport?: any, options?: any, ...more: Arg[]): Pattern
+  midibend(midibend?: any, ...more: Arg[]): Pattern
+  midichan(channel?: any, ...more: Arg[]): Pattern
+  midicmd(command?: any, ...more: Arg[]): Pattern
+  midimap(...more: Arg[]): Pattern
+  midiport(port?: any, ...more: Arg[]): Pattern
+  miditouch(miditouch?: any, ...more: Arg[]): Pattern
+  minutes(...more: Arg[]): Pattern
+  mix(...more: Arg[]): Pattern
+  mod(...more: Arg[]): Pattern
+  mode(modeName?: any, ...more: Arg[]): Pattern
+  modulate(...more: Arg[]): Pattern
+  moveXY(...more: Arg[]): Pattern
+  mtranspose(...more: Arg[]): Pattern
+  mul(...more: Arg[]): Pattern
+  n(value?: any, ...more: Arg[]): Pattern
+  ne(...more: Arg[]): Pattern
+  net(...more: Arg[]): Pattern
+  never(...more: Arg[]): Pattern
+  noise(wet?: any, ...more: Arg[]): Pattern
+  note(...more: Arg[]): Pattern
+  nrpnn(nrpnn?: any, ...more: Arg[]): Pattern
+  nrpv(nrpv?: any, ...more: Arg[]): Pattern
+  nudge(...more: Arg[]): Pattern
+  o(number?: any, ...more: Arg[]): Pattern
+  oct(octave?: any, ...more: Arg[]): Pattern
+  octave(octave?: any, ...more: Arg[]): Pattern
+  octaveR(...more: Arg[]): Pattern
+  octaves(count?: any, ...more: Arg[]): Pattern
+  octer(...more: Arg[]): Pattern
+  octersub(...more: Arg[]): Pattern
+  octersubsub(...more: Arg[]): Pattern
+  off(time?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  offset(shift?: any, ...more: Arg[]): Pattern
+  often(...more: Arg[]): Pattern
+  onPaint(...more: Arg[]): Pattern
+  onTrigger(...more: Arg[]): Pattern
+  onTriggerTime(...more: Arg[]): Pattern
+  onsetsOnly(...more: Arg[]): Pattern
+  or(...more: Arg[]): Pattern
+  orbit(number?: any, ...more: Arg[]): Pattern
+  oschost(oschost?: any, ...more: Arg[]): Pattern
+  oscport(oscport?: any, ...more: Arg[]): Pattern
+  out(...more: Arg[]): Pattern
+  outerBind(...more: Arg[]): Pattern
+  outerJoin(...more: Arg[]): Pattern
+  outside(...more: Arg[]): Pattern
+  overgain(...more: Arg[]): Pattern
+  overshape(...more: Arg[]): Pattern
+  pace(...more: Arg[]): Pattern
+  palindrome(...more: Arg[]): Pattern
+  pan(pan?: any, ...more: Arg[]): Pattern
+  panchor(anchor?: any, ...more: Arg[]): Pattern
+  panorient(...more: Arg[]): Pattern
+  panspan(...more: Arg[]): Pattern
+  pansplay(...more: Arg[]): Pattern
+  panwidth(...more: Arg[]): Pattern
+  partials(magnitudes?: any, ...more: Arg[]): Pattern
+  patt(time?: any, ...more: Arg[]): Pattern
+  pattack(time?: any, ...more: Arg[]): Pattern
+  pcurve(type?: any, ...more: Arg[]): Pattern
+  pdec(time?: any, ...more: Arg[]): Pattern
+  pdecay(time?: any, ...more: Arg[]): Pattern
+  penv(semitones?: any, ...more: Arg[]): Pattern
+  ph(speed?: any, ...more: Arg[]): Pattern
+  phasdp(depth?: any, ...more: Arg[]): Pattern
+  phaser(speed?: any, ...more: Arg[]): Pattern
+  phasercenter(centerfrequency?: any, ...more: Arg[]): Pattern
+  phaserdepth(depth?: any, ...more: Arg[]): Pattern
+  phaserrate(...more: Arg[]): Pattern
+  phasersweep(phasersweep?: any, ...more: Arg[]): Pattern
+  phases(phases?: any, ...more: Arg[]): Pattern
+  phc(centerfrequency?: any, ...more: Arg[]): Pattern
+  phd(depth?: any, ...more: Arg[]): Pattern
+  phs(phasersweep?: any, ...more: Arg[]): Pattern
+  piano(...more: Arg[]): Pattern
+  pianoroll(options?: any, cycles?: any, playhead?: any, vertical?: any, labels?: any, flipTime?: any, flipValues?: any, overscan?: any, hideNegative?: any, smear?: any, fold?: any, active?: any, inactive?: any, background?: any, playheadColor?: any, fill?: any, fillActive?: any, stroke?: any, strokeActive?: any, hideInactive?: any, colorizeInactive?: any, fontFamily?: any, minMidi?: any, maxMidi?: any, autorange?: any, ...more: Arg[]): Pattern
+  pick(pat?: any, xs?: any, ...more: Arg[]): Pattern
+  pickF(pat?: any, lookup?: any, funcs?: any, ...more: Arg[]): Pattern
+  pickOut(pat?: any, xs?: any, ...more: Arg[]): Pattern
+  pickReset(pat?: any, xs?: any, ...more: Arg[]): Pattern
+  pickRestart(pat?: any, xs?: any, ...more: Arg[]): Pattern
+  pickSqueeze(pat?: any, xs?: any, ...more: Arg[]): Pattern
+  pickmod(pat?: any, xs?: any, ...more: Arg[]): Pattern
+  pickmodF(pat?: any, lookup?: any, funcs?: any, ...more: Arg[]): Pattern
+  pickmodOut(pat?: any, xs?: any, ...more: Arg[]): Pattern
+  pickmodReset(pat?: any, xs?: any, ...more: Arg[]): Pattern
+  pickmodRestart(pat?: any, xs?: any, ...more: Arg[]): Pattern
+  pickmodSqueeze(pat?: any, xs?: any, ...more: Arg[]): Pattern
+  pitchJump(...more: Arg[]): Pattern
+  pitchJumpTime(...more: Arg[]): Pattern
+  pitchwheel(hapcircles?: any, circle?: any, edo?: any, root?: any, thickness?: any, hapRadius?: any, mode?: any, margin?: any, ...more: Arg[]): Pattern
+  ply(...more: Arg[]): Pattern
+  plyForEach(factor?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  plyWith(factor?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  plyforeach(factor?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  plywith(factor?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  poly(...more: Arg[]): Pattern
+  polyBind(...more: Arg[]): Pattern
+  polyTouch(...more: Arg[]): Pattern
+  postgain(...more: Arg[]): Pattern
+  pow(...more: Arg[]): Pattern
+  prel(time?: any, ...more: Arg[]): Pattern
+  prelease(time?: any, ...more: Arg[]): Pattern
+  press(...more: Arg[]): Pattern
+  pressBy(...more: Arg[]): Pattern
+  progNum(program?: any, ...more: Arg[]): Pattern
+  psus(...more: Arg[]): Pattern
+  psustain(...more: Arg[]): Pattern
+  punchcard(options?: any, cycles?: any, playhead?: any, vertical?: any, labels?: any, flipTime?: any, flipValues?: any, overscan?: any, hideNegative?: any, smear?: any, fold?: any, active?: any, inactive?: any, background?: any, playheadColor?: any, fill?: any, fillActive?: any, stroke?: any, strokeActive?: any, hideInactive?: any, colorizeInactive?: any, fontFamily?: any, minMidi?: any, maxMidi?: any, autorange?: any, ...more: Arg[]): Pattern
+  pw(pulsewidth?: any, ...more: Arg[]): Pattern
+  pwrate(rate?: any, ...more: Arg[]): Pattern
+  pwsweep(sweep?: any, ...more: Arg[]): Pattern
+  queryArc(begin?: any, end?: any, ...more: Arg[]): Pattern
+  r(...more: Arg[]): Pattern
+  range(...more: Arg[]): Pattern
+  range2(...more: Arg[]): Pattern
+  rangex(...more: Arg[]): Pattern
+  rarely(...more: Arg[]): Pattern
+  ratio(...more: Arg[]): Pattern
+  rdim(frequency?: any, ...more: Arg[]): Pattern
+  real(...more: Arg[]): Pattern
+  rel(time?: any, ...more: Arg[]): Pattern
+  release(time?: any, ...more: Arg[]): Pattern
+  removeUndefineds(...more: Arg[]): Pattern
+  repeatCycles(...more: Arg[]): Pattern
+  replicate(...more: Arg[]): Pattern
+  rescale(...more: Arg[]): Pattern
+  reset(...more: Arg[]): Pattern
+  resetAll(...more: Arg[]): Pattern
+  resetJoin(...more: Arg[]): Pattern
+  resonance(q?: any, ...more: Arg[]): Pattern
+  restart(...more: Arg[]): Pattern
+  restartAll(...more: Arg[]): Pattern
+  restartJoin(...more: Arg[]): Pattern
+  rev(...more: Arg[]): Pattern
+  revv(...more: Arg[]): Pattern
+  rfade(seconds?: any, ...more: Arg[]): Pattern
+  rib(offset?: any, cycles?: any, ...more: Arg[]): Pattern
+  ribbon(offset?: any, cycles?: any, ...more: Arg[]): Pattern
+  ring(...more: Arg[]): Pattern
+  ringdf(...more: Arg[]): Pattern
+  ringf(...more: Arg[]): Pattern
+  rlp(frequency?: any, ...more: Arg[]): Pattern
+  room(level?: any, ...more: Arg[]): Pattern
+  roomdim(frequency?: any, ...more: Arg[]): Pattern
+  roomfade(seconds?: any, ...more: Arg[]): Pattern
+  roomlp(frequency?: any, ...more: Arg[]): Pattern
+  roomsize(size?: any, ...more: Arg[]): Pattern
+  rootNotes(octave?: any, ...more: Arg[]): Pattern
+  round(...more: Arg[]): Pattern
+  rsize(size?: any, ...more: Arg[]): Pattern
+  s(sound?: any, ...more: Arg[]): Pattern
+  s_add(...more: Arg[]): Pattern
+  s_contract(...more: Arg[]): Pattern
+  s_expand(...more: Arg[]): Pattern
+  s_extend(...more: Arg[]): Pattern
+  s_sub(...more: Arg[]): Pattern
+  s_taper(...more: Arg[]): Pattern
+  s_taperlist(...more: Arg[]): Pattern
+  s_tour(...more: Arg[]): Pattern
+  scale(scale?: any, ...more: Arg[]): Pattern
+  scaleTrans(offset?: any, ...more: Arg[]): Pattern
+  scaleTranspose(offset?: any, ...more: Arg[]): Pattern
+  scope(config?: any, align?: any, color?: any, thickness?: any, scale?: any, pos?: any, trigger?: any, ...more: Arg[]): Pattern
+  scram(...more: Arg[]): Pattern
+  scramble(...more: Arg[]): Pattern
+  scrub(...more: Arg[]): Pattern
+  seconds(...more: Arg[]): Pattern
+  seed(n?: any, ...more: Arg[]): Pattern
+  seg(segments?: any, ...more: Arg[]): Pattern
+  segment(segments?: any, ...more: Arg[]): Pattern
+  semitone(...more: Arg[]): Pattern
+  seq(...more: Arg[]): Pattern
+  sequence(...more: Arg[]): Pattern
+  set(...more: Arg[]): Pattern
+  setContext(context?: any, ...more: Arg[]): Pattern
+  setSteps(...more: Arg[]): Pattern
+  shape(distortion?: any, ...more: Arg[]): Pattern
+  shrink(...more: Arg[]): Pattern
+  shrinklist(...more: Arg[]): Pattern
+  shuffle(...more: Arg[]): Pattern
+  sinefold(distortion?: any, volume?: any, ...more: Arg[]): Pattern
+  size(size?: any, ...more: Arg[]): Pattern
+  slice(...more: Arg[]): Pattern
+  slide(...more: Arg[]): Pattern
+  slow(factor?: any, ...more: Arg[]): Pattern
+  slowChunk(...more: Arg[]): Pattern
+  slowcat(...more: Arg[]): Pattern
+  slowchunk(...more: Arg[]): Pattern
+  smear(...more: Arg[]): Pattern
+  soft(distortion?: any, volume?: any, ...more: Arg[]): Pattern
+  someCycles(...more: Arg[]): Pattern
+  someCyclesBy(probability?: any, function_?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  sometimes(function_?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  sometimesBy(probability?: any, function_?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  songPtr(...more: Arg[]): Pattern
+  sortHapsByPart(...more: Arg[]): Pattern
+  sound(sound?: any, ...more: Arg[]): Pattern
+  soundfont(...more: Arg[]): Pattern
+  source(getSource?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  sparsity(factor?: any, ...more: Arg[]): Pattern
+  speak(...more: Arg[]): Pattern
+  spectrum(config?: any, thickness?: any, speed?: any, min?: any, max?: any, ...more: Arg[]): Pattern
+  speed(speed?: any, ...more: Arg[]): Pattern
+  spiral(options?: any, stretch?: any, size?: any, thickness?: any, cap?: any, inset?: any, playheadColor?: any, playheadLength?: any, playheadThickness?: any, padding?: any, steady?: any, activeColor?: any, inactiveColor?: any, colorizeInactive?: any, fade?: any, logSpiral?: any, ...more: Arg[]): Pattern
+  splice(...more: Arg[]): Pattern
+  splitQueries(...more: Arg[]): Pattern
+  spread(spread?: any, ...more: Arg[]): Pattern
+  squeeze(pat?: any, xs?: any, ...more: Arg[]): Pattern
+  squeezeBind(...more: Arg[]): Pattern
+  squeezeJoin(...more: Arg[]): Pattern
+  squeezeout(...more: Arg[]): Pattern
+  squiz(squiz?: any, ...more: Arg[]): Pattern
+  src(getSource?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  stack(...more: Arg[]): Pattern
+  stepBind(...more: Arg[]): Pattern
+  stepJoin(...more: Arg[]): Pattern
+  steps(...more: Arg[]): Pattern
+  stepsPerOctave(...more: Arg[]): Pattern
+  strans(offset?: any, ...more: Arg[]): Pattern
+  stretch(factor?: any, ...more: Arg[]): Pattern
+  striate(...more: Arg[]): Pattern
+  stripContext(...more: Arg[]): Pattern
+  struct(...more: Arg[]): Pattern
+  structAll(...more: Arg[]): Pattern
+  stut(times?: any, feedback?: any, time?: any, ...more: Arg[]): Pattern
+  stutWith(times?: any, time?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  stutwith(times?: any, time?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  sub(...more: Arg[]): Pattern
+  superimpose(...more: Arg[]): Pattern
+  supradough(...more: Arg[]): Pattern
+  sus(gain?: any, ...more: Arg[]): Pattern
+  sustain(gain?: any, ...more: Arg[]): Pattern
+  sustainpedal(...more: Arg[]): Pattern
+  swing(subdivision?: any, ...more: Arg[]): Pattern
+  swingBy(subdivision?: any, offset?: any, ...more: Arg[]): Pattern
+  sysex(id?: any, data?: any, ...more: Arg[]): Pattern
+  sysexdata(data?: any, ...more: Arg[]): Pattern
+  sysexid(id?: any, ...more: Arg[]): Pattern
+  sz(size?: any, ...more: Arg[]): Pattern
+  tag(tag?: any, ...more: Arg[]): Pattern
+  take(...more: Arg[]): Pattern
+  timeline(...more: Arg[]): Pattern
+  toBipolar(...more: Arg[]): Pattern
+  tour(...more: Arg[]): Pattern
+  trans(amount?: any, ...more: Arg[]): Pattern
+  transient(attack?: any, sustain?: any, ...more: Arg[]): Pattern
+  transpose(amount?: any, ...more: Arg[]): Pattern
+  trem(speed?: any, ...more: Arg[]): Pattern
+  tremdepth(depth?: any, ...more: Arg[]): Pattern
+  tremolo(speed?: any, ...more: Arg[]): Pattern
+  tremolodepth(depth?: any, ...more: Arg[]): Pattern
+  tremolophase(offset?: any, ...more: Arg[]): Pattern
+  tremoloshape(shape?: any, ...more: Arg[]): Pattern
+  tremoloskew(amount?: any, ...more: Arg[]): Pattern
+  tremolosync(cycles?: any, ...more: Arg[]): Pattern
+  tremphase(offset?: any, ...more: Arg[]): Pattern
+  tremshape(shape?: any, ...more: Arg[]): Pattern
+  tremskew(amount?: any, ...more: Arg[]): Pattern
+  tremsync(cycles?: any, ...more: Arg[]): Pattern
+  triode(...more: Arg[]): Pattern
+  tscope(config?: any, align?: any, color?: any, thickness?: any, scale?: any, pos?: any, trigger?: any, ...more: Arg[]): Pattern
+  tsdelay(...more: Arg[]): Pattern
+  uid(...more: Arg[]): Pattern
+  undegrade(...more: Arg[]): Pattern
+  undegradeBy(amount?: any, ...more: Arg[]): Pattern
+  unison(numvoices?: any, ...more: Arg[]): Pattern
+  unit(unit?: any, ...more: Arg[]): Pattern
+  unjoin(...more: Arg[]): Pattern
+  v(frequency?: any, ...more: Arg[]): Pattern
+  val(...more: Arg[]): Pattern
+  vel(...more: Arg[]): Pattern
+  velocity(...more: Arg[]): Pattern
+  vib(frequency?: any, ...more: Arg[]): Pattern
+  vibmod(depth?: any, ...more: Arg[]): Pattern
+  vibrato(frequency?: any, ...more: Arg[]): Pattern
+  vmod(depth?: any, ...more: Arg[]): Pattern
+  voice(...more: Arg[]): Pattern
+  voicing(...more: Arg[]): Pattern
+  voicings(dictionary?: any, ...more: Arg[]): Pattern
+  vowel(vowel?: any, ...more: Arg[]): Pattern
+  w(...more: Arg[]): Pattern
+  warp(amount?: any, ...more: Arg[]): Pattern
+  warpatt(time?: any, ...more: Arg[]): Pattern
+  warpattack(time?: any, ...more: Arg[]): Pattern
+  warpdc(dcoffset?: any, ...more: Arg[]): Pattern
+  warpdec(time?: any, ...more: Arg[]): Pattern
+  warpdecay(time?: any, ...more: Arg[]): Pattern
+  warpdepth(depth?: any, ...more: Arg[]): Pattern
+  warpenv(amount?: any, ...more: Arg[]): Pattern
+  warpmode(mode?: any, ...more: Arg[]): Pattern
+  warprate(rate?: any, ...more: Arg[]): Pattern
+  warprel(time?: any, ...more: Arg[]): Pattern
+  warprelease(time?: any, ...more: Arg[]): Pattern
+  warpshape(shape?: any, ...more: Arg[]): Pattern
+  warpskew(skew?: any, ...more: Arg[]): Pattern
+  warpsus(gain?: any, ...more: Arg[]): Pattern
+  warpsustain(gain?: any, ...more: Arg[]): Pattern
+  warpsync(rate?: any, ...more: Arg[]): Pattern
+  waveloss(...more: Arg[]): Pattern
+  wavetablePhaseRand(amount?: any, ...more: Arg[]): Pattern
+  wavetablePosition(position?: any, ...more: Arg[]): Pattern
+  wavetableWarp(amount?: any, ...more: Arg[]): Pattern
+  wavetableWarpMode(mode?: any, ...more: Arg[]): Pattern
+  when(binary_pat?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  whenKey(...more: Arg[]): Pattern
+  withContext(func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  withHap(func?: (value: any, ...args: any[]) => any, ...more: any[]): Pattern
+  withHapSpan(func?: (value: any, ...args: any[]) => any, ...more: any[]): Pattern
+  withHapTime(func?: (value: any, ...args: any[]) => any, ...more: any[]): Pattern
+  withHaps(func?: (value: any, ...args: any[]) => any, ...more: any[]): Pattern
+  withLoc(start?: any, end?: any, ...more: Arg[]): Pattern
+  withQuerySpan(func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  withQuerySpanMaybe(...more: Arg[]): Pattern
+  withQueryTime(func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  withState(...more: Arg[]): Pattern
+  withSteps(...more: Arg[]): Pattern
+  withValue(func?: (value: any, ...args: any[]) => any, ...more: any[]): Pattern
+  within(start?: any, end?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+  wordfall(...more: Arg[]): Pattern
+  worklet(src?: any, inputs?: any, ...more: Arg[]): Pattern
+  wt(position?: any, ...more: Arg[]): Pattern
+  wtatt(time?: any, ...more: Arg[]): Pattern
+  wtattack(time?: any, ...more: Arg[]): Pattern
+  wtdc(dcoffset?: any, ...more: Arg[]): Pattern
+  wtdec(time?: any, ...more: Arg[]): Pattern
+  wtdecay(time?: any, ...more: Arg[]): Pattern
+  wtdepth(depth?: any, ...more: Arg[]): Pattern
+  wtenv(amount?: any, ...more: Arg[]): Pattern
+  wtphaserand(amount?: any, ...more: Arg[]): Pattern
+  wtrate(rate?: any, ...more: Arg[]): Pattern
+  wtrel(time?: any, ...more: Arg[]): Pattern
+  wtrelease(time?: any, ...more: Arg[]): Pattern
+  wtshape(shape?: any, ...more: Arg[]): Pattern
+  wtskew(skew?: any, ...more: Arg[]): Pattern
+  wtsus(gain?: any, ...more: Arg[]): Pattern
+  wtsustain(gain?: any, ...more: Arg[]): Pattern
+  wtsync(rate?: any, ...more: Arg[]): Pattern
+  x(...more: Arg[]): Pattern
+  xfade(...more: Arg[]): Pattern
+  xsdelay(...more: Arg[]): Pattern
+  y(...more: Arg[]): Pattern
+  zcrush(...more: Arg[]): Pattern
+  zdelay(...more: Arg[]): Pattern
+  zmod(...more: Arg[]): Pattern
+  znoise(...more: Arg[]): Pattern
+  zoom(...more: Arg[]): Pattern
+  zoomArc(...more: Arg[]): Pattern
+  zoomIn(...more: Arg[]): Pattern
+  zoomarc(...more: Arg[]): Pattern
+  zrand(...more: Arg[]): Pattern
+  zzfx(...more: Arg[]): Pattern
 }
 
-declare function AbsoluteOrientationSensor(...args: any[]): Pattern
-declare function Accelerometer(...args: any[]): Pattern
-declare function AudioDecoder(...args: any[]): Pattern
-declare function AudioEncoder(...args: any[]): Pattern
-declare function AudioPlaybackStats(...args: any[]): Pattern
-declare function AudioWorklet(...args: any[]): Pattern
-declare function AuthenticatorAssertionResponse(...args: any[]): Pattern
-declare function AuthenticatorAttestationResponse(...args: any[]): Pattern
-declare function AuthenticatorResponse(...args: any[]): Pattern
-declare function BarcodeDetector(...args: any[]): Pattern
-declare function BatteryManager(...args: any[]): Pattern
-declare function BlockWidget(...args: any[]): Pattern
-declare function Bluetooth(...args: any[]): Pattern
-declare function BluetoothCharacteristicProperties(...args: any[]): Pattern
-declare function BluetoothDevice(...args: any[]): Pattern
-declare function BluetoothRemoteGATTCharacteristic(...args: any[]): Pattern
-declare function BluetoothRemoteGATTDescriptor(...args: any[]): Pattern
-declare function BluetoothRemoteGATTServer(...args: any[]): Pattern
-declare function BluetoothRemoteGATTService(...args: any[]): Pattern
-declare function Cache(...args: any[]): Pattern
-declare function CacheStorage(...args: any[]): Pattern
-declare function CaptureController(...args: any[]): Pattern
-declare function Clipboard(...args: any[]): Pattern
-declare function ClipboardChangeEvent(...args: any[]): Pattern
-declare function ClipboardItem(...args: any[]): Pattern
-declare function ClockCollator(...args: any[]): Pattern
-declare function CookieChangeEvent(...args: any[]): Pattern
-declare function CookieStore(...args: any[]): Pattern
-declare function CookieStoreManager(...args: any[]): Pattern
-declare function CreateMonitor(...args: any[]): Pattern
-declare function Credential(...args: any[]): Pattern
-declare function CredentialsContainer(...args: any[]): Pattern
-declare function CryptoKey(...args: any[]): Pattern
-declare function Cyclist(...args: any[]): Pattern
+declare function BlockWidget(...more: Arg[]): Pattern
+declare function ClockCollator(...more: Arg[]): Pattern
+declare function Cyclist(...more: Arg[]): Pattern
 declare const DEFAULT_MAX_POLYPHONY: any
-declare function DeviceMotionEvent(...args: any[]): Pattern
-declare function DeviceMotionEventAcceleration(...args: any[]): Pattern
-declare function DeviceMotionEventRotationRate(...args: any[]): Pattern
-declare function DeviceOrientationEvent(...args: any[]): Pattern
-declare function DevicePosture(...args: any[]): Pattern
-declare function DigitalCredential(...args: any[]): Pattern
-declare function DocumentPictureInPicture(...args: any[]): Pattern
-declare function Drawer(...args: any[]): Pattern
-declare function EyeDropper(...args: any[]): Pattern
-declare function FXr(...args: any[]): Pattern
-declare function FXrel(...args: any[]): Pattern
-declare function FXrelease(...args: any[]): Pattern
-declare function FederatedCredential(...args: any[]): Pattern
-declare function FetchLaterResult(...args: any[]): Pattern
-declare function FileSystemDirectoryHandle(...args: any[]): Pattern
-declare function FileSystemFileHandle(...args: any[]): Pattern
-declare function FileSystemHandle(...args: any[]): Pattern
-declare function FileSystemObserver(...args: any[]): Pattern
-declare function FileSystemWritableFileStream(...args: any[]): Pattern
-declare function FontData(...args: any[]): Pattern
-declare function Fraction(...args: any[]): Pattern
-declare function Framer(...args: any[]): Pattern
-declare function GPU(...args: any[]): Pattern
-declare function GPUAdapter(...args: any[]): Pattern
-declare function GPUAdapterInfo(...args: any[]): Pattern
-declare function GPUBindGroup(...args: any[]): Pattern
-declare function GPUBindGroupLayout(...args: any[]): Pattern
-declare function GPUBuffer(...args: any[]): Pattern
-declare const GPUBufferUsage: any
-declare function GPUCanvasContext(...args: any[]): Pattern
-declare const GPUColorWrite: any
-declare function GPUCommandBuffer(...args: any[]): Pattern
-declare function GPUCommandEncoder(...args: any[]): Pattern
-declare function GPUCompilationInfo(...args: any[]): Pattern
-declare function GPUCompilationMessage(...args: any[]): Pattern
-declare function GPUComputePassEncoder(...args: any[]): Pattern
-declare function GPUComputePipeline(...args: any[]): Pattern
-declare function GPUDevice(...args: any[]): Pattern
-declare function GPUDeviceLostInfo(...args: any[]): Pattern
-declare function GPUError(...args: any[]): Pattern
-declare function GPUExternalTexture(...args: any[]): Pattern
-declare function GPUInternalError(...args: any[]): Pattern
-declare const GPUMapMode: any
-declare function GPUOutOfMemoryError(...args: any[]): Pattern
-declare function GPUPipelineError(...args: any[]): Pattern
-declare function GPUPipelineLayout(...args: any[]): Pattern
-declare function GPUQuerySet(...args: any[]): Pattern
-declare function GPUQueue(...args: any[]): Pattern
-declare function GPURenderBundle(...args: any[]): Pattern
-declare function GPURenderBundleEncoder(...args: any[]): Pattern
-declare function GPURenderPassEncoder(...args: any[]): Pattern
-declare function GPURenderPipeline(...args: any[]): Pattern
-declare function GPUSampler(...args: any[]): Pattern
-declare function GPUShaderModule(...args: any[]): Pattern
-declare const GPUShaderStage: any
-declare function GPUSupportedFeatures(...args: any[]): Pattern
-declare function GPUSupportedLimits(...args: any[]): Pattern
-declare function GPUTexture(...args: any[]): Pattern
-declare const GPUTextureUsage: any
-declare function GPUTextureView(...args: any[]): Pattern
-declare function GPUUncapturedErrorEvent(...args: any[]): Pattern
-declare function GPUValidationError(...args: any[]): Pattern
-declare function GravitySensor(...args: any[]): Pattern
-declare function Gyroscope(...args: any[]): Pattern
-declare function H(...args: any[]): Pattern
-declare function HID(...args: any[]): Pattern
-declare function HIDConnectionEvent(...args: any[]): Pattern
-declare function HIDDevice(...args: any[]): Pattern
-declare function HIDInputReportEvent(...args: any[]): Pattern
-declare function Hap(...args: any[]): Pattern
-declare function IdentityCredential(...args: any[]): Pattern
-declare function IdentityCredentialError(...args: any[]): Pattern
-declare function IdentityProvider(...args: any[]): Pattern
-declare function IdleDetector(...args: any[]): Pattern
-declare function ImageCapture(...args: any[]): Pattern
-declare function ImageDecoder(...args: any[]): Pattern
-declare function ImageTrack(...args: any[]): Pattern
-declare function ImageTrackList(...args: any[]): Pattern
-declare function Keyboard(...args: any[]): Pattern
-declare function KeyboardLayoutMap(...args: any[]): Pattern
-declare function LanguageDetector(...args: any[]): Pattern
-declare function LanguageModel(...args: any[]): Pattern
-declare function LinearAccelerationSensor(...args: any[]): Pattern
-declare function Lock(...args: any[]): Pattern
-declare function LockManager(...args: any[]): Pattern
-declare function MIDIAccess(...args: any[]): Pattern
-declare function MIDIConnectionEvent(...args: any[]): Pattern
-declare function MIDIInput(...args: any[]): Pattern
-declare function MIDIInputMap(...args: any[]): Pattern
-declare function MIDIMessageEvent(...args: any[]): Pattern
-declare function MIDIOutput(...args: any[]): Pattern
-declare function MIDIOutputMap(...args: any[]): Pattern
-declare function MIDIPort(...args: any[]): Pattern
-declare function MediaDeviceInfo(...args: any[]): Pattern
-declare function MediaDevices(...args: any[]): Pattern
-declare function MediaKeyMessageEvent(...args: any[]): Pattern
-declare function MediaKeySession(...args: any[]): Pattern
-declare function MediaKeyStatusMap(...args: any[]): Pattern
-declare function MediaKeySystemAccess(...args: any[]): Pattern
-declare function MediaKeys(...args: any[]): Pattern
-declare function NavigationPreloadManager(...args: any[]): Pattern
-declare function NavigatorLogin(...args: any[]): Pattern
-declare function NavigatorManagedData(...args: any[]): Pattern
-declare function OTPCredential(...args: any[]): Pattern
-declare function OrientationSensor(...args: any[]): Pattern
-declare function PasswordCredential(...args: any[]): Pattern
+declare function Drawer(...more: Arg[]): Pattern
+declare function FXr(...more: Arg[]): Pattern
+declare function FXrel(...more: Arg[]): Pattern
+declare function FXrelease(...more: Arg[]): Pattern
+declare function Fraction(...more: Arg[]): Pattern
+declare function Framer(...more: Arg[]): Pattern
+declare function H(...more: Arg[]): Pattern
+declare function Hap(...more: Arg[]): Pattern
 /**
  * Create a pattern. As an end user, you will most likely not create a Pattern directly.
  * @param query {function} The function that maps a State to an array of Hap.
  */
-declare function Pattern(query?: any, ...more: any[]): Pattern
-declare function PaymentAddress(...args: any[]): Pattern
-declare function PaymentManager(...args: any[]): Pattern
-declare function PaymentMethodChangeEvent(...args: any[]): Pattern
-declare function PaymentRequest(...args: any[]): Pattern
-declare function PaymentRequestUpdateEvent(...args: any[]): Pattern
-declare function PaymentResponse(...args: any[]): Pattern
-declare function Presentation(...args: any[]): Pattern
-declare function PresentationAvailability(...args: any[]): Pattern
-declare function PresentationConnection(...args: any[]): Pattern
-declare function PresentationConnectionAvailableEvent(...args: any[]): Pattern
-declare function PresentationConnectionCloseEvent(...args: any[]): Pattern
-declare function PresentationConnectionList(...args: any[]): Pattern
-declare function PresentationReceiver(...args: any[]): Pattern
-declare function PresentationRequest(...args: any[]): Pattern
-declare function PressureObserver(...args: any[]): Pattern
-declare function PressureRecord(...args: any[]): Pattern
-declare function ProtectedAudience(...args: any[]): Pattern
-declare function PublicKeyCredential(...args: any[]): Pattern
-declare function RelativeOrientationSensor(...args: any[]): Pattern
-declare function ScreenDetailed(...args: any[]): Pattern
-declare function ScreenDetails(...args: any[]): Pattern
-declare function Sensor(...args: any[]): Pattern
-declare function SensorErrorEvent(...args: any[]): Pattern
-declare function Serial(...args: any[]): Pattern
-declare function SerialPort(...args: any[]): Pattern
-declare function ServiceWorker(...args: any[]): Pattern
-declare function ServiceWorkerContainer(...args: any[]): Pattern
-declare function ServiceWorkerRegistration(...args: any[]): Pattern
-declare function SliderWidget(...args: any[]): Pattern
-declare function SpeechRecognitionPhrase(...args: any[]): Pattern
+declare function Pattern(query?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+declare function SliderWidget(...more: Arg[]): Pattern
 declare const StartRules: any
-declare function State(...args: any[]): Pattern
-declare function StorageBucket(...args: any[]): Pattern
-declare function StorageBucketManager(...args: any[]): Pattern
-declare function StorageManager(...args: any[]): Pattern
-declare function StrudelMirror(...args: any[]): Pattern
-declare function SubtleCrypto(...args: any[]): Pattern
-declare function Summarizer(...args: any[]): Pattern
-declare function TimeSpan(...args: any[]): Pattern
-declare function Translator(...args: any[]): Pattern
-declare function USB(...args: any[]): Pattern
-declare function USBAlternateInterface(...args: any[]): Pattern
-declare function USBConfiguration(...args: any[]): Pattern
-declare function USBConnectionEvent(...args: any[]): Pattern
-declare function USBDevice(...args: any[]): Pattern
-declare function USBEndpoint(...args: any[]): Pattern
-declare function USBInTransferResult(...args: any[]): Pattern
-declare function USBInterface(...args: any[]): Pattern
-declare function USBIsochronousInTransferPacket(...args: any[]): Pattern
-declare function USBIsochronousInTransferResult(...args: any[]): Pattern
-declare function USBIsochronousOutTransferPacket(...args: any[]): Pattern
-declare function USBIsochronousOutTransferResult(...args: any[]): Pattern
-declare function USBOutTransferResult(...args: any[]): Pattern
-declare function VideoDecoder(...args: any[]): Pattern
-declare function VideoEncoder(...args: any[]): Pattern
+declare function State(...more: Arg[]): Pattern
+declare function StrudelMirror(...more: Arg[]): Pattern
+declare function TimeSpan(...more: Arg[]): Pattern
 declare const Vim: any
-declare function VirtualKeyboard(...args: any[]): Pattern
-declare function WGSLLanguageFeatures(...args: any[]): Pattern
-declare function WakeLock(...args: any[]): Pattern
-declare function WakeLockSentinel(...args: any[]): Pattern
 declare const Warpmode: any
 declare const WebMidi: any
-declare function WebTransport(...args: any[]): Pattern
-declare function WebTransportBidirectionalStream(...args: any[]): Pattern
-declare function WebTransportDatagramDuplexStream(...args: any[]): Pattern
-declare function WebTransportError(...args: any[]): Pattern
-declare function Worklet(...args: any[]): Pattern
-declare function XRAnchor(...args: any[]): Pattern
-declare function XRAnchorSet(...args: any[]): Pattern
-declare function XRBoundedReferenceSpace(...args: any[]): Pattern
-declare function XRCPUDepthInformation(...args: any[]): Pattern
-declare function XRCamera(...args: any[]): Pattern
-declare function XRCompositionLayer(...args: any[]): Pattern
-declare function XRCubeLayer(...args: any[]): Pattern
-declare function XRCylinderLayer(...args: any[]): Pattern
-declare function XRDOMOverlayState(...args: any[]): Pattern
-declare function XRDepthInformation(...args: any[]): Pattern
-declare function XREquirectLayer(...args: any[]): Pattern
-declare function XRFrame(...args: any[]): Pattern
-declare function XRHand(...args: any[]): Pattern
-declare function XRHitTestResult(...args: any[]): Pattern
-declare function XRHitTestSource(...args: any[]): Pattern
-declare function XRInputSource(...args: any[]): Pattern
-declare function XRInputSourceArray(...args: any[]): Pattern
-declare function XRInputSourceEvent(...args: any[]): Pattern
-declare function XRInputSourcesChangeEvent(...args: any[]): Pattern
-declare function XRJointPose(...args: any[]): Pattern
-declare function XRJointSpace(...args: any[]): Pattern
-declare function XRLayer(...args: any[]): Pattern
-declare function XRLayerEvent(...args: any[]): Pattern
-declare function XRLightEstimate(...args: any[]): Pattern
-declare function XRLightProbe(...args: any[]): Pattern
-declare function XRPlane(...args: any[]): Pattern
-declare function XRPlaneSet(...args: any[]): Pattern
-declare function XRPose(...args: any[]): Pattern
-declare function XRProjectionLayer(...args: any[]): Pattern
-declare function XRQuadLayer(...args: any[]): Pattern
-declare function XRRay(...args: any[]): Pattern
-declare function XRReferenceSpace(...args: any[]): Pattern
-declare function XRReferenceSpaceEvent(...args: any[]): Pattern
-declare function XRRenderState(...args: any[]): Pattern
-declare function XRRigidTransform(...args: any[]): Pattern
-declare function XRSession(...args: any[]): Pattern
-declare function XRSessionEvent(...args: any[]): Pattern
-declare function XRSpace(...args: any[]): Pattern
-declare function XRSubImage(...args: any[]): Pattern
-declare function XRSystem(...args: any[]): Pattern
-declare function XRTransientInputHitTestResult(...args: any[]): Pattern
-declare function XRTransientInputHitTestSource(...args: any[]): Pattern
-declare function XRView(...args: any[]): Pattern
-declare function XRViewerPose(...args: any[]): Pattern
-declare function XRViewport(...args: any[]): Pattern
-declare function XRVisibilityMaskChangeEvent(...args: any[]): Pattern
-declare function XRWebGLBinding(...args: any[]): Pattern
-declare function XRWebGLDepthInformation(...args: any[]): Pattern
-declare function XRWebGLLayer(...args: any[]): Pattern
-declare function XRWebGLSubImage(...args: any[]): Pattern
-declare function __chooseWith(...args: any[]): Pattern
-declare function __pianoroll(...args: any[]): Pattern
-declare function _brandBy(...args: any[]): Pattern
-declare function _fitslice(...args: any[]): Pattern
-declare function _irand(...args: any[]): Pattern
-declare function _keyDown(...args: any[]): Pattern
-declare function _match(...args: any[]): Pattern
-declare function _mod(...args: any[]): Pattern
-declare function _morph(...args: any[]): Pattern
-declare function _polymeterListSteps(...args: any[]): Pattern
-declare function _retime(...args: any[]): Pattern
-declare function _slices(...args: any[]): Pattern
+declare function __chooseWith(...more: Arg[]): Pattern
+declare function __pianoroll(...more: Arg[]): Pattern
+declare function _brandBy(...more: Arg[]): Pattern
+declare function _fitslice(...more: Arg[]): Pattern
+declare function _irand(...more: Arg[]): Pattern
+declare function _keyDown(...more: Arg[]): Pattern
+declare function _match(...more: Arg[]): Pattern
+declare function _mod(...more: Arg[]): Pattern
+declare function _morph(...more: Arg[]): Pattern
+declare function _polymeterListSteps(...more: Arg[]): Pattern
+declare function _retime(...more: Arg[]): Pattern
+declare function _slices(...more: Arg[]): Pattern
 declare const _strudelLoaded: any
 /**
  * A pattern of numbers that speed up (or slow down) samples while they play. Currently only supported by osc / superdirt.
@@ -7060,10 +6825,10 @@ declare const _strudelLoaded: any
  * @example
  * s("sax").accelerate("<0 1 2 4 8 16>").slow(2).osc()
  */
-declare function accelerate(amount?: any, ...more: any[]): Pattern
-declare function activateTheme(...args: any[]): Pattern
-declare function activeLabel(...args: any[]): Pattern
-declare function ad(...args: any[]): Pattern
+declare function accelerate(amount?: any, ...more: Arg[]): Pattern
+declare function activateTheme(...more: Arg[]): Pattern
+declare function activeLabel(...more: Arg[]): Pattern
+declare function ad(...more: Arg[]): Pattern
 /**
  * Assumes a pattern of numbers. Adds the given number to each item in the pattern.
  * @example
@@ -7077,7 +6842,7 @@ declare function ad(...args: any[]): Pattern
  * // Behind the scenes, the notes are converted to midi numbers:
  * // note("48 52 55".add("<0 5 7 0>"))
  */
-declare function add(...args: any[]): Pattern
+declare function add(...more: Arg[]): Pattern
 /**
  * Adds a new custom voicing dictionary.
  * @param name {string} identifier for the voicing dictionary
@@ -7095,7 +6860,7 @@ declare function add(...args: any[]): Pattern
  * }, ['C3', 'C6'])
  * "<C^7 A7 Dm7 G7>".voicings('cookie').note()
  */
-declare function addVoicings(name?: any, dictionary?: any, range?: any, ...more: any[]): Pattern
+declare function addVoicings(name?: any, dictionary?: any, range?: any, ...more: Arg[]): Pattern
 declare const addWidget: any
 /**
  * ADSR envelope: Combination of Attack, Decay, Sustain, and Release.
@@ -7106,7 +6871,7 @@ declare const addWidget: any
  * @example
  * note("[c3 bb2 f3 eb3]*2").sound("sawtooth").lpf(600).adsr(".1:.1:.5:.2")
  */
-declare function adsr(time?: any, time?: any, gain?: any, time?: any, ...more: any[]): Pattern
+declare function adsr(time?: any, time_?: any, gain?: any, time__?: any, ...more: Arg[]): Pattern
 /**
  * Register an alias for a bank of sounds.
  * Optionally accepts a single argument map of bank aliases.
@@ -7114,45 +6879,45 @@ declare function adsr(time?: any, time?: any, gain?: any, time?: any, ...more: a
  * @param bank {string} The bank to alias
  * @param alias {string} The alias to use for the bank
  */
-declare function aliasBank(bank?: any, alias?: any, ...more: any[]): any
-declare function all(...args: any[]): Pattern
+declare function aliasBank(bank?: any, alias?: any, ...more: Arg[]): any
+declare function all(...more: Arg[]): Pattern
 /**
  * Shorthand for .sometimesBy(0.9, fn)
  * @example
  * s("hh*8").almostAlways(x=>x.speed("0.5"))
  */
-declare function almostAlways(...args: any[]): Pattern
+declare function almostAlways(...more: Arg[]): Pattern
 /**
  * Shorthand for .sometimesBy(0.1, fn)
  * @example
  * s("hh*8").almostNever(x=>x.speed("0.5"))
  */
-declare function almostNever(...args: any[]): Pattern
+declare function almostNever(...more: Arg[]): Pattern
 /**
  * Shorthand for .sometimesBy(1, fn) (always calls fn)
  * @example
  * s("hh*8").always(x=>x.speed("0.5"))
  */
-declare function always(...args: any[]): Pattern
+declare function always(...more: Arg[]): Pattern
 /**
  * Like gain, but linear.
  * @param amount {number | Pattern} gain.
  * @example
  * s("bd*8").amp(".1*2 .5 .1*2 .5 .1 .5").osc()
  */
-declare function amp(amount?: any, ...more: any[]): Pattern
+declare function amp(amount?: any, ...more: Arg[]): Pattern
 declare const analysers: any
 declare const analysersData: any
-declare function analyze(...args: any[]): Pattern
+declare function analyze(...more: Arg[]): Pattern
 /**
  * The top note to align the voicing to. Defaults to c5
  * @param anchorNote {string | Pattern} the note to align the voicings to
  * @example
  * anchor("<c4 g4 c5 g5>").chord("C").voicing()
  */
-declare function anchor(anchorNote?: any, ...more: any[]): Pattern
-declare function and(...args: any[]): Pattern
-declare function angle(...args: any[]): Pattern
+declare function anchor(anchorNote?: any, ...more: Arg[]): Pattern
+declare function and(...more: Arg[]): Pattern
+declare function angle(...more: Arg[]): Pattern
 /**
  * Layers the result of the given function(s). Like superimpose, but without the original pattern:
  * Synonyms: apply
@@ -7161,26 +6926,26 @@ declare function angle(...args: any[]): Pattern
  *   .layer(x=>x.add("0,2"))
  *   .scale('C minor').note()
  */
-declare function apply(...args: any[]): Pattern
-declare function applyFM(...args: any[]): Pattern
-declare function applyGainCurve(...args: any[]): Pattern
-declare function applyN(...args: any[]): Pattern
-declare function applyParameterModulators(...args: any[]): Pattern
-declare function ar(...args: any[]): Pattern
+declare function apply(...more: Arg[]): Pattern
+declare function applyFM(...more: Arg[]): Pattern
+declare function applyGainCurve(...more: Arg[]): Pattern
+declare function applyN(...more: Arg[]): Pattern
+declare function applyParameterModulators(...more: Arg[]): Pattern
+declare function ar(...more: Arg[]): Pattern
 /**
  * Selects indices in in stacked notes.
  * @example
  * note("<[c,eb,g]!2 [c,f,ab] [d,f,ab]>")
  * .arp("0 [0,2] 1 [0,2]")
  */
-declare function arp(...args: any[]): Pattern
+declare function arp(...more: Arg[]): Pattern
 /**
  * Selects indices in in stacked notes.
  * @example
  * note("<[c,eb,g]!2 [c,f,ab] [d,f,ab]>")
  * .arpWith(haps => haps[2])
  */
-declare function arpWith(...args: any[]): Pattern
+declare function arpWith(...more: Arg[]): Pattern
 /**
  * Allows to arrange multiple patterns together over multiple cycles.
  * Takes a variable number of arrays with two elements specifying the number of cycles and the pattern to use.
@@ -7190,7 +6955,7 @@ declare function arpWith(...args: any[]): Pattern
  *   [2, "<g a>(5,8)"]
  * ).note()
  */
-declare function arrange(...args: any[]): Pattern
+declare function arrange(...more: Arg[]): Pattern
 /**
  * Sets properties in a batch.
  * @param mapping {String | Array} the control names that are set
@@ -7199,13 +6964,13 @@ declare function arrange(...args: any[]): Pattern
  * @example
  * "{0@2 0.25 0 0.5 .3 .5}%8".as("begin").s("sax_vib").clip(1)
  */
-declare function as(mapping?: any, ...more: any[]): Pattern
+declare function as(mapping?: any, ...more: Arg[]): Pattern
 /**
  * Asymmetrical diode distortion
  * @param distortion {number | Pattern} amount of distortion to apply
  * @param volume {number | Pattern} linear postgain of the distortion
  */
-declare function asym(distortion?: any, volume?: any, ...more: any[]): Pattern
+declare function asym(distortion?: any, volume?: any, ...more: Arg[]): Pattern
 /**
  * Amplitude envelope attack time: Specifies how long it takes for the sound to reach its peak value, relative to the onset.
  * Synonyms: att
@@ -7213,7 +6978,7 @@ declare function asym(distortion?: any, volume?: any, ...more: any[]): Pattern
  * @example
  * note("c3 e3 f3 g3").attack("<0 .1 .5>")
  */
-declare function att(attack?: any, ...more: any[]): Pattern
+declare function att(attack?: any, ...more: Arg[]): Pattern
 /**
  * Amplitude envelope attack time: Specifies how long it takes for the sound to reach its peak value, relative to the onset.
  * Synonyms: att
@@ -7221,10 +6986,10 @@ declare function att(attack?: any, ...more: any[]): Pattern
  * @example
  * note("c3 e3 f3 g3").attack("<0 .1 .5>")
  */
-declare function attack(attack?: any, ...more: any[]): Pattern
-declare function averageArray(...args: any[]): Pattern
-declare function backgroundImage(...args: any[]): Pattern
-declare function band(...args: any[]): Pattern
+declare function attack(attack?: any, ...more: Arg[]): Pattern
+declare function averageArray(...more: Arg[]): Pattern
+declare function backgroundImage(...more: Arg[]): Pattern
+declare function band(...more: Arg[]): Pattern
 /**
  * Sets the center frequency of the band-pass filter. When using mininotation, you
  * can also optionally supply the 'bpq' parameter separated by ':'.
@@ -7233,7 +6998,7 @@ declare function band(...args: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd,hh*6").bpf("<1000 2000 4000 8000>")
  */
-declare function bandf(frequency?: any, ...more: any[]): Pattern
+declare function bandf(frequency?: any, ...more: Arg[]): Pattern
 /**
  * Sets the band-pass q-factor (resonance).
  * Synonyms: bandq
@@ -7241,15 +7006,15 @@ declare function bandf(frequency?: any, ...more: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd").bpf(500).bpq("<0 1 2 3>")
  */
-declare function bandq(q?: any, ...more: any[]): Pattern
+declare function bandq(q?: any, ...more: Arg[]): Pattern
 /**
  * Select the sound bank to use. To be used together with s. The bank name (+ "_") will be prepended to the value of s.
  * @param bank {string | Pattern} the name of the bank
  * @example
  * s("bd sd [~ bd] sd").bank('RolandTR909') // = s("RolandTR909_bd RolandTR909_sd")
  */
-declare function bank(bank?: any, ...more: any[]): Pattern
-declare function base64ToUnicode(...args: any[]): Pattern
+declare function bank(bank?: any, ...more: Arg[]): Pattern
+declare function base64ToUnicode(...more: Arg[]): Pattern
 /**
  * Create byte beats with custom expressions
  * Synonyms: bbexpr
@@ -7257,7 +7022,7 @@ declare function base64ToUnicode(...args: any[]): Pattern
  * @example
  * s("bytebeat").bbexpr('t*(t>>15^t>>66)')
  */
-declare function bbexpr(byteBeatExpression?: any, ...more: any[]): Pattern
+declare function bbexpr(byteBeatExpression?: any, ...more: Arg[]): Pattern
 /**
  * Create byte beats with custom expressions
  * Synonyms: bbst
@@ -7265,7 +7030,7 @@ declare function bbexpr(byteBeatExpression?: any, ...more: any[]): Pattern
  * @example
  * note("c3!8".add("{0 0 12 0 7 5 3}%8")).s("bytebeat:5").bbst("<3 1>".mul(10000))._scope()
  */
-declare function bbst(byteBeatStartTime?: any, ...more: any[]): Pattern
+declare function bbst(byteBeatStartTime?: any, ...more: Arg[]): Pattern
 /**
  * creates a structure pattern from divisions of a cycle
  * especially useful for creating rhythms
@@ -7274,7 +7039,7 @@ declare function bbst(byteBeatStartTime?: any, ...more: any[]): Pattern
  * @example
  * s("sd").beat("4,12", 16)
  */
-declare function beat(...args: any[]): Pattern
+declare function beat(...more: Arg[]): Pattern
 /**
  * A pattern of numbers from 0 to 1. Skips the beginning of each sample, e.g. 0.25 to cut off the first quarter from each sample.
  * @param amount {number | Pattern} between 0 and 1, where 1 is the length of the sample
@@ -7282,7 +7047,7 @@ declare function beat(...args: any[]): Pattern
  * samples({ rave: 'rave/AREUREADY.wav' }, 'github:tidalcycles/dirt-samples')
  * s("rave").begin("<0 .25 .5 .75>").fast(2)
  */
-declare function begin(amount?: any, ...more: any[]): Pattern
+declare function begin(amount?: any, ...more: Arg[]): Pattern
 /**
  * Generates a continuous pattern of [berlin noise](conceived by Jame Coyne and Jade Rowland as a joke but turned out to be surprisingly cool and useful,
  * like perlin noise but with sawtooth waves), in the range 0..1.
@@ -7296,7 +7061,7 @@ declare const berlin: Pattern
  * Synonyms: bgain
  * @param number {number | Pattern}
  */
-declare function bgain(number?: any, ...more: any[]): Pattern
+declare function bgain(number?: any, ...more: Arg[]): Pattern
 /**
  * Creates a binary pattern from a number.
  * @param n {number} input number to convert to binary
@@ -7304,14 +7069,14 @@ declare function bgain(number?: any, ...more: any[]): Pattern
  * "hh".s().struct(binary(5))
  * // "hh".s().struct("1 0 1")
  */
-declare function binary(n?: any, ...more: any[]): Pattern
+declare function binary(n?: any, ...more: Arg[]): Pattern
 /**
  * Creates a binary list pattern from a number.
  * @param n {number} input number to convert to binary
 s("saw").seg(8)
 .partials(binaryL(irand(4096).add(1)))
  */
-declare function binaryL(n?: any, ...more: any[]): Pattern
+declare function binaryL(n?: any, ...more: Arg[]): Pattern
 /**
  * Creates a binary pattern from a number, padded to n bits long.
  * @param n {number} input number to convert to binary
@@ -7320,15 +7085,15 @@ declare function binaryL(n?: any, ...more: any[]): Pattern
  * "hh".s().struct(binaryN(55532, 16))
  * // "hh".s().struct("1 1 0 1 1 0 0 0 1 1 1 0 1 1 0 0")
  */
-declare function binaryN(n?: any, nBits?: any, ...more: any[]): Pattern
+declare function binaryN(n?: any, nBits?: any, ...more: Arg[]): Pattern
 /**
  * Creates a binary list pattern from a number, padded to n bits long.
  * @param n {number} input number to convert to binary
  * @param nBits {number} pattern length, defaults to 16
  */
-declare function binaryNL(n?: any, nBits?: any, ...more: any[]): Pattern
-declare function bind(...args: any[]): Pattern
-declare function binshift(...args: any[]): Pattern
+declare function binaryNL(n?: any, nBits?: any, ...more: Arg[]): Pattern
+declare function bind(...more: Arg[]): Pattern
+declare function binshift(...more: Arg[]): Pattern
 /**
  * Splits a pattern into the given number of slices, and plays them according to a pattern of slice numbers.
  * Similar to slice, but slices up patterns rather than sound samples.
@@ -7342,10 +7107,10 @@ declare function binshift(...args: any[]): Pattern
  *   .bank("RolandTR909").speed(1.2)
  *   .bite(4, "0 0 [1 2] <3 2> 0 0 [2 1] 3")
  */
-declare function bite(number?: any, slices?: any, ...more: any[]): Pattern
-declare function bjork(...args: any[]): Pattern
-declare function bjorklund(...args: any[]): Pattern
-declare function blshift(...args: any[]): Pattern
+declare function bite(number?: any, slices?: any, ...more: Arg[]): Pattern
+declare function bjork(...more: Arg[]): Pattern
+declare function bjorklund(...more: Arg[]): Pattern
+declare function blshift(...more: Arg[]): Pattern
 /**
  * Modulates with the output from a given bus.
  * Can be called in sequence like pat.bmod(...).bmod(...) to set up multiple modulators
@@ -7371,8 +7136,8 @@ declare function blshift(...args: any[]): Pattern
  * modulator: s("one").seg(64).gain(slider(0, 0, 1)).bus(1).dry(0)
  * carrier: s("saw").bmod({ b: 1 })
  */
-declare function bmod(config?: any, id?: any, ...more: any[]): Pattern
-declare function bor(...args: any[]): Pattern
+declare function bmod(config?: any, id?: any, ...more: Arg[]): Pattern
+declare function bor(...more: Arg[]): Pattern
 /**
  * Sets the center frequency of the band-pass filter. When using mininotation, you
  * can also optionally supply the 'bpq' parameter separated by ':'.
@@ -7381,7 +7146,7 @@ declare function bor(...args: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd,hh*6").bpf("<1000 2000 4000 8000>")
  */
-declare function bp(frequency?: any, ...more: any[]): Pattern
+declare function bp(frequency?: any, ...more: Arg[]): Pattern
 /**
  * Sets the attack duration for the bandpass filter envelope.
  * Synonyms: bpa
@@ -7393,7 +7158,7 @@ declare function bp(frequency?: any, ...more: any[]): Pattern
  * .bpa("<.5 .25 .1 .01>/4")
  * .bpenv(4)
  */
-declare function bpa(attack?: any, ...more: any[]): Pattern
+declare function bpa(attack?: any, ...more: Arg[]): Pattern
 /**
  * Sets the attack duration for the bandpass filter envelope.
  * Synonyms: bpa
@@ -7405,7 +7170,7 @@ declare function bpa(attack?: any, ...more: any[]): Pattern
  * .bpa("<.5 .25 .1 .01>/4")
  * .bpenv(4)
  */
-declare function bpattack(attack?: any, ...more: any[]): Pattern
+declare function bpattack(attack?: any, ...more: Arg[]): Pattern
 /**
  * Sets the decay duration for the bandpass filter envelope.
  * Synonyms: bpd
@@ -7418,12 +7183,12 @@ declare function bpattack(attack?: any, ...more: any[]): Pattern
  * .bps(0.2)
  * .bpenv(4)
  */
-declare function bpd(decay?: any, ...more: any[]): Pattern
+declare function bpd(decay?: any, ...more: Arg[]): Pattern
 /**
  * DC offset of the LFO for the bandpass filter
  * @param dcoffset {number | Pattern} dc offset. set to 0 for unipolar
  */
-declare function bpdc(dcoffset?: any, ...more: any[]): Pattern
+declare function bpdc(dcoffset?: any, ...more: Arg[]): Pattern
 /**
  * Sets the decay duration for the bandpass filter envelope.
  * Synonyms: bpd
@@ -7436,12 +7201,12 @@ declare function bpdc(dcoffset?: any, ...more: any[]): Pattern
  * .bps(0.2)
  * .bpenv(4)
  */
-declare function bpdecay(decay?: any, ...more: any[]): Pattern
+declare function bpdecay(decay?: any, ...more: Arg[]): Pattern
 /**
  * Depth of the LFO for the bandpass filter
  * @param depth {number | Pattern} depth of modulation
  */
-declare function bpdepth(depth?: any, ...more: any[]): Pattern
+declare function bpdepth(depth?: any, ...more: Arg[]): Pattern
 /**
  * Depth of the LFO for the bandpass filter, in HZ
  * Synonyms: bpdepthfreq
@@ -7449,7 +7214,7 @@ declare function bpdepth(depth?: any, ...more: any[]): Pattern
  * @example
  * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).bpdepthfrequency("<200 500 100 0>")
  */
-declare function bpdepthfreq(depth?: any, ...more: any[]): Pattern
+declare function bpdepthfreq(depth?: any, ...more: Arg[]): Pattern
 /**
  * Depth of the LFO for the bandpass filter, in HZ
  * Synonyms: bpdepthfreq
@@ -7457,7 +7222,7 @@ declare function bpdepthfreq(depth?: any, ...more: any[]): Pattern
  * @example
  * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).bpdepthfrequency("<200 500 100 0>")
  */
-declare function bpdepthfrequency(depth?: any, ...more: any[]): Pattern
+declare function bpdepthfrequency(depth?: any, ...more: Arg[]): Pattern
 /**
  * Sets the bandpass filter envelope modulation depth.
  * Synonyms: bpe
@@ -7469,7 +7234,7 @@ declare function bpdepthfrequency(depth?: any, ...more: any[]): Pattern
  * .bpa(.5)
  * .bpenv("<4 2 1 0 -1 -2 -4>/4")
  */
-declare function bpe(modulation?: any, ...more: any[]): Pattern
+declare function bpe(modulation?: any, ...more: Arg[]): Pattern
 /**
  * Sets the bandpass filter envelope modulation depth.
  * Synonyms: bpe
@@ -7481,7 +7246,7 @@ declare function bpe(modulation?: any, ...more: any[]): Pattern
  * .bpa(.5)
  * .bpenv("<4 2 1 0 -1 -2 -4>/4")
  */
-declare function bpenv(modulation?: any, ...more: any[]): Pattern
+declare function bpenv(modulation?: any, ...more: Arg[]): Pattern
 /**
  * Sets the center frequency of the band-pass filter. When using mininotation, you
  * can also optionally supply the 'bpq' parameter separated by ':'.
@@ -7490,7 +7255,7 @@ declare function bpenv(modulation?: any, ...more: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd,hh*6").bpf("<1000 2000 4000 8000>")
  */
-declare function bpf(frequency?: any, ...more: any[]): Pattern
+declare function bpf(frequency?: any, ...more: Arg[]): Pattern
 /**
  * Sets the band-pass q-factor (resonance).
  * Synonyms: bandq
@@ -7498,7 +7263,7 @@ declare function bpf(frequency?: any, ...more: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd").bpf(500).bpq("<0 1 2 3>")
  */
-declare function bpq(q?: any, ...more: any[]): Pattern
+declare function bpq(q?: any, ...more: Arg[]): Pattern
 /**
  * Sets the release time for the bandpass filter envelope.
  * Synonyms: bpr
@@ -7512,12 +7277,12 @@ declare function bpq(q?: any, ...more: any[]): Pattern
  * .bpr("<.5 .25 .1 0>/4")
  * .release(.5)
  */
-declare function bpr(release?: any, ...more: any[]): Pattern
+declare function bpr(release?: any, ...more: Arg[]): Pattern
 /**
  * Rate of the LFO for the bandpass filter
  * @param rate {number | Pattern} rate in hertz
  */
-declare function bprate(rate?: any, ...more: any[]): Pattern
+declare function bprate(rate?: any, ...more: Arg[]): Pattern
 /**
  * Sets the release time for the bandpass filter envelope.
  * Synonyms: bpr
@@ -7531,7 +7296,7 @@ declare function bprate(rate?: any, ...more: any[]): Pattern
  * .bpr("<.5 .25 .1 0>/4")
  * .release(.5)
  */
-declare function bprelease(release?: any, ...more: any[]): Pattern
+declare function bprelease(release?: any, ...more: Arg[]): Pattern
 /**
  * Sets the sustain amplitude for the bandpass filter envelope.
  * Synonyms: bps
@@ -7544,17 +7309,17 @@ declare function bprelease(release?: any, ...more: any[]): Pattern
  * .bps("<0 .25 .5 1>/4")
  * .bpenv(4)
  */
-declare function bps(sustain?: any, ...more: any[]): Pattern
+declare function bps(sustain?: any, ...more: Arg[]): Pattern
 /**
  * Shape of the LFO for the bandpass filter
  * @param shape {number | Pattern} Shape of the lfo (0, 1, 2, ..)
  */
-declare function bpshape(shape?: any, ...more: any[]): Pattern
+declare function bpshape(shape?: any, ...more: Arg[]): Pattern
 /**
  * Skew of the LFO for the bandpass filter
  * @param skew {number | Pattern} How much to bend the LFO shape
  */
-declare function bpskew(skew?: any, ...more: any[]): Pattern
+declare function bpskew(skew?: any, ...more: Arg[]): Pattern
 /**
  * Sets the sustain amplitude for the bandpass filter envelope.
  * Synonyms: bps
@@ -7567,18 +7332,18 @@ declare function bpskew(skew?: any, ...more: any[]): Pattern
  * .bps("<0 .25 .5 1>/4")
  * .bpenv(4)
  */
-declare function bpsustain(sustain?: any, ...more: any[]): Pattern
+declare function bpsustain(sustain?: any, ...more: Arg[]): Pattern
 /**
  * Cycle-synced rate of the LFO for the bandpass filter
  * @param rate {number | Pattern} rate in cycles
  */
-declare function bpsync(rate?: any, ...more: any[]): Pattern
+declare function bpsync(rate?: any, ...more: Arg[]): Pattern
 /**
  * Returns a new pattern where every other cycle is played once, twice as
  * fast, and offset in time by one quarter of a cycle. Creates a kind of
  * breakbeat feel.
  */
-declare function brak(...args: any[]): Pattern
+declare function brak(...more: Arg[]): Pattern
 /**
  * A continuous pattern of 0 or 1 (binary random)
  * @example
@@ -7591,8 +7356,8 @@ declare const brand: Pattern
  * @example
  * s("hh*10").pan(brandBy(0.2))
  */
-declare function brandBy(probability?: any, ...more: any[]): Pattern
-declare function brshift(...args: any[]): Pattern
+declare function brandBy(probability?: any, ...more: Arg[]): Pattern
+declare function brshift(...more: Arg[]): Pattern
 /**
  * A bus is a send which can be used for mixing patterns. It combines with..
  * s("bus") to play that bus through another pattern (for, say, applying non-linear
@@ -7600,15 +7365,15 @@ declare function brshift(...args: any[]): Pattern
  * otherPat.bmod(..) (to modulate another pattern with the bus)
  * @param number {number | Pattern}
  */
-declare function bus(number?: any, ...more: any[]): Pattern
+declare function bus(number?: any, ...more: Arg[]): Pattern
 /**
  * Postgain multiplier prior to sending the signal to the audio bus.
  * Synonyms: bgain
  * @param number {number | Pattern}
  */
-declare function busgain(number?: any, ...more: any[]): Pattern
-declare function bxor(...args: any[]): Pattern
-declare function bypass(...args: any[]): Pattern
+declare function busgain(number?: any, ...more: Arg[]): Pattern
+declare function bxor(...more: Arg[]): Pattern
+declare function bypass(...more: Arg[]): Pattern
 /**
  * Create byte beats with custom expressions
  * Synonyms: bbexpr
@@ -7616,7 +7381,7 @@ declare function bypass(...args: any[]): Pattern
  * @example
  * s("bytebeat").bbexpr('t*(t>>15^t>>66)')
  */
-declare function byteBeatExpression(byteBeatExpression?: any, ...more: any[]): Pattern
+declare function byteBeatExpression(byteBeatExpression?: any, ...more: Arg[]): Pattern
 /**
  * Create byte beats with custom expressions
  * Synonyms: bbst
@@ -7624,26 +7389,25 @@ declare function byteBeatExpression(byteBeatExpression?: any, ...more: any[]): P
  * @example
  * note("c3!8".add("{0 0 12 0 7 5 3}%8")).s("bytebeat:5").bbst("<3 1>".mul(10000))._scope()
  */
-declare function byteBeatStartTime(byteBeatStartTime?: any, ...more: any[]): Pattern
-declare const caches: any
-declare function calculateSteps(...args: any[]): Pattern
+declare function byteBeatStartTime(byteBeatStartTime?: any, ...more: Arg[]): Pattern
+declare function calculateSteps(...more: Arg[]): Pattern
 /**
  * Concatenation: combines a list of patterns, switching between them successively, one per cycle.
  * Synonyms: cat
  * @example
  * slowcat("e5", "b4", ["d5", "c5"])
  */
-declare function cat(...args: any[]): Pattern
+declare function cat(...more: Arg[]): Pattern
 /**
  * MIDI control number: Sends a MIDI control change message.
  * @param MIDI {number | Pattern} control number (0-127)
  */
-declare function ccn(MIDI?: any, ...more: any[]): Pattern
+declare function ccn(MIDI?: any, ...more: Arg[]): Pattern
 /**
  * MIDI control value: Sends a MIDI control change message.
  * @param MIDI {number | Pattern} control value (0-127)
  */
-declare function ccv(MIDI?: any, ...more: any[]): Pattern
+declare function ccv(MIDI?: any, ...more: Arg[]): Pattern
 /**
  * Assumes a numerical pattern. Returns a new pattern with all values set to
  * their mathematical ceiling. E.g. 3.2 replaced with 4, and -4.2
@@ -7651,7 +7415,7 @@ declare function ccv(MIDI?: any, ...more: any[]): Pattern
  * @example
  * note("42 42.1 42.5 43".ceil())
  */
-declare function ceil(...args: any[]): Pattern
+declare function ceil(...more: Arg[]): Pattern
 /**
  * Allows you to set the output channels on the interface
  * Synonyms: ch
@@ -7659,12 +7423,12 @@ declare function ceil(...args: any[]): Pattern
  * @example
  * note("e a d b g").channels("3:4")
  */
-declare function ch(channels?: any, ...more: any[]): Pattern
+declare function ch(channels?: any, ...more: Arg[]): Pattern
 /**
  * Choose the channel the pattern is sent to in superdirt
  * @param channel {number | Pattern} channel number
  */
-declare function channel(channel?: any, ...more: any[]): Pattern
+declare function channel(channel?: any, ...more: Arg[]): Pattern
 /**
  * Allows you to set the output channels on the interface
  * Synonyms: ch
@@ -7672,20 +7436,20 @@ declare function channel(channel?: any, ...more: any[]): Pattern
  * @example
  * note("e a d b g").channels("3:4")
  */
-declare function channels(channels?: any, ...more: any[]): Pattern
+declare function channels(channels?: any, ...more: Arg[]): Pattern
 /**
  * Distortion via Chebyshev polynomials
  * @param distortion {number | Pattern} amount of distortion to apply
  * @param volume {number | Pattern} linear postgain of the distortion
  */
-declare function chebyshev(distortion?: any, volume?: any, ...more: any[]): Pattern
+declare function chebyshev(distortion?: any, volume?: any, ...more: Arg[]): Pattern
 /**
  * Chooses randomly from the given list of elements.
  * @param xs {any} values / patterns to choose from.
  * @example
  * note("c2 g2!2 d2 f1").s(choose("sine", "triangle", "bd:6"))
  */
-declare function choose(xs?: any, ...more: any[]): Pattern
+declare function choose(xs?: any, ...more: Arg[]): Pattern
 /**
  * Picks one of the elements at random each cycle.
  * Synonyms: randcat
@@ -7694,16 +7458,16 @@ declare function choose(xs?: any, ...more: any[]): Pattern
  * @example
  * s("bd | hh | sd").fast(8)
  */
-declare function chooseCycles(...args: any[]): Pattern
-declare function chooseIn(...args: any[]): Pattern
+declare function chooseCycles(...more: Arg[]): Pattern
+declare function chooseIn(...more: Arg[]): Pattern
 /**
  * As with {chooseWith}, but the structure comes from the chosen values, rather
  * than the pattern you're using to choose with.
  * @param pat {Pattern}
  * @param xs {*}
  */
-declare function chooseInWith(pat?: any, xs?: any, ...more: any[]): Pattern
-declare function chooseOut(...args: any[]): Pattern
+declare function chooseInWith(pat?: any, xs?: any, ...more: Arg[]): Pattern
+declare function chooseOut(...more: Arg[]): Pattern
 /**
  * Choose from the list of values (or patterns of values) using the given
  * pattern of numbers, which should be in the range of 0..1
@@ -7712,7 +7476,7 @@ declare function chooseOut(...args: any[]): Pattern
  * @example
  * note("c2 g2!2 d2 f1").s(chooseWith(sine.fast(2), ["sawtooth", "triangle", "bd:6"]))
  */
-declare function chooseWith(pat?: any, xs?: any, ...more: any[]): Pattern
+declare function chooseWith(pat?: any, xs?: any, ...more: Arg[]): Pattern
 /**
  * Cuts each sample into the given number of parts, allowing you to explore a technique known as 'granular synthesis'.
  * It turns a pattern of samples into a pattern of parts of samples.
@@ -7723,21 +7487,21 @@ declare function chooseWith(pat?: any, xs?: any, ...more: any[]): Pattern
  *  .rev() // reverse order of chops
  *  .loopAt(2) // fit sample into 2 cycles
  */
-declare function chop(...args: any[]): Pattern
+declare function chop(...more: Arg[]): Pattern
 /**
  * The chord to voice
  * @param symbols {string | Pattern} chord symbols to voice e.g., C, Eb, Fm7, G7. The symbols can be defined via addVoicings
  * @example
  * chord("<Am C D F Am E Am E>").voicing()
  */
-declare function chord(symbols?: any, ...more: any[]): Pattern
+declare function chord(symbols?: any, ...more: Arg[]): Pattern
 /**
  * mix control for the chorus effect
  * @param chorus {string | Pattern} mix amount between 0 and 1
  * @example
  * note("d d a# a").s("sawtooth").chorus(.5)
  */
-declare function chorus(chorus?: any, ...more: any[]): Pattern
+declare function chorus(chorus?: any, ...more: Arg[]): Pattern
 /**
  * Divides a pattern into a given number of parts, then cycles through those parts in turn, applying the given function to each part in turn (one part per cycle).
  * Synonyms: slowChunk, slowchunk
@@ -7745,7 +7509,7 @@ declare function chorus(chorus?: any, ...more: any[]): Pattern
  * "0 1 2 3".chunk(4, x=>x.add(7))
  * .scale("A:minor").note()
  */
-declare function chunk(...args: any[]): Pattern
+declare function chunk(...more: Arg[]): Pattern
 /**
  * Like chunk, but cycles through the parts in reverse order. Known as chunk' in tidalcycles
  * Synonyms: chunkback
@@ -7753,7 +7517,7 @@ declare function chunk(...args: any[]): Pattern
  * "0 1 2 3".chunkBack(4, x=>x.add(7))
  * .scale("A:minor").note()
  */
-declare function chunkBack(...args: any[]): Pattern
+declare function chunkBack(...more: Arg[]): Pattern
 /**
  * Like chunkInto, but moves backwards through the chunks.
  * Synonyms: chunkbackinto
@@ -7761,7 +7525,7 @@ declare function chunkBack(...args: any[]): Pattern
  * sound("bd sd ht lt bd - cp lt").chunkInto(4, hurry(2))
  *   .bank("tr909")
  */
-declare function chunkBackInto(...args: any[]): Pattern
+declare function chunkBackInto(...more: Arg[]): Pattern
 /**
  * Like chunk, but the function is applied to a looped subcycle of the source pattern.
  * Synonyms: chunkinto
@@ -7769,7 +7533,7 @@ declare function chunkBackInto(...args: any[]): Pattern
  * sound("bd sd ht lt bd - cp lt").chunkInto(4, hurry(2))
  *   .bank("tr909")
  */
-declare function chunkInto(...args: any[]): Pattern
+declare function chunkInto(...more: Arg[]): Pattern
 /**
  * Like chunk, but cycles through the parts in reverse order. Known as chunk' in tidalcycles
  * Synonyms: chunkback
@@ -7777,7 +7541,7 @@ declare function chunkInto(...args: any[]): Pattern
  * "0 1 2 3".chunkBack(4, x=>x.add(7))
  * .scale("A:minor").note()
  */
-declare function chunkback(...args: any[]): Pattern
+declare function chunkback(...more: Arg[]): Pattern
 /**
  * Like chunkInto, but moves backwards through the chunks.
  * Synonyms: chunkbackinto
@@ -7785,7 +7549,7 @@ declare function chunkback(...args: any[]): Pattern
  * sound("bd sd ht lt bd - cp lt").chunkInto(4, hurry(2))
  *   .bank("tr909")
  */
-declare function chunkbackinto(...args: any[]): Pattern
+declare function chunkbackinto(...more: Arg[]): Pattern
 /**
  * Like chunk, but the function is applied to a looped subcycle of the source pattern.
  * Synonyms: chunkinto
@@ -7793,12 +7557,12 @@ declare function chunkbackinto(...args: any[]): Pattern
  * sound("bd sd ht lt bd - cp lt").chunkInto(4, hurry(2))
  *   .bank("tr909")
  */
-declare function chunkinto(...args: any[]): Pattern
-declare function clamp(...args: any[]): Pattern
-declare function cleanupDraw(...args: any[]): Pattern
-declare function cleanupOnEnd(...args: any[]): Pattern
-declare function cleanupUi(...args: any[]): Pattern
-declare function clearHydra(...args: any[]): Pattern
+declare function chunkinto(...more: Arg[]): Pattern
+declare function clamp(...more: Arg[]): Pattern
+declare function cleanupDraw(...more: Arg[]): Pattern
+declare function cleanupOnEnd(...more: Arg[]): Pattern
+declare function cleanupUi(...more: Arg[]): Pattern
+declare function clearHydra(...more: Arg[]): Pattern
 /**
  * Multiplies the duration with the given number. Also cuts samples off at the end if they exceed the duration.
  * Synonyms: legato
@@ -7806,22 +7570,22 @@ declare function clearHydra(...args: any[]): Pattern
  * @example
  * note("c a f e").s("piano").clip("<.5 1 2>")
  */
-declare function clip(factor?: any, ...more: any[]): Pattern
+declare function clip(factor?: any, ...more: Arg[]): Pattern
 /**
  * Fake-resampling for lowering the sample rate. Caution: This effect seems to only work in chromium based browsers
  * @param factor {number | Pattern} 1 for original 2 for half, 3 for a third and so on.
  * @example
  * s("bd sd [~ bd] sd,hh*8").coarse("<1 4 8 16 32>")
  */
-declare function coarse(factor?: any, ...more: any[]): Pattern
-declare function code2hash(...args: any[]): Pattern
+declare function coarse(factor?: any, ...more: Arg[]): Pattern
+declare function code2hash(...more: Arg[]): Pattern
 declare const codemirrorSettings: any
 /**
  * Sets the color of the hap in visualizations like pianoroll or highlighting.
  * Synonyms: colour
  * @param color {string} Hexadecimal or CSS color name
  */
-declare function color(color?: any, ...more: any[]): Pattern
+declare function color(color?: any, ...more: Arg[]): Pattern
 declare const colorMap: any
 /**
  * Sets the color of the hap in visualizations like pianoroll or highlighting.
@@ -7829,10 +7593,10 @@ declare const colorMap: any
  * @param color {string} Hexadecimal or CSS color name
  */
 declare const colour: any
-declare function comb(...args: any[]): Pattern
+declare function comb(...more: Arg[]): Pattern
 declare const compartments: any
 declare const complex: any
-declare function compose(...args: any[]): Pattern
+declare function compose(...more: Arg[]): Pattern
 /**
  * Compress each cycle into the given timespan, leaving a gap
  * @example
@@ -7841,8 +7605,8 @@ declare function compose(...args: any[]): Pattern
  *   s("~ bd sd ~")
  * )
  */
-declare function compress(...args: any[]): Pattern
-declare function compressSpan(...args: any[]): Pattern
+declare function compress(...more: Arg[]): Pattern
+declare function compressSpan(...more: Arg[]): Pattern
 /**
  * Dynamics Compressor. The params are compressor("threshold:ratio:knee:attack:release")
  * More info here
@@ -7850,34 +7614,33 @@ declare function compressSpan(...args: any[]): Pattern
  * s("bd sd [~ bd] sd,hh*8")
  * .compressor("-20:20:10:.002:.02")
  */
-declare function compressor(...args: any[]): Pattern
-declare function compressorAttack(...args: any[]): Pattern
-declare function compressorKnee(...args: any[]): Pattern
-declare function compressorRatio(...args: any[]): Pattern
-declare function compressorRelease(...args: any[]): Pattern
-declare function compressspan(...args: any[]): Pattern
-declare function connectBusModulator(...args: any[]): Pattern
-declare function connectEnvelope(...args: any[]): Pattern
-declare function connectLFO(...args: any[]): Pattern
-declare function connectToDestination(...args: any[]): Pattern
-declare function constant(...args: any[]): Pattern
+declare function compressor(...more: Arg[]): Pattern
+declare function compressorAttack(...more: Arg[]): Pattern
+declare function compressorKnee(...more: Arg[]): Pattern
+declare function compressorRatio(...more: Arg[]): Pattern
+declare function compressorRelease(...more: Arg[]): Pattern
+declare function compressspan(...more: Arg[]): Pattern
+declare function connectBusModulator(...more: Arg[]): Pattern
+declare function connectEnvelope(...more: Arg[]): Pattern
+declare function connectLFO(...more: Arg[]): Pattern
+declare function connectToDestination(...more: Arg[]): Pattern
+declare function constant(...more: Arg[]): Pattern
 /**
  * Experimental
  * Contracts the step size of the pattern by the given factor. See also expand.
  * @example
  * sound("tha dhi thom nam").bank("mridangam").contract("3 2 1 1 2 3").pace(8)
  */
-declare function contract(...args: any[]): Pattern
+declare function contract(...more: Arg[]): Pattern
 /**
  * MIDI control: Sends a MIDI control change message.
  * @param MIDI {number | Pattern} control number (0-127)
  * @param MIDI {number | Pattern} controller value (0-127)
  */
-declare function control(MIDI?: any, MIDI?: any, ...more: any[]): Pattern
+declare function control(MIDI?: any, MIDI_?: any, ...more: Arg[]): Pattern
 declare const controls: any
-declare function convertColorToNumber(...args: any[]): Pattern
-declare function convertHexToNumber(...args: any[]): Pattern
-declare const cookieStore: any
+declare function convertColorToNumber(...more: Arg[]): Pattern
+declare function convertHexToNumber(...more: Arg[]): Pattern
 /**
  * A cosine signal between 0 and 1.
  * @example
@@ -7894,19 +7657,19 @@ declare const cosine2: Pattern
  * @example
  * s("<bd sd>,hh*2").cpm(90) // = 90 bpm
  */
-declare function cpm(...args: any[]): Pattern
-declare function cps(...args: any[]): Pattern
-declare function createClock(...args: any[]): Pattern
-declare function createFilter(...args: any[]): Pattern
-declare function createParam(...args: any[]): Pattern
-declare function createParams(...args: any[]): Pattern
+declare function cpm(...more: Arg[]): Pattern
+declare function cps(...more: Arg[]): Pattern
+declare function createClock(...more: Arg[]): Pattern
+declare function createFilter(...more: Arg[]): Pattern
+declare function createParam(...more: Arg[]): Pattern
+declare function createParams(...more: Arg[]): Pattern
 /**
  * Bit crusher effect.
  * @param depth {number | Pattern} between 1 (for drastic reduction in bit-depth) to 16 (for barely no reduction).
  * @example
  * s("<bd sd>,hh*3").fast(2).crush("<16 8 7 6 5 4 3 2>")
  */
-declare function crush(depth?: any, ...more: any[]): Pattern
+declare function crush(depth?: any, ...more: Arg[]): Pattern
 /**
  * Applies the cutoff frequency of the low-pass filter.
  * When using mininotation, you can also optionally add the 'lpq' parameter, separated by ':'.
@@ -7917,24 +7680,24 @@ declare function crush(depth?: any, ...more: any[]): Pattern
  * @example
  * s("bd*16").lpf("1000:0 1000:10 1000:20 1000:30")
  */
-declare function ctf(frequency?: any, ...more: any[]): Pattern
-declare function ctlNum(...args: any[]): Pattern
-declare function ctranspose(...args: any[]): Pattern
+declare function ctf(frequency?: any, ...more: Arg[]): Pattern
+declare function ctlNum(...more: Arg[]): Pattern
+declare function ctranspose(...more: Arg[]): Pattern
 /**
  * Cubic polynomial distortion
  * @param distortion {number | Pattern} amount of distortion to apply
  * @param volume {number | Pattern} linear postgain of the distortion
  */
-declare function cubic(distortion?: any, volume?: any, ...more: any[]): Pattern
-declare function curry(...args: any[]): Pattern
-declare function curve(...args: any[]): Pattern
+declare function cubic(distortion?: any, volume?: any, ...more: Arg[]): Pattern
+declare function curry(...more: Arg[]): Pattern
+declare function curve(...more: Arg[]): Pattern
 /**
  * In the style of classic drum-machines, cut will stop a playing sample as soon as another samples with in same cutgroup is to be played. An example would be an open hi-hat followed by a closed one, essentially muting the open.
  * @param group {number | Pattern} cut group number
  * @example
  * s("[oh hh]*4").cut(1)
  */
-declare function cut(group?: any, ...more: any[]): Pattern
+declare function cut(group?: any, ...more: Arg[]): Pattern
 /**
  * Applies the cutoff frequency of the low-pass filter.
  * When using mininotation, you can also optionally add the 'lpq' parameter, separated by ':'.
@@ -7945,8 +7708,8 @@ declare function cut(group?: any, ...more: any[]): Pattern
  * @example
  * s("bd*16").lpf("1000:0 1000:10 1000:20 1000:30")
  */
-declare function cutoff(frequency?: any, ...more: any[]): Pattern
-declare function cycleToSeconds(...args: any[]): Pattern
+declare function cutoff(frequency?: any, ...more: Arg[]): Pattern
+declare function cycleToSeconds(...more: Arg[]): Pattern
 /**
  * A pattern measuring the duration of events,
  * in cycles per event. cyclesPer doesn't have structure itself, but takes structure, and therefore
@@ -7970,7 +7733,7 @@ declare const cyclesPer: Pattern
  * @example
  * note("c3 e3 f3 g3").decay("<.1 .2 .3 .4>").sustain(0)
  */
-declare function dec(time?: any, ...more: any[]): Pattern
+declare function dec(time?: any, ...more: Arg[]): Pattern
 /**
  * Amplitude envelope decay time: the time it takes after the attack time to reach the sustain level.
  * Note that the decay is only audible if the sustain value is lower than 1.
@@ -7979,7 +7742,7 @@ declare function dec(time?: any, ...more: any[]): Pattern
  * @example
  * note("c3 e3 f3 g3").decay("<.1 .2 .3 .4>").sustain(0)
  */
-declare function decay(time?: any, ...more: any[]): Pattern
+declare function decay(time?: any, ...more: Arg[]): Pattern
 declare const defaultSettings: any
 /**
  * configures the default midimap, which is used when no "midimap" port is set
@@ -7988,7 +7751,7 @@ declare const defaultSettings: any
  * $: note("c a f e").midi();
  * $: lpf(sine.slow(4).segment(16)).midi();
  */
-declare function defaultmidimap(...args: any[]): Pattern
+declare function defaultmidimap(...more: Arg[]): Pattern
 /**
  * Randomly removes 50% of events from the pattern. Shorthand for .degradeBy(0.5)
  * @example
@@ -7996,7 +7759,7 @@ declare function defaultmidimap(...args: any[]): Pattern
  * @example
  * s("[hh?]*8")
  */
-declare function degrade(...args: any[]): Pattern
+declare function degrade(...more: Arg[]): Pattern
 /**
  * Randomly removes events from the pattern by a given amount.
  * 0 = 0% chance of removal
@@ -8010,9 +7773,9 @@ declare function degrade(...args: any[]): Pattern
  * //beat generator
  * s("bd").segment(16).degradeBy(.5).ribbon(16,1)
  */
-declare function degradeBy(amount?: any, ...more: any[]): Pattern
-declare function degradeByWith(...args: any[]): Pattern
-declare function degree(...args: any[]): Pattern
+declare function degradeBy(amount?: any, ...more: Arg[]): Pattern
+declare function degradeByWith(...more: Arg[]): Pattern
+declare function degree(...more: Arg[]): Pattern
 /**
  * Sets the level of the delay signal.
  * When using mininotation, you can also optionally add the 'delaytime' and 'delayfeedback' parameter,
@@ -8023,7 +7786,7 @@ declare function degree(...args: any[]): Pattern
  * @example
  * s("bd bd").delay("0.65:0.25:0.9 0.65:0.125:0.7")
  */
-declare function delay(level?: any, ...more: any[]): Pattern
+declare function delay(level?: any, ...more: Arg[]): Pattern
 /**
  * Sets the level of the signal that is fed back into the delay.
  * Caution: Values >= 1 will result in a signal that gets louder and louder! Don't do it
@@ -8032,7 +7795,7 @@ declare function delay(level?: any, ...more: any[]): Pattern
  * @example
  * s("bd").delay(.25).delayfeedback("<.25 .5 .75 1>")
  */
-declare function delayfb(feedback?: any, ...more: any[]): Pattern
+declare function delayfb(feedback?: any, ...more: Arg[]): Pattern
 /**
  * Sets the level of the signal that is fed back into the delay.
  * Caution: Values >= 1 will result in a signal that gets louder and louder! Don't do it
@@ -8041,7 +7804,7 @@ declare function delayfb(feedback?: any, ...more: any[]): Pattern
  * @example
  * s("bd").delay(.25).delayfeedback("<.25 .5 .75 1>")
  */
-declare function delayfeedback(feedback?: any, ...more: any[]): Pattern
+declare function delayfeedback(feedback?: any, ...more: Arg[]): Pattern
 /**
  * Sets the time of the delay effect.
  * Synonyms: delayt, dt
@@ -8049,7 +7812,7 @@ declare function delayfeedback(feedback?: any, ...more: any[]): Pattern
  * @example
  * note("d d a# a".fast(2)).s("sawtooth").delay(.8).delaytime(1/2).delayspeed("<2 .5 -1 -2>")
  */
-declare function delayspeed(delayspeed?: any, ...more: any[]): Pattern
+declare function delayspeed(delayspeed?: any, ...more: Arg[]): Pattern
 /**
  * Sets the time of the delay effect in cycles.
  * Synonyms: delayt, dt
@@ -8057,7 +7820,7 @@ declare function delayspeed(delayspeed?: any, ...more: any[]): Pattern
  * @example
  * s("bd bd").delay(.25).delaysync("<1 2 3 5>".div(8))
  */
-declare function delaysync(cycles?: any, ...more: any[]): Pattern
+declare function delaysync(cycles?: any, ...more: Arg[]): Pattern
 /**
  * Sets the time of the delay effect.
  * Synonyms: delayt, dt
@@ -8065,9 +7828,9 @@ declare function delaysync(cycles?: any, ...more: any[]): Pattern
  * @example
  * note("d d a# a".fast(2)).s("sawtooth").delay(.8).delaytime(1/2).delayspeed("<2 .5 -1 -2>")
  */
-declare function delayt(delayspeed?: any, ...more: any[]): Pattern
-declare function delaytime(...args: any[]): Pattern
-declare function deltaSlide(...args: any[]): Pattern
+declare function delayt(delayspeed?: any, ...more: Arg[]): Pattern
+declare function delaytime(...more: Arg[]): Pattern
+declare function deltaSlide(...more: Arg[]): Pattern
 /**
  * Set detune for stacked voices of supported oscillators
  * Synonyms: det
@@ -8075,7 +7838,7 @@ declare function deltaSlide(...args: any[]): Pattern
  * @example
  * note("d f a a# a d3").fast(2).s("supersaw").detune("<.1 .2 .5 24.1>")
  */
-declare function det(amount?: any, ...more: any[]): Pattern
+declare function det(amount?: any, ...more: Arg[]): Pattern
 /**
  * Set detune for stacked voices of supported oscillators
  * Synonyms: det
@@ -8083,7 +7846,7 @@ declare function det(amount?: any, ...more: any[]): Pattern
  * @example
  * note("d f a a# a d3").fast(2).s("supersaw").detune("<.1 .2 .5 24.1>")
  */
-declare function detune(amount?: any, ...more: any[]): Pattern
+declare function detune(amount?: any, ...more: Arg[]): Pattern
 /**
  * Sets the level of the signal that is fed back into the delay.
  * Caution: Values >= 1 will result in a signal that gets louder and louder! Don't do it
@@ -8092,8 +7855,8 @@ declare function detune(amount?: any, ...more: any[]): Pattern
  * @example
  * s("bd").delay(.25).delayfeedback("<.25 .5 .75 1>")
  */
-declare function dfb(feedback?: any, ...more: any[]): Pattern
-declare function dict(...args: any[]): Pattern
+declare function dfb(feedback?: any, ...more: Arg[]): Pattern
+declare function dict(...more: Arg[]): Pattern
 /**
  * Which dictionary to use for the voicings. This falls back to the default dictionary if not provided
  * @param dictionaryName {string} which dictionary (having been defined with addVoicings) to use
@@ -8106,13 +7869,13 @@ declare function dict(...args: any[]): Pattern
  * .dict('house').anchor(66)
  * .voicing().room(.5)
  */
-declare function dictionary(dictionaryName?: any, ...more: any[]): Pattern
+declare function dictionary(dictionaryName?: any, ...more: Arg[]): Pattern
 /**
  * Diode-emulating distortion
  * @param distortion {number | Pattern} amount of distortion to apply
  * @param volume {number | Pattern} linear postgain of the distortion
  */
-declare function diode(distortion?: any, volume?: any, ...more: any[]): Pattern
+declare function diode(distortion?: any, volume?: any, ...more: Arg[]): Pattern
 /**
  * Wave shaping distortion. CAUTION: it can get loud.
  * Second option in optional array syntax (ex: ".9:.5") applies a postgain to the output. Third option sets the waveshaping type.
@@ -8128,7 +7891,7 @@ declare function diode(distortion?: any, volume?: any, ...more: any[]): Pattern
  * @example
  * s("bd:4*4").bank("tr808").distort("3:0.5:diode")
  */
-declare function dist(distortion?: any, volume?: any, type?: any, ...more: any[]): Pattern
+declare function dist(distortion?: any, volume?: any, type?: any, ...more: Arg[]): Pattern
 /**
  * Wave shaping distortion. CAUTION: it can get loud.
  * Second option in optional array syntax (ex: ".9:.5") applies a postgain to the output. Third option sets the waveshaping type.
@@ -8144,7 +7907,7 @@ declare function dist(distortion?: any, volume?: any, type?: any, ...more: any[]
  * @example
  * s("bd:4*4").bank("tr808").distort("3:0.5:diode")
  */
-declare function distort(distortion?: any, volume?: any, type?: any, ...more: any[]): Pattern
+declare function distort(distortion?: any, volume?: any, type?: any, ...more: Arg[]): Pattern
 declare const distortionAlgorithms: any
 /**
  * Type of waveshaping distortion to apply.
@@ -8158,7 +7921,7 @@ declare const distortionAlgorithms: any
  *   .distort(rand.range(1, 8))
  *   .distorttype("<fold chebyshev scurve diode asym sinefold>")
  */
-declare function distorttype(type?: any, ...more: any[]): Pattern
+declare function distorttype(type?: any, ...more: Arg[]): Pattern
 /**
  * Postgain for waveshaping distortion.
  * Synonyms: distvol
@@ -8166,23 +7929,22 @@ declare function distorttype(type?: any, ...more: any[]): Pattern
  * @example
  * s("bd*4").bank("tr909").distort(2).distortvol(0.8)
  */
-declare function distortvol(volume?: any, ...more: any[]): Pattern
+declare function distortvol(volume?: any, ...more: Arg[]): Pattern
 /**
  * Divides each number by the given factor.
  */
-declare function div(...args: any[]): Pattern
+declare function div(...more: Arg[]): Pattern
 /**
  * DJ filter, below 0.5 is low pass filter, above is high pass filter.
  * @param cutoff {number | Pattern} below 0.5 is low pass filter, above is high pass filter
  * @example
  * n(irand(16).seg(8)).scale("d:phrygian").s("supersaw").djf("<.5 .3 .2 .75>")
  */
-declare function djf(cutoff?: any, ...more: any[]): Pattern
-declare const documentPictureInPicture: any
-declare function dough(...args: any[]): Pattern
-declare function doughTrigger(...args: any[]): Pattern
-declare function doughsamples(...args: any[]): Pattern
-declare function drawFrequencyScope(...args: any[]): Pattern
+declare function djf(cutoff?: any, ...more: Arg[]): Pattern
+declare function dough(...more: Arg[]): Pattern
+declare function doughTrigger(...more: Arg[]): Pattern
+declare function doughsamples(...more: Arg[]): Pattern
+declare function drawFrequencyScope(...more: Arg[]): Pattern
 /**
  * Intended for a debugging, drawLine renders the pattern as a string, where each character represents the same time span.
  * Should only be used with single characters as values, otherwise the character slots will be messed up.
@@ -8198,16 +7960,16 @@ declare function drawFrequencyScope(...args: any[]): Pattern
  * console.log(line);
  * silence;
  */
-declare function drawLine(pattern?: any, chars?: any, ...more: any[]): Pattern
-declare function drawPianoroll(...args: any[]): Pattern
-declare function drawTimeScope(...args: any[]): Pattern
+declare function drawLine(pattern?: any, chars?: any, ...more: Arg[]): Pattern
+declare function drawPianoroll(...more: Arg[]): Pattern
+declare function drawTimeScope(...more: Arg[]): Pattern
 /**
  * Filter overdrive for supported filter types
  * @param amount {number | Pattern}
  * @example
  * note("{f g g c d a a#}%16".sub(17)).s("supersaw").lpenv(8).lpf(150).lpq(.8).ftype('ladder').drive("<.5 4>")
  */
-declare function drive(amount?: any, ...more: any[]): Pattern
+declare function drive(amount?: any, ...more: Arg[]): Pattern
 /**
  * Experimental
  * Drops the given number of steps from a pattern.
@@ -8221,17 +7983,17 @@ declare function drive(amount?: any, ...more: any[]): Pattern
  * @example
  * "tha dhi thom nam".drop("0 -1 -2 -3").sound().bank("mridangam")
  */
-declare function drop(...args: any[]): Pattern
+declare function drop(...more: Arg[]): Pattern
 /**
  * Set dryness of reverb. See room and size for more information about reverb.
  * @param dry {number | Pattern} 0 = wet, 1 = dry
  * @example
  * n("[0,3,7](3,8)").s("superpiano").room(.7).dry("<0 .5 .75 1>").osc()
  */
-declare function dry(dry?: any, ...more: any[]): Pattern
-declare function drywet(...args: any[]): Pattern
-declare function ds(...args: any[]): Pattern
-declare function dspWorklet(...args: any[]): Pattern
+declare function dry(dry?: any, ...more: Arg[]): Pattern
+declare function drywet(...more: Arg[]): Pattern
+declare function ds(...more: Arg[]): Pattern
+declare function dspWorklet(...more: Arg[]): Pattern
 /**
  * Sets the time of the delay effect.
  * Synonyms: delayt, dt
@@ -8239,7 +8001,7 @@ declare function dspWorklet(...args: any[]): Pattern
  * @example
  * note("d d a# a".fast(2)).s("sawtooth").delay(.8).delaytime(1/2).delayspeed("<2 .5 -1 -2>")
  */
-declare function dt(delayspeed?: any, ...more: any[]): Pattern
+declare function dt(delayspeed?: any, ...more: Arg[]): Pattern
 /**
  * Modulate the amplitude of an orbit to create a "sidechain" like effect.
  * Can be applied to multiple orbits with the ':' mininotation, e.g. duckorbit("2:3")
@@ -8253,7 +8015,7 @@ declare function dt(delayspeed?: any, ...more: any[]): Pattern
  * $: s("hh*16").orbit(3)
  * $: s("bd:4!4").beat("0,4,8,11,14",16).duckorbit("2:3").duckattack(0.2).duckdepth(1)
  */
-declare function duck(orbit?: any, ...more: any[]): Pattern
+declare function duck(orbit?: any, ...more: Arg[]): Pattern
 /**
  * The time required for the ducked signal(s) to return to their normal volume.
  * Can vary across orbits with the ':' mininotation, e.g. duckonset("0:0.003").
@@ -8268,7 +8030,7 @@ declare function duck(orbit?: any, ...more: any[]): Pattern
  * lessduck: s("hh*16").orbit(5)
  * ducker: s("bd:4!4").beat("0,4,8,11,14",16).duckorbit("2:5").duckattack("0.4:0.1")
  */
-declare function duckattack(time?: any, ...more: any[]): Pattern
+declare function duckattack(time?: any, ...more: Arg[]): Pattern
 /**
  * The amount of ducking applied to target orbit
  * Can vary across orbits with the ':' mininotation, e.g. duckdepth("0.3:0.1").
@@ -8281,7 +8043,7 @@ declare function duckattack(time?: any, ...more: any[]): Pattern
  * $: s("hh*16").orbit(3)
  * $: s("bd:4!4").beat("0,4,8,11,14",16).duckorbit("2:3").duckattack(0.2).duckdepth("1:0.5")
  */
-declare function duckdepth(depth?: any, ...more: any[]): Pattern
+declare function duckdepth(depth?: any, ...more: Arg[]): Pattern
 /**
  * The time required for the ducked signal(s) to reach their lowest volume.
  * Can be used to prevent clicking or for creative rhythmic effects.
@@ -8303,7 +8065,7 @@ declare function duckdepth(depth?: any, ...more: any[]): Pattern
  * hhat: s("hh*16").orbit(7)
  * ducker: s("bd*4").bank("tr909").duckorbit("4:7").duckonset("0.3:0.003").duckattack(0.25)
  */
-declare function duckonset(time?: any, ...more: any[]): Pattern
+declare function duckonset(time?: any, ...more: Arg[]): Pattern
 /**
  * Sets the duration of the event in cycles. Similar to clip / legato, it also cuts samples off at the end if they exceed the duration.
  * Synonyms: dur
@@ -8311,7 +8073,7 @@ declare function duckonset(time?: any, ...more: any[]): Pattern
  * @example
  * note("c a f e").s("piano").dur("<.5 1 2>")
  */
-declare function dur(seconds?: any, ...more: any[]): Pattern
+declare function dur(seconds?: any, ...more: Arg[]): Pattern
 /**
  * Sets the duration of the event in cycles. Similar to clip / legato, it also cuts samples off at the end if they exceed the duration.
  * Synonyms: dur
@@ -8319,21 +8081,21 @@ declare function dur(seconds?: any, ...more: any[]): Pattern
  * @example
  * note("c a f e").s("piano").dur("<.5 1 2>")
  */
-declare function duration(seconds?: any, ...more: any[]): Pattern
+declare function duration(seconds?: any, ...more: Arg[]): Pattern
 /**
  * Applies a function to each of the running patterns separately. This is intended for future use with upcoming 'stepwise' features. See all for a version that applies the function to all the patterns stacked together into a single pattern.
  * $: sound("bd - cp sd")
  * $: sound("hh*8")
  * each(fast("<2 3>"))
  */
-declare function each(...args: any[]): Pattern
+declare function each(...more: Arg[]): Pattern
 /**
  * Nudge a pattern to start earlier in time. Equivalent of Tidal's <~ operator
  * @param cycles {number | Pattern} number of cycles to nudge left
  * @example
  * "bd ~".stack("hh ~".early(.1)).s()
  */
-declare function early(cycles?: any, ...more: any[]): Pattern
+declare function early(cycles?: any, ...more: Arg[]): Pattern
 /**
  * Superimpose and offset multiple times, gradually decreasing the velocity
  * @param times {number} how many times to repeat
@@ -8342,7 +8104,7 @@ declare function early(cycles?: any, ...more: any[]): Pattern
  * @example
  * s("bd sd").echo(3, 1/6, .8)
  */
-declare function echo(times?: any, time?: any, feedback?: any, ...more: any[]): Pattern
+declare function echo(times?: any, time?: any, feedback?: any, ...more: Arg[]): Pattern
 /**
  * Superimpose and offset multiple times, applying the given function each time.
  * Synonyms: echowith, stutWith, stutwith
@@ -8354,7 +8116,7 @@ declare function echo(times?: any, time?: any, feedback?: any, ...more: any[]): 
  * .echoWith(4, 1/8, (p,n) => p.add(n*2))
  * .scale("C:minor").note()
  */
-declare function echoWith(times?: any, time?: any, func?: any, ...more: any[]): Pattern
+declare function echoWith(times?: any, time?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
 /**
  * Superimpose and offset multiple times, applying the given function each time.
  * Synonyms: echowith, stutWith, stutwith
@@ -8366,8 +8128,8 @@ declare function echoWith(times?: any, time?: any, func?: any, ...more: any[]): 
  * .echoWith(4, 1/8, (p,n) => p.add(n*2))
  * .scale("C:minor").note()
  */
-declare function echowith(times?: any, time?: any, func?: any, ...more: any[]): Pattern
-declare function effectSend(...args: any[]): Pattern
+declare function echowith(times?: any, time?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+declare function effectSend(...more: Arg[]): Pattern
 /**
  * A 'euclid' variant with an additional parameter that morphs the resulting
  * rhythm from 0 (no morphing) to 1 (completely 'even'). For example
@@ -8384,16 +8146,16 @@ declare function effectSend(...args: any[]): Pattern
  * sound("hh").euclidish(7,12,sine.slow(8))
  * .pan(sine.slow(8))
  */
-declare function eish(pulses?: any, steps?: any, groove?: any, ...more: any[]): Pattern
-declare function enableWebMidi(...args: any[]): Pattern
+declare function eish(pulses?: any, steps?: any, groove?: any, ...more: Arg[]): Pattern
+declare function enableWebMidi(...more: Arg[]): Pattern
 /**
  * The same as .begin, but cuts off the end off each sample.
  * @param length {number | Pattern} 1 = whole sample, .5 = half sample, .25 = quarter sample etc..
  * @example
  * s("bd*2,oh*4").end("<.1 .2 .5 1>").fast(2)
  */
-declare function end(length?: any, ...more: any[]): Pattern
-declare function enhance(...args: any[]): Pattern
+declare function end(length?: any, ...more: Arg[]): Pattern
+declare function enhance(...more: Arg[]): Pattern
 /**
  * Configures an envelope. Can be called in sequence like pat.env(...).env(...) to set up multiple envelopes
  * There are two ways to declare which control will be modulated:
@@ -8438,10 +8200,10 @@ declare function enhance(...args: any[]): Pattern
  *   .diode(0.3)
  *   .sometimes(x => x.env({ a: "0.5" }, 'lpf_mod'))
  */
-declare function env(config?: any, id?: any, ...more: any[]): Pattern
-declare function eq(...args: any[]): Pattern
-declare function eqt(...args: any[]): Pattern
-declare function errorLogger(...args: any[]): Pattern
+declare function env(config?: any, id?: any, ...more: Arg[]): Pattern
+declare function eq(...more: Arg[]): Pattern
+declare function eqt(...more: Arg[]): Pattern
+declare function errorLogger(...more: Arg[]): Pattern
 /**
  * Changes the structure of the pattern to form an Euclidean rhythm.
  * Euclidean rhythms are rhythms obtained using the greatest common
@@ -8455,7 +8217,7 @@ declare function errorLogger(...args: any[]): Pattern
  * // The Cuban tresillo pattern.
  * note("c3").euclid(3,8)
  */
-declare function euclid(pulses?: any, steps?: any, ...more: any[]): Pattern
+declare function euclid(pulses?: any, steps?: any, ...more: Arg[]): Pattern
 /**
  * Similar to euclid, but each pulse is held until the next pulse,
  * so there will be no gaps.
@@ -8487,7 +8249,7 @@ declare const euclidLegatoRot: any
  * // A Samba rhythm necklace from Brazil
  * note("c3").euclidRot(3,16,14)
  */
-declare function euclidRot(pulses?: any, steps?: any, rotation?: any, ...more: any[]): Pattern
+declare function euclidRot(pulses?: any, steps?: any, rotation?: any, ...more: Arg[]): Pattern
 /**
  * A 'euclid' variant with an additional parameter that morphs the resulting
  * rhythm from 0 (no morphing) to 1 (completely 'even'). For example
@@ -8504,10 +8266,10 @@ declare function euclidRot(pulses?: any, steps?: any, rotation?: any, ...more: a
  * sound("hh").euclidish(7,12,sine.slow(8))
  * .pan(sine.slow(8))
  */
-declare function euclidish(pulses?: any, steps?: any, groove?: any, ...more: any[]): Pattern
-declare function euclidrot(...args: any[]): Pattern
-declare function evalScope(...args: any[]): any
-declare function evaluate(...args: any[]): Pattern
+declare function euclidish(pulses?: any, steps?: any, groove?: any, ...more: Arg[]): Pattern
+declare function euclidrot(...more: Arg[]): Pattern
+declare function evalScope(...more: Arg[]): any
+declare function evaluate(...more: Arg[]): Pattern
 /**
  * An alias for firstOf
  * @param n {number} how many cycles
@@ -8515,15 +8277,15 @@ declare function evaluate(...args: any[]): Pattern
  * @example
  * note("c3 d3 e3 g3").every(4, x=>x.rev())
  */
-declare function every(n?: any, func?: any, ...more: any[]): Pattern
+declare function every(n?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
 /**
  * Experimental
  * Expands the step size of the pattern by the given factor.
  * @example
  * sound("tha dhi thom nam").bank("mridangam").expand("3 2 1 1 2 3").pace(8)
  */
-declare function expand(...args: any[]): Pattern
-declare function expression(...args: any[]): Pattern
+declare function expand(...more: Arg[]): Pattern
+declare function expression(...more: Arg[]): Pattern
 /**
  * Experimental
  * extend is similar to fast in that it increases its density, but it also increases the step count
@@ -8535,11 +8297,11 @@ declare function expression(...args: any[]): Pattern
  *   sound("bd - sd -")
  * ).pace(8)
  */
-declare function extend(...args: any[]): Pattern
+declare function extend(...more: Arg[]): Pattern
 declare const extensions: any
-declare function fadeInTime(...args: any[]): Pattern
-declare function fadeOutTime(...args: any[]): Pattern
-declare function fadeTime(...args: any[]): Pattern
+declare function fadeInTime(...more: Arg[]): Pattern
+declare function fadeOutTime(...more: Arg[]): Pattern
+declare function fadeTime(...more: Arg[]): Pattern
 /**
  * controls the center of the filter envelope. 0 is unipolar positive, .5 is bipolar, 1 is unipolar negative
  * @param center {number | Pattern} 0 to 1
@@ -8547,7 +8309,7 @@ declare function fadeTime(...args: any[]): Pattern
  * note("{f g g c d a a#}%8").s("sawtooth").lpf("{1000}%2")
  * .lpenv(8).fanchor("<0 .5 1>")
  */
-declare function fanchor(center?: any, ...more: any[]): Pattern
+declare function fanchor(center?: any, ...more: Arg[]): Pattern
 /**
  * Speed up a pattern by the given factor. Used by "*" in mini notation.
  * Synonyms: density
@@ -8555,7 +8317,7 @@ declare function fanchor(center?: any, ...more: any[]): Pattern
  * @example
  * s("bd hh sd hh").fast(2) // s("[bd hh sd hh]*2")
  */
-declare function fast(factor?: any, ...more: any[]): Pattern
+declare function fast(factor?: any, ...more: Arg[]): Pattern
 /**
  * Like chunk, but the cycles of the source pattern aren't repeated
  * for each set of chunks.
@@ -8565,14 +8327,14 @@ declare function fast(factor?: any, ...more: any[]): Pattern
  * .scale("C2:major").note()
  * .fastChunk(4, x => x.color('red')).slow(2)
  */
-declare function fastChunk(...args: any[]): Pattern
+declare function fastChunk(...more: Arg[]): Pattern
 /**
  * speeds up a pattern like fast, but rather than it playing multiple times as fast would it instead leaves a gap in the remaining space of the cycle. For example, the following will play the sound pattern "bd sn" only once but compressed into the first half of the cycle, i.e. twice as fast.
  * Synonyms: fastgap
  * @example
  * s("bd sd").fastGap(2)
  */
-declare function fastGap(...args: any[]): Pattern
+declare function fastGap(...more: Arg[]): Pattern
 /**
  * Like cat, but the items are crammed into one cycle.
  * Synonyms: sequence, fastcat
@@ -8585,7 +8347,7 @@ declare function fastGap(...args: any[]): Pattern
  *   note("c4(5,8)")
  * )
  */
-declare function fastcat(...args: any[]): Pattern
+declare function fastcat(...more: Arg[]): Pattern
 /**
  * Like chunk, but the cycles of the source pattern aren't repeated
  * for each set of chunks.
@@ -8595,31 +8357,30 @@ declare function fastcat(...args: any[]): Pattern
  * .scale("C2:major").note()
  * .fastChunk(4, x => x.color('red')).slow(2)
  */
-declare function fastchunk(...args: any[]): Pattern
+declare function fastchunk(...more: Arg[]): Pattern
 /**
  * speeds up a pattern like fast, but rather than it playing multiple times as fast would it instead leaves a gap in the remaining space of the cycle. For example, the following will play the sound pattern "bd sn" only once but compressed into the first half of the cycle, i.e. twice as fast.
  * Synonyms: fastgap
  * @example
  * s("bd sd").fastGap(2)
  */
-declare function fastgap(...args: any[]): Pattern
-declare function fetchLater(...args: any[]): Pattern
-declare function fft(...args: any[]): Pattern
-declare function fill(...args: any[]): Pattern
+declare function fastgap(...more: Arg[]): Pattern
+declare function fft(...more: Arg[]): Pattern
+declare function fill(...more: Arg[]): Pattern
 /**
  * Filters haps using the given function
  * @param test {function} function to test Hap
  * @example
  * s("hh!7 oh").filter(hap => hap.value.s === 'hh')
  */
-declare function filter(test?: any, ...more: any[]): Pattern
+declare function filter(test?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
 /**
  * Filters haps by their begin time
  * @param test {function} function to test Hap.whole.begin
  * @example
  * oneCycle: s("bd*4").filterWhen((t) => t < 1)
  */
-declare function filterWhen(test?: any, ...more: any[]): Pattern
+declare function filterWhen(test?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
 /**
  * Applies the given function every n cycles, starting from the first cycle.
  * @param n {number} how many cycles
@@ -8627,7 +8388,7 @@ declare function filterWhen(test?: any, ...more: any[]): Pattern
  * @example
  * note("c3 d3 e3 g3").firstOf(4, x=>x.rev())
  */
-declare function firstOf(n?: any, func?: any, ...more: any[]): Pattern
+declare function firstOf(n?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
 /**
  * Makes the sample fit its event duration. Good for rhythmical loops like drum breaks.
  * Similar to loopAt.
@@ -8635,10 +8396,10 @@ declare function firstOf(n?: any, func?: any, ...more: any[]): Pattern
  * samples({ rhodes: 'https://cdn.freesound.org/previews/132/132051_316502-lq.mp3' })
  * s("rhodes/2").fit()
  */
-declare function fit(...args: any[]): Pattern
-declare function flash(...args: any[]): Pattern
+declare function fit(...more: Arg[]): Pattern
+declare function flash(...more: Arg[]): Pattern
 declare const flashField: any
-declare function flatten(...args: any[]): Pattern
+declare function flatten(...more: Arg[]): Pattern
 /**
  * Assumes a numerical pattern. Returns a new pattern with all values set to
  * their mathematical floor. E.g. 3.7 replaced with to 3, and -4.2
@@ -8646,7 +8407,7 @@ declare function flatten(...args: any[]): Pattern
  * @example
  * note("42 42.1 42.5 43".floor())
  */
-declare function floor(...args: any[]): Pattern
+declare function floor(...more: Arg[]): Pattern
 /**
  * Sets the Frequency Modulation of the synth.
  * Controls the modulation index, which defines the brightness of the sound.
@@ -8665,15 +8426,15 @@ declare function floor(...args: any[]): Pattern
  *  .fm(4).fm2(rand.mul(4)).fm3(saw.mul(8).slow(8))
  *  .fmh(1.06).fmh2(10).fmh3(0.1)
  */
-declare function fm(brightness?: any, ...more: any[]): Pattern
-declare function fm1(...args: any[]): Pattern
-declare function fm2(...args: any[]): Pattern
-declare function fm3(...args: any[]): Pattern
-declare function fm4(...args: any[]): Pattern
-declare function fm5(...args: any[]): Pattern
-declare function fm6(...args: any[]): Pattern
-declare function fm7(...args: any[]): Pattern
-declare function fm8(...args: any[]): Pattern
+declare function fm(brightness?: any, ...more: Arg[]): Pattern
+declare function fm1(...more: Arg[]): Pattern
+declare function fm2(...more: Arg[]): Pattern
+declare function fm3(...more: Arg[]): Pattern
+declare function fm4(...more: Arg[]): Pattern
+declare function fm5(...more: Arg[]): Pattern
+declare function fm6(...more: Arg[]): Pattern
+declare function fm7(...more: Arg[]): Pattern
+declare function fm8(...more: Arg[]): Pattern
 /**
  * Attack time for the FM envelope: time it takes to reach maximum modulation
  * A number may be added afterwards to control the attack of the envelope of
@@ -8686,15 +8447,15 @@ declare function fm8(...args: any[]): Pattern
  * .fmattack("<0 .05 .1 .2>")
  * ._scope()
  */
-declare function fmatt(time?: any, ...more: any[]): Pattern
-declare function fmatt1(...args: any[]): Pattern
-declare function fmatt2(...args: any[]): Pattern
-declare function fmatt3(...args: any[]): Pattern
-declare function fmatt4(...args: any[]): Pattern
-declare function fmatt5(...args: any[]): Pattern
-declare function fmatt6(...args: any[]): Pattern
-declare function fmatt7(...args: any[]): Pattern
-declare function fmatt8(...args: any[]): Pattern
+declare function fmatt(time?: any, ...more: Arg[]): Pattern
+declare function fmatt1(...more: Arg[]): Pattern
+declare function fmatt2(...more: Arg[]): Pattern
+declare function fmatt3(...more: Arg[]): Pattern
+declare function fmatt4(...more: Arg[]): Pattern
+declare function fmatt5(...more: Arg[]): Pattern
+declare function fmatt6(...more: Arg[]): Pattern
+declare function fmatt7(...more: Arg[]): Pattern
+declare function fmatt8(...more: Arg[]): Pattern
 /**
  * Attack time for the FM envelope: time it takes to reach maximum modulation
  * A number may be added afterwards to control the attack of the envelope of
@@ -8707,15 +8468,15 @@ declare function fmatt8(...args: any[]): Pattern
  * .fmattack("<0 .05 .1 .2>")
  * ._scope()
  */
-declare function fmattack(time?: any, ...more: any[]): Pattern
-declare function fmattack1(...args: any[]): Pattern
-declare function fmattack2(...args: any[]): Pattern
-declare function fmattack3(...args: any[]): Pattern
-declare function fmattack4(...args: any[]): Pattern
-declare function fmattack5(...args: any[]): Pattern
-declare function fmattack6(...args: any[]): Pattern
-declare function fmattack7(...args: any[]): Pattern
-declare function fmattack8(...args: any[]): Pattern
+declare function fmattack(time?: any, ...more: Arg[]): Pattern
+declare function fmattack1(...more: Arg[]): Pattern
+declare function fmattack2(...more: Arg[]): Pattern
+declare function fmattack3(...more: Arg[]): Pattern
+declare function fmattack4(...more: Arg[]): Pattern
+declare function fmattack5(...more: Arg[]): Pattern
+declare function fmattack6(...more: Arg[]): Pattern
+declare function fmattack7(...more: Arg[]): Pattern
+declare function fmattack8(...more: Arg[]): Pattern
 /**
  * Decay time for the FM envelope: seconds until the sustain level is reached after the attack phase.
  * A number may be added afterwards to control the decay of the envelope of
@@ -8729,15 +8490,15 @@ declare function fmattack8(...args: any[]): Pattern
  * .fmsustain(.4)
  * ._scope()
  */
-declare function fmdec(time?: any, ...more: any[]): Pattern
-declare function fmdec1(...args: any[]): Pattern
-declare function fmdec2(...args: any[]): Pattern
-declare function fmdec3(...args: any[]): Pattern
-declare function fmdec4(...args: any[]): Pattern
-declare function fmdec5(...args: any[]): Pattern
-declare function fmdec6(...args: any[]): Pattern
-declare function fmdec7(...args: any[]): Pattern
-declare function fmdec8(...args: any[]): Pattern
+declare function fmdec(time?: any, ...more: Arg[]): Pattern
+declare function fmdec1(...more: Arg[]): Pattern
+declare function fmdec2(...more: Arg[]): Pattern
+declare function fmdec3(...more: Arg[]): Pattern
+declare function fmdec4(...more: Arg[]): Pattern
+declare function fmdec5(...more: Arg[]): Pattern
+declare function fmdec6(...more: Arg[]): Pattern
+declare function fmdec7(...more: Arg[]): Pattern
+declare function fmdec8(...more: Arg[]): Pattern
 /**
  * Decay time for the FM envelope: seconds until the sustain level is reached after the attack phase.
  * A number may be added afterwards to control the decay of the envelope of
@@ -8751,15 +8512,15 @@ declare function fmdec8(...args: any[]): Pattern
  * .fmsustain(.4)
  * ._scope()
  */
-declare function fmdecay(time?: any, ...more: any[]): Pattern
-declare function fmdecay1(...args: any[]): Pattern
-declare function fmdecay2(...args: any[]): Pattern
-declare function fmdecay3(...args: any[]): Pattern
-declare function fmdecay4(...args: any[]): Pattern
-declare function fmdecay5(...args: any[]): Pattern
-declare function fmdecay6(...args: any[]): Pattern
-declare function fmdecay7(...args: any[]): Pattern
-declare function fmdecay8(...args: any[]): Pattern
+declare function fmdecay(time?: any, ...more: Arg[]): Pattern
+declare function fmdecay1(...more: Arg[]): Pattern
+declare function fmdecay2(...more: Arg[]): Pattern
+declare function fmdecay3(...more: Arg[]): Pattern
+declare function fmdecay4(...more: Arg[]): Pattern
+declare function fmdecay5(...more: Arg[]): Pattern
+declare function fmdecay6(...more: Arg[]): Pattern
+declare function fmdecay7(...more: Arg[]): Pattern
+declare function fmdecay8(...more: Arg[]): Pattern
 /**
  * Ramp type of fm envelope. Exp might be a bit broken..
  * A number may be added afterwards to control the envelope of
@@ -8773,15 +8534,15 @@ declare function fmdecay8(...args: any[]): Pattern
  * .fmenv("<exp lin>")
  * ._scope()
  */
-declare function fmenv(type?: any, ...more: any[]): Pattern
-declare function fmenv1(...args: any[]): Pattern
-declare function fmenv2(...args: any[]): Pattern
-declare function fmenv3(...args: any[]): Pattern
-declare function fmenv4(...args: any[]): Pattern
-declare function fmenv5(...args: any[]): Pattern
-declare function fmenv6(...args: any[]): Pattern
-declare function fmenv7(...args: any[]): Pattern
-declare function fmenv8(...args: any[]): Pattern
+declare function fmenv(type?: any, ...more: Arg[]): Pattern
+declare function fmenv1(...more: Arg[]): Pattern
+declare function fmenv2(...more: Arg[]): Pattern
+declare function fmenv3(...more: Arg[]): Pattern
+declare function fmenv4(...more: Arg[]): Pattern
+declare function fmenv5(...more: Arg[]): Pattern
+declare function fmenv6(...more: Arg[]): Pattern
+declare function fmenv7(...more: Arg[]): Pattern
+declare function fmenv8(...more: Arg[]): Pattern
 /**
  * Sets the Frequency Modulation Harmonicity Ratio.
  * Controls the timbre of the sound.
@@ -8796,15 +8557,15 @@ declare function fmenv8(...args: any[]): Pattern
  * .fmh("<1 2 1.5 1.61>")
  * ._scope()
  */
-declare function fmh(harmonicity?: any, ...more: any[]): Pattern
-declare function fmh1(...args: any[]): Pattern
-declare function fmh2(...args: any[]): Pattern
-declare function fmh3(...args: any[]): Pattern
-declare function fmh4(...args: any[]): Pattern
-declare function fmh5(...args: any[]): Pattern
-declare function fmh6(...args: any[]): Pattern
-declare function fmh7(...args: any[]): Pattern
-declare function fmh8(...args: any[]): Pattern
+declare function fmh(harmonicity?: any, ...more: Arg[]): Pattern
+declare function fmh1(...more: Arg[]): Pattern
+declare function fmh2(...more: Arg[]): Pattern
+declare function fmh3(...more: Arg[]): Pattern
+declare function fmh4(...more: Arg[]): Pattern
+declare function fmh5(...more: Arg[]): Pattern
+declare function fmh6(...more: Arg[]): Pattern
+declare function fmh7(...more: Arg[]): Pattern
+declare function fmh8(...more: Arg[]): Pattern
 /**
  * Sets the Frequency Modulation of the synth.
  * Controls the modulation index, which defines the brightness of the sound.
@@ -8823,15 +8584,15 @@ declare function fmh8(...args: any[]): Pattern
  *  .fm(4).fm2(rand.mul(4)).fm3(saw.mul(8).slow(8))
  *  .fmh(1.06).fmh2(10).fmh3(0.1)
  */
-declare function fmi(brightness?: any, ...more: any[]): Pattern
-declare function fmi1(...args: any[]): Pattern
-declare function fmi2(...args: any[]): Pattern
-declare function fmi3(...args: any[]): Pattern
-declare function fmi4(...args: any[]): Pattern
-declare function fmi5(...args: any[]): Pattern
-declare function fmi6(...args: any[]): Pattern
-declare function fmi7(...args: any[]): Pattern
-declare function fmi8(...args: any[]): Pattern
+declare function fmi(brightness?: any, ...more: Arg[]): Pattern
+declare function fmi1(...more: Arg[]): Pattern
+declare function fmi2(...more: Arg[]): Pattern
+declare function fmi3(...more: Arg[]): Pattern
+declare function fmi4(...more: Arg[]): Pattern
+declare function fmi5(...more: Arg[]): Pattern
+declare function fmi6(...more: Arg[]): Pattern
+declare function fmi7(...more: Arg[]): Pattern
+declare function fmi8(...more: Arg[]): Pattern
 /**
  * Release time for the FM envelope: how much modulation is applied after the note is released
  * A number may be added afterwards to control the release of the envelope of
@@ -8839,15 +8600,15 @@ declare function fmi8(...args: any[]): Pattern
  * Synonyms: fmrel
  * @param time {number | Pattern} release time
  */
-declare function fmrel(time?: any, ...more: any[]): Pattern
-declare function fmrel1(...args: any[]): Pattern
-declare function fmrel2(...args: any[]): Pattern
-declare function fmrel3(...args: any[]): Pattern
-declare function fmrel4(...args: any[]): Pattern
-declare function fmrel5(...args: any[]): Pattern
-declare function fmrel6(...args: any[]): Pattern
-declare function fmrel7(...args: any[]): Pattern
-declare function fmrel8(...args: any[]): Pattern
+declare function fmrel(time?: any, ...more: Arg[]): Pattern
+declare function fmrel1(...more: Arg[]): Pattern
+declare function fmrel2(...more: Arg[]): Pattern
+declare function fmrel3(...more: Arg[]): Pattern
+declare function fmrel4(...more: Arg[]): Pattern
+declare function fmrel5(...more: Arg[]): Pattern
+declare function fmrel6(...more: Arg[]): Pattern
+declare function fmrel7(...more: Arg[]): Pattern
+declare function fmrel8(...more: Arg[]): Pattern
 /**
  * Release time for the FM envelope: how much modulation is applied after the note is released
  * A number may be added afterwards to control the release of the envelope of
@@ -8855,15 +8616,15 @@ declare function fmrel8(...args: any[]): Pattern
  * Synonyms: fmrel
  * @param time {number | Pattern} release time
  */
-declare function fmrelease(time?: any, ...more: any[]): Pattern
-declare function fmrelease1(...args: any[]): Pattern
-declare function fmrelease2(...args: any[]): Pattern
-declare function fmrelease3(...args: any[]): Pattern
-declare function fmrelease4(...args: any[]): Pattern
-declare function fmrelease5(...args: any[]): Pattern
-declare function fmrelease6(...args: any[]): Pattern
-declare function fmrelease7(...args: any[]): Pattern
-declare function fmrelease8(...args: any[]): Pattern
+declare function fmrelease(time?: any, ...more: Arg[]): Pattern
+declare function fmrelease1(...more: Arg[]): Pattern
+declare function fmrelease2(...more: Arg[]): Pattern
+declare function fmrelease3(...more: Arg[]): Pattern
+declare function fmrelease4(...more: Arg[]): Pattern
+declare function fmrelease5(...more: Arg[]): Pattern
+declare function fmrelease6(...more: Arg[]): Pattern
+declare function fmrelease7(...more: Arg[]): Pattern
+declare function fmrelease8(...more: Arg[]): Pattern
 /**
  * Sustain level for the FM envelope: how much modulation is applied after the decay phase
  * A number may be added afterwards to control the sustain of the envelope of
@@ -8877,15 +8638,15 @@ declare function fmrelease8(...args: any[]): Pattern
  * .fmsustain("<1 .75 .5 0>")
  * ._scope()
  */
-declare function fmsus(level?: any, ...more: any[]): Pattern
-declare function fmsus1(...args: any[]): Pattern
-declare function fmsus2(...args: any[]): Pattern
-declare function fmsus3(...args: any[]): Pattern
-declare function fmsus4(...args: any[]): Pattern
-declare function fmsus5(...args: any[]): Pattern
-declare function fmsus6(...args: any[]): Pattern
-declare function fmsus7(...args: any[]): Pattern
-declare function fmsus8(...args: any[]): Pattern
+declare function fmsus(level?: any, ...more: Arg[]): Pattern
+declare function fmsus1(...more: Arg[]): Pattern
+declare function fmsus2(...more: Arg[]): Pattern
+declare function fmsus3(...more: Arg[]): Pattern
+declare function fmsus4(...more: Arg[]): Pattern
+declare function fmsus5(...more: Arg[]): Pattern
+declare function fmsus6(...more: Arg[]): Pattern
+declare function fmsus7(...more: Arg[]): Pattern
+declare function fmsus8(...more: Arg[]): Pattern
 /**
  * Sustain level for the FM envelope: how much modulation is applied after the decay phase
  * A number may be added afterwards to control the sustain of the envelope of
@@ -8899,15 +8660,15 @@ declare function fmsus8(...args: any[]): Pattern
  * .fmsustain("<1 .75 .5 0>")
  * ._scope()
  */
-declare function fmsustain(level?: any, ...more: any[]): Pattern
-declare function fmsustain1(...args: any[]): Pattern
-declare function fmsustain2(...args: any[]): Pattern
-declare function fmsustain3(...args: any[]): Pattern
-declare function fmsustain4(...args: any[]): Pattern
-declare function fmsustain5(...args: any[]): Pattern
-declare function fmsustain6(...args: any[]): Pattern
-declare function fmsustain7(...args: any[]): Pattern
-declare function fmsustain8(...args: any[]): Pattern
+declare function fmsustain(level?: any, ...more: Arg[]): Pattern
+declare function fmsustain1(...more: Arg[]): Pattern
+declare function fmsustain2(...more: Arg[]): Pattern
+declare function fmsustain3(...more: Arg[]): Pattern
+declare function fmsustain4(...more: Arg[]): Pattern
+declare function fmsustain5(...more: Arg[]): Pattern
+declare function fmsustain6(...more: Arg[]): Pattern
+declare function fmsustain7(...more: Arg[]): Pattern
+declare function fmsustain8(...more: Arg[]): Pattern
 /**
  * Waveform of the fm modulator
  * A number may be added afterwards to control the waveform
@@ -8918,26 +8679,26 @@ declare function fmsustain8(...args: any[]): Pattern
  * @example
  * n("0 1 2 3".fast(4)).chord("<Dm Am F G>").voicing().s("sawtooth").fmwave("brown").fm(.6)
  */
-declare function fmwave(wave?: any, ...more: any[]): Pattern
-declare function fmwave1(...args: any[]): Pattern
-declare function fmwave2(...args: any[]): Pattern
-declare function fmwave3(...args: any[]): Pattern
-declare function fmwave4(...args: any[]): Pattern
-declare function fmwave5(...args: any[]): Pattern
-declare function fmwave6(...args: any[]): Pattern
-declare function fmwave7(...args: any[]): Pattern
-declare function fmwave8(...args: any[]): Pattern
-declare function focusSpan(...args: any[]): Pattern
-declare function focusspan(...args: any[]): Pattern
+declare function fmwave(wave?: any, ...more: Arg[]): Pattern
+declare function fmwave1(...more: Arg[]): Pattern
+declare function fmwave2(...more: Arg[]): Pattern
+declare function fmwave3(...more: Arg[]): Pattern
+declare function fmwave4(...more: Arg[]): Pattern
+declare function fmwave5(...more: Arg[]): Pattern
+declare function fmwave6(...more: Arg[]): Pattern
+declare function fmwave7(...more: Arg[]): Pattern
+declare function fmwave8(...more: Arg[]): Pattern
+declare function focusSpan(...more: Arg[]): Pattern
+declare function focusspan(...more: Arg[]): Pattern
 /**
  * Wavefolding distortion
  * @param distortion {number | Pattern} amount of distortion to apply
  * @param volume {number | Pattern} linear postgain of the distortion
  */
-declare function fold(distortion?: any, volume?: any, ...more: any[]): Pattern
-declare function fractionalArgs(...args: any[]): Pattern
-declare function frameRate(...args: any[]): Pattern
-declare function freeze(...args: any[]): Pattern
+declare function fold(distortion?: any, volume?: any, ...more: Arg[]): Pattern
+declare function fractionalArgs(...more: Arg[]): Pattern
+declare function frameRate(...more: Arg[]): Pattern
+declare function freeze(...more: Arg[]): Pattern
 /**
  * Set frequency of sound.
  * @param frequency {number | Pattern} in Hz. the audible range is between 20 and 20000 Hz
@@ -8946,16 +8707,16 @@ declare function freeze(...args: any[]): Pattern
  * @example
  * freq("110".mul.out(".5 1.5 .6 [2 3]")).s("superzow").osc()
  */
-declare function freq(frequency?: any, ...more: any[]): Pattern
-declare function freqToMidi(...args: any[]): Pattern
+declare function freq(frequency?: any, ...more: Arg[]): Pattern
+declare function freqToMidi(...more: Arg[]): Pattern
 /**
  * Assumes a numerical pattern, containing bipolar values in the range -1 .. 1
  * Returns a new pattern with values scaled to the unipolar range 0 .. 1
  */
-declare function fromBipolar(...args: any[]): Pattern
-declare function fshift(...args: any[]): Pattern
-declare function fshiftnote(...args: any[]): Pattern
-declare function fshiftphase(...args: any[]): Pattern
+declare function fromBipolar(...more: Arg[]): Pattern
+declare function fshift(...more: Arg[]): Pattern
+declare function fshiftnote(...more: Arg[]): Pattern
+declare function fshiftphase(...more: Arg[]): Pattern
 /**
  * Sets the filter type. The ladder filter is more aggressive. More types might be added in the future.
  * @param type {number | Pattern} 12db (0), ladder (1), or 24db (2)
@@ -8968,82 +8729,81 @@ declare function fshiftphase(...args: any[]): Pattern
  * .lpenv(3).lpq(1)
  * .ftype("<ladder 12db 24db>")
  */
-declare function ftype(type?: any, ...more: any[]): Pattern
-declare function func(...args: any[]): Pattern
-declare function fxr(...args: any[]): Pattern
+declare function ftype(type?: any, ...more: Arg[]): Pattern
+declare function func(...more: Arg[]): Pattern
+declare function fxr(...more: Arg[]): Pattern
 /**
  * Controls the gain by an exponential amount.
  * @param amount {number | Pattern} gain.
  * @example
  * s("hh*8").gain(".4!2 1 .4!2 1 .4 1").fast(2)
  */
-declare function gain(amount?: any, ...more: any[]): Pattern
-declare function gainNode(...args: any[]): Pattern
+declare function gain(amount?: any, ...more: Arg[]): Pattern
+declare function gainNode(...more: Arg[]): Pattern
 /**
  * Does absolutely nothing, but with a given metrical 'steps'
  * @param steps {number}
  * @example
  * gap(3) // "~@3"
  */
-declare function gap(steps?: any, ...more: any[]): Pattern
-declare function gat(...args: any[]): Pattern
-declare function gate(...args: any[]): Pattern
-declare function getADSRValues(...args: any[]): Pattern
-declare function getAccidentalsOffset(...args: any[]): Pattern
-declare function getAnalyserById(...args: any[]): Pattern
-declare function getAnalyzerData(...args: any[]): Pattern
-declare function getAudioContext(...args: any[]): any
-declare function getAudioContextCurrentTime(...args: any[]): Pattern
-declare function getAudioDevices(...args: any[]): Pattern
-declare function getCachedBuffer(...args: any[]): Pattern
-declare function getCompressor(...args: any[]): Pattern
-declare function getComputedPropertyValue(...args: any[]): Pattern
-declare function getControlName(...args: any[]): Pattern
-declare function getCps(...args: any[]): Pattern
-declare function getCurrentKeyboardState(...args: any[]): Pattern
-declare function getDefaultValue(...args: any[]): Pattern
-declare function getDistortion(...args: any[]): Pattern
-declare function getDistortionAlgorithm(...args: any[]): Pattern
-declare function getDrawContext(...args: any[]): Pattern
-declare function getDrawOptions(...args: any[]): Pattern
-declare function getEnvelope(...args: any[]): Pattern
-declare function getEventOffsetMs(...args: any[]): Pattern
-declare function getFontBufferSource(...args: any[]): Pattern
+declare function gap(steps?: any, ...more: Arg[]): Pattern
+declare function gat(...more: Arg[]): Pattern
+declare function gate(...more: Arg[]): Pattern
+declare function getADSRValues(...more: Arg[]): Pattern
+declare function getAccidentalsOffset(...more: Arg[]): Pattern
+declare function getAnalyserById(...more: Arg[]): Pattern
+declare function getAnalyzerData(...more: Arg[]): Pattern
+declare function getAudioContext(...more: Arg[]): any
+declare function getAudioContextCurrentTime(...more: Arg[]): Pattern
+declare function getAudioDevices(...more: Arg[]): Pattern
+declare function getCachedBuffer(...more: Arg[]): Pattern
+declare function getCompressor(...more: Arg[]): Pattern
+declare function getComputedPropertyValue(...more: Arg[]): Pattern
+declare function getControlName(...more: Arg[]): Pattern
+declare function getCps(...more: Arg[]): Pattern
+declare function getCurrentKeyboardState(...more: Arg[]): Pattern
+declare function getDefaultValue(...more: Arg[]): Pattern
+declare function getDistortion(...more: Arg[]): Pattern
+declare function getDistortionAlgorithm(...more: Arg[]): Pattern
+declare function getDrawContext(...more: Arg[]): Pattern
+declare function getDrawOptions(...more: Arg[]): Pattern
+declare function getEnvelope(...more: Arg[]): Pattern
+declare function getEventOffsetMs(...more: Arg[]): Pattern
+declare function getFontBufferSource(...more: Arg[]): Pattern
 /**
  *
  */
-declare function getFreq(...args: any[]): Pattern
-declare function getFrequency(...args: any[]): Pattern
-declare function getFrequencyFromValue(...args: any[]): Pattern
-declare function getIsStarted(...args: any[]): Pattern
-declare function getLeafLocation(...args: any[]): Pattern
-declare function getLeafLocations(...args: any[]): Pattern
-declare function getLeaves(...args: any[]): Pattern
-declare function getLfo(...args: any[]): Pattern
-declare function getLoadedBuffer(...args: any[]): Pattern
-declare function getOscillator(...args: any[]): Pattern
-declare function getParamADSR(...args: any[]): Pattern
-declare function getParamLfo(...args: any[]): Pattern
-declare function getPattern(...args: any[]): Pattern
-declare function getPerformanceTimeSeconds(...args: any[]): Pattern
-declare function getPitchEnvelope(...args: any[]): Pattern
-declare function getPlayableNoteValue(...args: any[]): Pattern
-declare function getPunchcardPainter(...args: any[]): Pattern
-declare function getRandsAtTime(...args: any[]): Pattern
-declare function getSampleBuffer(...args: any[]): Pattern
-declare function getSampleBufferSource(...args: any[]): Pattern
-declare function getSampleInfo(...args: any[]): Pattern
-declare function getScreenDetails(...args: any[]): Pattern
-declare function getSound(...args: any[]): Pattern
-declare function getSoundIndex(...args: any[]): Pattern
-declare function getSuperdoughAudioController(...args: any[]): Pattern
-declare function getTheme(...args: any[]): Pattern
-declare function getTime(...args: any[]): Pattern
-declare function getTrigger(...args: any[]): Pattern
-declare function getTriggerFunc(...args: any[]): Pattern
-declare function getVibratoOscillator(...args: any[]): Pattern
-declare function getWorklet(...args: any[]): Pattern
-declare function getZZFX(...args: any[]): Pattern
+declare function getFreq(...more: Arg[]): Pattern
+declare function getFrequency(...more: Arg[]): Pattern
+declare function getFrequencyFromValue(...more: Arg[]): Pattern
+declare function getIsStarted(...more: Arg[]): Pattern
+declare function getLeafLocation(...more: Arg[]): Pattern
+declare function getLeafLocations(...more: Arg[]): Pattern
+declare function getLeaves(...more: Arg[]): Pattern
+declare function getLfo(...more: Arg[]): Pattern
+declare function getLoadedBuffer(...more: Arg[]): Pattern
+declare function getOscillator(...more: Arg[]): Pattern
+declare function getParamADSR(...more: Arg[]): Pattern
+declare function getParamLfo(...more: Arg[]): Pattern
+declare function getPattern(...more: Arg[]): Pattern
+declare function getPerformanceTimeSeconds(...more: Arg[]): Pattern
+declare function getPitchEnvelope(...more: Arg[]): Pattern
+declare function getPlayableNoteValue(...more: Arg[]): Pattern
+declare function getPunchcardPainter(...more: Arg[]): Pattern
+declare function getRandsAtTime(...more: Arg[]): Pattern
+declare function getSampleBuffer(...more: Arg[]): Pattern
+declare function getSampleBufferSource(...more: Arg[]): Pattern
+declare function getSampleInfo(...more: Arg[]): Pattern
+declare function getSound(...more: Arg[]): Pattern
+declare function getSoundIndex(...more: Arg[]): Pattern
+declare function getSuperdoughAudioController(...more: Arg[]): Pattern
+declare function getTheme(...more: Arg[]): Pattern
+declare function getTime(...more: Arg[]): Pattern
+declare function getTrigger(...more: Arg[]): Pattern
+declare function getTriggerFunc(...more: Arg[]): Pattern
+declare function getVibratoOscillator(...more: Arg[]): Pattern
+declare function getWorklet(...more: Arg[]): Pattern
+declare function getZZFX(...more: Arg[]): Pattern
 /**
  * Experimental
  * Progressively grows the pattern by 'n' steps until the full pattern is played, or if a second value is given (using mininotation list syntax with :),
@@ -9061,19 +8821,19 @@ declare function getZZFX(...args: any[]): Pattern
  * note("0 1 2 3 4 5 6 7".scale("C:ritusen")).sound("folkharp")
  *    .grow("1 -1").pace(8)
  */
-declare function grow(...args: any[]): Pattern
-declare function gt(...args: any[]): Pattern
-declare function gte(...args: any[]): Pattern
-declare function h(...args: any[]): Pattern
+declare function grow(...more: Arg[]): Pattern
+declare function gt(...more: Arg[]): Pattern
+declare function gte(...more: Arg[]): Pattern
+declare function h(...more: Arg[]): Pattern
 /**
  * Hard-clipping distortion
  * @param distortion {number | Pattern} amount of distortion to apply
  * @param volume {number | Pattern} linear postgain of the distortion
  */
-declare function hard(distortion?: any, volume?: any, ...more: any[]): Pattern
-declare function harmonic(...args: any[]): Pattern
-declare function hash2code(...args: any[]): Pattern
-declare function hbrick(...args: any[]): Pattern
+declare function hard(distortion?: any, volume?: any, ...more: Arg[]): Pattern
+declare function harmonic(...more: Arg[]): Pattern
+declare function hash2code(...more: Arg[]): Pattern
+declare function hbrick(...more: Arg[]): Pattern
 /**
  * Applies the cutoff frequency of the high-pass filter.
  * When using mininotation, you can also optionally add the 'hpq' parameter, separated by ':'.
@@ -9084,11 +8844,11 @@ declare function hbrick(...args: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd,hh*8").hpf("<2000 2000:25>")
  */
-declare function hcutoff(frequency?: any, ...more: any[]): Pattern
+declare function hcutoff(frequency?: any, ...more: Arg[]): Pattern
 declare const highlightExtension: any
-declare function highlightMiniLocations(...args: any[]): Pattern
-declare function hold(...args: any[]): Pattern
-declare function hours(...args: any[]): Pattern
+declare function highlightMiniLocations(...more: Arg[]): Pattern
+declare function hold(...more: Arg[]): Pattern
+declare function hours(...more: Arg[]): Pattern
 /**
  * Applies the cutoff frequency of the high-pass filter.
  * When using mininotation, you can also optionally add the 'hpq' parameter, separated by ':'.
@@ -9099,7 +8859,7 @@ declare function hours(...args: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd,hh*8").hpf("<2000 2000:25>")
  */
-declare function hp(frequency?: any, ...more: any[]): Pattern
+declare function hp(frequency?: any, ...more: Arg[]): Pattern
 /**
  * Sets the attack duration for the highpass filter envelope.
  * Synonyms: hpa
@@ -9111,7 +8871,7 @@ declare function hp(frequency?: any, ...more: any[]): Pattern
  * .hpa("<.5 .25 .1 .01>/4")
  * .hpenv(4)
  */
-declare function hpa(attack?: any, ...more: any[]): Pattern
+declare function hpa(attack?: any, ...more: Arg[]): Pattern
 /**
  * Sets the attack duration for the highpass filter envelope.
  * Synonyms: hpa
@@ -9123,7 +8883,7 @@ declare function hpa(attack?: any, ...more: any[]): Pattern
  * .hpa("<.5 .25 .1 .01>/4")
  * .hpenv(4)
  */
-declare function hpattack(attack?: any, ...more: any[]): Pattern
+declare function hpattack(attack?: any, ...more: Arg[]): Pattern
 /**
  * Sets the decay duration for the highpass filter envelope.
  * Synonyms: hpd
@@ -9136,12 +8896,12 @@ declare function hpattack(attack?: any, ...more: any[]): Pattern
  * .hps(0.2)
  * .hpenv(4)
  */
-declare function hpd(decay?: any, ...more: any[]): Pattern
+declare function hpd(decay?: any, ...more: Arg[]): Pattern
 /**
  * DC offset of the LFO for the highpass filter
  * @param dcoffset {number | Pattern} dc offset. set to 0 for unipolar
  */
-declare function hpdc(dcoffset?: any, ...more: any[]): Pattern
+declare function hpdc(dcoffset?: any, ...more: Arg[]): Pattern
 /**
  * Sets the decay duration for the highpass filter envelope.
  * Synonyms: hpd
@@ -9154,12 +8914,12 @@ declare function hpdc(dcoffset?: any, ...more: any[]): Pattern
  * .hps(0.2)
  * .hpenv(4)
  */
-declare function hpdecay(decay?: any, ...more: any[]): Pattern
+declare function hpdecay(decay?: any, ...more: Arg[]): Pattern
 /**
  * Depth of the LFO for the highpass filter
  * @param depth {number | Pattern} depth of modulation
  */
-declare function hpdepth(depth?: any, ...more: any[]): Pattern
+declare function hpdepth(depth?: any, ...more: Arg[]): Pattern
 /**
  * Depth of the LFO for the hipass filter, in hz
  * Synonyms: hpdepthfreq
@@ -9167,7 +8927,7 @@ declare function hpdepth(depth?: any, ...more: any[]): Pattern
  * @example
  * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).hpdepthfrequency("<200 500 100 0>")
  */
-declare function hpdepthfreq(depth?: any, ...more: any[]): Pattern
+declare function hpdepthfreq(depth?: any, ...more: Arg[]): Pattern
 /**
  * Depth of the LFO for the hipass filter, in hz
  * Synonyms: hpdepthfreq
@@ -9175,7 +8935,7 @@ declare function hpdepthfreq(depth?: any, ...more: any[]): Pattern
  * @example
  * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).hpdepthfrequency("<200 500 100 0>")
  */
-declare function hpdepthfrequency(depth?: any, ...more: any[]): Pattern
+declare function hpdepthfrequency(depth?: any, ...more: Arg[]): Pattern
 /**
  * Sets the highpass filter envelope modulation depth.
  * Synonyms: hpe
@@ -9187,7 +8947,7 @@ declare function hpdepthfrequency(depth?: any, ...more: any[]): Pattern
  * .hpa(.5)
  * .hpenv("<4 2 1 0 -1 -2 -4>/4")
  */
-declare function hpe(modulation?: any, ...more: any[]): Pattern
+declare function hpe(modulation?: any, ...more: Arg[]): Pattern
 /**
  * Sets the highpass filter envelope modulation depth.
  * Synonyms: hpe
@@ -9199,7 +8959,7 @@ declare function hpe(modulation?: any, ...more: any[]): Pattern
  * .hpa(.5)
  * .hpenv("<4 2 1 0 -1 -2 -4>/4")
  */
-declare function hpenv(modulation?: any, ...more: any[]): Pattern
+declare function hpenv(modulation?: any, ...more: Arg[]): Pattern
 /**
  * Applies the cutoff frequency of the high-pass filter.
  * When using mininotation, you can also optionally add the 'hpq' parameter, separated by ':'.
@@ -9210,7 +8970,7 @@ declare function hpenv(modulation?: any, ...more: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd,hh*8").hpf("<2000 2000:25>")
  */
-declare function hpf(frequency?: any, ...more: any[]): Pattern
+declare function hpf(frequency?: any, ...more: Arg[]): Pattern
 /**
  * Controls the high-pass q-value.
  * Synonyms: hresonance
@@ -9218,7 +8978,7 @@ declare function hpf(frequency?: any, ...more: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd,hh*8").hpf(2000).hpq("<0 10 20 30>")
  */
-declare function hpq(q?: any, ...more: any[]): Pattern
+declare function hpq(q?: any, ...more: Arg[]): Pattern
 /**
  * Sets the release time for the highpass filter envelope.
  * Synonyms: hpr
@@ -9232,12 +8992,12 @@ declare function hpq(q?: any, ...more: any[]): Pattern
  * .hpr("<.5 .25 .1 0>/4")
  * .release(.5)
  */
-declare function hpr(release?: any, ...more: any[]): Pattern
+declare function hpr(release?: any, ...more: Arg[]): Pattern
 /**
  * Rate of the LFO for the highpass filter
  * @param rate {number | Pattern} rate in hertz
  */
-declare function hprate(rate?: any, ...more: any[]): Pattern
+declare function hprate(rate?: any, ...more: Arg[]): Pattern
 /**
  * Sets the release time for the highpass filter envelope.
  * Synonyms: hpr
@@ -9251,7 +9011,7 @@ declare function hprate(rate?: any, ...more: any[]): Pattern
  * .hpr("<.5 .25 .1 0>/4")
  * .release(.5)
  */
-declare function hprelease(release?: any, ...more: any[]): Pattern
+declare function hprelease(release?: any, ...more: Arg[]): Pattern
 /**
  * Sets the sustain amplitude for the highpass filter envelope.
  * Synonyms: hps
@@ -9264,17 +9024,17 @@ declare function hprelease(release?: any, ...more: any[]): Pattern
  * .hps("<0 .25 .5 1>/4")
  * .hpenv(4)
  */
-declare function hps(sustain?: any, ...more: any[]): Pattern
+declare function hps(sustain?: any, ...more: Arg[]): Pattern
 /**
  * Shape of the LFO for the highpass filter
  * @param shape {number | Pattern} Shape of the lfo (0, 1, 2, ..)
  */
-declare function hpshape(shape?: any, ...more: any[]): Pattern
+declare function hpshape(shape?: any, ...more: Arg[]): Pattern
 /**
  * Skew of the LFO for the highpass filter
  * @param skew {number | Pattern} How much to bend the LFO shape
  */
-declare function hpskew(skew?: any, ...more: any[]): Pattern
+declare function hpskew(skew?: any, ...more: Arg[]): Pattern
 /**
  * Sets the sustain amplitude for the highpass filter envelope.
  * Synonyms: hps
@@ -9287,12 +9047,12 @@ declare function hpskew(skew?: any, ...more: any[]): Pattern
  * .hps("<0 .25 .5 1>/4")
  * .hpenv(4)
  */
-declare function hpsustain(sustain?: any, ...more: any[]): Pattern
+declare function hpsustain(sustain?: any, ...more: Arg[]): Pattern
 /**
  * Cycle-synced rate of the LFO for the highpass filter
  * @param rate {number | Pattern} rate in cycles
  */
-declare function hpsync(rate?: any, ...more: any[]): Pattern
+declare function hpsync(rate?: any, ...more: Arg[]): Pattern
 /**
  * Controls the high-pass q-value.
  * Synonyms: hresonance
@@ -9300,15 +9060,15 @@ declare function hpsync(rate?: any, ...more: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd,hh*8").hpf(2000).hpq("<0 10 20 30>")
  */
-declare function hresonance(q?: any, ...more: any[]): Pattern
-declare function hsl(...args: any[]): Pattern
-declare function hsla(...args: any[]): Pattern
+declare function hresonance(q?: any, ...more: Arg[]): Pattern
+declare function hsl(...more: Arg[]): Pattern
+declare function hsla(...more: Arg[]): Pattern
 /**
  * Both speeds up the pattern (like 'fast') and the sample playback (like 'speed').
  * @example
  * s("bd sd:2").hurry("<1 2 4 3>").slow(1.5)
  */
-declare function hurry(...args: any[]): Pattern
+declare function hurry(...more: Arg[]): Pattern
 /**
  * Silences a pattern.
  * @example
@@ -9317,12 +9077,12 @@ declare function hurry(...args: any[]): Pattern
  *   s("hh*3")
  * )
  */
-declare function hush(...args: any[]): any
+declare function hush(...more: Arg[]): any
 /**
  *
  */
-declare function id(...args: any[]): Pattern
-declare function imag(...args: any[]): Pattern
+declare function id(...more: Arg[]): Pattern
+declare function imag(...more: Arg[]): Pattern
 /**
  * Picks patterns (or plain values) either from a list (by index) or a lookup table (by name).
  * Similar to pick, but cycles are squeezed into the target ('inhabited') pattern.
@@ -9336,7 +9096,7 @@ declare function imag(...args: any[]): Pattern
  * @example
  * s("a@2 [a b] a".inhabit({a: "bd(3,8)", b: "sd sd"})).slow(4)
  */
-declare function inhabit(pat?: any, xs?: any, ...more: any[]): Pattern
+declare function inhabit(pat?: any, xs?: any, ...more: Arg[]): Pattern
 /**
  * The same as inhabit, but if you pick a number greater than the size of the list,
  * it wraps around, rather than sticking at the maximum value.
@@ -9346,35 +9106,35 @@ declare function inhabit(pat?: any, xs?: any, ...more: any[]): Pattern
  * @param pat {Pattern}
  * @param xs {*}
  */
-declare function inhabitmod(pat?: any, xs?: any, ...more: any[]): Pattern
-declare function initAudio(...args: any[]): Pattern
-declare function initAudioOnFirstClick(...args: any[]): any
-declare function initEditor(...args: any[]): Pattern
-declare function initHydra(...args: any[]): Pattern
-declare function initTheme(...args: any[]): Pattern
-declare function injectStyle(...args: any[]): Pattern
-declare function innerBind(...args: any[]): Pattern
+declare function inhabitmod(pat?: any, xs?: any, ...more: Arg[]): Pattern
+declare function initAudio(...more: Arg[]): Pattern
+declare function initAudioOnFirstClick(...more: Arg[]): any
+declare function initEditor(...more: Arg[]): Pattern
+declare function initHydra(...more: Arg[]): Pattern
+declare function initTheme(...more: Arg[]): Pattern
+declare function injectStyle(...more: Arg[]): Pattern
+declare function innerBind(...more: Arg[]): Pattern
 /**
  * Carries out an operation 'inside' a cycle.
  * @example
  * "0 1 2 3 4 3 2 1".inside(4, rev).scale('C major').note()
  * // "0 1 2 3 4 3 2 1".slow(4).rev().fast(4).scale('C major').note()
  */
-declare function inside(...args: any[]): Pattern
+declare function inside(...more: Arg[]): Pattern
 /**
  * Swaps 1s and 0s in a binary pattern.
  * Synonyms: inv
  * @example
  * s("bd").struct("1 0 0 1 0 0 1 0".lastOf(4, invert))
  */
-declare function inv(...args: any[]): Pattern
+declare function inv(...more: Arg[]): Pattern
 /**
  * Swaps 1s and 0s in a binary pattern.
  * Synonyms: inv
  * @example
  * s("bd").struct("1 0 0 1 0 0 1 0".lastOf(4, invert))
  */
-declare function invert(...args: any[]): Pattern
+declare function invert(...more: Arg[]): Pattern
 /**
  * Sets the sample to use as an impulse response for the reverb.
  * Synonyms: ir
@@ -9382,7 +9142,7 @@ declare function invert(...args: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd").room(.8).ir("<shaker_large:0 shaker_large:2>")
  */
-declare function ir(sample?: any, ...more: any[]): Pattern
+declare function ir(sample?: any, ...more: Arg[]): Pattern
 /**
  * A continuous pattern of random integers, between 0 and n-1.
  * @param n {number} max value (exclusive)
@@ -9390,7 +9150,7 @@ declare function ir(sample?: any, ...more: any[]): Pattern
  * // randomly select scale notes from 0 - 7 (= C to C)
  * n(irand(8)).struct("x x*2 x x*3").scale("C:minor")
  */
-declare function irand(n?: any, ...more: any[]): Pattern
+declare function irand(n?: any, ...more: Arg[]): Pattern
 /**
  * Sets the beginning of the IR response sample
  * Synonyms: ir
@@ -9399,7 +9159,7 @@ declare function irand(n?: any, ...more: any[]): Pattern
  * samples('github:switchangel/pad')
  * $: s("brk/2").fit().scrub(irand(16).div(16).seg(8)).ir("swpad:4").room(.65).irspeed("-2").irbegin("<0 .5 .75>/2").roomsize(.6)
  */
-declare function irbegin(begin?: any, ...more: any[]): Pattern
+declare function irbegin(begin?: any, ...more: Arg[]): Pattern
 /**
  * Sets the sample to use as an impulse response for the reverb.
  * Synonyms: ir
@@ -9407,7 +9167,7 @@ declare function irbegin(begin?: any, ...more: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd").room(.8).ir("<shaker_large:0 shaker_large:2>")
  */
-declare function iresponse(sample?: any, ...more: any[]): Pattern
+declare function iresponse(sample?: any, ...more: Arg[]): Pattern
 /**
  * Sets speed of the sample for the impulse response.
  * @param speed {string | Pattern}
@@ -9415,13 +9175,13 @@ declare function iresponse(sample?: any, ...more: any[]): Pattern
  * samples('github:switchangel/pad')
  * $: s("brk/2").fit().scrub(irand(16).div(16).seg(8)).ir("swpad:4").room(.2).irspeed("<2 1 .5>/2").irbegin(.5).roomsize(.5)
  */
-declare function irspeed(speed?: any, ...more: any[]): Pattern
-declare function isControlName(...args: any[]): Pattern
-declare function isFlashEnabled(...args: any[]): Pattern
-declare function isNote(...args: any[]): Pattern
-declare function isNoteWithOctave(...args: any[]): Pattern
-declare function isPattern(...args: any[]): Pattern
-declare function isPatternHighlightingEnabled(...args: any[]): Pattern
+declare function irspeed(speed?: any, ...more: Arg[]): Pattern
+declare function isControlName(...more: Arg[]): Pattern
+declare function isFlashEnabled(...more: Arg[]): Pattern
+declare function isNote(...more: Arg[]): Pattern
+declare function isNoteWithOctave(...more: Arg[]): Pattern
+declare function isPattern(...more: Arg[]): Pattern
+declare function isPatternHighlightingEnabled(...more: Arg[]): Pattern
 /**
  * A sawtooth signal between 1 and 0 (like saw, but flipped).
  * @example
@@ -9441,21 +9201,21 @@ declare const isaw2: Pattern
  * @example
  * note("0 1 2 3".scale('A minor')).iter(4)
  */
-declare function iter(...args: any[]): Pattern
+declare function iter(...more: Arg[]): Pattern
 /**
  * Like iter, but plays the subdivisions in reverse order. Known as iter' in tidalcycles
  * Synonyms: iterback
  * @example
  * note("0 1 2 3".scale('A minor')).iterBack(4)
  */
-declare function iterBack(...args: any[]): Pattern
+declare function iterBack(...more: Arg[]): Pattern
 /**
  * Like iter, but plays the subdivisions in reverse order. Known as iter' in tidalcycles
  * Synonyms: iterback
  * @example
  * note("0 1 2 3".scale('A minor')).iterBack(4)
  */
-declare function iterback(...args: any[]): Pattern
+declare function iterback(...more: Arg[]): Pattern
 /**
  * An inverted triangle signal between 1 and 0 (like tri, but flipped).
  * @example
@@ -9475,24 +9235,24 @@ declare const itri2: Pattern
  * @example
  * s("bd lt [~ ht] mt cp ~ bd hh").jux(iter(4))
  */
-declare function jux(...args: any[]): Pattern
+declare function jux(...more: Arg[]): Pattern
 /**
  * Jux with adjustable stereo width. 0 = mono, 1 = full stereo.
  * Synonyms: juxby
  * @example
  * s("bd lt [~ ht] mt cp ~ bd hh").juxBy("<0 .5 1>/2", rev)
  */
-declare function juxBy(...args: any[]): Pattern
+declare function juxBy(...more: Arg[]): Pattern
 /**
  * Jux with adjustable stereo width. 0 = mono, 1 = full stereo.
  * Synonyms: juxby
  * @example
  * s("bd lt [~ ht] mt cp ~ bd hh").juxBy("<0 .5 1>/2", rev)
  */
-declare function juxby(...args: any[]): Pattern
-declare function kcutoff(...args: any[]): Pattern
-declare function keep(...args: any[]): Pattern
-declare function keepif(...args: any[]): Pattern
+declare function juxby(...more: Arg[]): Pattern
+declare function kcutoff(...more: Arg[]): Pattern
+declare function keep(...more: Arg[]): Pattern
+declare function keepif(...more: Arg[]): Pattern
 declare const keyAlias: any
 /**
  * returns true when a key or array of keys is held
@@ -9500,13 +9260,13 @@ declare const keyAlias: any
  * @example
  * keyDown("Control:j").pick([s("bd(5,8)"), s("cp(3,8)")])
  */
-declare function keyDown(...args: any[]): Pattern
-declare function krush(...args: any[]): Pattern
+declare function keyDown(...more: Arg[]): Pattern
+declare function krush(...more: Arg[]): Pattern
 /**
  * Sets the displayed text for an event on the pianoroll
  * @param label {string} text to display
  */
-declare function label(label?: any, ...more: any[]): Pattern
+declare function label(label?: any, ...more: Arg[]): Pattern
 /**
  * Applies the given function every n cycles, starting from the last cycle.
  * @param n {number} how many cycles
@@ -9514,15 +9274,15 @@ declare function label(label?: any, ...more: any[]): Pattern
  * @example
  * note("c3 d3 e3 g3").lastOf(4, x=>x.rev())
  */
-declare function lastOf(n?: any, func?: any, ...more: any[]): Pattern
+declare function lastOf(n?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
 /**
  * Nudge a pattern to start later in time. Equivalent of Tidal's ~> operator
  * @param cycles {number | Pattern} number of cycles to nudge right
  * @example
  * "bd ~".stack("hh ~".late(.1)).s()
  */
-declare function late(cycles?: any, ...more: any[]): Pattern
-declare function lbrick(...args: any[]): Pattern
+declare function late(cycles?: any, ...more: Arg[]): Pattern
+declare function lbrick(...more: Arg[]): Pattern
 /**
  * Multiplies the duration with the given number. Also cuts samples off at the end if they exceed the duration.
  * Synonyms: legato
@@ -9530,14 +9290,14 @@ declare function lbrick(...args: any[]): Pattern
  * @example
  * note("c a f e").s("piano").clip("<.5 1 2>")
  */
-declare function legato(factor?: any, ...more: any[]): Pattern
+declare function legato(factor?: any, ...more: Arg[]): Pattern
 /**
  * Emulation of a Leslie speaker: speakers rotating in a wooden amplified cabinet.
  * @param wet {number | Pattern} between 0 and 1
  * @example
  * n("0,4,7").s("supersquare").leslie("<0 .4 .6 1>").osc()
  */
-declare function leslie(wet?: any, ...more: any[]): Pattern
+declare function leslie(wet?: any, ...more: Arg[]): Pattern
 /**
  * Configures an LFO. Can be called in sequence like pat.lfo(...).lfo(...) to set up multiple LFOs.
  * There are two ways to declare which control will be modulated:
@@ -9579,28 +9339,28 @@ declare function leslie(wet?: any, ...more: any[]): Pattern
  *   .diode(0.3)
  *   .sometimes(x => x.lfo({ s: "8" }, 'lpf_mod'))
  */
-declare function lfo(config?: any, id?: any, ...more: any[]): Pattern
+declare function lfo(config?: any, id?: any, ...more: Arg[]): Pattern
 /**
  * Selects the given fraction of the pattern and repeats that part to fill the remainder of the cycle.
  * @param fraction {number} fraction to select
  * @example
  * s("lt ht mt cp, [hh oh]*2").linger("<1 .5 .25 .125>")
  */
-declare function linger(fraction?: any, ...more: any[]): Pattern
-declare function listRange(...args: any[]): Pattern
-declare function load(...args: any[]): Pattern
-declare function loadBuffer(...args: any[]): Pattern
-declare function loadSoundfont(...args: any[]): Pattern
-declare function loadWorklets(...args: any[]): Pattern
+declare function linger(fraction?: any, ...more: Arg[]): Pattern
+declare function listRange(...more: Arg[]): Pattern
+declare function load(...more: Arg[]): Pattern
+declare function loadBuffer(...more: Arg[]): Pattern
+declare function loadSoundfont(...more: Arg[]): Pattern
+declare function loadWorklets(...more: Arg[]): Pattern
 /**
  * Specifies whether delaytime is calculated relative to cps.
  * @param enable {number | Pattern} When set to 1, delaytime is a direct multiple of a cycle.
  * @example
  * s("sd").delay().lock(1).osc()
  */
-declare function lock(enable?: any, ...more: any[]): Pattern
+declare function lock(enable?: any, ...more: Arg[]): Pattern
 declare const logKey: any
-declare function logger(...args: any[]): Pattern
+declare function logger(...more: Arg[]): Pattern
 /**
  * Loops the sample.
  * Note that the tempo of the loop is not synced with the cycle tempo.
@@ -9609,14 +9369,14 @@ declare function logger(...args: any[]): Pattern
  * @example
  * s("casio").loop(1)
  */
-declare function loop(on?: any, ...more: any[]): Pattern
+declare function loop(on?: any, ...more: Arg[]): Pattern
 /**
  * Makes the sample fit the given number of cycles by changing the speed.
  * @example
  * samples({ rhodes: 'https://cdn.freesound.org/previews/132/132051_316502-lq.mp3' })
  * s("rhodes").loopAt(2)
  */
-declare function loopAt(...args: any[]): Pattern
+declare function loopAt(...more: Arg[]): Pattern
 /**
  * Makes the sample fit the given number of cycles and cps value, by
  * changing the speed. Please note that at some point cps will be
@@ -9626,7 +9386,7 @@ declare function loopAt(...args: any[]): Pattern
  * samples({ rhodes: 'https://cdn.freesound.org/previews/132/132051_316502-lq.mp3' })
  * s("rhodes").loopAtCps(4,1.5).cps(1.5)
  */
-declare function loopAtCps(...args: any[]): Pattern
+declare function loopAtCps(...more: Arg[]): Pattern
 /**
  * Begin to loop at a specific point in the sample (inbetween begin and end).
  * Note that the loop point must be inbetween begin and end, and before loopEnd!
@@ -9637,7 +9397,7 @@ declare function loopAtCps(...args: any[]): Pattern
  * s("space").loop(1)
  * .loopBegin("<0 .125 .25>")._scope()
  */
-declare function loopBegin(time?: any, ...more: any[]): Pattern
+declare function loopBegin(time?: any, ...more: Arg[]): Pattern
 /**
  * End the looping section at a specific point in the sample (inbetween begin and end).
  * Note that the loop point must be inbetween begin and end, and after loopBegin!
@@ -9647,9 +9407,9 @@ declare function loopBegin(time?: any, ...more: any[]): Pattern
  * s("space").loop(1)
  * .loopEnd("<1 .75 .5 .25>")._scope()
  */
-declare function loopEnd(time?: any, ...more: any[]): Pattern
-declare function loopat(...args: any[]): Pattern
-declare function loopatcps(...args: any[]): Pattern
+declare function loopEnd(time?: any, ...more: Arg[]): Pattern
+declare function loopat(...more: Arg[]): Pattern
+declare function loopatcps(...more: Arg[]): Pattern
 /**
  * Begin to loop at a specific point in the sample (inbetween begin and end).
  * Note that the loop point must be inbetween begin and end, and before loopEnd!
@@ -9660,7 +9420,7 @@ declare function loopatcps(...args: any[]): Pattern
  * s("space").loop(1)
  * .loopBegin("<0 .125 .25>")._scope()
  */
-declare function loopb(time?: any, ...more: any[]): Pattern
+declare function loopb(time?: any, ...more: Arg[]): Pattern
 /**
  * End the looping section at a specific point in the sample (inbetween begin and end).
  * Note that the loop point must be inbetween begin and end, and after loopBegin!
@@ -9670,7 +9430,7 @@ declare function loopb(time?: any, ...more: any[]): Pattern
  * s("space").loop(1)
  * .loopEnd("<1 .75 .5 .25>")._scope()
  */
-declare function loope(time?: any, ...more: any[]): Pattern
+declare function loope(time?: any, ...more: Arg[]): Pattern
 /**
  * Applies the cutoff frequency of the low-pass filter.
  * When using mininotation, you can also optionally add the 'lpq' parameter, separated by ':'.
@@ -9681,7 +9441,7 @@ declare function loope(time?: any, ...more: any[]): Pattern
  * @example
  * s("bd*16").lpf("1000:0 1000:10 1000:20 1000:30")
  */
-declare function lp(frequency?: any, ...more: any[]): Pattern
+declare function lp(frequency?: any, ...more: Arg[]): Pattern
 /**
  * Sets the attack duration for the lowpass filter envelope.
  * Synonyms: lpa
@@ -9693,7 +9453,7 @@ declare function lp(frequency?: any, ...more: any[]): Pattern
  * .lpa("<.5 .25 .1 .01>/4")
  * .lpenv(4)
  */
-declare function lpa(attack?: any, ...more: any[]): Pattern
+declare function lpa(attack?: any, ...more: Arg[]): Pattern
 /**
  * Sets the attack duration for the lowpass filter envelope.
  * Synonyms: lpa
@@ -9705,7 +9465,7 @@ declare function lpa(attack?: any, ...more: any[]): Pattern
  * .lpa("<.5 .25 .1 .01>/4")
  * .lpenv(4)
  */
-declare function lpattack(attack?: any, ...more: any[]): Pattern
+declare function lpattack(attack?: any, ...more: Arg[]): Pattern
 /**
  * Sets the decay duration for the lowpass filter envelope.
  * Synonyms: lpd
@@ -9717,12 +9477,12 @@ declare function lpattack(attack?: any, ...more: any[]): Pattern
  * .lpd("<.5 .25 .1 0>/4")
  * .lpenv(4)
  */
-declare function lpd(decay?: any, ...more: any[]): Pattern
+declare function lpd(decay?: any, ...more: Arg[]): Pattern
 /**
  * DC offset of the LFO for the lowpass filter
  * @param dcoffset {number | Pattern} dc offset. set to 0 for unipolar
  */
-declare function lpdc(dcoffset?: any, ...more: any[]): Pattern
+declare function lpdc(dcoffset?: any, ...more: Arg[]): Pattern
 /**
  * Sets the decay duration for the lowpass filter envelope.
  * Synonyms: lpd
@@ -9734,14 +9494,14 @@ declare function lpdc(dcoffset?: any, ...more: any[]): Pattern
  * .lpd("<.5 .25 .1 0>/4")
  * .lpenv(4)
  */
-declare function lpdecay(decay?: any, ...more: any[]): Pattern
+declare function lpdecay(decay?: any, ...more: Arg[]): Pattern
 /**
  * Depth of the LFO for the lowpass filter
  * @param depth {number | Pattern} depth of modulation
  * @example
  * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).lpdepth("<1 .5 1.8 0>")
  */
-declare function lpdepth(depth?: any, ...more: any[]): Pattern
+declare function lpdepth(depth?: any, ...more: Arg[]): Pattern
 /**
  * Depth of the LFO for the lowpass filter, in HZ
  * Synonyms: lpdepthfreq
@@ -9749,7 +9509,7 @@ declare function lpdepth(depth?: any, ...more: any[]): Pattern
  * @example
  * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).lpdepthfrequency("<200 500 100 0>")
  */
-declare function lpdepthfreq(depth?: any, ...more: any[]): Pattern
+declare function lpdepthfreq(depth?: any, ...more: Arg[]): Pattern
 /**
  * Depth of the LFO for the lowpass filter, in HZ
  * Synonyms: lpdepthfreq
@@ -9757,7 +9517,7 @@ declare function lpdepthfreq(depth?: any, ...more: any[]): Pattern
  * @example
  * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).lpdepthfrequency("<200 500 100 0>")
  */
-declare function lpdepthfrequency(depth?: any, ...more: any[]): Pattern
+declare function lpdepthfrequency(depth?: any, ...more: Arg[]): Pattern
 /**
  * Sets the lowpass filter envelope modulation depth.
  * Synonyms: lpe
@@ -9769,7 +9529,7 @@ declare function lpdepthfrequency(depth?: any, ...more: any[]): Pattern
  * .lpa(.5)
  * .lpenv("<4 2 1 0 -1 -2 -4>/4")
  */
-declare function lpe(modulation?: any, ...more: any[]): Pattern
+declare function lpe(modulation?: any, ...more: Arg[]): Pattern
 /**
  * Sets the lowpass filter envelope modulation depth.
  * Synonyms: lpe
@@ -9781,7 +9541,7 @@ declare function lpe(modulation?: any, ...more: any[]): Pattern
  * .lpa(.5)
  * .lpenv("<4 2 1 0 -1 -2 -4>/4")
  */
-declare function lpenv(modulation?: any, ...more: any[]): Pattern
+declare function lpenv(modulation?: any, ...more: Arg[]): Pattern
 /**
  * Applies the cutoff frequency of the low-pass filter.
  * When using mininotation, you can also optionally add the 'lpq' parameter, separated by ':'.
@@ -9792,7 +9552,7 @@ declare function lpenv(modulation?: any, ...more: any[]): Pattern
  * @example
  * s("bd*16").lpf("1000:0 1000:10 1000:20 1000:30")
  */
-declare function lpf(frequency?: any, ...more: any[]): Pattern
+declare function lpf(frequency?: any, ...more: Arg[]): Pattern
 /**
  * Controls the low-pass q-value.
  * Synonyms: resonance
@@ -9800,7 +9560,7 @@ declare function lpf(frequency?: any, ...more: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd,hh*8").lpf(2000).lpq("<0 10 20 30>")
  */
-declare function lpq(q?: any, ...more: any[]): Pattern
+declare function lpq(q?: any, ...more: Arg[]): Pattern
 /**
  * Sets the release time for the lowpass filter envelope.
  * Synonyms: lpr
@@ -9814,14 +9574,14 @@ declare function lpq(q?: any, ...more: any[]): Pattern
  * .lpr("<.5 .25 .1 0>/4")
  * .release(.5)
  */
-declare function lpr(release?: any, ...more: any[]): Pattern
+declare function lpr(release?: any, ...more: Arg[]): Pattern
 /**
  * Rate of the LFO for the lowpass filter
  * @param rate {number | Pattern} rate in hertz
  * @example
  * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).lprate("<4 8 2 1>")
  */
-declare function lprate(rate?: any, ...more: any[]): Pattern
+declare function lprate(rate?: any, ...more: Arg[]): Pattern
 /**
  * Sets the release time for the lowpass filter envelope.
  * Synonyms: lpr
@@ -9835,7 +9595,7 @@ declare function lprate(rate?: any, ...more: any[]): Pattern
  * .lpr("<.5 .25 .1 0>/4")
  * .release(.5)
  */
-declare function lprelease(release?: any, ...more: any[]): Pattern
+declare function lprelease(release?: any, ...more: Arg[]): Pattern
 /**
  * Sets the sustain amplitude for the lowpass filter envelope.
  * Synonyms: lps
@@ -9848,17 +9608,17 @@ declare function lprelease(release?: any, ...more: any[]): Pattern
  * .lps("<0 .25 .5 1>/4")
  * .lpenv(4)
  */
-declare function lps(sustain?: any, ...more: any[]): Pattern
+declare function lps(sustain?: any, ...more: Arg[]): Pattern
 /**
  * Shape of the LFO for the lowpass filter
  * @param shape {number | Pattern} Shape of the lfo (0, 1, 2, ..)
  */
-declare function lpshape(shape?: any, ...more: any[]): Pattern
+declare function lpshape(shape?: any, ...more: Arg[]): Pattern
 /**
  * Skew of the LFO for the lowpass filter
  * @param skew {number | Pattern} How much to bend the LFO shape
  */
-declare function lpskew(skew?: any, ...more: any[]): Pattern
+declare function lpskew(skew?: any, ...more: Arg[]): Pattern
 /**
  * Sets the sustain amplitude for the lowpass filter envelope.
  * Synonyms: lps
@@ -9871,32 +9631,32 @@ declare function lpskew(skew?: any, ...more: any[]): Pattern
  * .lps("<0 .25 .5 1>/4")
  * .lpenv(4)
  */
-declare function lpsustain(sustain?: any, ...more: any[]): Pattern
+declare function lpsustain(sustain?: any, ...more: Arg[]): Pattern
 /**
  * Cycle-synced rate of the LFO for the lowpass filter
  * @param rate {number | Pattern} rate in cycles
  * @example
  * note("<c c c# c c c4>*16").s("sawtooth").lpf(600).lpsync("<4 8 2 1>")
  */
-declare function lpsync(rate?: any, ...more: any[]): Pattern
+declare function lpsync(rate?: any, ...more: Arg[]): Pattern
 /**
  * Rate of modulation / rotation for leslie effect
  * @param rate {number | Pattern} 6.7 for fast, 0.7 for slow
  * @example
  * n("0,4,7").s("supersquare").leslie(1).lrate("<1 2 4 8>").osc()
  */
-declare function lrate(rate?: any, ...more: any[]): Pattern
+declare function lrate(rate?: any, ...more: Arg[]): Pattern
 /**
  * Physical size of the cabinet in meters. Be careful, it might be slightly larger than your computer. Affects the Doppler amount (pitch warble)
  * @param meters {number | Pattern} somewhere between 0 and 1
  * @example
  * n("0,4,7").s("supersquare").leslie(1).lrate(2).lsize("<.1 .5 1>").osc()
  */
-declare function lsize(meters?: any, ...more: any[]): Pattern
-declare function lt(...args: any[]): Pattern
-declare function lte(...args: any[]): Pattern
-declare function m(...args: any[]): Pattern
-declare function mapArgs(...args: any[]): Pattern
+declare function lsize(meters?: any, ...more: Arg[]): Pattern
+declare function lt(...more: Arg[]): Pattern
+declare function lte(...more: Arg[]): Pattern
+declare function m(...more: Arg[]): Pattern
+declare function mapArgs(...more: Arg[]): Pattern
 /**
  * Overrides the css of highlighted events. Make sure to use single quotes!
  * @example
@@ -9909,34 +9669,34 @@ declare const markcss: any
  * @example
  * note("c [eb,g] d [eb,g]").mask("<1 [0 1]>")
  */
-declare function mask(...args: any[]): Pattern
+declare function mask(...more: Arg[]): Pattern
 declare const maxPolyphony: any
 /**
  *
  */
-declare function midi2note(...args: any[]): Pattern
-declare function midiToFreq(...args: any[]): Pattern
+declare function midi2note(...more: Arg[]): Pattern
+declare function midiToFreq(...more: Arg[]): Pattern
 /**
  * MIDI pitch bend: Sends a MIDI pitch bend message.
  * @param midibend {number | Pattern} MIDI pitch bend (-1 - 1)
  * @example
  * note("c4").midibend(sine.slow(4).range(-0.4,0.4)).midi()
  */
-declare function midibend(midibend?: any, ...more: any[]): Pattern
+declare function midibend(midibend?: any, ...more: Arg[]): Pattern
 /**
  * MIDI channel: Sets the MIDI channel for the event.
  * @param channel {number | Pattern} MIDI channel number (0-15)
  * @example
  * note("c4").midichan(1).midi()
  */
-declare function midichan(channel?: any, ...more: any[]): Pattern
+declare function midichan(channel?: any, ...more: Arg[]): Pattern
 /**
  * MIDI command: Sends a MIDI command message.
  * @param command {number | Pattern} MIDI command
  * @example
  * midicmd("clock*48,<start stop>/2").midi()
  */
-declare function midicmd(command?: any, ...more: any[]): Pattern
+declare function midicmd(command?: any, ...more: Arg[]): Pattern
 declare const midicontrolMap: any
 /**
  * MIDI keyboard: Opens a MIDI input port to receive MIDI keyboard messages.
@@ -9953,8 +9713,8 @@ declare const midicontrolMap: any
  *   .add(note(rand.mul(0.3)))
  *   .lpf(1000).lpe(2).room(0.5)
  */
-declare function midikeys(input?: any, ...more: any[]): Pattern
-declare function midimap(...args: any[]): Pattern
+declare function midikeys(input?: any, ...more: Arg[]): Pattern
+declare function midimap(...more: Arg[]): Pattern
 /**
  * Adds midimaps to the registry. Inside each midimap, control names (e.g. lpf) are mapped to cc numbers.
  * @example
@@ -9972,7 +9732,7 @@ declare function midimap(...args: any[]): Pattern
  * .midimap('mymap')
  * .midi()
  */
-declare function midimaps(...args: any[]): Pattern
+declare function midimaps(...more: Arg[]): Pattern
 /**
  * MIDI input: Opens a MIDI input port to receive MIDI control change messages.
  * The output is a function that accepts a midi cc value to query as well as (optionally) a midi channel
@@ -9986,14 +9746,14 @@ declare function midimaps(...args: any[]): Pattern
  * note("c a f e").s("saw")
  *   .when(cc(0).gt(0), x => x.postgain(0))
  */
-declare function midin(input?: any, ...more: any[]): any
+declare function midin(input?: any, ...more: Arg[]): any
 /**
  * MIDI port: Sets the MIDI port for the event.
  * @param port {number | Pattern} MIDI port
  * @example
  * note("c a f e").midiport("<0 1 2 3>").midi()
  */
-declare function midiport(port?: any, ...more: any[]): Pattern
+declare function midiport(port?: any, ...more: Arg[]): Pattern
 declare const midisoundMap: any
 /**
  * MIDI key after touch: Sends a MIDI key after touch message.
@@ -10001,20 +9761,20 @@ declare const midisoundMap: any
  * @example
  * note("c4").miditouch(sine.slow(4).range(0,1)).midi()
  */
-declare function miditouch(miditouch?: any, ...more: any[]): Pattern
-declare function mini(...args: any[]): Pattern
-declare function mini2ast(...args: any[]): Pattern
-declare function miniAllStrings(...args: any[]): Pattern
-declare function minify(...args: any[]): Pattern
-declare function minutes(...args: any[]): Pattern
-declare function mod(...args: any[]): Pattern
+declare function miditouch(miditouch?: any, ...more: Arg[]): Pattern
+declare function mini(...more: Arg[]): Pattern
+declare function mini2ast(...more: Arg[]): Pattern
+declare function miniAllStrings(...more: Arg[]): Pattern
+declare function minify(...more: Arg[]): Pattern
+declare function minutes(...more: Arg[]): Pattern
+declare function mod(...more: Arg[]): Pattern
 /**
  * Remove anchor note from the voicing. Useful for melody harmonization
  * @param modeName {string | Pattern} one of {below | above | duck | root}
  * @example
  * mode("<below above duck root>").chord("C").voicing()
  */
-declare function mode(modeName?: any, ...more: any[]): Pattern
+declare function mode(modeName?: any, ...more: Arg[]): Pattern
 /**
  * Takes two binary rhythms represented as lists of 1s and 0s, and a number
  * between 0 and 1 that morphs between them. The two lists should contain the same
@@ -10032,7 +9792,7 @@ declare function mode(modeName?: any, ...more: any[]): Pattern
  *                         )
  *                   )
  */
-declare function morph(...args: any[]): Pattern
+declare function morph(...more: Arg[]): Pattern
 declare const mouseX: Pattern
 declare const mouseY: Pattern
 /**
@@ -10047,14 +9807,14 @@ declare const mousex: Pattern
  * n(mousey.segment(4).range(0,7)).scale("C:minor")
  */
 declare const mousey: Pattern
-declare function moveXY(...args: any[]): Pattern
-declare function mtranspose(...args: any[]): Pattern
+declare function moveXY(...more: Arg[]): Pattern
+declare function mtranspose(...more: Arg[]): Pattern
 /**
  * Multiplies each number by the given factor.
  * @example
  * "<1 1.5 [1.66, <2 2.33>]>*4".mul(150).freq()
  */
-declare function mul(...args: any[]): Pattern
+declare function mul(...more: Arg[]): Pattern
 declare const multiChannelOrbits: any
 /**
  * Selects the given index from the sample map.
@@ -10064,23 +9824,23 @@ declare const multiChannelOrbits: any
  * @example
  * s("bd sd [~ bd] sd,hh*6").n("<0 1>")
  */
-declare function n(value?: any, ...more: any[]): Pattern
-declare function nanFallback(...args: any[]): Pattern
-declare function ne(...args: any[]): Pattern
-declare function net(...args: any[]): Pattern
+declare function n(value?: any, ...more: Arg[]): Pattern
+declare function nanFallback(...more: Arg[]): Pattern
+declare function ne(...more: Arg[]): Pattern
+declare function net(...more: Arg[]): Pattern
 /**
  * Shorthand for .sometimesBy(0, fn) (never calls fn)
  * @example
  * s("hh*8").never(x=>x.speed("0.5"))
  */
-declare function never(...args: any[]): Pattern
+declare function never(...more: Arg[]): Pattern
 /**
  * Adds pink noise to the mix
  * @param wet {number | Pattern} wet amount
  * @example
  * sound("<white pink brown>/2")
  */
-declare function noise(wet?: any, ...more: any[]): Pattern
+declare function noise(wet?: any, ...more: Arg[]): Pattern
 declare const noises: any
 /**
  * Plays the given note name or midi number. A note name consists of
@@ -10100,8 +9860,8 @@ declare const noises: any
  * @example
  * note("fbb1 a#0 cbbb-1 e##-2").sound("saw")
  */
-declare function note(...args: any[]): Pattern
-declare function noteToMidi(...args: any[]): Pattern
+declare function note(...more: Arg[]): Pattern
+declare function noteToMidi(...more: Arg[]): Pattern
 declare const nothing: Pattern
 /**
  * MIDI NRPN non-registered parameter number: Sends a MIDI NRPN non-registered parameter number message.
@@ -10109,17 +9869,17 @@ declare const nothing: Pattern
  * @example
  * note("c4").nrpnn("1:8").nrpv("123").midichan(1).midi()
  */
-declare function nrpnn(nrpnn?: any, ...more: any[]): Pattern
+declare function nrpnn(nrpnn?: any, ...more: Arg[]): Pattern
 /**
  * MIDI NRPN non-registered parameter value: Sends a MIDI NRPN non-registered parameter value message.
  * @param nrpv {number | Pattern} MIDI NRPN non-registered parameter value (0-127)
  * @example
  * note("c4").nrpnn("1:8").nrpv("123").midichan(1).midi()
  */
-declare function nrpv(nrpv?: any, ...more: any[]): Pattern
-declare function nudge(...args: any[]): Pattern
-declare function numeralArgs(...args: any[]): Pattern
-declare function objectMap(...args: any[]): Pattern
+declare function nrpv(nrpv?: any, ...more: Arg[]): Pattern
+declare function nudge(...more: Arg[]): Pattern
+declare function numeralArgs(...more: Arg[]): Pattern
+declare function objectMap(...more: Arg[]): Pattern
 /**
  * Sets the default octave of a synth.
  * Synonyms: oct
@@ -10127,7 +9887,7 @@ declare function objectMap(...args: any[]): Pattern
  * @example
  * n("0,4,7").scale("F:minor").s('supersaw').octave("<0 1 2 3>")
  */
-declare function oct(octave?: any, ...more: any[]): Pattern
+declare function oct(octave?: any, ...more: Arg[]): Pattern
 /**
  * Sets the default octave of a synth.
  * Synonyms: oct
@@ -10135,18 +9895,18 @@ declare function oct(octave?: any, ...more: any[]): Pattern
  * @example
  * n("0,4,7").scale("F:minor").s('supersaw').octave("<0 1 2 3>")
  */
-declare function octave(octave?: any, ...more: any[]): Pattern
-declare function octaveR(...args: any[]): Pattern
+declare function octave(octave?: any, ...more: Arg[]): Pattern
+declare function octaveR(...more: Arg[]): Pattern
 /**
  * How many octaves are voicing steps spread apart, defaults to 1
  * @param count {number | Pattern} the number of octaves
  * @example
  * chord("<Am C D F Am E Am E>").octaves("<2 4>").voicing()
  */
-declare function octaves(count?: any, ...more: any[]): Pattern
-declare function octer(...args: any[]): Pattern
-declare function octersub(...args: any[]): Pattern
-declare function octersubsub(...args: any[]): Pattern
+declare function octaves(count?: any, ...more: Arg[]): Pattern
+declare function octer(...more: Arg[]): Pattern
+declare function octersub(...more: Arg[]): Pattern
+declare function octersubsub(...more: Arg[]): Pattern
 /**
  * Superimposes the function result on top of the original pattern, delayed by the given time.
  * @param time {Pattern | number} offset time
@@ -10154,28 +9914,24 @@ declare function octersubsub(...args: any[]): Pattern
  * @example
  * "c3 eb3 g3".off(1/8, x=>x.add(7)).note()
  */
-declare function off(time?: any, func?: any, ...more: any[]): Pattern
+declare function off(time?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
 /**
  * Sets how the voicing is offset from the anchored position
  * @param shift {number | Pattern} the amount to shift the voicing up or down
  * @example
  * chord("<Am C D F Am E Am E>").offset("<0 1 2 3 4 5>") // alter the voicing each time
  */
-declare function offset(shift?: any, ...more: any[]): Pattern
+declare function offset(shift?: any, ...more: Arg[]): Pattern
 /**
  * Shorthand for .sometimesBy(0.75, fn)
  * @example
  * s("hh*8").often(x=>x.speed("0.5"))
  */
-declare function often(...args: any[]): Pattern
-declare function onTriggerSample(...args: any[]): Pattern
-declare function onTriggerSynth(...args: any[]): Pattern
-declare function onceEnded(...args: any[]): Pattern
-declare const ondevicemotion: any
-declare const ondeviceorientation: any
-declare const ondeviceorientationabsolute: any
-declare const onpointerrawupdate: any
-declare function or(...args: any[]): Pattern
+declare function often(...more: Arg[]): Pattern
+declare function onTriggerSample(...more: Arg[]): Pattern
+declare function onTriggerSynth(...more: Arg[]): Pattern
+declare function onceEnded(...more: Arg[]): Pattern
+declare function or(...more: Arg[]): Pattern
 /**
  * An orbit is a global parameter context for patterns. Patterns with the same orbit will share the same global effects.
  * Synonyms: o
@@ -10186,31 +9942,31 @@ declare function or(...args: any[]): Pattern
  *   s("~ sd ~ sd").delay(.5).delaytime(.125).orbit(2)
  * )
  */
-declare function orbit(number?: any, ...more: any[]): Pattern
+declare function orbit(number?: any, ...more: Arg[]): Pattern
 /**
  * The host to send open sound control messages to. Requires running the OSC bridge.
  * @param oschost {string | Pattern} e.g. 'localhost'
  * @example
  * note("c4").oschost('127.0.0.1').oscport(57120).osc();
  */
-declare function oschost(oschost?: any, ...more: any[]): Pattern
+declare function oschost(oschost?: any, ...more: Arg[]): Pattern
 /**
  * The port to send open sound control messages to. Requires running the OSC bridge.
  * @param oscport {number | Pattern} e.g. 57120
  * @example
  * note("c4").oschost('127.0.0.1').oscport(57120).osc();
  */
-declare function oscport(oscport?: any, ...more: any[]): Pattern
-declare function outerBind(...args: any[]): Pattern
+declare function oscport(oscport?: any, ...more: Arg[]): Pattern
+declare function outerBind(...more: Arg[]): Pattern
 /**
  * Carries out an operation 'outside' a cycle.
  * @example
  * "<[0 1] 2 [3 4] 5>".outside(4, rev).scale('C major').note()
  * // "<[0 1] 2 [3 4] 5>".fast(4).rev().slow(4).scale('C major').note()
  */
-declare function outside(...args: any[]): Pattern
-declare function overgain(...args: any[]): Pattern
-declare function overshape(...args: any[]): Pattern
+declare function outside(...more: Arg[]): Pattern
+declare function overgain(...more: Arg[]): Pattern
+declare function overshape(...more: Arg[]): Pattern
 /**
  * Experimental
  * Speeds a pattern up or down, to fit to the given number of steps per cycle.
@@ -10218,15 +9974,15 @@ declare function overshape(...args: any[]): Pattern
  * sound("bd sd cp").pace(4)
  * // The same as sound("{bd sd cp}%4") or sound("<bd sd cp>*4")
  */
-declare function pace(...args: any[]): Pattern
+declare function pace(...more: Arg[]): Pattern
 declare const packageName: any
-declare function pairs(...args: any[]): Pattern
+declare function pairs(...more: Arg[]): Pattern
 /**
  * Applies rev to a pattern every other cycle, so that the pattern alternates between forwards and backwards.
  * @example
  * note("c d e g").palindrome()
  */
-declare function palindrome(...args: any[]): Pattern
+declare function palindrome(...more: Arg[]): Pattern
 /**
  * Sets position in stereo.
  * @param pan {number | Pattern} between 0 and 1, from left to right (assuming stereo), once round a circle (assuming multichannel)
@@ -10235,7 +9991,7 @@ declare function palindrome(...args: any[]): Pattern
  * @example
  * s("bd rim sd rim bd ~ cp rim").pan(sine.slow(2))
  */
-declare function pan(pan?: any, ...more: any[]): Pattern
+declare function pan(pan?: any, ...more: Arg[]): Pattern
 /**
  * Sets the range anchor of the envelope:
  *
@@ -10246,19 +10002,19 @@ declare function pan(pan?: any, ...more: any[]): Pattern
  * @example
  * note("c c4").penv(12).panchor("<0 .5 1 .5>")
  */
-declare function panchor(anchor?: any, ...more: any[]): Pattern
-declare function panorient(...args: any[]): Pattern
-declare function panspan(...args: any[]): Pattern
-declare function pansplay(...args: any[]): Pattern
-declare function panwidth(...args: any[]): Pattern
+declare function panchor(anchor?: any, ...more: Arg[]): Pattern
+declare function panorient(...more: Arg[]): Pattern
+declare function panspan(...more: Arg[]): Pattern
+declare function pansplay(...more: Arg[]): Pattern
+declare function panwidth(...more: Arg[]): Pattern
 /**
  * Turns a list of patterns into a single pattern which outputs list-values
  */
-declare function parray(...args: any[]): Pattern
-declare function parse(...args: any[]): Pattern
-declare function parseBooleans(...args: any[]): Pattern
-declare function parseFractional(...args: any[]): Pattern
-declare function parseNumeral(...args: any[]): Pattern
+declare function parray(...more: Arg[]): Pattern
+declare function parse(...more: Arg[]): Pattern
+declare function parseBooleans(...more: Arg[]): Pattern
+declare function parseFractional(...more: Arg[]): Pattern
+declare function parseNumeral(...more: Arg[]): Pattern
 /**
  * Scale the magnitude of the harmonics of one of the core synths ('sine', 'tri', 'saw', ..)
  * Can also be used to create a new synth via s('user').partials(...)
@@ -10270,7 +10026,7 @@ declare function parseNumeral(...args: any[]): Pattern
  * s("saw").seg(8).n(irand(12)).scale("G#:minor")
  *   .partials(binaryL(irand(256).add("1")))
  */
-declare function partials(magnitudes?: any, ...more: any[]): Pattern
+declare function partials(magnitudes?: any, ...more: Arg[]): Pattern
 /**
  * Attack time of pitch envelope.
  * Synonyms: patt
@@ -10278,7 +10034,7 @@ declare function partials(magnitudes?: any, ...more: any[]): Pattern
  * @example
  * note("c eb g bb").pattack("0 .1 .25 .5").slow(2)
  */
-declare function patt(time?: any, ...more: any[]): Pattern
+declare function patt(time?: any, ...more: Arg[]): Pattern
 /**
  * Attack time of pitch envelope.
  * Synonyms: patt
@@ -10286,8 +10042,8 @@ declare function patt(time?: any, ...more: any[]): Pattern
  * @example
  * note("c eb g bb").pattack("0 .1 .25 .5").slow(2)
  */
-declare function pattack(time?: any, ...more: any[]): Pattern
-declare function patternifyAST(...args: any[]): Pattern
+declare function pattack(time?: any, ...more: Arg[]): Pattern
+declare function patternifyAST(...more: Arg[]): Pattern
 /**
  * Curve of envelope. Defaults to linear. exponential is good for kicks
  * @param type {number | Pattern} 0 = linear, 1 = exponential
@@ -10297,7 +10053,7 @@ declare function patternifyAST(...args: any[]): Pattern
  * .penv(32)
  * .pcurve("<0 1>")
  */
-declare function pcurve(type?: any, ...more: any[]): Pattern
+declare function pcurve(type?: any, ...more: Arg[]): Pattern
 /**
  * Decay time of pitch envelope.
  * Synonyms: pdec
@@ -10305,7 +10061,7 @@ declare function pcurve(type?: any, ...more: any[]): Pattern
  * @example
  * note("<c eb g bb>").pdecay("<0 .1 .25 .5>")
  */
-declare function pdec(time?: any, ...more: any[]): Pattern
+declare function pdec(time?: any, ...more: Arg[]): Pattern
 /**
  * Decay time of pitch envelope.
  * Synonyms: pdec
@@ -10313,7 +10069,7 @@ declare function pdec(time?: any, ...more: any[]): Pattern
  * @example
  * note("<c eb g bb>").pdecay("<0 .1 .25 .5>")
  */
-declare function pdecay(time?: any, ...more: any[]): Pattern
+declare function pdecay(time?: any, ...more: Arg[]): Pattern
 /**
  * Amount of pitch envelope. Negative values will flip the envelope.
  * If you don't set other pitch envelope controls, pattack:.2 will be the default.
@@ -10322,7 +10078,7 @@ declare function pdecay(time?: any, ...more: any[]): Pattern
  * note("c")
  * .penv("<12 7 1 .5 0 -1 -7 -12>")
  */
-declare function penv(semitones?: any, ...more: any[]): Pattern
+declare function penv(semitones?: any, ...more: Arg[]): Pattern
 /**
  * A pattern measuring the 'shortness' of events, or in other words, the duration of pattern events,
  * in events per cycle. per doesn't have structure itself, but takes structure, and therefore
@@ -10371,7 +10127,7 @@ declare const perx: Pattern
  * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
  * .phaser("<1 2 4 8>")
  */
-declare function ph(speed?: any, ...more: any[]): Pattern
+declare function ph(speed?: any, ...more: Arg[]): Pattern
 /**
  * The amount the signal is affected by the phaser effect. Defaults to 0.75
  * Synonyms: phd, phasdp
@@ -10380,7 +10136,7 @@ declare function ph(speed?: any, ...more: any[]): Pattern
  * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
  * .phaser(2).phaserdepth("<0 .5 .75 1>")
  */
-declare function phasdp(depth?: any, ...more: any[]): Pattern
+declare function phasdp(depth?: any, ...more: Arg[]): Pattern
 /**
  * Phaser audio effect that approximates popular guitar pedals.
  * Synonyms: ph
@@ -10389,7 +10145,7 @@ declare function phasdp(depth?: any, ...more: any[]): Pattern
  * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
  * .phaser("<1 2 4 8>")
  */
-declare function phaser(speed?: any, ...more: any[]): Pattern
+declare function phaser(speed?: any, ...more: Arg[]): Pattern
 /**
  * The center frequency of the phaser in HZ. Defaults to 1000
  * Synonyms: phc
@@ -10398,7 +10154,7 @@ declare function phaser(speed?: any, ...more: any[]): Pattern
  * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
  * .phaser(2).phasercenter("<800 2000 4000>")
  */
-declare function phasercenter(centerfrequency?: any, ...more: any[]): Pattern
+declare function phasercenter(centerfrequency?: any, ...more: Arg[]): Pattern
 /**
  * The amount the signal is affected by the phaser effect. Defaults to 0.75
  * Synonyms: phd, phasdp
@@ -10407,8 +10163,8 @@ declare function phasercenter(centerfrequency?: any, ...more: any[]): Pattern
  * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
  * .phaser(2).phaserdepth("<0 .5 .75 1>")
  */
-declare function phaserdepth(depth?: any, ...more: any[]): Pattern
-declare function phaserrate(...args: any[]): Pattern
+declare function phaserdepth(depth?: any, ...more: Arg[]): Pattern
+declare function phaserrate(...more: Arg[]): Pattern
 /**
  * The frequency sweep range of the lfo for the phaser effect. Defaults to 2000
  * Synonyms: phs
@@ -10417,7 +10173,7 @@ declare function phaserrate(...args: any[]): Pattern
  * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
  * .phaser(2).phasersweep("<800 2000 4000>")
  */
-declare function phasersweep(phasersweep?: any, ...more: any[]): Pattern
+declare function phasersweep(phasersweep?: any, ...more: Arg[]): Pattern
 /**
  * Rotates the harmonics of one of the core synths ('sine', 'tri', 'saw', 'user', ..) by a list of phases
  * @param phases {Array.<number> | Pattern} List of [0, 1) phases for partials. 0th entry is the fundamental phase (i.e. DC offset is skipped)
@@ -10427,7 +10183,7 @@ declare function phasersweep(phasersweep?: any, ...more: any[]): Pattern
  *   .partials(partials([1, 1, 1]))
  *   .superimpose(x => x.phases([0.5, 0.5, 0.5]))
  */
-declare function phases(phases?: any, ...more: any[]): Pattern
+declare function phases(phases?: any, ...more: Arg[]): Pattern
 /**
  * The center frequency of the phaser in HZ. Defaults to 1000
  * Synonyms: phc
@@ -10436,7 +10192,7 @@ declare function phases(phases?: any, ...more: any[]): Pattern
  * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
  * .phaser(2).phasercenter("<800 2000 4000>")
  */
-declare function phc(centerfrequency?: any, ...more: any[]): Pattern
+declare function phc(centerfrequency?: any, ...more: Arg[]): Pattern
 /**
  * The amount the signal is affected by the phaser effect. Defaults to 0.75
  * Synonyms: phd, phasdp
@@ -10445,7 +10201,7 @@ declare function phc(centerfrequency?: any, ...more: any[]): Pattern
  * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
  * .phaser(2).phaserdepth("<0 .5 .75 1>")
  */
-declare function phd(depth?: any, ...more: any[]): Pattern
+declare function phd(depth?: any, ...more: Arg[]): Pattern
 /**
  * The frequency sweep range of the lfo for the phaser effect. Defaults to 2000
  * Synonyms: phs
@@ -10454,7 +10210,7 @@ declare function phd(depth?: any, ...more: any[]): Pattern
  * n(run(8)).scale("D:pentatonic").s("sawtooth").release(0.5)
  * .phaser(2).phasersweep("<800 2000 4000>")
  */
-declare function phs(phasersweep?: any, ...more: any[]): Pattern
+declare function phs(phasersweep?: any, ...more: Arg[]): Pattern
 /**
  * Visualises a pattern as a scrolling 'pianoroll', displayed in the background of the editor. To show a pianoroll for all running patterns, use all(pianoroll). To have a pianoroll appear below
  * a pattern instead, prefix with _, e.g.: sound("bd sd")._pianoroll().
@@ -10491,7 +10247,7 @@ declare function phs(phasersweep?: any, ...more: any[]): Pattern
  * .lpenv(4).lpf(300)
  * .pianoroll({ labels: 1 })
  */
-declare function pianoroll(options?: any, cycles?: any, playhead?: any, vertical?: any, labels?: any, flipTime?: any, flipValues?: any, overscan?: any, hideNegative?: any, smear?: any, fold?: any, active?: any, inactive?: any, background?: any, playheadColor?: any, fill?: any, fillActive?: any, stroke?: any, strokeActive?: any, hideInactive?: any, colorizeInactive?: any, fontFamily?: any, minMidi?: any, maxMidi?: any, autorange?: any, ...more: any[]): Pattern
+declare function pianoroll(options?: any, cycles?: any, playhead?: any, vertical?: any, labels?: any, flipTime?: any, flipValues?: any, overscan?: any, hideNegative?: any, smear?: any, fold?: any, active?: any, inactive?: any, background?: any, playheadColor?: any, fill?: any, fillActive?: any, stroke?: any, strokeActive?: any, hideInactive?: any, colorizeInactive?: any, fontFamily?: any, minMidi?: any, maxMidi?: any, autorange?: any, ...more: Arg[]): Pattern
 /**
  * Picks patterns (or plain values) either from a list (by index) or a lookup table (by name).
  * Similar to inhabit, but maintains the structure of the original patterns.
@@ -10506,7 +10262,7 @@ declare function pianoroll(options?: any, cycles?: any, playhead?: any, vertical
  * @example
  * s("<a!2 [a,b] b>".pick({a: "bd(3,8)", b: "sd sd"}))
  */
-declare function pick(pat?: any, xs?: any, ...more: any[]): Pattern
+declare function pick(pat?: any, xs?: any, ...more: Arg[]): Pattern
 /**
  * pickF lets you use a pattern of numbers to pick which function to apply to another pattern.
  * @param pat {Pattern}
@@ -10518,25 +10274,25 @@ declare function pick(pat?: any, xs?: any, ...more: any[]): Pattern
  * note("<c2 d2>(3,8)").s("square")
  *     .pickF("<0 2> 1", [jux(rev),fast(2),x=>x.lpf(800)])
  */
-declare function pickF(pat?: any, lookup?: any, funcs?: any, ...more: any[]): Pattern
+declare function pickF(pat?: any, lookup?: any, funcs?: any, ...more: Arg[]): Pattern
 /**
  * Similar to pick, but it applies an outerJoin instead of an innerJoin.
  * @param pat {Pattern}
  * @param xs {*}
  */
-declare function pickOut(pat?: any, xs?: any, ...more: any[]): Pattern
+declare function pickOut(pat?: any, xs?: any, ...more: Arg[]): Pattern
 /**
  * Similar to pick, but the choosen pattern is reset when its index is triggered.
  * @param pat {Pattern}
  * @param xs {*}
  */
-declare function pickReset(pat?: any, xs?: any, ...more: any[]): Pattern
+declare function pickReset(pat?: any, xs?: any, ...more: Arg[]): Pattern
 /**
  * Similar to pick, but the choosen pattern is restarted when its index is triggered.
  * @param pat {Pattern}
  * @param xs {*}
  */
-declare function pickRestart(pat?: any, xs?: any, ...more: any[]): Pattern
+declare function pickRestart(pat?: any, xs?: any, ...more: Arg[]): Pattern
 /**
  * Picks patterns (or plain values) either from a list (by index) or a lookup table (by name).
  * Similar to pick, but cycles are squeezed into the target ('inhabited') pattern.
@@ -10550,7 +10306,7 @@ declare function pickRestart(pat?: any, xs?: any, ...more: any[]): Pattern
  * @example
  * s("a@2 [a b] a".inhabit({a: "bd(3,8)", b: "sd sd"})).slow(4)
  */
-declare function pickSqueeze(pat?: any, xs?: any, ...more: any[]): Pattern
+declare function pickSqueeze(pat?: any, xs?: any, ...more: Arg[]): Pattern
 /**
  * The same as pick, but if you pick a number greater than the size of the list,
  * it wraps around, rather than sticking at the maximum value.
@@ -10559,7 +10315,7 @@ declare function pickSqueeze(pat?: any, xs?: any, ...more: any[]): Pattern
  * @param pat {Pattern}
  * @param xs {*}
  */
-declare function pickmod(pat?: any, xs?: any, ...more: any[]): Pattern
+declare function pickmod(pat?: any, xs?: any, ...more: Arg[]): Pattern
 /**
  * The same as pickF, but if you pick a number greater than the size of the functions list,
  * it wraps around, rather than sticking at the maximum value.
@@ -10567,21 +10323,21 @@ declare function pickmod(pat?: any, xs?: any, ...more: any[]): Pattern
  * @param lookup {Pattern} a pattern of indices
  * @param funcs {Array.<function()>} the array of functions from which to pull
  */
-declare function pickmodF(pat?: any, lookup?: any, funcs?: any, ...more: any[]): Pattern
+declare function pickmodF(pat?: any, lookup?: any, funcs?: any, ...more: Arg[]): Pattern
 /**
  * The same as pickOut, but if you pick a number greater than the size of the list,
  * it wraps around, rather than sticking at the maximum value.
  * @param pat {Pattern}
  * @param xs {*}
  */
-declare function pickmodOut(pat?: any, xs?: any, ...more: any[]): Pattern
+declare function pickmodOut(pat?: any, xs?: any, ...more: Arg[]): Pattern
 /**
  * The same as pickReset, but if you pick a number greater than the size of the list,
  * it wraps around, rather than sticking at the maximum value.
  * @param pat {Pattern}
  * @param xs {*}
  */
-declare function pickmodReset(pat?: any, xs?: any, ...more: any[]): Pattern
+declare function pickmodReset(pat?: any, xs?: any, ...more: Arg[]): Pattern
 /**
  * The same as pickRestart, but if you pick a number greater than the size of the list,
  * it wraps around, rather than sticking at the maximum value.
@@ -10595,7 +10351,7 @@ declare function pickmodReset(pat?: any, xs?: any, ...more: any[]): Pattern
  *         d: n("0 -3 0 ~")
  *       }).scale("C:major").s("piano")
  */
-declare function pickmodRestart(pat?: any, xs?: any, ...more: any[]): Pattern
+declare function pickmodRestart(pat?: any, xs?: any, ...more: Arg[]): Pattern
 /**
  * The same as inhabit, but if you pick a number greater than the size of the list,
  * it wraps around, rather than sticking at the maximum value.
@@ -10605,10 +10361,10 @@ declare function pickmodRestart(pat?: any, xs?: any, ...more: any[]): Pattern
  * @param pat {Pattern}
  * @param xs {*}
  */
-declare function pickmodSqueeze(pat?: any, xs?: any, ...more: any[]): Pattern
-declare function pipe(...args: any[]): Pattern
-declare function pitchJump(...args: any[]): Pattern
-declare function pitchJumpTime(...args: any[]): Pattern
+declare function pickmodSqueeze(pat?: any, xs?: any, ...more: Arg[]): Pattern
+declare function pipe(...more: Arg[]): Pattern
+declare function pitchJump(...more: Arg[]): Pattern
+declare function pitchJumpTime(...more: Arg[]): Pattern
 /**
  * Renders a pitch circle to visualize frequencies within one octave
  * @param hapcircles {number}
@@ -10625,14 +10381,14 @@ declare function pitchJumpTime(...args: any[]): Pattern
  * .lpf(500)
  * ._pitchwheel()
  */
-declare function pitchwheel(hapcircles?: any, circle?: any, edo?: any, root?: any, thickness?: any, hapRadius?: any, mode?: any, margin?: any, ...more: any[]): Pattern
-declare function play(...args: any[]): Pattern
+declare function pitchwheel(hapcircles?: any, circle?: any, edo?: any, root?: any, thickness?: any, hapRadius?: any, mode?: any, margin?: any, ...more: Arg[]): Pattern
+declare function play(...more: Arg[]): Pattern
 /**
  * The ply function repeats each event the given number of times.
  * @example
  * s("bd ~ sd cp").ply("<1 2 3>")
  */
-declare function ply(...args: any[]): Pattern
+declare function ply(...more: Arg[]): Pattern
 /**
  * The plyForEach function repeats each event the given number of times, applying the given function to each event.
  * This version of ply uses the iteration index as an argument to the function, similar to echoWith.
@@ -10664,9 +10420,9 @@ declare const plyWith: any
  * // The same as note("{c eb g, c2 g2}%6")
  * polymeter("c eb g", "c2 g2").note()
  */
-declare function pm(...args: any[]): Pattern
-declare function polyBind(...args: any[]): Pattern
-declare function polyTouch(...args: any[]): Pattern
+declare function pm(...more: Arg[]): Pattern
+declare function polyBind(...more: Arg[]): Pattern
+declare function polyTouch(...more: Arg[]): Pattern
 /**
  * Experimental
  * Aligns the steps of the patterns, creating polymeters. The patterns are repeated until they all fit the cycle. For example, in the below the first pattern is repeated twice, and the second is repeated three times, to fit the lowest common multiple of six steps.
@@ -10675,7 +10431,7 @@ declare function polyTouch(...args: any[]): Pattern
  * // The same as note("{c eb g, c2 g2}%6")
  * polymeter("c eb g", "c2 g2").note()
  */
-declare function polymeter(...args: any[]): Pattern
+declare function polymeter(...more: Arg[]): Pattern
 /**
  * The given items are played at the same time at the same length.
  * Synonyms: polyrhythm, pr
@@ -10688,15 +10444,15 @@ declare function polymeter(...args: any[]): Pattern
  *   note("c4(5,8)")
  * )
  */
-declare function polyrhythm(...args: any[]): Pattern
+declare function polyrhythm(...more: Arg[]): Pattern
 /**
  * Gain applied after all effects have been processed.
  * @example
  * s("bd sd [~ bd] sd,hh*8")
  * .compressor("-20:20:10:.002:.02").postgain(1.5)
  */
-declare function postgain(...args: any[]): Pattern
-declare function pow(...args: any[]): Pattern
+declare function postgain(...more: Arg[]): Pattern
+declare function pow(...more: Arg[]): Pattern
 /**
  * The given items are played at the same time at the same length.
  * Synonyms: polyrhythm, pr
@@ -10709,7 +10465,7 @@ declare function pow(...args: any[]): Pattern
  *   note("c4(5,8)")
  * )
  */
-declare function pr(...args: any[]): Pattern
+declare function pr(...more: Arg[]): Pattern
 /**
  * Release time of pitch envelope
  * Synonyms: prel
@@ -10719,7 +10475,7 @@ declare function pr(...args: any[]): Pattern
  * .release(.5) // to hear the pitch release
  * .prelease("<0 .1 .25 .5>")
  */
-declare function prel(time?: any, ...more: any[]): Pattern
+declare function prel(time?: any, ...more: Arg[]): Pattern
 /**
  * Release time of pitch envelope
  * Synonyms: prel
@@ -10729,7 +10485,7 @@ declare function prel(time?: any, ...more: any[]): Pattern
  * .release(.5) // to hear the pitch release
  * .prelease("<0 .1 .25 .5>")
  */
-declare function prelease(time?: any, ...more: any[]): Pattern
+declare function prelease(time?: any, ...more: Arg[]): Pattern
 /**
  * Syncopates a rhythm, by shifting each event halfway into its timespan.
  * @example
@@ -10737,7 +10493,7 @@ declare function prelease(time?: any, ...more: any[]): Pattern
  *       s("bd mt sd ht").every(4, press)
  *      ).slow(2)
  */
-declare function press(...args: any[]): Pattern
+declare function press(...more: Arg[]): Pattern
 /**
  * Like press, but allows you to specify the amount by which each
  * event is shifted. pressBy(0.5) is the same as press, while
@@ -10747,26 +10503,26 @@ declare function press(...args: any[]): Pattern
  *       s("bd mt sd ht").pressBy("<0 0.5 0.25>")
  *      ).slow(2)
  */
-declare function pressBy(...args: any[]): Pattern
-declare function processSampleMap(...args: any[]): Pattern
+declare function pressBy(...more: Arg[]): Pattern
+declare function processSampleMap(...more: Arg[]): Pattern
 /**
  * MIDI program number: Sends a MIDI program change message.
  * @param program {number | Pattern} MIDI program number (0-127)
  * @example
  * note("c4").progNum(10).midichan(1).midi()
  */
-declare function progNum(program?: any, ...more: any[]): Pattern
-declare function psus(...args: any[]): Pattern
+declare function progNum(program?: any, ...more: Arg[]): Pattern
+declare function psus(...more: Arg[]): Pattern
 /**
  *
  */
-declare function psustain(...args: any[]): Pattern
+declare function psustain(...more: Arg[]): Pattern
 /**
  * A discrete value that repeats once per cycle.
  * @example
  * pure('e4') // "e4"
  */
-declare function pure(...args: any[]): Pattern
+declare function pure(...more: Arg[]): Pattern
 /**
  * Controls the pulsewidth of the pulse oscillator
  * @param pulsewidth {number | Pattern}
@@ -10775,23 +10531,22 @@ declare function pure(...args: any[]): Pattern
  * @example
  * n(run(8)).scale("D:pentatonic").s("pulse").pw("0 .75 .5 1")
  */
-declare function pw(pulsewidth?: any, ...more: any[]): Pattern
+declare function pw(pulsewidth?: any, ...more: Arg[]): Pattern
 /**
  * Controls the lfo rate for the pulsewidth of the pulse oscillator
  * @param rate {number | Pattern}
  * @example
  * n(run(8)).scale("D:pentatonic").s("pulse").pw("0.5").pwrate("<5 .1 25>").pwsweep("<0.3 .8>")
  */
-declare function pwrate(rate?: any, ...more: any[]): Pattern
+declare function pwrate(rate?: any, ...more: Arg[]): Pattern
 /**
  * Controls the lfo sweep for the pulsewidth of the pulse oscillator
  * @param sweep {number | Pattern}
  * @example
  * n(run(8)).scale("D:pentatonic").s("pulse").pw("0.5").pwrate("<5 .1 25>").pwsweep("<0.3 .8>")
  */
-declare function pwsweep(sweep?: any, ...more: any[]): Pattern
-declare function queryLocalFonts(...args: any[]): Pattern
-declare function r(...args: any[]): Pattern
+declare function pwsweep(sweep?: any, ...more: Arg[]): Pattern
+declare function r(...more: Arg[]): Pattern
 /**
  * A continuous pattern of random numbers, between 0 and 1.
  * @example
@@ -10810,7 +10565,7 @@ declare const rand2: Pattern
  * s("saw").seg(16).n(irand(12)).scale("F1:minor")
  *   .partials(randL(8))
  */
-declare function randL(n?: any, ...more: any[]): Pattern
+declare function randL(n?: any, ...more: Arg[]): Pattern
 /**
  * Picks one of the elements at random each cycle.
  * Synonyms: randcat
@@ -10819,8 +10574,8 @@ declare function randL(n?: any, ...more: any[]): Pattern
  * @example
  * s("bd | hh | sd").fast(8)
  */
-declare function randcat(...args: any[]): Pattern
-declare function randrun(...args: any[]): Pattern
+declare function randcat(...more: Arg[]): Pattern
+declare function randrun(...more: Arg[]): Pattern
 /**
  * Assumes a numerical pattern, containing unipolar values in the range 0 .. 1.
  * Returns a new pattern with values scaled to the given min/max range.
@@ -10829,7 +10584,7 @@ declare function randrun(...args: any[]): Pattern
  * s("[bd sd]*2,hh*8")
  * .cutoff(sine.range(500,4000))
  */
-declare function range(...args: any[]): Pattern
+declare function range(...more: Arg[]): Pattern
 /**
  * Assumes a numerical pattern, containing bipolar values in the range -1 .. 1
  * Returns a new pattern with values scaled to the given min/max range.
@@ -10837,7 +10592,7 @@ declare function range(...args: any[]): Pattern
  * s("[bd sd]*2,hh*8")
  * .cutoff(sine2.range2(500,4000))
  */
-declare function range2(...args: any[]): Pattern
+declare function range2(...more: Arg[]): Pattern
 /**
  * Assumes a numerical pattern, containing unipolar values in the range 0 .. 1
  * Returns a new pattern with values scaled to the given min/max range,
@@ -10846,13 +10601,13 @@ declare function range2(...args: any[]): Pattern
  * s("[bd sd]*2,hh*8")
  * .cutoff(sine.rangex(500,4000))
  */
-declare function rangex(...args: any[]): Pattern
+declare function rangex(...more: Arg[]): Pattern
 /**
  * Shorthand for .sometimesBy(0.25, fn)
  * @example
  * s("hh*8").rarely(x=>x.speed("0.5"))
  */
-declare function rarely(...args: any[]): Pattern
+declare function rarely(...more: Arg[]): Pattern
 /**
  * Allows dividing numbers via list notation using ":".
  * Returns a new pattern with just numbers.
@@ -10860,7 +10615,7 @@ declare function rarely(...args: any[]): Pattern
  * ratio("1, 5:4, 3:2").mul(110)
  * .freq().s("piano")
  */
-declare function ratio(...args: any[]): Pattern
+declare function ratio(...more: Arg[]): Pattern
 /**
  * Reverb lowpass frequency at -60dB (in hertz).
  * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -10871,12 +10626,12 @@ declare function ratio(...args: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd").room(0.5).rlp(5000).rdim(400)
  */
-declare function rdim(frequency?: any, ...more: any[]): Pattern
-declare function real(...args: any[]): Pattern
+declare function rdim(frequency?: any, ...more: Arg[]): Pattern
+declare function real(...more: Arg[]): Pattern
 /**
  * exposes a custom value at query time. basically allows mutating state without evaluation
  */
-declare function ref(...args: any[]): Pattern
+declare function ref(...more: Arg[]): Pattern
 /**
  * Registers a new pattern method. The method is added to the Pattern class + the standalone function is returned from register.
  * @param name {string | Array.<string>} name of the function, or an array of names to be used as synonyms
@@ -10889,20 +10644,20 @@ in their raw form and it will be up to you to patternify them and/or query them 
  * })
  * s("saw").seg(8).velocity(rand).vlpf(800)
  */
-declare function register(name?: any, func?: any, patternify?: any, ...more: any[]): Pattern
-declare function registerControl(...args: any[]): Pattern
-declare function registerMultiControl(...args: any[]): Pattern
-declare function registerSampleSource(...args: any[]): Pattern
-declare function registerSamplesPrefix(...args: any[]): Pattern
-declare function registerSound(...args: any[]): any
-declare function registerSoundfonts(...args: any[]): Pattern
-declare function registerSynthSounds(...args: any[]): any
-declare function registerVoicings(...args: any[]): Pattern
-declare function registerWaveTable(...args: any[]): Pattern
-declare function registerWidget(...args: any[]): Pattern
-declare function registerWorklet(...args: any[]): Pattern
-declare function registerZZFXSounds(...args: any[]): any
-declare function reify(...args: any[]): Pattern
+declare function register(name?: any, func?: (pat: Pattern, ...args: any[]) => any, patternify?: any, ...more: Arg[]): Pattern
+declare function registerControl(...more: Arg[]): Pattern
+declare function registerMultiControl(...more: Arg[]): Pattern
+declare function registerSampleSource(...more: Arg[]): Pattern
+declare function registerSamplesPrefix(...more: Arg[]): Pattern
+declare function registerSound(...more: Arg[]): any
+declare function registerSoundfonts(...more: Arg[]): Pattern
+declare function registerSynthSounds(...more: Arg[]): any
+declare function registerVoicings(...more: Arg[]): Pattern
+declare function registerWaveTable(...more: Arg[]): Pattern
+declare function registerWidget(...more: Arg[]): Pattern
+declare function registerWorklet(...more: Arg[]): Pattern
+declare function registerZZFXSounds(...more: Arg[]): any
+declare function reify(...more: Arg[]): Pattern
 /**
  * Amplitude envelope release time: The time it takes after the offset to go from sustain level to zero.
  * Synonyms: rel
@@ -10910,7 +10665,7 @@ declare function reify(...args: any[]): Pattern
  * @example
  * note("c3 e3 g3 c4").release("<0 .1 .4 .6 1>/2")
  */
-declare function rel(time?: any, ...more: any[]): Pattern
+declare function rel(time?: any, ...more: Arg[]): Pattern
 /**
  * Amplitude envelope release time: The time it takes after the offset to go from sustain level to zero.
  * Synonyms: rel
@@ -10918,21 +10673,21 @@ declare function rel(time?: any, ...more: any[]): Pattern
  * @example
  * note("c3 e3 g3 c4").release("<0 .1 .4 .6 1>/2")
  */
-declare function release(time?: any, ...more: any[]): Pattern
-declare function releaseAudioNode(...args: any[]): Pattern
+declare function release(time?: any, ...more: Arg[]): Pattern
+declare function releaseAudioNode(...more: Arg[]): Pattern
 /**
  * Returns a new pattern, with haps containing undefined values removed from
  * query results.
  */
-declare function removeUndefineds(...args: any[]): Pattern
-declare function renderPatternAudio(...args: any[]): Pattern
+declare function removeUndefineds(...more: Arg[]): Pattern
+declare function renderPatternAudio(...more: Arg[]): Pattern
 /**
  * Repeats each cycle the given number of times.
  * @example
  * note(irand(12).add(34)).segment(4).repeatCycles(2).s("gm_acoustic_guitar_nylon")
  */
 declare const repeatCycles: any
-declare function repl(...args: any[]): Pattern
+declare function repl(...more: Arg[]): Pattern
 /**
  * Experimental
  * replicate is similar to fast in that it increases its density, but it also increases the step count
@@ -10945,16 +10700,16 @@ declare function repl(...args: any[]): Pattern
  *   sound("bd - sd -")
  * ).pace(8)
  */
-declare function replicate(...args: any[]): Pattern
-declare function rescale(...args: any[]): Pattern
-declare function resetDefaultValues(...args: any[]): Pattern
-declare function resetDefaults(...args: any[]): Pattern
-declare function resetGlobalEffects(...args: any[]): Pattern
-declare function resetLoadedSounds(...args: any[]): Pattern
-declare function resetSeenKeys(...args: any[]): Pattern
-declare function resetVoicings(...args: any[]): Pattern
-declare function reset_state(...args: any[]): Pattern
-declare function reset_timelines(...args: any[]): Pattern
+declare function replicate(...more: Arg[]): Pattern
+declare function rescale(...more: Arg[]): Pattern
+declare function resetDefaultValues(...more: Arg[]): Pattern
+declare function resetDefaults(...more: Arg[]): Pattern
+declare function resetGlobalEffects(...more: Arg[]): Pattern
+declare function resetLoadedSounds(...more: Arg[]): Pattern
+declare function resetSeenKeys(...more: Arg[]): Pattern
+declare function resetVoicings(...more: Arg[]): Pattern
+declare function reset_state(...more: Arg[]): Pattern
+declare function reset_timelines(...more: Arg[]): Pattern
 /**
  * Controls the low-pass q-value.
  * Synonyms: resonance
@@ -10962,14 +10717,14 @@ declare function reset_timelines(...args: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd,hh*8").lpf(2000).lpq("<0 10 20 30>")
  */
-declare function resonance(q?: any, ...more: any[]): Pattern
+declare function resonance(q?: any, ...more: Arg[]): Pattern
 /**
  * Reverse all cycles in a pattern. See also revv for reversing a whole pattern.
  * @example
  * note("c d e g").rev()
  */
-declare function rev(...args: any[]): Pattern
-declare function reverseBuffer(...args: any[]): Pattern
+declare function rev(...more: Arg[]): Pattern
+declare function reverseBuffer(...more: Arg[]): Pattern
 /**
  * Reverse a whole pattern. See also rev for reversing each cycle.
  * @example
@@ -10978,7 +10733,7 @@ declare function reverseBuffer(...args: any[]): Pattern
  * // cycles stays the same.
  * note("<[c d] [e g]>").revv()
  */
-declare function revv(...args: any[]): Pattern
+declare function revv(...more: Arg[]): Pattern
 /**
  * Reverb fade time (in seconds).
  * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -10989,7 +10744,7 @@ declare function revv(...args: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd").room(0.5).rlp(5000).rfade(4)
  */
-declare function rfade(seconds?: any, ...more: any[]): Pattern
+declare function rfade(seconds?: any, ...more: Arg[]): Pattern
 /**
  * Loops the pattern inside an offset for cycles.
  * If you think of the entire span of time in cycles as a ribbon, you can cut a single piece and loop it.
@@ -11005,7 +10760,7 @@ declare function rfade(seconds?: any, ...more: any[]): Pattern
  * // rhythm generator
  * s("bd!16?").ribbon(29,.5)
  */
-declare function rib(offset?: any, cycles?: any, ...more: any[]): Pattern
+declare function rib(offset?: any, cycles?: any, ...more: Arg[]): Pattern
 /**
  * Loops the pattern inside an offset for cycles.
  * If you think of the entire span of time in cycles as a ribbon, you can cut a single piece and loop it.
@@ -11021,10 +10776,10 @@ declare function rib(offset?: any, cycles?: any, ...more: any[]): Pattern
  * // rhythm generator
  * s("bd!16?").ribbon(29,.5)
  */
-declare function ribbon(offset?: any, cycles?: any, ...more: any[]): Pattern
-declare function ring(...args: any[]): Pattern
-declare function ringdf(...args: any[]): Pattern
-declare function ringf(...args: any[]): Pattern
+declare function ribbon(offset?: any, cycles?: any, ...more: Arg[]): Pattern
+declare function ring(...more: Arg[]): Pattern
+declare function ringdf(...more: Arg[]): Pattern
+declare function ringf(...more: Arg[]): Pattern
 /**
  * Reverb lowpass starting frequency (in hertz).
  * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -11035,7 +10790,7 @@ declare function ringf(...args: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd").room(0.5).rlp(5000)
  */
-declare function rlp(frequency?: any, ...more: any[]): Pattern
+declare function rlp(frequency?: any, ...more: Arg[]): Pattern
 /**
  * Sets the level of reverb.
  * When using mininotation, you can also optionally add the 'size' parameter, separated by ':'.
@@ -11045,7 +10800,7 @@ declare function rlp(frequency?: any, ...more: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd").room("<0.9:1 0.9:4>")
  */
-declare function room(level?: any, ...more: any[]): Pattern
+declare function room(level?: any, ...more: Arg[]): Pattern
 /**
  * Reverb lowpass frequency at -60dB (in hertz).
  * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -11056,7 +10811,7 @@ declare function room(level?: any, ...more: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd").room(0.5).rlp(5000).rdim(400)
  */
-declare function roomdim(frequency?: any, ...more: any[]): Pattern
+declare function roomdim(frequency?: any, ...more: Arg[]): Pattern
 /**
  * Reverb fade time (in seconds).
  * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -11067,7 +10822,7 @@ declare function roomdim(frequency?: any, ...more: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd").room(0.5).rlp(5000).rfade(4)
  */
-declare function roomfade(seconds?: any, ...more: any[]): Pattern
+declare function roomfade(seconds?: any, ...more: Arg[]): Pattern
 /**
  * Reverb lowpass starting frequency (in hertz).
  * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -11078,7 +10833,7 @@ declare function roomfade(seconds?: any, ...more: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd").room(0.5).rlp(5000)
  */
-declare function roomlp(frequency?: any, ...more: any[]): Pattern
+declare function roomlp(frequency?: any, ...more: Arg[]): Pattern
 /**
  * Sets the room size of the reverb, see room.
  * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -11089,22 +10844,22 @@ declare function roomlp(frequency?: any, ...more: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd").room(.8).rsize(4)
  */
-declare function roomsize(size?: any, ...more: any[]): Pattern
+declare function roomsize(size?: any, ...more: Arg[]): Pattern
 /**
  * Maps the chords of the incoming pattern to root notes in the given octave.
  * @param octave {octave} octave to use
  * @example
  * "<C^7 A7 Dm7 G7>".rootNotes(2).note()
  */
-declare function rootNotes(octave?: any, ...more: any[]): Pattern
-declare function rotate(...args: any[]): Pattern
+declare function rootNotes(octave?: any, ...more: Arg[]): Pattern
+declare function rotate(...more: Arg[]): Pattern
 /**
  * Assumes a numerical pattern. Returns a new pattern with all values rounded
  * to the nearest integer.
  * @example
  * n("0.5 1.5 2.5".round()).scale("C:major")
  */
-declare function round(...args: any[]): Pattern
+declare function round(...more: Arg[]): Pattern
 /**
  * Sets the room size of the reverb, see room.
  * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -11115,14 +10870,14 @@ declare function round(...args: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd").room(.8).rsize(4)
  */
-declare function rsize(size?: any, ...more: any[]): Pattern
+declare function rsize(size?: any, ...more: Arg[]): Pattern
 /**
  * A discrete pattern of numbers from 0 to n-1
  * @example
  * n(run(4)).scale("C4:pentatonic")
  * // n("0 1 2 3").scale("C4:pentatonic")
  */
-declare function run(...args: any[]): Pattern
+declare function run(...more: Arg[]): Pattern
 /**
  * Select a sound / sample by name. When using mininotation, you can also optionally supply 'n' and 'gain' parameters
  * separated by ':'.
@@ -11133,19 +10888,19 @@ declare function run(...args: any[]): Pattern
  * @example
  * s("bd:0 bd:1 bd:0:0.3 bd:1:1.4")
  */
-declare function s(sound?: any, ...more: any[]): Pattern
-declare function s_add(...args: any[]): Pattern
-declare function s_alt(...args: any[]): Pattern
-declare function s_cat(...args: any[]): Pattern
-declare function s_contract(...args: any[]): Pattern
-declare function s_expand(...args: any[]): Pattern
-declare function s_extend(...args: any[]): Pattern
-declare function s_polymeter(...args: any[]): Pattern
-declare function s_sub(...args: any[]): Pattern
-declare function s_taper(...args: any[]): Pattern
-declare function s_taperlist(...args: any[]): Pattern
-declare function s_tour(...args: any[]): Pattern
-declare function s_zip(...args: any[]): Pattern
+declare function s(sound?: any, ...more: Arg[]): Pattern
+declare function s_add(...more: Arg[]): Pattern
+declare function s_alt(...more: Arg[]): Pattern
+declare function s_cat(...more: Arg[]): Pattern
+declare function s_contract(...more: Arg[]): Pattern
+declare function s_expand(...more: Arg[]): Pattern
+declare function s_extend(...more: Arg[]): Pattern
+declare function s_polymeter(...more: Arg[]): Pattern
+declare function s_sub(...more: Arg[]): Pattern
+declare function s_taper(...more: Arg[]): Pattern
+declare function s_taperlist(...more: Arg[]): Pattern
+declare function s_tour(...more: Arg[]): Pattern
+declare function s_zip(...more: Arg[]): Pattern
 /**
  * Loads a collection of samples to use with s
  * @example
@@ -11158,7 +10913,7 @@ declare function s_zip(...args: any[]): Pattern
  *  }, 'https://raw.githubusercontent.com/tidalcycles/Dirt-Samples/master/');
  * s("[bd ~]*2, [~ hh]*2, ~ sd")
  */
-declare function samples(...args: any[]): any
+declare function samples(...more: Arg[]): any
 /**
  * A sawtooth signal between 0 and 1.
  * @example
@@ -11202,7 +10957,7 @@ declare const saw2: Pattern
  * @example
  * n("[0 0] [1 2] [3 4] [5 6]").scale("C:major:blues")
  */
-declare function scale(scale?: any, ...more: any[]): Pattern
+declare function scale(scale?: any, ...more: Arg[]): Pattern
 /**
  * Transposes notes inside the scale by the number of steps.
  * Expected to be called on a Pattern which already has a {@link Pattern#scale}
@@ -11214,7 +10969,7 @@ declare function scale(scale?: any, ...more: any[]): Pattern
  * .scaleTranspose("<0 -1 -2 -3 -4 -5 -6 -4>")
  * .note()
  */
-declare function scaleTrans(offset?: any, ...more: any[]): Pattern
+declare function scaleTrans(offset?: any, ...more: Arg[]): Pattern
 /**
  * Transposes notes inside the scale by the number of steps.
  * Expected to be called on a Pattern which already has a {@link Pattern#scale}
@@ -11226,9 +10981,9 @@ declare function scaleTrans(offset?: any, ...more: any[]): Pattern
  * .scaleTranspose("<0 -1 -2 -3 -4 -5 -6 -4>")
  * .note()
  */
-declare function scaleTranspose(offset?: any, ...more: any[]): Pattern
-declare function scheduleAtTime(...args: any[]): Pattern
-declare function scram(...args: any[]): Pattern
+declare function scaleTranspose(offset?: any, ...more: Arg[]): Pattern
+declare function scheduleAtTime(...more: Arg[]): Pattern
+declare function scram(...more: Arg[]): Pattern
 /**
  * Slices a pattern into the given number of parts, then plays those parts at random. Similar to shuffle,
  * but parts might be played more than once, or not at all, per cycle.
@@ -11237,7 +10992,7 @@ declare function scram(...args: any[]): Pattern
  * @example
  * seq("c d e f".scramble(4), "g").note().sound("piano")
  */
-declare function scramble(...args: any[]): Pattern
+declare function scramble(...more: Arg[]): Pattern
 /**
  * Allows you to scrub an audio file like a tape loop by passing values that represents the position in the audio file
  * in the optional array syntax ex: "0.5:2", the second value controls the speed of playback
@@ -11248,8 +11003,8 @@ declare function scramble(...args: any[]): Pattern
  * samples('github:yaxu/clean-breaks/main');
  * s("amen/4").fit().scrub("{0@3 0@2 4@3}%8".div(16))
  */
-declare function scrub(...args: any[]): Pattern
-declare function seconds(...args: any[]): Pattern
+declare function scrub(...more: Arg[]): Pattern
+declare function seconds(...more: Arg[]): Pattern
 /**
  * Change the seed for random signals. Normally, random signals depend on time,
  * so two patterns at the same time will have the same random values. Specifying
@@ -11260,7 +11015,7 @@ declare function seconds(...args: any[]): Pattern
  * $: s("hh*4").degrade();
  * $: s("bd*4").degrade().seed(1); // Will degrade different events from the hi-hat
  */
-declare function seed(n?: any, ...more: any[]): Pattern
+declare function seed(n?: any, ...more: Arg[]): Pattern
 /**
  * Samples the pattern at a rate of n events per cycle. Useful for turning a continuous pattern into a discrete one.
  * Synonyms: seg
@@ -11268,7 +11023,7 @@ declare function seed(n?: any, ...more: any[]): Pattern
  * @example
  * note(saw.range(40,52).segment(24))
  */
-declare function seg(segments?: any, ...more: any[]): Pattern
+declare function seg(segments?: any, ...more: Arg[]): Pattern
 /**
  * Samples the pattern at a rate of n events per cycle. Useful for turning a continuous pattern into a discrete one.
  * Synonyms: seg
@@ -11276,8 +11031,8 @@ declare function seg(segments?: any, ...more: any[]): Pattern
  * @example
  * note(saw.range(40,52).segment(24))
  */
-declare function segment(segments?: any, ...more: any[]): Pattern
-declare function semitone(...args: any[]): Pattern
+declare function segment(segments?: any, ...more: Arg[]): Pattern
+declare function semitone(...more: Arg[]): Pattern
 /**
  * Like cat, but the items are crammed into one cycle.
  * Synonyms: sequence, fastcat
@@ -11290,7 +11045,7 @@ declare function semitone(...args: any[]): Pattern
  *   note("c4(5,8)")
  * )
  */
-declare function seq(...args: any[]): Pattern
+declare function seq(...more: Arg[]): Pattern
 /**
  * Similarly to arrange, allows you to arrange multiple patterns together over multiple cycles.
  * Unlike arrange, you specify a start and stop time for each pattern rather than duration, which
@@ -11301,25 +11056,25 @@ declare function seq(...args: any[]): Pattern
  *         )
  *   .sound()
  */
-declare function seqPLoop(...args: any[]): Pattern
+declare function seqPLoop(...more: Arg[]): Pattern
 /**
  * See fastcat
  */
-declare function sequence(...args: any[]): Pattern
+declare function sequence(...more: Arg[]): Pattern
 /**
  * Takes a list of patterns, and returns a pattern of lists.
  */
-declare function sequenceP(...args: any[]): Pattern
-declare function set(...args: any[]): Pattern
-declare function setAudioContext(...args: any[]): Pattern
-declare function setCpm(...args: any[]): any
-declare function setCps(...args: any[]): any
-declare function setCpsFunc(...args: any[]): Pattern
-declare function setDefault(...args: any[]): Pattern
-declare function setDefaultAudioContext(...args: any[]): Pattern
-declare function setDefaultValue(...args: any[]): Pattern
-declare function setDefaultValues(...args: any[]): Pattern
-declare function setDefaultVoicings(...args: any[]): Pattern
+declare function sequenceP(...more: Arg[]): Pattern
+declare function set(...more: Arg[]): Pattern
+declare function setAudioContext(...more: Arg[]): Pattern
+declare function setCpm(...more: Arg[]): any
+declare function setCps(...more: Arg[]): any
+declare function setCpsFunc(...more: Arg[]): Pattern
+declare function setDefault(...more: Arg[]): Pattern
+declare function setDefaultAudioContext(...more: Arg[]): Pattern
+declare function setDefaultValue(...more: Arg[]): Pattern
+declare function setDefaultValues(...more: Arg[]): Pattern
+declare function setDefaultVoicings(...more: Arg[]): Pattern
 declare const setFlash: any
 /**
  * Apply a function to all gains provided in patterns. Can be used to rescale gain to be
@@ -11329,9 +11084,9 @@ declare const setFlash: any
  * setGainCurve((x) => x * x) // quadratic gain
  * s("bd*4").gain(0.5) // equivalent to 0.25 gain normally
  */
-declare function setGainCurve(...args: any[]): Pattern
-declare function setIsStarted(...args: any[]): Pattern
-declare function setLogger(...args: any[]): Pattern
+declare function setGainCurve(function_?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+declare function setIsStarted(...more: Arg[]): Pattern
+declare function setLogger(...more: Arg[]): Pattern
 /**
  * Set the max polyphony. If notes are ringing out via release then they will
  * start to die out in first-in-first-out order once the max polyphony has been hit
@@ -11340,20 +11095,20 @@ declare function setLogger(...args: any[]): Pattern
  * setMaxPolyphony(4)
  * n(irand(24).seg(8)).scale("C#3:minor").room(1).release(4).gain(0.5)
  */
-declare function setMaxPolyphony(Max?: any, ...more: any[]): Pattern
+declare function setMaxPolyphony(Max?: any, ...more: Arg[]): Pattern
 declare const setMiniLocations: any
-declare function setMultiChannelOrbits(...args: any[]): Pattern
-declare function setPattern(...args: any[]): Pattern
+declare function setMultiChannelOrbits(...more: Arg[]): Pattern
+declare function setPattern(...more: Arg[]): Pattern
 declare const setSliderWidgets: any
-declare function setSoundfontUrl(...args: any[]): Pattern
-declare function setStringParser(...args: any[]): Pattern
-declare function setSuperdoughAudioController(...args: any[]): Pattern
-declare function setTheme(...args: any[]): Pattern
-declare function setTime(...args: any[]): any
-declare function setTriggerFunc(...args: any[]): Pattern
-declare function setVersionDefaults(...args: any[]): Pattern
-declare function setVoicingRange(...args: any[]): Pattern
-declare function setWidget(...args: any[]): Pattern
+declare function setSoundfontUrl(...more: Arg[]): Pattern
+declare function setStringParser(...more: Arg[]): Pattern
+declare function setSuperdoughAudioController(...more: Arg[]): Pattern
+declare function setTheme(...more: Arg[]): Pattern
+declare function setTime(...more: Arg[]): any
+declare function setTriggerFunc(...more: Arg[]): Pattern
+declare function setVersionDefaults(...more: Arg[]): Pattern
+declare function setVoicingRange(...more: Arg[]): Pattern
+declare function setWidget(...more: Arg[]): Pattern
 /**
  * Changes the global tempo to the given cycles per minute
  * @param cpm {number} cycles per minute
@@ -11361,8 +11116,8 @@ declare function setWidget(...args: any[]): Pattern
  * setcpm(140/4) // =140 bpm in 4/4
  * $: s("bd*4,[- sd]*2").bank('tr707')
  */
-declare function setcpm(cpm?: any, ...more: any[]): any
-declare function setcps(...args: any[]): any
+declare function setcpm(cpm?: any, ...more: Arg[]): any
+declare function setcps(...more: Arg[]): any
 declare const settings: any
 /**
  * (Deprecated) Wave shaping distortion. WARNING: can suddenly get unpredictably loud.
@@ -11372,11 +11127,8 @@ declare const settings: any
  * @example
  * s("bd sd [~ bd] sd,hh*8").shape("<0 .2 .4 .6 .8>")
  */
-declare function shape(distortion?: any, ...more: any[]): Pattern
-declare function showDirectoryPicker(...args: any[]): Pattern
+declare function shape(distortion?: any, ...more: Arg[]): Pattern
 declare const showMiniLocations: any
-declare function showOpenFilePicker(...args: any[]): Pattern
-declare function showSaveFilePicker(...args: any[]): Pattern
 /**
  * Experimental
  * Progressively shrinks the pattern by 'n' steps until there's nothing left, or if a second value is given (using mininotation list syntax with :),
@@ -11394,8 +11146,8 @@ declare function showSaveFilePicker(...args: any[]): Pattern
  * note("0 1 2 3 4 5 6 7".scale("C:ritusen")).sound("folkharp")
  *    .shrink("1 -1").pace(8)
  */
-declare function shrink(...args: any[]): Pattern
-declare function shrinklist(...args: any[]): Pattern
+declare function shrink(...more: Arg[]): Pattern
+declare function shrinklist(...more: Arg[]): Pattern
 /**
  * Slices a pattern into the given number of parts, then plays those parts in random order.
  * Each part will be played exactly once per cycle.
@@ -11404,8 +11156,8 @@ declare function shrinklist(...args: any[]): Pattern
  * @example
  * seq("c d e f".shuffle(4), "g").note().sound("piano")
  */
-declare function shuffle(...args: any[]): Pattern
-declare function signal(...args: any[]): Pattern
+declare function shuffle(...more: Arg[]): Pattern
+declare function signal(func: (time: number) => any): Pattern
 /**
  * Does absolutely nothing..
  * @example
@@ -11429,7 +11181,7 @@ declare const sine2: Pattern
  * @param distortion {number | Pattern} amount of distortion to apply
  * @param volume {number | Pattern} linear postgain of the distortion
  */
-declare function sinefold(distortion?: any, volume?: any, ...more: any[]): Pattern
+declare function sinefold(distortion?: any, volume?: any, ...more: Arg[]): Pattern
 /**
  * Sets the room size of the reverb, see room.
  * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -11440,7 +11192,7 @@ declare function sinefold(distortion?: any, volume?: any, ...more: any[]): Patte
  * @example
  * s("bd sd [~ bd] sd").room(.8).rsize(4)
  */
-declare function size(size?: any, ...more: any[]): Pattern
+declare function size(size?: any, ...more: Arg[]): Pattern
 /**
  * Chops samples into the given number of slices, triggering those slices with a given pattern of slice numbers.
  * Instead of a number, it also accepts a list of numbers from 0 to 1 to slice at specific points.
@@ -11451,8 +11203,8 @@ declare function size(size?: any, ...more: any[]): Pattern
  * samples('github:tidalcycles/dirt-samples')
  * s("breaks125").fit().slice([0,.25,.5,.75], "0 1 1 <2 3>")
  */
-declare function slice(...args: any[]): Pattern
-declare function slide(...args: any[]): Pattern
+declare function slice(...more: Arg[]): Pattern
+declare function slide(...more: Arg[]): Pattern
 /**
  * Displays a slider widget to allow the user manipulate a value
  * @param value {number} Initial value
@@ -11460,10 +11212,10 @@ declare function slide(...args: any[]): Pattern
  * @param max {number} Maximum value - optional, defaults to 1
  * @param step {number} Step size - optional
  */
-declare function slider(value?: any, min?: any, max?: any, step?: any, ...more: any[]): Pattern
+declare function slider(value?: any, min?: any, max?: any, step?: any, ...more: Arg[]): Pattern
 declare const sliderPlugin: any
 declare const sliderValues: any
-declare function sliderWithID(...args: any[]): Pattern
+declare function sliderWithID(...more: Arg[]): Pattern
 /**
  * Slow down a pattern over the given number of cycles. Like the "/" operator in mini notation.
  * Synonyms: sparsity
@@ -11471,7 +11223,7 @@ declare function sliderWithID(...args: any[]): Pattern
  * @example
  * s("bd hh sd hh").slow(2) // s("[bd hh sd hh]/2")
  */
-declare function slow(factor?: any, ...more: any[]): Pattern
+declare function slow(factor?: any, ...more: Arg[]): Pattern
 /**
  * Divides a pattern into a given number of parts, then cycles through those parts in turn, applying the given function to each part in turn (one part per cycle).
  * Synonyms: slowChunk, slowchunk
@@ -11479,19 +11231,19 @@ declare function slow(factor?: any, ...more: any[]): Pattern
  * "0 1 2 3".chunk(4, x=>x.add(7))
  * .scale("A:minor").note()
  */
-declare function slowChunk(...args: any[]): Pattern
+declare function slowChunk(...more: Arg[]): Pattern
 /**
  * Concatenation: combines a list of patterns, switching between them successively, one per cycle.
  * Synonyms: cat
  * @example
  * slowcat("e5", "b4", ["d5", "c5"])
  */
-declare function slowcat(...args: any[]): Pattern
+declare function slowcat(...more: Arg[]): Pattern
 /**
  * Concatenation: combines a list of patterns, switching between them successively, one per cycle. Unlike slowcat, this version will skip cycles.
  * @param items {any} The items to concatenate
  */
-declare function slowcatPrime(items?: any, ...more: any[]): Pattern
+declare function slowcatPrime(items?: any, ...more: Arg[]): Pattern
 /**
  * Divides a pattern into a given number of parts, then cycles through those parts in turn, applying the given function to each part in turn (one part per cycle).
  * Synonyms: slowChunk, slowchunk
@@ -11499,21 +11251,21 @@ declare function slowcatPrime(items?: any, ...more: any[]): Pattern
  * "0 1 2 3".chunk(4, x=>x.add(7))
  * .scale("A:minor").note()
  */
-declare function slowchunk(...args: any[]): Pattern
-declare function smear(...args: any[]): Pattern
+declare function slowchunk(...more: Arg[]): Pattern
+declare function smear(...more: Arg[]): Pattern
 /**
  * Soft-clipping distortion
  * @param distortion {number | Pattern} amount of distortion to apply
  * @param volume {number | Pattern} linear postgain of the distortion
  */
-declare function soft(distortion?: any, volume?: any, ...more: any[]): Pattern
-declare function sol2note(...args: any[]): Pattern
+declare function soft(distortion?: any, volume?: any, ...more: Arg[]): Pattern
+declare function sol2note(...more: Arg[]): Pattern
 /**
  * Shorthand for .someCyclesBy(0.5, fn)
  * @example
  * s("bd,hh*8").someCycles(x=>x.speed("0.5"))
  */
-declare function someCycles(...args: any[]): Pattern
+declare function someCycles(...more: Arg[]): Pattern
 /**
  * Randomly applies the given function by the given probability on a cycle by cycle basis.
  * Similar to sometimesBy
@@ -11522,14 +11274,14 @@ declare function someCycles(...args: any[]): Pattern
  * @example
  * s("bd,hh*8").someCyclesBy(.3, x=>x.speed("0.5"))
  */
-declare function someCyclesBy(probability?: any, ...more: any[]): Pattern
+declare function someCyclesBy(probability?: any, function_?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
 /**
  * Applies the given function with a 50% chance
  * @param function {function} the transformation to apply
  * @example
  * s("hh*8").sometimes(x=>x.speed("0.5"))
  */
-declare function sometimes(...args: any[]): Pattern
+declare function sometimes(function_?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
 /**
  * Randomly applies the given function by the given probability.
  * Similar to someCyclesBy
@@ -11538,8 +11290,8 @@ declare function sometimes(...args: any[]): Pattern
  * @example
  * s("hh*8").sometimesBy(.4, x=>x.speed("0.5"))
  */
-declare function sometimesBy(probability?: any, ...more: any[]): Pattern
-declare function songPtr(...args: any[]): Pattern
+declare function sometimesBy(probability?: any, function_?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
+declare function songPtr(...more: Arg[]): Pattern
 /**
  * Select a sound / sample by name. When using mininotation, you can also optionally supply 'n' and 'gain' parameters
  * separated by ':'.
@@ -11550,13 +11302,13 @@ declare function songPtr(...args: any[]): Pattern
  * @example
  * s("bd:0 bd:1 bd:0:0.3 bd:1:1.4")
  */
-declare function sound(sound?: any, ...more: any[]): Pattern
+declare function sound(sound?: any, ...more: Arg[]): Pattern
 /**
  * Register an alias for a sound.
  * @param original {string} The original sound name
  * @param alias {string} The alias to use for the sound
  */
-declare function soundAlias(original?: any, alias?: any, ...more: any[]): any
+declare function soundAlias(original?: any, alias?: any, ...more: Arg[]): any
 declare const soundMap: any
 declare const soundfontList: any
 /**
@@ -11564,7 +11316,7 @@ declare const soundfontList: any
  * Synonyms: src
  * @param getSource {function}
  */
-declare function source(getSource?: any, ...more: any[]): Pattern
+declare function source(getSource?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
 /**
  * Slow down a pattern over the given number of cycles. Like the "/" operator in mini notation.
  * Synonyms: sparsity
@@ -11572,8 +11324,8 @@ declare function source(getSource?: any, ...more: any[]): Pattern
  * @example
  * s("bd hh sd hh").slow(2) // s("[bd hh sd hh]/2")
  */
-declare function sparsity(factor?: any, ...more: any[]): Pattern
-declare function speak(...args: any[]): Pattern
+declare function sparsity(factor?: any, ...more: Arg[]): Pattern
+declare function speak(...more: Arg[]): Pattern
 /**
  * Changes the speed of sample playback, i.e. a cheap way of changing pitch.
  * @param speed {number | Pattern} inf to inf, negative numbers play the sample backwards.
@@ -11582,7 +11334,7 @@ declare function speak(...args: any[]): Pattern
  * @example
  * speed("1 1.5*2 [2 1.1]").s("piano").clip(1)
  */
-declare function speed(speed?: any, ...more: any[]): Pattern
+declare function speed(speed?: any, ...more: Arg[]): Pattern
 /**
  * Works the same as slice, but changes the playback speed of each slice to match the duration of its step.
  * @example
@@ -11590,15 +11342,15 @@ declare function speed(speed?: any, ...more: any[]): Pattern
  * s("breaks165")
  * .splice(8,  "0 1 [2 3 0]@2 3 0@2 7")
  */
-declare function splice(...args: any[]): Pattern
-declare function splitAt(...args: any[]): Pattern
+declare function splice(...more: Arg[]): Pattern
+declare function splitAt(...more: Arg[]): Pattern
 /**
  * Set the stereo pan spread for supported oscillators
  * @param spread {number | Pattern} between 0 and 1
  * @example
  * note("d f a a# a d3").fast(2).s("supersaw").spread("<0 .3 1>")
  */
-declare function spread(spread?: any, ...more: any[]): Pattern
+declare function spread(spread?: any, ...more: Arg[]): Pattern
 /**
  * A square signal between 0 and 1.
  * @example
@@ -11617,8 +11369,8 @@ declare const square2: Pattern
  * @example
  * note(squeeze("<0@2 [1!2] 2>", ["g a", "f g f g" , "g a c d"]))
  */
-declare function squeeze(pat?: any, xs?: any, ...more: any[]): Pattern
-declare function squeezeBind(...args: any[]): Pattern
+declare function squeeze(pat?: any, xs?: any, ...more: Arg[]): Pattern
+declare function squeezeBind(...more: Arg[]): Pattern
 /**
  * Made by Calum Gunn. Reminiscent of some weird mixture of filter, ring-modulator and pitch-shifter. The SuperCollider manual defines Squiz as:
  * "A simplistic pitch-raising algorithm. It's not meant to sound natural; its sound is reminiscent of some weird mixture of filter, ring-modulator and pitch-shifter, depending on the input. The algorithm works by cutting the signal into fragments (delimited by upwards-going zero-crossings) and squeezing those fragments in the time domain (i.e. simply playing them back faster than they came in), leaving silences inbetween. All the parameters apart from memlen can be modulated."
@@ -11626,13 +11378,13 @@ declare function squeezeBind(...args: any[]): Pattern
  * @example
  * squiz("2 4/2 6 [8 16]").s("bd").osc()
  */
-declare function squiz(squiz?: any, ...more: any[]): Pattern
+declare function squiz(squiz?: any, ...more: Arg[]): Pattern
 /**
  * Define a custom webaudio node to use as a sound source.
  * Synonyms: src
  * @param getSource {function}
  */
-declare function src(getSource?: any, ...more: any[]): Pattern
+declare function src(getSource?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
 /**
  * The given items are played at the same time at the same length.
  * Synonyms: polyrhythm, pr
@@ -11645,14 +11397,14 @@ declare function src(getSource?: any, ...more: any[]): Pattern
  *   note("c4(5,8)")
  * )
  */
-declare function stack(...args: any[]): Pattern
-declare function stackBy(...args: any[]): Pattern
-declare function stackCentre(...args: any[]): Pattern
-declare function stackLeft(...args: any[]): Pattern
-declare function stackRight(...args: any[]): Pattern
-declare function startPresetNote(...args: any[]): Pattern
-declare function steady(...args: any[]): Pattern
-declare function stepBind(...args: any[]): Pattern
+declare function stack(...more: Arg[]): Pattern
+declare function stackBy(...more: Arg[]): Pattern
+declare function stackCentre(...more: Arg[]): Pattern
+declare function stackLeft(...more: Arg[]): Pattern
+declare function stackRight(...more: Arg[]): Pattern
+declare function startPresetNote(...more: Arg[]): Pattern
+declare function steady(...more: Arg[]): Pattern
+declare function stepBind(...more: Arg[]): Pattern
 /**
  * Experimental
  * Concatenates patterns stepwise, according to an inferred 'steps per cycle'.
@@ -11661,7 +11413,7 @@ declare function stepBind(...args: any[]): Pattern
  * stepalt(["bd cp", "mt"], "bd").sound()
  * // The same as "bd cp bd mt bd".sound()
  */
-declare function stepalt(...args: any[]): Pattern
+declare function stepalt(...more: Arg[]): Pattern
 /**
  * 'Concatenates' patterns like fastcat, but proportional to a number of steps per cycle.
  * The steps can either be inferred from the pattern, or provided as a [length, pattern] pair.
@@ -11674,9 +11426,9 @@ declare function stepalt(...args: any[]): Pattern
  * stepcat("bd sd cp","hh hh").sound()
  * // the same as "bd sd cp hh hh".sound()
  */
-declare function stepcat(...args: any[]): Pattern
-declare function steps(...args: any[]): Pattern
-declare function stepsPerOctave(...args: any[]): Pattern
+declare function stepcat(...more: Arg[]): Pattern
+declare function steps(...more: Arg[]): Pattern
+declare function stepsPerOctave(...more: Arg[]): Pattern
 /**
  * Transposes notes inside the scale by the number of steps.
  * Expected to be called on a Pattern which already has a {@link Pattern#scale}
@@ -11688,21 +11440,21 @@ declare function stepsPerOctave(...args: any[]): Pattern
  * .scaleTranspose("<0 -1 -2 -3 -4 -5 -6 -4>")
  * .note()
  */
-declare function strans(offset?: any, ...more: any[]): Pattern
+declare function strans(offset?: any, ...more: Arg[]): Pattern
 /**
  * Changes the speed of sample playback, i.e. a cheap way of changing pitch.
  * @param factor {number | Pattern} inf to inf, negative numbers play the sample backwards.
  * @example
  * s("gm_flute").stretch("1 2 .5")
  */
-declare function stretch(factor?: any, ...more: any[]): Pattern
+declare function stretch(factor?: any, ...more: Arg[]): Pattern
 /**
  * Cuts each sample into the given number of parts, triggering progressive portions of each sample at each loop.
  * @example
  * s("numbers:0 numbers:1 numbers:2").striate(6).slow(3)
  */
-declare function striate(...args: any[]): Pattern
-declare function stringifyValues(...args: any[]): Pattern
+declare function striate(...more: Arg[]): Pattern
+declare function stringifyValues(...more: Arg[]): Pattern
 /**
  * Applies the given structure to the pattern:
  * @example
@@ -11710,7 +11462,7 @@ declare function stringifyValues(...args: any[]): Pattern
  *   .struct("x ~ x ~ ~ x ~ x ~ ~ ~ x ~ x ~ ~")
  *   .slow(2)
  */
-declare function struct(...args: any[]): Pattern
+declare function struct(...more: Arg[]): Pattern
 declare const strudel: any
 declare const strudelScope: any
 /**
@@ -11721,7 +11473,7 @@ declare const strudelScope: any
  * @example
  * s("bd sd").stut(3, .8, 1/6)
  */
-declare function stut(times?: any, feedback?: any, time?: any, ...more: any[]): Pattern
+declare function stut(times?: any, feedback?: any, time?: any, ...more: Arg[]): Pattern
 /**
  * Superimpose and offset multiple times, applying the given function each time.
  * Synonyms: echowith, stutWith, stutwith
@@ -11733,7 +11485,7 @@ declare function stut(times?: any, feedback?: any, time?: any, ...more: any[]): 
  * .echoWith(4, 1/8, (p,n) => p.add(n*2))
  * .scale("C:minor").note()
  */
-declare function stutWith(times?: any, time?: any, func?: any, ...more: any[]): Pattern
+declare function stutWith(times?: any, time?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
 /**
  * Superimpose and offset multiple times, applying the given function each time.
  * Synonyms: echowith, stutWith, stutwith
@@ -11745,16 +11497,16 @@ declare function stutWith(times?: any, time?: any, func?: any, ...more: any[]): 
  * .echoWith(4, 1/8, (p,n) => p.add(n*2))
  * .scale("C:minor").note()
  */
-declare function stutwith(times?: any, time?: any, func?: any, ...more: any[]): Pattern
+declare function stutwith(times?: any, time?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
 /**
  * Like add, but the given numbers are subtracted.
  * @example
  * n("0 2 4".sub("<0 1 2 3>")).scale("C4:minor")
  * // See add for more information.
  */
-declare function sub(...args: any[]): Pattern
-declare function superdough(...args: any[]): Pattern
-declare function superdoughTrigger(...args: any[]): Pattern
+declare function sub(...more: Arg[]): Pattern
+declare function superdough(...more: Arg[]): Pattern
+declare function superdoughTrigger(...more: Arg[]): Pattern
 /**
  * Superimposes the result of the given function(s) on top of the original pattern:
  * @example
@@ -11762,7 +11514,7 @@ declare function superdoughTrigger(...args: any[]): Pattern
  *   .superimpose(x=>x.add(2))
  *   .scale('C minor').note()
  */
-declare function superimpose(...args: any[]): Pattern
+declare function superimpose(...more: Arg[]): Pattern
 /**
  * Amplitude envelope sustain level: The level which is reached after attack / decay, being sustained until the offset.
  * Synonyms: sus
@@ -11770,7 +11522,7 @@ declare function superimpose(...args: any[]): Pattern
  * @example
  * note("c3 e3 f3 g3").decay(.2).sustain("<0 .1 .4 .6 1>")
  */
-declare function sus(gain?: any, ...more: any[]): Pattern
+declare function sus(gain?: any, ...more: Arg[]): Pattern
 /**
  * Amplitude envelope sustain level: The level which is reached after attack / decay, being sustained until the offset.
  * Synonyms: sus
@@ -11778,8 +11530,8 @@ declare function sus(gain?: any, ...more: any[]): Pattern
  * @example
  * note("c3 e3 f3 g3").decay(.2).sustain("<0 .1 .4 .6 1>")
  */
-declare function sustain(gain?: any, ...more: any[]): Pattern
-declare function sustainpedal(...args: any[]): Pattern
+declare function sustain(gain?: any, ...more: Arg[]): Pattern
+declare function sustainpedal(...more: Arg[]): Pattern
 /**
  * Shorthand for swingBy with 1/3:
  * @param subdivision {number}
@@ -11787,7 +11539,7 @@ declare function sustainpedal(...args: any[]): Pattern
  * s("hh*8").swing(4)
  * // s("hh*8").swingBy(1/3, 4)
  */
-declare function swing(subdivision?: any, ...more: any[]): Pattern
+declare function swing(subdivision?: any, ...more: Arg[]): Pattern
 /**
  * The function swingBy x n breaks each cycle into n slices, and then delays events in the second half of each slice by the amount x, which is relative to the size of the (half) slice. So if x is 0 it does nothing, 0.5 delays for half the note duration, and 1 will wrap around to doing nothing again. The end result is a shuffle or swing-like rhythm
  * @param subdivision {number}
@@ -11795,7 +11547,7 @@ declare function swing(subdivision?: any, ...more: any[]): Pattern
  * @example
  * s("hh*8").swingBy(1/3, 4)
  */
-declare function swingBy(subdivision?: any, offset?: any, ...more: any[]): Pattern
+declare function swingBy(subdivision?: any, offset?: any, ...more: Arg[]): Pattern
 /**
  * MIDI sysex: Sends a MIDI sysex message.
  * @param id {number | Pattern} Sysex ID
@@ -11803,21 +11555,21 @@ declare function swingBy(subdivision?: any, offset?: any, ...more: any[]): Patte
  * @example
  * note("c4").sysex(["0x77", "0x01:0x02:0x03:0x04"]).midichan(1).midi()
  */
-declare function sysex(id?: any, data?: any, ...more: any[]): Pattern
+declare function sysex(id?: any, data?: any, ...more: Arg[]): Pattern
 /**
  * MIDI sysex data: Sends a MIDI sysex message.
  * @param data {number | Pattern} Sysex data
  * @example
  * note("c4").sysexid("0x77").sysexdata("0x01:0x02:0x03:0x04").midichan(1).midi()
  */
-declare function sysexdata(data?: any, ...more: any[]): Pattern
+declare function sysexdata(data?: any, ...more: Arg[]): Pattern
 /**
  * MIDI sysex ID: Sends a MIDI sysex identifier message.
  * @param id {number | Pattern} Sysex ID
  * @example
  * note("c4").sysexid("0x77").sysexdata("0x01:0x02:0x03:0x04").midichan(1).midi()
  */
-declare function sysexid(id?: any, ...more: any[]): Pattern
+declare function sysexid(id?: any, ...more: Arg[]): Pattern
 /**
  * Sets the room size of the reverb, see room.
  * When this property is changed, the reverb will be recaculated, so only change this sparsely..
@@ -11828,11 +11580,11 @@ declare function sysexid(id?: any, ...more: any[]): Pattern
  * @example
  * s("bd sd [~ bd] sd").room(.8).rsize(4)
  */
-declare function sz(size?: any, ...more: any[]): Pattern
+declare function sz(size?: any, ...more: Arg[]): Pattern
 /**
  * Loads a collection of wavetables to use with s
  */
-declare function tables(...args: any[]): Pattern
+declare function tables(...more: Arg[]): Pattern
 /**
  * Experimental
  * Takes the given number of steps from a pattern (dropping the rest).
@@ -11847,9 +11599,9 @@ declare function tables(...args: any[]): Pattern
  * "bd cp ht mt".take("-1 -2 -3").sound()
  * // The same as "mt ht mt cp ht mt".sound()
  */
-declare function take(...args: any[]): Pattern
-declare function theme(...args: any[]): Pattern
-declare function themeColors(...args: any[]): Pattern
+declare function take(...more: Arg[]): Pattern
+declare function theme(...more: Arg[]): Pattern
+declare function themeColors(...more: Arg[]): Pattern
 declare const themes: any
 /**
  * A signal representing the cycle time.
@@ -11867,7 +11619,7 @@ declare const time: Pattern
  * stepcat("bd sd cp","hh hh").sound()
  * // the same as "bd sd cp hh hh".sound()
  */
-declare function timeCat(...args: any[]): Pattern
+declare function timeCat(...more: Arg[]): Pattern
 /**
  * 'Concatenates' patterns like fastcat, but proportional to a number of steps per cycle.
  * The steps can either be inferred from the pattern, or provided as a [length, pattern] pair.
@@ -11880,19 +11632,19 @@ declare function timeCat(...args: any[]): Pattern
  * stepcat("bd sd cp","hh hh").sound()
  * // the same as "bd sd cp hh hh".sound()
  */
-declare function timecat(...args: any[]): Pattern
-declare function timeline(...args: any[]): Pattern
+declare function timecat(...more: Arg[]): Pattern
+declare function timeline(...more: Arg[]): Pattern
 /**
  * Assumes a numerical pattern, containing unipolar values in the range 0 ..
  *
  * Returns a new pattern with values scaled to the bipolar range -1 .. 1
  */
-declare function toBipolar(...args: any[]): Pattern
-declare function toggleBlockComment(...args: any[]): Pattern
-declare function toggleBlockCommentByLine(...args: any[]): Pattern
-declare function toggleComment(...args: any[]): Pattern
-declare function toggleLineComment(...args: any[]): Pattern
-declare function tokenizeNote(...args: any[]): Pattern
+declare function toBipolar(...more: Arg[]): Pattern
+declare function toggleBlockComment(...more: Arg[]): Pattern
+declare function toggleBlockCommentByLine(...more: Arg[]): Pattern
+declare function toggleComment(...more: Arg[]): Pattern
+declare function toggleLineComment(...more: Arg[]): Pattern
+declare function tokenizeNote(...more: Arg[]): Pattern
 /**
  * Experimental
  * Inserts a pattern into a list of patterns. On the first repetition it will be inserted at the end of the list, then moved backwards through the list
@@ -11903,7 +11655,7 @@ declare function tokenizeNote(...args: any[]): Pattern
  *    .sound("folkharp")
  *    .pace(8)
  */
-declare function tour(...args: any[]): Pattern
+declare function tour(...more: Arg[]): Pattern
 /**
  * Change the pitch of each value by the given amount. Expects numbers or note strings as values.
  * The amount can be given as a number of semitones or as a string in interval short notation.
@@ -11932,7 +11684,7 @@ declare function tour(...args: any[]): Pattern
  * @example
  * "c2 c3".fast(2).transpose("<1P -2M 4P 3m>".slow(2)).note()
  */
-declare function trans(amount?: any, ...more: any[]): Pattern
+declare function trans(amount?: any, ...more: Arg[]): Pattern
 /**
  * Transient shaper. Gives independent control over the emphasis on transients
  * and sustains
@@ -11943,7 +11695,7 @@ declare function trans(amount?: any, ...more: any[]): Pattern
  * @example
  * s("hh*16").bank("tr909").transient("<-1:1 1:-1>")
  */
-declare function transient(attack?: any, sustain?: any, ...more: any[]): Pattern
+declare function transient(attack?: any, sustain?: any, ...more: Arg[]): Pattern
 /**
  * Change the pitch of each value by the given amount. Expects numbers or note strings as values.
  * The amount can be given as a number of semitones or as a string in interval short notation.
@@ -11972,7 +11724,7 @@ declare function transient(attack?: any, sustain?: any, ...more: any[]): Pattern
  * @example
  * "c2 c3".fast(2).transpose("<1P -2M 4P 3m>".slow(2)).note()
  */
-declare function transpose(amount?: any, ...more: any[]): Pattern
+declare function transpose(amount?: any, ...more: Arg[]): Pattern
 /**
  * Modulate the amplitude of a sound with a continuous waveform
  * Synonyms: trem
@@ -11980,7 +11732,7 @@ declare function transpose(amount?: any, ...more: any[]): Pattern
  * @example
  * note("d d d# d".fast(4)).s("supersaw").tremolo("<3 2 100> ").tremoloskew("<.5>")
  */
-declare function trem(speed?: any, ...more: any[]): Pattern
+declare function trem(speed?: any, ...more: Arg[]): Pattern
 /**
  * Modulate the amplitude of a sound with a continuous waveform
  * Synonyms: trem
@@ -11988,7 +11740,7 @@ declare function trem(speed?: any, ...more: any[]): Pattern
  * @example
  * note("d d d# d".fast(4)).s("supersaw").tremolo("<3 2 100> ").tremoloskew("<.5>")
  */
-declare function tremolo(speed?: any, ...more: any[]): Pattern
+declare function tremolo(speed?: any, ...more: Arg[]): Pattern
 /**
  * Depth of amplitude modulation
  * Synonyms: tremdepth
@@ -11996,7 +11748,7 @@ declare function tremolo(speed?: any, ...more: any[]): Pattern
  * @example
  * note("a1 a1 a#1 a1".fast(4)).s("pulse").tremsync(4).tremolodepth("<1 2 .7>")
  */
-declare function tremolodepth(depth?: any, ...more: any[]): Pattern
+declare function tremolodepth(depth?: any, ...more: Arg[]): Pattern
 /**
  * Alter the phase of the modulation waveform
  * Synonyms: tremphase
@@ -12004,7 +11756,7 @@ declare function tremolodepth(depth?: any, ...more: any[]): Pattern
  * @example
  * note("{f a c e}%16").s("sawtooth").tremsync(4).tremolophase("<0 .25 .66>")
  */
-declare function tremolophase(offset?: any, ...more: any[]): Pattern
+declare function tremolophase(offset?: any, ...more: Arg[]): Pattern
 /**
  * Shape of amplitude modulation
  * Synonyms: tremshape
@@ -12012,7 +11764,7 @@ declare function tremolophase(offset?: any, ...more: any[]): Pattern
  * @example
  * note("{f g c d}%16").tremsync(4).tremoloshape("<sine tri square>").s("sawtooth")
  */
-declare function tremoloshape(shape?: any, ...more: any[]): Pattern
+declare function tremoloshape(shape?: any, ...more: Arg[]): Pattern
 /**
  * Alter the shape of the modulation waveform
  * Synonyms: tremskew
@@ -12020,7 +11772,7 @@ declare function tremoloshape(shape?: any, ...more: any[]): Pattern
  * @example
  * note("{f a c e}%16").s("sawtooth").tremsync(4).tremoloskew("<.5 0 1>")
  */
-declare function tremoloskew(amount?: any, ...more: any[]): Pattern
+declare function tremoloskew(amount?: any, ...more: Arg[]): Pattern
 /**
  * Modulate the amplitude of a sound with a continuous waveform
  * Synonyms: tremsync
@@ -12028,7 +11780,7 @@ declare function tremoloskew(amount?: any, ...more: any[]): Pattern
  * @example
  * note("d d d# d".fast(4)).s("supersaw").tremolosync("4").tremoloskew("<1 .5 0>")
  */
-declare function tremolosync(cycles?: any, ...more: any[]): Pattern
+declare function tremolosync(cycles?: any, ...more: Arg[]): Pattern
 /**
  * A triangle signal between 0 and 1.
  * @example
@@ -12039,9 +11791,9 @@ declare const tri: Pattern
  * A triangle signal between -1 and 1 (like tri, but bipolar).
  */
 declare const tri2: Pattern
-declare function triode(...args: any[]): Pattern
-declare function tsdelay(...args: any[]): Pattern
-declare function uid(...args: any[]): Pattern
+declare function triode(...more: Arg[]): Pattern
+declare function tsdelay(...more: Arg[]): Pattern
+declare function uid(...more: Arg[]): Pattern
 /**
  * Inverse of degrade: Randomly removes 50% of events from the pattern. Shorthand for .undegradeBy(0.5)
  * Events that would be removed by degrade are let through by undegrade and vice versa (see second example).
@@ -12053,7 +11805,7 @@ declare function uid(...args: any[]): Pattern
  *   x => x.undegrade().pan(1)
  * )
  */
-declare function undegrade(...args: any[]): Pattern
+declare function undegrade(...more: Arg[]): Pattern
 /**
  * Inverse of degradeBy: Randomly removes events from the pattern by a given amount.
  * 0 = 100% chance of removal
@@ -12068,28 +11820,28 @@ declare function undegrade(...args: any[]): Pattern
  *   x => x.undegradeBy(0.8).pan(1)
  * )
  */
-declare function undegradeBy(amount?: any, ...more: any[]): Pattern
-declare function unicodeToBase64(...args: any[]): Pattern
-declare function uniq(...args: any[]): Pattern
-declare function uniqsort(...args: any[]): Pattern
-declare function uniqsortr(...args: any[]): Pattern
+declare function undegradeBy(amount?: any, ...more: Arg[]): Pattern
+declare function unicodeToBase64(...more: Arg[]): Pattern
+declare function uniq(...more: Arg[]): Pattern
+declare function uniqsort(...more: Arg[]): Pattern
+declare function uniqsortr(...more: Arg[]): Pattern
 /**
  * Set number of stacked voices for supported oscillators
  * @param numvoices {number | Pattern}
  * @example
  * note("d f a a# a d3").fast(2).s("supersaw").unison("<1 2 7>")
  */
-declare function unison(numvoices?: any, ...more: any[]): Pattern
+declare function unison(numvoices?: any, ...more: Arg[]): Pattern
 /**
  * Used in conjunction with speed, accepts values of "r" (rate, default behavior), "c" (cycles), or "s" (seconds). Using unit "c" means speed will be interpreted in units of cycles, e.g. speed "1" means samples will be stretched to fill a cycle. Using unit "s" means the playback speed will be adjusted so that the duration is the number of seconds specified by speed.
  * @param unit {number | string | Pattern} see description above
  * @example
  * speed("1 2 .5 3").s("bd").unit("c").osc()
  */
-declare function unit(unit?: any, ...more: any[]): Pattern
-declare function updateMiniLocations(...args: any[]): Pattern
-declare function updateSliderWidgets(...args: any[]): Pattern
-declare function updateWidgets(...args: any[]): Pattern
+declare function unit(unit?: any, ...more: Arg[]): Pattern
+declare function updateMiniLocations(...more: Arg[]): Pattern
+declare function updateSliderWidgets(...more: Arg[]): Pattern
+declare function updateWidgets(...more: Arg[]): Pattern
 /**
  * Sets which random number generator to use. Historically Strudel would
  * use useRNG('legacy'), which remains the default. To use a new more statistically
@@ -12101,7 +11853,7 @@ declare function updateWidgets(...args: any[]): Pattern
  * $: n(irand(50)).seg(16).scale("C:minor").ribbon(88, 32)
  * $: n(irand(50)).seg(16).scale("C:minor").ribbon(388, 32)
  */
-declare function useRNG(mod?: any, ...more: any[]): any
+declare function useRNG(mod?: any, ...more: Arg[]): any
 /**
  * Applies a vibrato to the frequency of the oscillator.
  * Synonyms: vibrato, v
@@ -12116,9 +11868,9 @@ declare function useRNG(mod?: any, ...more: any[]): any
  * .vib("<.5 1 2 4 8 16>:12")
  * ._scope()
  */
-declare function v(frequency?: any, ...more: any[]): Pattern
-declare function val(...args: any[]): Pattern
-declare function valueToMidi(...args: any[]): Pattern
+declare function v(frequency?: any, ...more: Arg[]): Pattern
+declare function val(...more: Arg[]): Pattern
+declare function valueToMidi(...more: Arg[]): Pattern
 /**
  * Sets the velocity from 0 to 1. Is multiplied together with gain.
  * Synonyms: vel
@@ -12127,7 +11879,7 @@ declare function valueToMidi(...args: any[]): Pattern
  * .gain(".4!2 1 .4!2 1 .4 1")
  * .velocity(".4 1")
  */
-declare function vel(...args: any[]): Pattern
+declare function vel(...more: Arg[]): Pattern
 /**
  * Sets the velocity from 0 to 1. Is multiplied together with gain.
  * Synonyms: vel
@@ -12136,7 +11888,7 @@ declare function vel(...args: any[]): Pattern
  * .gain(".4!2 1 .4!2 1 .4 1")
  * .velocity(".4 1")
  */
-declare function velocity(...args: any[]): Pattern
+declare function velocity(...more: Arg[]): Pattern
 /**
  * Applies a vibrato to the frequency of the oscillator.
  * Synonyms: vibrato, v
@@ -12151,7 +11903,7 @@ declare function velocity(...args: any[]): Pattern
  * .vib("<.5 1 2 4 8 16>:12")
  * ._scope()
  */
-declare function vib(frequency?: any, ...more: any[]): Pattern
+declare function vib(frequency?: any, ...more: Arg[]): Pattern
 /**
  * Sets the vibrato depth in semitones. Only has an effect if vibrato | vib | v is is also set
  * Synonyms: vmod
@@ -12166,7 +11918,7 @@ declare function vib(frequency?: any, ...more: any[]): Pattern
  * .vibmod("<.25 .5 1 2 12>:8")
  * ._scope()
  */
-declare function vibmod(depth?: any, ...more: any[]): Pattern
+declare function vibmod(depth?: any, ...more: Arg[]): Pattern
 /**
  * Applies a vibrato to the frequency of the oscillator.
  * Synonyms: vibrato, v
@@ -12181,7 +11933,7 @@ declare function vibmod(depth?: any, ...more: any[]): Pattern
  * .vib("<.5 1 2 4 8 16>:12")
  * ._scope()
  */
-declare function vibrato(frequency?: any, ...more: any[]): Pattern
+declare function vibrato(frequency?: any, ...more: Arg[]): Pattern
 /**
  * Sets the vibrato depth in semitones. Only has an effect if vibrato | vib | v is is also set
  * Synonyms: vmod
@@ -12196,8 +11948,8 @@ declare function vibrato(frequency?: any, ...more: any[]): Pattern
  * .vibmod("<.25 .5 1 2 12>:8")
  * ._scope()
  */
-declare function vmod(depth?: any, ...more: any[]): Pattern
-declare function voice(...args: any[]): Pattern
+declare function vmod(depth?: any, ...more: Arg[]): Pattern
+declare function voice(...more: Arg[]): Pattern
 /**
  * Turns chord symbols into voicings. You can use the following control params:
  *
@@ -12219,8 +11971,8 @@ declare function voice(...args: any[]): Pattern
  * @example
  * n("0 1 2 3").chord("<C Am F G>").voicing()
  */
-declare function voicing(...args: any[]): Pattern
-declare function voicingAlias(...args: any[]): Pattern
+declare function voicing(...more: Arg[]): Pattern
+declare function voicingAlias(...more: Arg[]): Pattern
 declare const voicingRegistry: any
 /**
  * DEPRECATED: still works, but it is recommended you use .voicing instead (without s).
@@ -12230,7 +11982,7 @@ declare const voicingRegistry: any
  * @example
  * stack("<C^7 A7 Dm7 G7>".voicings('lefthand'), "<C3 A2 D3 G2>").note()
  */
-declare function voicings(dictionary?: any, ...more: any[]): Pattern
+declare function voicings(dictionary?: any, ...more: Arg[]): Pattern
 /**
  * Formant filter to make things sound like vowels.
  * @param vowel {string | Pattern} You can use a e i o u ae aa oe ue y uh un en an on, corresponding to [a] [e] [i] [o] [u] [æ] [ɑ] [ø] [y] [ɯ] [ʌ] [œ̃] [ɛ̃] [ɑ̃] [ɔ̃]. Aliases: aa = å = ɑ, oe = ø = ö, y = ı, ae = æ.
@@ -12240,8 +11992,8 @@ declare function voicings(dictionary?: any, ...more: any[]): Pattern
  * @example
  * s("bd sd mt ht bd [~ cp] ht lt").vowel("[a|e|i|o|u]")
  */
-declare function vowel(vowel?: any, ...more: any[]): Pattern
-declare function w(...args: any[]): Pattern
+declare function vowel(vowel?: any, ...more: Arg[]): Pattern
+declare function w(...more: Arg[]): Pattern
 /**
  * Amount of warp (alteration of the waveform) to apply to the wavetable oscillator
  * Synonyms: wavetableWarp
@@ -12250,46 +12002,46 @@ declare function w(...args: any[]): Pattern
  * s("basique").bank("wt_digital").seg(8).note("F1").warp("0 0.25 0.5 0.75 1")
  *   .warpmode("spin")
  */
-declare function warp(amount?: any, ...more: any[]): Pattern
+declare function warp(amount?: any, ...more: Arg[]): Pattern
 /**
  * Attack time of the wavetable oscillator's warp envelope
  * Synonyms: warpatt
  * @param time {number | Pattern} attack time in seconds
  */
-declare function warpatt(time?: any, ...more: any[]): Pattern
+declare function warpatt(time?: any, ...more: Arg[]): Pattern
 /**
  * Attack time of the wavetable oscillator's warp envelope
  * Synonyms: warpatt
  * @param time {number | Pattern} attack time in seconds
  */
-declare function warpattack(time?: any, ...more: any[]): Pattern
+declare function warpattack(time?: any, ...more: Arg[]): Pattern
 /**
  * DC offset of the LFO for the wavetable oscillator's warp
  * @param dcoffset {number | Pattern} dc offset. set to 0 for unipolar
  */
-declare function warpdc(dcoffset?: any, ...more: any[]): Pattern
+declare function warpdc(dcoffset?: any, ...more: Arg[]): Pattern
 /**
  * Decay time of the wavetable oscillator's warp envelope
  * Synonyms: warpdec
  * @param time {number | Pattern} decay time in seconds
  */
-declare function warpdec(time?: any, ...more: any[]): Pattern
+declare function warpdec(time?: any, ...more: Arg[]): Pattern
 /**
  * Decay time of the wavetable oscillator's warp envelope
  * Synonyms: warpdec
  * @param time {number | Pattern} decay time in seconds
  */
-declare function warpdecay(time?: any, ...more: any[]): Pattern
+declare function warpdecay(time?: any, ...more: Arg[]): Pattern
 /**
  * Depth of the LFO for the wavetable oscillator's warp
  * @param depth {number | Pattern} depth of modulation
  */
-declare function warpdepth(depth?: any, ...more: any[]): Pattern
+declare function warpdepth(depth?: any, ...more: Arg[]): Pattern
 /**
  * Amount of envelope applied wavetable oscillator's position envelope
  * @param amount {number | Pattern} between 0 and 1
  */
-declare function warpenv(amount?: any, ...more: any[]): Pattern
+declare function warpenv(amount?: any, ...more: Arg[]): Pattern
 /**
  * Type of warp (alteration of the waveform) to apply to the wavetable oscillator.
  * The current options are: none, asym, bendp, bendm, bendmp, sync, quant, fold, pwm, orbit,
@@ -12300,53 +12052,53 @@ declare function warpenv(amount?: any, ...more: any[]): Pattern
  * s("morgana").bank("wt_digital").seg(8).note("F1").warp("0 0.25 0.5 0.75 1")
  *   .warpmode("<asym bendp spin logistic sync wormhole brownian>*2")
  */
-declare function warpmode(mode?: any, ...more: any[]): Pattern
+declare function warpmode(mode?: any, ...more: Arg[]): Pattern
 /**
  * Rate of the LFO for the wavetable oscillator's warp
  * @param rate {number | Pattern} rate in hertz
  */
-declare function warprate(rate?: any, ...more: any[]): Pattern
+declare function warprate(rate?: any, ...more: Arg[]): Pattern
 /**
  * Release time of the wavetable oscillator's warp envelope
  * Synonyms: warprel
  * @param time {number | Pattern} release time in seconds
  */
-declare function warprel(time?: any, ...more: any[]): Pattern
+declare function warprel(time?: any, ...more: Arg[]): Pattern
 /**
  * Release time of the wavetable oscillator's warp envelope
  * Synonyms: warprel
  * @param time {number | Pattern} release time in seconds
  */
-declare function warprelease(time?: any, ...more: any[]): Pattern
+declare function warprelease(time?: any, ...more: Arg[]): Pattern
 /**
  * Shape of the LFO for the wavetable oscillator's warp
  * @param shape {number | Pattern} Shape of the lfo (0, 1, 2, ..)
  */
-declare function warpshape(shape?: any, ...more: any[]): Pattern
+declare function warpshape(shape?: any, ...more: Arg[]): Pattern
 /**
  * Skew of the LFO for the wavetable oscillator's warp
  * @param skew {number | Pattern} How much to bend the LFO shape
  */
-declare function warpskew(skew?: any, ...more: any[]): Pattern
+declare function warpskew(skew?: any, ...more: Arg[]): Pattern
 /**
  * Sustain time of the wavetable oscillator's warp envelope
  * Synonyms: warpsus
  * @param gain {number | Pattern} sustain level (0 to 1)
  */
-declare function warpsus(gain?: any, ...more: any[]): Pattern
+declare function warpsus(gain?: any, ...more: Arg[]): Pattern
 /**
  * Sustain time of the wavetable oscillator's warp envelope
  * Synonyms: warpsus
  * @param gain {number | Pattern} sustain level (0 to 1)
  */
-declare function warpsustain(gain?: any, ...more: any[]): Pattern
+declare function warpsustain(gain?: any, ...more: Arg[]): Pattern
 /**
  * cycle synced rate of the LFO for the wavetable warp position
  * @param rate {number | Pattern} rate in cycles
  */
-declare function warpsync(rate?: any, ...more: any[]): Pattern
-declare function waveformN(...args: any[]): Pattern
-declare function waveloss(...args: any[]): Pattern
+declare function warpsync(rate?: any, ...more: Arg[]): Pattern
+declare function waveformN(...more: Arg[]): Pattern
+declare function waveloss(...more: Arg[]): Pattern
 /**
  * Amount of randomness of the initial phase of the wavetable oscillator.
  * Synonyms: wavetablePhaseRand
@@ -12354,7 +12106,7 @@ declare function waveloss(...args: any[]): Pattern
  * @example
  * s("basique").bank("wt_digital").seg(16).wtphaserand("<0 1>")
  */
-declare function wavetablePhaseRand(amount?: any, ...more: any[]): Pattern
+declare function wavetablePhaseRand(amount?: any, ...more: Arg[]): Pattern
 /**
  * Position in the wavetable of the wavetable oscillator
  * Synonyms: wavetablePosition
@@ -12362,7 +12114,7 @@ declare function wavetablePhaseRand(amount?: any, ...more: any[]): Pattern
  * @example
  * s("squelch").bank("wt_digital").seg(8).note("F1").wt("0 0.25 0.5 0.75 1")
  */
-declare function wavetablePosition(position?: any, ...more: any[]): Pattern
+declare function wavetablePosition(position?: any, ...more: Arg[]): Pattern
 /**
  * Amount of warp (alteration of the waveform) to apply to the wavetable oscillator
  * Synonyms: wavetableWarp
@@ -12371,7 +12123,7 @@ declare function wavetablePosition(position?: any, ...more: any[]): Pattern
  * s("basique").bank("wt_digital").seg(8).note("F1").warp("0 0.25 0.5 0.75 1")
  *   .warpmode("spin")
  */
-declare function wavetableWarp(amount?: any, ...more: any[]): Pattern
+declare function wavetableWarp(amount?: any, ...more: Arg[]): Pattern
 /**
  * Type of warp (alteration of the waveform) to apply to the wavetable oscillator.
  * The current options are: none, asym, bendp, bendm, bendmp, sync, quant, fold, pwm, orbit,
@@ -12382,14 +12134,14 @@ declare function wavetableWarp(amount?: any, ...more: any[]): Pattern
  * s("morgana").bank("wt_digital").seg(8).note("F1").warp("0 0.25 0.5 0.75 1")
  *   .warpmode("<asym bendp spin logistic sync wormhole brownian>*2")
  */
-declare function wavetableWarpMode(mode?: any, ...more: any[]): Pattern
+declare function wavetableWarpMode(mode?: any, ...more: Arg[]): Pattern
 /**
  * Chooses randomly from the given list of elements by giving a probability to each element
  * @param pairs {any} arrays of value and weight
  * @example
  * note("c2 g2!2 d2 f1").s(wchoose(["sine",10], ["triangle",1], ["bd:6",1]))
  */
-declare function wchoose(pairs?: any, ...more: any[]): Pattern
+declare function wchoose(pairs?: any, ...more: Arg[]): Pattern
 /**
  * Picks one of the elements at random each cycle by giving a probability to each element
  * Synonyms: wrandcat
@@ -12401,10 +12153,10 @@ declare function wchoose(pairs?: any, ...more: any[]): Pattern
  * // The probability can itself be a pattern
  * wchooseCycles(["bd(3,8)","<5 0>"], ["hh hh hh",3]).fast(4).s()
  */
-declare function wchooseCycles(...args: any[]): Pattern
-declare function webAudioTimeout(...args: any[]): Pattern
-declare function webaudioOutput(...args: any[]): Pattern
-declare function webaudioRepl(...args: any[]): Pattern
+declare function wchooseCycles(...more: Arg[]): Pattern
+declare function webAudioTimeout(...more: Arg[]): Pattern
+declare function webaudioOutput(...more: Arg[]): Pattern
+declare function webaudioRepl(...more: Arg[]): Pattern
 /**
  * Applies the given function whenever the given pattern is in a true state.
  * @param binary_pat {Pattern}
@@ -12412,21 +12164,21 @@ declare function webaudioRepl(...args: any[]): Pattern
  * @example
  * "c3 eb3 g3".when("<0 1>/2", x=>x.sub("5")).note()
  */
-declare function when(binary_pat?: any, func?: any, ...more: any[]): Pattern
+declare function when(binary_pat?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
 /**
  * Do something on a keypress, or array of keypresses
  * Key name reference
  * @example
  * s("bd(5,8)").whenKey("Control:j", x => x.segment(16).color("red")).whenKey("Control:i", x => x.fast(2).color("blue"))
  */
-declare function whenKey(...args: any[]): Pattern
+declare function whenKey(...more: Arg[]): Pattern
 declare const widgetPlugin: any
 /**
  * Modify a pattern by applying a function to the randomSeed control if present
  * @param func {function} Function from seed (or undefined) to seed (or undefined)
  * @param pat {Pattern} Pattern to update
  */
-declare function withSeed(func?: any, pat?: any, ...more: any[]): Pattern
+declare function withSeed(func?: (pat: Pattern, ...args: any[]) => any, pat?: any, ...more: Arg[]): Pattern
 /**
  * Returns a new pattern, with the function applied to the value of
  * each hap. It has the alias fmap.
@@ -12435,21 +12187,21 @@ declare function withSeed(func?: any, pat?: any, ...more: any[]): Pattern
  * @example
  * "0 1 2".withValue(v => v + 10).log()
  */
-declare function withValue(func?: any, ...more: any[]): Pattern
+declare function withValue(func?: (value: any, ...args: any[]) => any, ...more: any[]): Pattern
 /**
  * Use within to apply a function to only a part of a pattern.
  * @param start {number} start within cycle (0 - 1)
  * @param end {number} end within cycle (0 - 1). Must be > start
  * @param func {function} function to be applied to the sub-pattern
  */
-declare function within(start?: any, end?: any, func?: any, ...more: any[]): Pattern
+declare function within(start?: any, end?: any, func?: (pat: Pattern, ...args: any[]) => any, ...more: Arg[]): Pattern
 /**
  * Creates a worklet effect. Typically derived by writing K(...) in the REPL which will parse
  * Kabelsalat code.
  * @param src {string} Source code of the worklet update function
  * @param inputs {number | Pattern} Worklet inputs
  */
-declare function worklet(src?: any, inputs?: any, ...more: any[]): Pattern
+declare function worklet(src?: any, inputs?: any, ...more: Arg[]): Pattern
 /**
  * Picks one of the elements at random each cycle by giving a probability to each element
  * Synonyms: wrandcat
@@ -12461,7 +12213,7 @@ declare function worklet(src?: any, inputs?: any, ...more: any[]): Pattern
  * // The probability can itself be a pattern
  * wchooseCycles(["bd(3,8)","<5 0>"], ["hh hh hh",3]).fast(4).s()
  */
-declare function wrandcat(...args: any[]): Pattern
+declare function wrandcat(...more: Arg[]): Pattern
 /**
  * Position in the wavetable of the wavetable oscillator
  * Synonyms: wavetablePosition
@@ -12469,46 +12221,46 @@ declare function wrandcat(...args: any[]): Pattern
  * @example
  * s("squelch").bank("wt_digital").seg(8).note("F1").wt("0 0.25 0.5 0.75 1")
  */
-declare function wt(position?: any, ...more: any[]): Pattern
+declare function wt(position?: any, ...more: Arg[]): Pattern
 /**
  * Attack time of the wavetable oscillator's position envelope
  * Synonyms: wtatt
  * @param time {number | Pattern} attack time in seconds
  */
-declare function wtatt(time?: any, ...more: any[]): Pattern
+declare function wtatt(time?: any, ...more: Arg[]): Pattern
 /**
  * Attack time of the wavetable oscillator's position envelope
  * Synonyms: wtatt
  * @param time {number | Pattern} attack time in seconds
  */
-declare function wtattack(time?: any, ...more: any[]): Pattern
+declare function wtattack(time?: any, ...more: Arg[]): Pattern
 /**
  * DC offset of the LFO for the wavetable oscillator's position
  * @param dcoffset {number | Pattern} dc offset. set to 0 for unipolar
  */
-declare function wtdc(dcoffset?: any, ...more: any[]): Pattern
+declare function wtdc(dcoffset?: any, ...more: Arg[]): Pattern
 /**
  * Decay time of the wavetable oscillator's position envelope
  * Synonyms: wtdec
  * @param time {number | Pattern} decay time in seconds
  */
-declare function wtdec(time?: any, ...more: any[]): Pattern
+declare function wtdec(time?: any, ...more: Arg[]): Pattern
 /**
  * Decay time of the wavetable oscillator's position envelope
  * Synonyms: wtdec
  * @param time {number | Pattern} decay time in seconds
  */
-declare function wtdecay(time?: any, ...more: any[]): Pattern
+declare function wtdecay(time?: any, ...more: Arg[]): Pattern
 /**
  * Depth of the LFO for the wavetable oscillator's position
  * @param depth {number | Pattern} depth of modulation
  */
-declare function wtdepth(depth?: any, ...more: any[]): Pattern
+declare function wtdepth(depth?: any, ...more: Arg[]): Pattern
 /**
  * Amount of envelope applied wavetable oscillator's position envelope
  * @param amount {number | Pattern} between 0 and 1
  */
-declare function wtenv(amount?: any, ...more: any[]): Pattern
+declare function wtenv(amount?: any, ...more: Arg[]): Pattern
 /**
  * Amount of randomness of the initial phase of the wavetable oscillator.
  * Synonyms: wavetablePhaseRand
@@ -12516,52 +12268,52 @@ declare function wtenv(amount?: any, ...more: any[]): Pattern
  * @example
  * s("basique").bank("wt_digital").seg(16).wtphaserand("<0 1>")
  */
-declare function wtphaserand(amount?: any, ...more: any[]): Pattern
+declare function wtphaserand(amount?: any, ...more: Arg[]): Pattern
 /**
  * Rate of the LFO for the wavetable oscillator's position
  * @param rate {number | Pattern} rate in hertz
  */
-declare function wtrate(rate?: any, ...more: any[]): Pattern
+declare function wtrate(rate?: any, ...more: Arg[]): Pattern
 /**
  * Release time of the wavetable oscillator's position envelope
  * Synonyms: wtrel
  * @param time {number | Pattern} release time in seconds
  */
-declare function wtrel(time?: any, ...more: any[]): Pattern
+declare function wtrel(time?: any, ...more: Arg[]): Pattern
 /**
  * Release time of the wavetable oscillator's position envelope
  * Synonyms: wtrel
  * @param time {number | Pattern} release time in seconds
  */
-declare function wtrelease(time?: any, ...more: any[]): Pattern
+declare function wtrelease(time?: any, ...more: Arg[]): Pattern
 /**
  * Shape of the LFO for the wavetable oscillator's position
  * @param shape {number | Pattern} Shape of the lfo (0, 1, 2, ..)
  */
-declare function wtshape(shape?: any, ...more: any[]): Pattern
+declare function wtshape(shape?: any, ...more: Arg[]): Pattern
 /**
  * Skew of the LFO for the wavetable oscillator's position
  * @param skew {number | Pattern} How much to bend the LFO shape
  */
-declare function wtskew(skew?: any, ...more: any[]): Pattern
+declare function wtskew(skew?: any, ...more: Arg[]): Pattern
 /**
  * Sustain time of the wavetable oscillator's position envelope
  * Synonyms: wtsus
  * @param gain {number | Pattern} sustain level (0 to 1)
  */
-declare function wtsus(gain?: any, ...more: any[]): Pattern
+declare function wtsus(gain?: any, ...more: Arg[]): Pattern
 /**
  * Sustain time of the wavetable oscillator's position envelope
  * Synonyms: wtsus
  * @param gain {number | Pattern} sustain level (0 to 1)
  */
-declare function wtsustain(gain?: any, ...more: any[]): Pattern
+declare function wtsustain(gain?: any, ...more: Arg[]): Pattern
 /**
  * cycle synced rate of the LFO for the wavetable oscillator's position
  * @param rate {number | Pattern} rate in cycles
  */
-declare function wtsync(rate?: any, ...more: any[]): Pattern
-declare function x(...args: any[]): Pattern
+declare function wtsync(rate?: any, ...more: Arg[]): Pattern
+declare function x(...more: Arg[]): Pattern
 /**
  * Cross-fades between left and right from 0 to 1:
  *
@@ -12571,11 +12323,11 @@ declare function x(...args: any[]): Pattern
  * @example
  * xfade(s("bd*2"), "<0 .25 .5 .75 1>", s("hh*8"))
  */
-declare function xfade(...args: any[]): Pattern
-declare function xsdelay(...args: any[]): Pattern
-declare function y(...args: any[]): Pattern
-declare function zcrush(...args: any[]): Pattern
-declare function zdelay(...args: any[]): Pattern
+declare function xfade(...more: Arg[]): Pattern
+declare function xsdelay(...more: Arg[]): Pattern
+declare function y(...more: Arg[]): Pattern
+declare function zcrush(...more: Arg[]): Pattern
+declare function zdelay(...more: Arg[]): Pattern
 /**
  * Experimental
  * 'zips' together the steps of the provided patterns. This can create a long repetition, taking place over a single, dense cycle.
@@ -12585,19 +12337,19 @@ declare function zdelay(...args: any[]): Pattern
  *    .sound("folkharp")
  *    .pace(8)
  */
-declare function zip(...args: any[]): Pattern
-declare function zipWith(...args: any[]): Pattern
-declare function zmod(...args: any[]): Pattern
-declare function znoise(...args: any[]): Pattern
+declare function zip(...more: Arg[]): Pattern
+declare function zipWith(...more: Arg[]): Pattern
+declare function zmod(...more: Arg[]): Pattern
+declare function znoise(...more: Arg[]): Pattern
 /**
  * Plays a portion of a pattern, specified by the beginning and end of a time span. The new resulting pattern is played over the time period of the original pattern:
  * @example
  * s("bd*2 hh*3 [sd bd]*2 perc").zoom(0.25, 0.75)
  * // s("hh*3 [sd bd]*2") // equivalent
  */
-declare function zoom(...args: any[]): Pattern
-declare function zoomArc(...args: any[]): Pattern
-declare function zoomIn(...args: any[]): Pattern
-declare function zoomarc(...args: any[]): Pattern
-declare function zrand(...args: any[]): Pattern
-declare function zzfx(...args: any[]): Pattern
+declare function zoom(...more: Arg[]): Pattern
+declare function zoomArc(...more: Arg[]): Pattern
+declare function zoomIn(...more: Arg[]): Pattern
+declare function zoomarc(...more: Arg[]): Pattern
+declare function zrand(...more: Arg[]): Pattern
+declare function zzfx(...more: Arg[]): Pattern

@@ -2,7 +2,9 @@
   "compilerOptions": {
     "target": "ES2022",
     "lib": ["ES2022", "DOM"],
-    "checkJs": false
+    "checkJs": true,
+    "moduleDetection": "force",
+    "allowUnusedLabels": true
   },
   "include": ["*.js", "strudel.d.ts"]
 }

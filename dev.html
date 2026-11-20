@@ -168,14 +168,16 @@
     })
 
     // play and stop from the editor (POST /play, POST /stop), like Ctrl+Enter and Ctrl+.
+    // toggle (POST /toggle) is stop when the page plays, and play when it does not.
     new EventSource('events?file=' + encodeURIComponent(file)).onmessage = async e => {
       try {
         if (!audioReady) throw new Error('Click the page once, so the browser lets it play sound')
-        if (e.data === 'play') {
+        const command = e.data === 'toggle' ? (started ? 'stop' : 'play') : e.data
+        if (command === 'play') {
           started = true
           last = null // play the file again, also if it did not change
           await load()
-        } else if (e.data === 'stop') {
+        } else if (command === 'stop') {
           started = false
           await repl.editor.stop()
           status('stopped ' + new Date().toLocaleTimeString())

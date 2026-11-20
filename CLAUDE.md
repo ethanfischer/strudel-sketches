@@ -1,4 +1,4 @@
-Personal project with no stakes: commit and push your changes by default, without asking. Commit only the files you changed, because the user edits the sketches (`*.ts`, `*.js`) while you work.
+Personal project with no stakes
 
 README.md explains the parts: the dev page, the nvim keys, `lib.ts`, the types.
 

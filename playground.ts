@@ -25,11 +25,14 @@ $drums: stack(
 )
 .bank("YamahaRM50")
 
-$flute: n("1 [- 1] [4 1] 3 [- 1] [3 1] 2 -")
+const flMel = "2 [- 2] [3 2] 3 [- 2] [3 2] 3 -";
+const flTrn = "0 [- 0] [0 0] -2 [- 0] [0 0] 0 -";
+$flute: n(flMel)
             .slow(2)
             .set(chords)
             //.scale("pentatonic")
             .voicing()
+            .transpose(flTrn.slow(2))
             .attack(0)
             .release(.25)
             .sound("gm_flute")

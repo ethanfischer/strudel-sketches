@@ -1659,6 +1659,151 @@ type StrudelSound =
   | "z_triangle"
   | "zzfx"
 
+// The drum machine banks, for completion in .bank("...")
+type Bank = StrudelBank | (string & {})
+type StrudelBank =
+  | "9000"
+  | "ace"
+  | "ajkpercusyn"
+  | "akailinn"
+  | "akaimpc60"
+  | "akaixr10"
+  | "alesishr16"
+  | "alesissr16"
+  | "bossdr110"
+  | "bossdr220"
+  | "bossdr55"
+  | "bossdr550"
+  | "casiorz1"
+  | "casiosk1"
+  | "casiovl1"
+  | "circuitsdrumtracks"
+  | "circuitstom"
+  | "compurhythm1000"
+  | "compurhythm78"
+  | "compurhythm8000"
+  | "concertmatemg1"
+  | "d110"
+  | "d70"
+  | "ddm110"
+  | "ddr30"
+  | "dmx"
+  | "doepferms404"
+  | "dpm48"
+  | "dr110"
+  | "dr220"
+  | "dr55"
+  | "dr550"
+  | "drumulator"
+  | "emudrumulator"
+  | "emumodular"
+  | "emusp12"
+  | "hr16"
+  | "jd990"
+  | "korgddm110"
+  | "korgkpr77"
+  | "korgkr55"
+  | "korgkrz"
+  | "korgm1"
+  | "korgminipops"
+  | "korgpoly800"
+  | "korgt3"
+  | "kpr77"
+  | "kr55"
+  | "krz"
+  | "linn"
+  | "linn9000"
+  | "linndrum"
+  | "linnlm1"
+  | "linnlm2"
+  | "lm1"
+  | "lm2"
+  | "lm8953"
+  | "m1"
+  | "mc202"
+  | "mc303"
+  | "mfb512"
+  | "microrhythmer12"
+  | "minipops"
+  | "moogconcertmatemg1"
+  | "mpc1000"
+  | "mpc60"
+  | "ms404"
+  | "mt32"
+  | "oberheimdmx"
+  | "percysyn"
+  | "polaris"
+  | "poly800"
+  | "r8"
+  | "r88"
+  | "rhodespolaris"
+  | "rhythmace"
+  | "rm50"
+  | "rolandcompurhythm1000"
+  | "rolandcompurhythm78"
+  | "rolandcompurhythm8000"
+  | "rolandd110"
+  | "rolandd70"
+  | "rolandddr30"
+  | "rolandjd990"
+  | "rolandmc202"
+  | "rolandmc303"
+  | "rolandmt32"
+  | "rolandr8"
+  | "rolands50"
+  | "rolandsh09"
+  | "rolandsystem100"
+  | "rolandtr505"
+  | "rolandtr606"
+  | "rolandtr626"
+  | "rolandtr707"
+  | "rolandtr727"
+  | "rolandtr808"
+  | "rolandtr909"
+  | "rx21"
+  | "rx5"
+  | "ry30"
+  | "rz1"
+  | "s50"
+  | "sakatadpm48"
+  | "sds400"
+  | "sds5"
+  | "sequentialcircuitsdrumtracks"
+  | "sequentialcircuitstom"
+  | "serge"
+  | "sergemodular"
+  | "sh09"
+  | "simmonssds400"
+  | "simmonssds5"
+  | "sk1"
+  | "snare"
+  | "soundmastersr88"
+  | "sp12"
+  | "spacedrum"
+  | "sr16"
+  | "system100"
+  | "t3"
+  | "tg33"
+  | "tom"
+  | "tom2"
+  | "tr505"
+  | "tr606"
+  | "tr626"
+  | "tr707"
+  | "tr727"
+  | "tr808"
+  | "tr909"
+  | "univoxmicrorhythmer12"
+  | "viscospacedrum"
+  | "vl1"
+  | "xdrumlm8953"
+  | "xr10"
+  | "yamaharm50"
+  | "yamaharx21"
+  | "yamaharx5"
+  | "yamahary30"
+  | "yamahatg33"
+
 interface Pattern {
   /**
    * Establishes an FX chain. Can be called by chaining .FX(fx1).FX(fx2)..
@@ -2130,7 +2275,7 @@ interface Pattern {
    * @example
    * s("bd sd [~ bd] sd").bank('RolandTR909') // = s("RolandTR909_bd RolandTR909_sd")
    */
-  bank(bank?: any, ...more: Arg[]): Pattern
+  bank(bank?: Bank | Pattern, ...more: any[]): Pattern
   /**
    * Create byte beats with custom expressions
    * Synonyms: bbexpr
@@ -7494,7 +7639,7 @@ interface String {
   band(...more: Arg[]): Pattern
   bandf(frequency?: any, ...more: Arg[]): Pattern
   bandq(q?: any, ...more: Arg[]): Pattern
-  bank(bank?: any, ...more: Arg[]): Pattern
+  bank(bank?: Bank | Pattern, ...more: any[]): Pattern
   bbexpr(byteBeatExpression?: any, ...more: Arg[]): Pattern
   bbst(byteBeatStartTime?: any, ...more: Arg[]): Pattern
   beat(...more: Arg[]): Pattern
@@ -8668,7 +8813,7 @@ declare function bandq(q?: any, ...more: Arg[]): Pattern
  * @example
  * s("bd sd [~ bd] sd").bank('RolandTR909') // = s("RolandTR909_bd RolandTR909_sd")
  */
-declare function bank(bank?: any, ...more: Arg[]): Pattern
+declare function bank(bank?: Bank | Pattern, ...more: any[]): Pattern
 declare function base64ToUnicode(...more: Arg[]): Pattern
 /**
  * Create byte beats with custom expressions

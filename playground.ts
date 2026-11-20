@@ -33,6 +33,6 @@ $flute: n(flMel)
             //.scale("pentatonic")
             .voicing()
             .transpose(flTrn.slow(2))
-            .midi("IAC Driver Bus 1") // to GarageBand: the flute is the software instrument on the selected track
+            .midi('IAC Driver Bus 1') // to GarageBand: the flute is the software instrument on the selected track
 
 all(x => x.swing(4).room(1).roomsize(1))

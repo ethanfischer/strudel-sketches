@@ -4,6 +4,7 @@ declare global {
     interface Pattern {
         downShift(): Pattern;
         upShift(): Pattern;
+        oneOf(...changes: ((p: Pattern) => Pattern)[]): Pattern;
     }
 }
 
@@ -16,10 +17,15 @@ const upShift = register('upShift', (p: Pattern) => p
     .lpf(200)
     .transpose(4));
 
+// pattern.oneOf(a, b, ...): for each cycle, the pattern changed by one of the functions, at random
+Pattern.prototype.oneOf = function (...changes: ((p: Pattern) => Pattern)[]) {
+    return randcat(...changes.map(change => change(this)))
+}
+
 function stupidMelody(){
     return note("g a b c").sound("gm_piano");
 }
 
-$: randcat(stupidMelody().downShift(), stupidMelody().upShift())
+$: stupidMelody().oneOf(downShift, upShift)
 
 

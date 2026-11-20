@@ -34,7 +34,8 @@
     })
 
     let last = null
-    let started = false
+    let started = false // false after a stop, so a save does not start the sound again
+    let audioReady = false
     async function load() {
       const r = await fetch(file, { cache: 'no-store' })
       if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + file)
@@ -48,7 +49,8 @@
     async function play() {
       showError('')
       await repl.editor.evaluate()
-      status('playing ' + new Date().toLocaleTimeString())
+      // An error in the code does not throw here; the update event shows it, and the scheduler does not start
+      status((repl.editor.repl.scheduler.started ? 'playing ' : 'not playing ') + new Date().toLocaleTimeString())
     }
 
     document.getElementById('start').addEventListener('click', async e => {
@@ -59,10 +61,29 @@
       // add one. The base here replaces the GitHub _base in the file.
       await samples(await (await fetch('samples/strudel.json')).json(), location.origin + '/samples/')
       await initAudioOnFirstClick()
+      audioReady = true
       started = true
       await play()
       setInterval(() => load().catch(err => showError(err.message)), 300)
     })
+
+    // play and stop from the editor (POST /play, POST /stop), like Ctrl+Enter and Ctrl+.
+    new EventSource('events').onmessage = async e => {
+      try {
+        if (!audioReady) throw new Error('Click the page once, so the browser lets it play sound')
+        if (e.data === 'play') {
+          started = true
+          last = null // play the file again, also if it did not change
+          await load()
+        } else if (e.data === 'stop') {
+          started = false
+          await repl.editor.stop()
+          status('stopped ' + new Date().toLocaleTimeString())
+        }
+      } catch (err) {
+        showError(err.message)
+      }
+    }
 
     // The component made repl.editor when the parser connected it, above
     load()

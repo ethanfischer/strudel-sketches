@@ -36,6 +36,12 @@ node dev.mjs
 
 Open http://localhost:8001/dev.html?file=pianoslice.js and click the page. Each time you save the file, the page plays the new code. The samples come from [strudel-samples](https://github.com/ethanfischer/strudel-samples). Clone it next to this repo, so the page also plays samples that you did not push yet. Set `SAMPLES_DIR` to use another folder. Reload the page after you add a sample.
 
+In nvim, `<leader>mm` saves and plays, like Ctrl+Enter, and `<leader>mp` stops, like Ctrl+. (`nvim.lua`). To turn this on, add this line to your vimrc:
+
+```vim
+autocmd BufRead,BufNewFile */Music/strudel/*.js luafile ~/Music/strudel/nvim.lua
+```
+
 ## Terminal version
 
 `cli/` is the same game for the terminal, in Rust. It has the fire, the train, the WPM and the quotes. A small built-in synth plays the music: the kick, the spider, the acid bass and the choir, with the same patterns, tempo and key changes as the Strudel version. It does not sound exactly the same as the web version.

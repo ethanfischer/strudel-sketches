@@ -39,12 +39,6 @@ _$: note("a [d a] [d g] | a [d a] [ g d] | c4 [d a] [d g] | d4 [d a] [d4 g] | g 
     .sound("buzzer_wrong")
     .fast(4)
 
-
-_$: note("g")
-    .sound("gm_piano")
-    .fast(4)
-
-
 _$: s("nicechord")
   // | picks one of the four at random, for each group
   .slice(32, "[3 - 3 2 | - 2  2 - | - 2 2 2]*2")

@@ -36,7 +36,7 @@ node dev.mjs
 
 Open http://localhost:8001/dev.html?file=pianoslice.js and click the page. Each time you save the file, the page plays the new code. The samples come from [strudel-samples](https://github.com/ethanfischer/strudel-samples). Clone it next to this repo, so the page also plays samples that you did not push yet. Set `SAMPLES_DIR` to use another folder. Reload the page after you add a sample.
 
-In nvim, `<leader>mm` saves and plays, like Ctrl+Enter, and `<leader>mp` stops, like Ctrl+. (`nvim.lua`). To turn this on, add this line to your vimrc:
+In nvim, `<leader>mm` saves and plays the file, like Ctrl+Enter. If no dev page is open for the file, it opens one in your browser. `<leader>mp` stops all dev pages, like Ctrl+. (`nvim.lua`). To turn this on, add this line to your vimrc:
 
 ```vim
 autocmd BufRead,BufNewFile */Music/strudel/*.js luafile ~/Music/strudel/nvim.lua

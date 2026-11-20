@@ -68,7 +68,7 @@
     })
 
     // play and stop from the editor (POST /play, POST /stop), like Ctrl+Enter and Ctrl+.
-    new EventSource('events').onmessage = async e => {
+    new EventSource('events?file=' + encodeURIComponent(file)).onmessage = async e => {
       try {
         if (!audioReady) throw new Error('Click the page once, so the browser lets it play sound')
         if (e.data === 'play') {

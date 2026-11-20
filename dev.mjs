@@ -1,6 +1,6 @@
 // Local Strudel for live coding from an editor: node dev.mjs, then open http://localhost:8001/dev.html?file=pianoslice.js
 // Each time the file changes on disk, the page plays the new code.
-// POST /play and POST /stop do what Ctrl+Enter and Ctrl+. do in the page (see nvim.lua).
+// POST /play?file= and POST /stop do what Ctrl+Enter and Ctrl+. do in the page (see nvim.lua).
 // /samples/ serves SAMPLES_DIR (default ../strudel-samples, a clone of github.com/ethanfischer/strudel-samples),
 // so a new sample plays before you push it. /samples/strudel.json is built from the folder for each request, so a new
 // file plays before you commit it.
@@ -22,30 +22,36 @@ function inside(dir, path) {
   return full
 }
 
-// The open pages, which get play and stop from /events
-const pages = new Set()
+// The open pages and the file of each, which get play and stop from /events?file=
+const pages = new Map()
 
 createServer(async (req, res) => {
   const path = decodeURIComponent(new URL(req.url, 'http://x').pathname)
   try {
+    const file = new URL(req.url, 'http://x').searchParams.get('file')
     if (path === '/events') {
       res.writeHead(200, { 'content-type': 'text/event-stream', 'cache-control': 'no-store' })
       res.write(': connected\n\n')
-      pages.add(res)
+      pages.set(res, file)
       return req.on('close', () => pages.delete(res))
     }
+    // POST /play?file=x plays x in the pages open for x. 404 when there is none, so the editor can open one.
+    // POST /stop stops all pages.
     if (req.method === 'POST' && (path === '/play' || path === '/stop')) {
-      if (pages.size === 0) return res.writeHead(503).end('No dev page is open\n')
-      for (const page of pages) page.write(`data: ${path.slice(1)}\n\n`)
-      return res.writeHead(200).end(`${path.slice(1)} sent to ${pages.size} page(s)\n`)
+      const command = path.slice(1)
+      if (command === 'play' && !file) return res.writeHead(400).end('play needs ?file=\n')
+      const to = [...pages].filter(([, f]) => command === 'stop' || f === file).map(([page]) => page)
+      if (to.length === 0) return res.writeHead(404).end(command === 'play' ? `No dev page is open for ${file}\n` : 'No dev page is open\n')
+      for (const page of to) page.write(`data: ${command}\n\n`)
+      return res.writeHead(200).end(`${command} sent to ${to.length} page(s)\n`)
     }
     if (path === '/samples/strudel.json') {
       res.writeHead(200, { 'content-type': 'application/json', 'cache-control': 'no-store' })
       return res.end(JSON.stringify(sampleMap(samplesDir)))
     }
-    const file = path.startsWith('/samples/') ? inside(samplesDir, path.slice('/samples'.length)) : inside(root, path)
-    const body = await readFile(file)
-    res.writeHead(200, { 'content-type': types[extname(file)] ?? 'application/octet-stream', 'cache-control': 'no-store' })
+    const served = path.startsWith('/samples/') ? inside(samplesDir, path.slice('/samples'.length)) : inside(root, path)
+    const body = await readFile(served)
+    res.writeHead(200, { 'content-type': types[extname(served)] ?? 'application/octet-stream', 'cache-control': 'no-store' })
     res.end(body)
   } catch (err) {
     res.writeHead(err.code === 'ENOENT' ? 404 : 500).end(err.message)

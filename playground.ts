@@ -26,13 +26,14 @@ $drums: stack(
 .bank("YamahaRM50")
 
 const flMel = "2 [- 2] [3 2] 0 [- 1] [2 1]  0 -";
-const flTrn = "0 [- 0] [0 0] 0 [- 0] [0 0]  0 -";
-$flute: n(flMel)
+const flMel2 = "[0 1] [- 1] [- 2] [- 2] [- 5] - 6@2";
+const flMel3 = "- -  [3 2] [1 2 ] [3 4] - 3@2";
+const flMel4 = "- - - - [[7 8] 7] - 3@2";
+$flute: n(chooseCycles(flMel, flMel2, flMel3, flMel4))
             .slow(2)
             .set(chords)
             //.scale("pentatonic")
             .voicing()
-            .transpose(flTrn.slow(2))
             .attack(0)
             .release(.25)
             .sound("sine")

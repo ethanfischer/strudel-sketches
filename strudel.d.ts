@@ -10644,7 +10644,7 @@ in their raw form and it will be up to you to patternify them and/or query them 
  * })
  * s("saw").seg(8).velocity(rand).vlpf(800)
  */
-declare function register(name?: any, func?: (pat: Pattern, ...args: any[]) => any, patternify?: any, ...more: Arg[]): Pattern
+declare function register(name: string, func: (...args: any[]) => Pattern, ...more: any[]): (...args: any[]) => Pattern
 declare function registerControl(...more: Arg[]): Pattern
 declare function registerMultiControl(...more: Arg[]): Pattern
 declare function registerSampleSource(...more: Arg[]): Pattern

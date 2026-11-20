@@ -29,7 +29,11 @@ const flMel = "2 [- 2] [3 2] 0 [- 1] [2 1]  0 -";
 const flMel2 = "[0 1] [- 1] [- 2] [- 2] [- 5] - 6@2";
 const flMel3 = "- -  [3 2] [1 2 ] [3 4] - 3@2";
 const flMel4 = "- - - - [[7 8] 7] - 3@2";
-$flute: n(chooseCycles(flMel, flMel2, flMel3, flMel4))
+// A new line from perlin noise, with a random rhythm. ribbon loops one piece of it, so each motif plays 2 times
+// (4 cycles after the slow), and then a new one. Change 13 for other motifs.
+$flute: n(perlin.range(0, 7).floor())
+            .struct("x [~ x] [x x] x [~ x] [x|~] x ~")
+            .ribbon("<0 0 13 13>", 1)
             .slow(2)
             .set(chords)
             //.scale("pentatonic")

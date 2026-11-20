@@ -10,7 +10,9 @@ const chords = arrange([16, chords1], [8, chords2])
 _$piano: chords.voicing().s("piano")
 _$bass: chords.rootNotes(2).s("gm_acoustic_bass")
 $drums: stack(
-  s("[rd ~ ~] [rd ~ rd] [rd ~ ~] [rd ~ rd]"),
+  s("rd [rd rd] rd [rd rd]"),
   s("~ hh ~ hh"),
-  s("bd*4").gain(.4),
-).bank("rolandr8")
+  s("bd - bd -").gain(.4),
+).bank("YamahaRM50")
+
+all(x => x.swing(4))

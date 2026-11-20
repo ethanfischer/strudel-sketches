@@ -6,4 +6,4 @@ _$partials: note("c2 <eb2 <g2 g1>>".fast(2))
 const chords = chord("A-7 A-6 A-b6 D-7 G-9@2").slow(4);
 $piano: chords.voicing().s("piano")
 
-$bass: chords.rootNotes(2).note().s("gm_acoustic_bass")
+$bass: chords.rootNotes(2).s("gm_acoustic_bass")

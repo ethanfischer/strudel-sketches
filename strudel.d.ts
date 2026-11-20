@@ -11148,7 +11148,6 @@ declare function lfo(config?: any, id?: any, ...more: Arg[]): Pattern
  */
 declare function linger(fraction?: any, ...more: Arg[]): Pattern
 declare function listRange(...more: Arg[]): Pattern
-declare function load(...more: Arg[]): Pattern
 declare function loadBuffer(...more: Arg[]): Pattern
 declare function loadSoundfont(...more: Arg[]): Pattern
 declare function loadWorklets(...more: Arg[]): Pattern
@@ -12182,7 +12181,6 @@ declare function pitchJumpTime(...more: Arg[]): Pattern
  * ._pitchwheel()
  */
 declare function pitchwheel(hapcircles?: any, circle?: any, edo?: any, root?: any, thickness?: any, hapRadius?: any, mode?: any, margin?: any, ...more: Arg[]): Pattern
-declare function play(...more: Arg[]): Pattern
 /**
  * The ply function repeats each event the given number of times.
  * @example

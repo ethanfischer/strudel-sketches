@@ -55,11 +55,13 @@
     // for the start and the end), and then the positions that play now, as the boxes that the browser editor draws.
     // The messages go in order, one request at a time. A new "active" message replaces an "active" message that did
     // not go yet.
+    // Each message has the id of this page, so nvim does not mix the positions of two pages for the same file.
+    const pageId = crypto.randomUUID()
     const highlightQueue = []
     let sendingHighlights = false
     function sendHighlight(message) {
       if ('active' in message && 'active' in (highlightQueue.at(-1) ?? {})) highlightQueue.pop()
-      highlightQueue.push({ file, ...message })
+      highlightQueue.push({ file, page: pageId, ...message })
       if (!sendingHighlights) sendHighlights()
     }
     async function sendHighlights() {
@@ -169,7 +171,18 @@
 
     // play and stop from the editor (POST /play, POST /stop), like Ctrl+Enter and Ctrl+.
     // toggle (POST /toggle) is stop when the page plays, and play when it does not (also after a play that failed).
-    new EventSource('events?file=' + encodeURIComponent(file)).onmessage = async e => {
+    // When the connection breaks (for example when the dev server restarts), a new one after 1 s. The browser also tries
+    // again, but it waits longer after each failure (Firefox: about 1 minute), and until then nvim opens a new page.
+    function connectEvents() {
+      const events = new EventSource('events?file=' + encodeURIComponent(file) + '&page=' + pageId)
+      events.onerror = () => {
+        events.close()
+        setTimeout(connectEvents, 1000)
+      }
+      events.onmessage = onEvent
+    }
+    connectEvents()
+    async function onEvent(e) {
       try {
         if (!audioReady) throw new Error('Click the page once, so the browser lets it play sound')
         const command = e.data === 'toggle' ? (repl.editor.repl.scheduler.started ? 'stop' : 'play') : e.data

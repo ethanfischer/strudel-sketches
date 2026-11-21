@@ -60,13 +60,14 @@ createServer(async (req, res) => {
   const path = decodeURIComponent(new URL(req.url, 'http://x').pathname)
   try {
     const file = new URL(req.url, 'http://x').searchParams.get('file')
+    const page = new URL(req.url, 'http://x').searchParams.get('page')
     if (path === '/events') {
       res.writeHead(200, { 'content-type': 'text/event-stream', 'cache-control': 'no-store' })
       res.write(': connected\n\n')
       pages.set(res, file)
       return req.on('close', () => {
         pages.delete(res)
-        sendHighlights(JSON.stringify({ file, active: [] }) + '\n') // a closed page plays nothing
+        sendHighlights(JSON.stringify({ file, page, active: [] }) + '\n') // a closed page plays nothing
       })
     }
     if (path === '/highlights' && req.method === 'POST') {
@@ -104,7 +105,9 @@ createServer(async (req, res) => {
       const command = path.slice(1)
       if (command !== 'stop' && !file) return res.writeHead(400).end(`${command} needs ?file=\n`)
       const to = [...pages].filter(([, f]) => command === 'stop' || f === file).map(([page]) => page)
-      if (to.length === 0) return res.writeHead(404).end(command !== 'stop' ? `No dev page is open for ${file}\n` : 'No dev page is open\n')
+      // The open pages in the message, so you can see why there is none for the file
+      const open = `Open dev pages: ${[...pages.values()].join(', ') || 'none'}`
+      if (to.length === 0) return res.writeHead(404).end(command !== 'stop' ? `No dev page is open for ${file}. ${open}\n` : `No dev page is open\n`)
       for (const page of to) page.write(`data: ${command}\n\n`)
       return res.writeHead(200).end(`${command} sent to ${to.length} page(s)\n`)
     }

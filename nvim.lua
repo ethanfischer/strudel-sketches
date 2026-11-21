@@ -21,7 +21,7 @@ local function send(command, file, on_404)
   vim.system({ 'curl', '-sS', '-o', '-', '-w', '\n%{http_code}', '-X', 'POST', url }, { text = true }, function(r)
     if r.code ~= 0 then return fail('the dev server does not run. Start it with node dev.mjs in ' .. root) end
     local body, status = r.stdout:match('^(.-)\n?(%d+)$')
-    if status == '404' and on_404 then return on_404() end
+    if status == '404' and on_404 then return on_404(vim.trim(body)) end
     if status ~= '200' then fail(command .. ' failed: ' .. vim.trim(body)) end
   end)
 end
@@ -34,9 +34,9 @@ end
 local function save_and_send(command)
   vim.cmd.write()
   local file = current_file()
-  send(command, file, function()
+  send(command, file, function(reason)
     vim.system({ 'open', server .. 'dev.html?file=' .. vim.uri_encode(file) })
-    vim.schedule(function() vim.notify('Strudel: opened the dev page for ' .. file .. '. Click it once to play.') end)
+    vim.schedule(function() vim.notify('Strudel: ' .. reason .. '\nOpened a dev page for ' .. file .. '. Click it once to play.') end)
   end)
 end
 
@@ -151,11 +151,13 @@ local function on_highlights(message)
     for i, l in ipairs(message.locations) do
       ids[i] = vim.api.nvim_buf_set_extmark(buf, ns_marks, l[1], col(l[1], l[2]), { end_row = l[3], end_col = col(l[3], l[4]) })
     end
-    highlights.marks[message.file] = { buf = buf, ids = ids }
+    highlights.marks[message.file] = { buf = buf, ids = ids, page = message.page }
     return
   end
   local m = highlights.marks[message.file]
   if not m or not vim.api.nvim_buf_is_valid(m.buf) then return end
+  -- The numbers are positions in the list of one page. Another page for the same file has its own list.
+  if message.page ~= m.page then return end
   vim.api.nvim_buf_clear_namespace(m.buf, ns_active, 0, -1)
   for _, i in ipairs(message.active) do
     local row, c, details = unpack(vim.api.nvim_buf_get_extmark_by_id(m.buf, ns_marks, m.ids[i + 1], { details = true }))

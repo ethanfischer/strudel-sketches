@@ -25,7 +25,7 @@ const x = s("nicechord")
     .hpf(300)
     .speed("<1>");
 
-$beat: arrange([32, one], [32, one], [256, stack(two, x)]);
+$beat: arrange([32, one], [33, one], [256, stack(two, x)]);
 
 
 // The same sections as $beat (4, 2, 16 cycles), so they change at the same time

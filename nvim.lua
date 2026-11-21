@@ -1,6 +1,7 @@
 -- Strudel key maps for the dev page (node dev.mjs). Your vimrc loads this file for the .js and .ts files in this folder.
 -- <leader>mp saves and plays, like Ctrl+Enter. If no dev page is open for the file, it opens one in your browser.
 -- <leader>mm stops all dev pages, like Ctrl+.
+-- <leader><leader> saves and plays when the dev page for the file does not play, and stops it when it plays.
 -- <leader>my copies the file as JavaScript (a .ts file without its types), with lib.ts in front, to paste into strudel.cc.
 -- <leader>ml opens or closes a split with the log of the dev pages: console.log in the sketch, errors, play and stop.
 -- <leader>mb lists the drum banks that have all the sounds of this paragraph. Move in the list, and the paragraph plays
@@ -30,14 +31,17 @@ local function current_file()
   return path:sub(#root + 2) -- the path from this folder, the same as ?file= in the page
 end
 
-vim.keymap.set('n', '<leader>mp', function()
+local function save_and_send(command)
   vim.cmd.write()
   local file = current_file()
-  send('play', file, function()
+  send(command, file, function()
     vim.system({ 'open', server .. 'dev.html?file=' .. vim.uri_encode(file) })
     vim.schedule(function() vim.notify('Strudel: opened the dev page for ' .. file .. '. Click it once to play.') end)
   end)
-end, { buffer = true, desc = 'Strudel: save and play' })
+end
+
+vim.keymap.set('n', '<leader>mp', function() save_and_send('play') end, { buffer = true, desc = 'Strudel: save and play' })
+vim.keymap.set('n', '<leader><leader>', function() save_and_send('toggle') end, { buffer = true, desc = 'Strudel: save and play, or stop' })
 vim.keymap.set('n', '<leader>mm', function() send('stop') end, { buffer = true, desc = 'Strudel: stop' })
 vim.keymap.set('n', '<leader>my', function()
   vim.cmd.write()
@@ -76,6 +80,41 @@ vim.keymap.set('n', '<leader>ml', function()
   vim.cmd('normal! G') -- on the last line, so the split follows the new lines
   vim.api.nvim_set_current_win(code_win)
 end, { buffer = true, desc = 'Strudel: open or close the log of the dev pages' })
+
+-- Completion: only the longest name of each group of synonyms (release, not rel), sorted by name, not by length.
+-- The groups come from the "Synonyms:" lines in the docs of strudel.d.ts. The short names still work in the code.
+if not _G.strudel_short_names then
+  local short, synonyms = {}, nil
+  for line in io.lines(root .. '/strudel.d.ts') do
+    local list = line:match('^%s*%* Synonyms: (.+)$')
+    if list then synonyms = vim.split(list, ', ', { plain = true }) end
+    local name = line:match('^%s*([%w_$]+)%(') or line:match('^declare %a+ ([%w_$]+)')
+    if name and synonyms then
+      local group = { name, unpack(synonyms) }
+      local longest = name
+      for _, n in ipairs(group) do if #n > #longest then longest = n end end
+      for _, n in ipairs(group) do if n ~= longest then short[n] = true end end
+      synonyms = nil
+    end
+  end
+  _G.strudel_short_names = short
+end
+local cmp = require('cmp')
+local compare = cmp.config.compare
+cmp.setup.buffer({
+  sources = { {
+    name = 'nvim_lsp',
+    entry_filter = function(entry) return not _G.strudel_short_names[entry:get_completion_item().label] end,
+  } },
+  sorting = { comparators = { compare.offset, compare.exact, compare.score, compare.recently_used, compare.kind,
+    -- By name, without case. The _ names (_fast, the versions that do not take patterns) go last.
+    function(a, b)
+      local x, y = a:get_completion_item().label:lower(), b:get_completion_item().label:lower()
+      local ux, uy = x:sub(1, 1) == '_', y:sub(1, 1) == '_'
+      if ux ~= uy then return uy end
+      if x ~= y then return x < y end
+    end } },
+})
 
 -- Highlights (StrudelActive): the mini-notation that plays now, as the boxes in the browser editor. After each play, a
 -- dev page sends the positions of the mini-notation, and then the positions that play now (GET /highlights). The

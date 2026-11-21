@@ -1,49 +1,60 @@
-samples('github:switchangel/pad')
-setcpm(90)
+setcpm(180)
 
-_$: s("nicechord")
-  .slice(8, "7") // try 12, 13, 14, 15
-  .speed(-1)
-  .fast(4)
-  ._scope()
+const l = .05;
+const beat1 = "<.05 .9 .05 .9 .05 .9 .05 .95>";
+$beat: s("nicechord")
+    .begin(beat1)
+    .end(beat1.add(l))
+    .gain(1.25)
+    .speed("<1 -1>")
+    .orbit(0);
 
+const beatX = "<.05 .05 .05 .05 .05 .05 .05 .05>";
+_$beat: s("nicechord")
+    .begin(beatX)
+    .end(beatX.add(l))
+    .gain(1.5)
+    .hpf(300)
+    .speed("<1>");
 
-const f = "1 - 4 - 2 - 6 -";
-//const r = "16 - 10 - 14  - 12 -"
-const r = "15 15" 
-_$: s("nicechord")
-  .slice(16, r) // try 12, 13, 14, 15
-  .speed(-1 -.0125)
-  .fast(2)
-  ._scope()
+_$whitenoise : s("white")
+    .n(0)
+    .gain(0.3)
+    .decay(.001)
+    .sustain(.001)
+    .lpf(2000)
+    .speed("<1>");
 
-const l = .3;
-const back = s("nicechord")
-    .speed(-1)
-    .begin(1-l)
-    .end(1);
+const beat2 = "<.01 .01 .01 .01 .01 .01 .01 .01>";
+_$beat: s("nicechord")
+    .begin(beat2)
+    .end(beat2.add(l))
+    .gain(1.25)
+    .speed("<1>")
+    .orbit(0);
 
+const beat3 = "<.95>";
+_$beat: s("nicechord")
+    .begin(beat3)
+    .end(beat3.add(l))
+    .gain(1.25)
+    .speed("<-1>")
+    .orbit(0);
 
-const back2 = s("nicechord")
-    .speed(-1)
-    .begin(1-l)
-    .end(1);
-
-const fwd = s("nicechord")
-    .speed(1)
-    .begin(.05)
-    .end(l);
-
-
-const fwd2 = s("nicechord")
-    .speed(1)
-    .begin(.10)
-    .end(l+.10);
-
-_$: cat(back, back2);
-
-const starts = "<.05 .90 .10 .95 .05 .90 .05 .92 .05 .90 .05 .89>";
-$: s("nicechord")
-    .begin(starts)
-    .end(starts.add(l))
-    .speed("<1 -1>");
+const melody1 = `
+                [- 0] [2 -] [3 -] [4 -] 
+                [3 -] [2 -] [1 -] [-1 -]
+                [- 0] [2 -] [1 -] [-1 -] 
+                [0 -] - - -
+                `;
+const melody = arrange([1, melody1], [1, "-"]);
+$bass: n(melody).scale("Ab:minor").s("sine").slow(32).transpose(-12)
+$bassdrum: s("bd")
+            .bank("ViscoSpaceDrum")
+            .slow(2)
+            .early(1)
+            .release(.01)
+            .decay(.10)
+            .gain(0.75)
+            .lpf(100)
+            //.duckorbit(0);
